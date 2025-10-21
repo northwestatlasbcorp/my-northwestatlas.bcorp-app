@@ -483,13 +483,6 @@ section {
 }
 
 .about-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-rgb), 0.3);
-  border-color: var(--primary);
-  background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.1), rgba(0, 0, 0, 0.5));
-}
-
-.about-card:hover {
   /* 3D эффект + золотое свечение */
   transform: translateY(-12px) rotateX(2deg);
   box-shadow: 
@@ -1562,29 +1555,6 @@ footer {
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
   }
-}
-
-.site-title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-size: 90px; /* Размер шрифта для больших экранов */
-    line-height: 1.2;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(var(--primary-rgb), 0.6);
-    white-space: nowrap; /* Запрет переноса текста по умолчанию */
-}
-
-@media (max-width: 768px) {
-    .site-title {
-        font-size: 2.5rem; /* Уменьшение размера шрифта для мобильных */
-        white-space: normal; /* Разрешение переноса текста */
-        text-align: center; /* Выравнивание текста по центру */
-    }
-
-    .site-title .text-gold {
-        display: block; /* Перенос "B CORP" на новую строку */
-        margin-top: 0.5rem; /* Отступ между строками */
-    }
 }
 
 /* Современные кнопки */
