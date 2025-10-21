@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
+    <meta property="og:site_name" content="North West Atlas B Corp">
+    <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
+    <meta property="og:description" content="Компания North West Atlas B Corp создаёт инновационные решения для технологий, устойчивого развития и социальной ответственности.">
+    <meta property="og:image" content="https://northwestatlasbcorp.vercel.app/og-image.jpg">
+    <meta property="og:url" content="https://northwestatlasbcorp.vercel.app">
+    <meta name="keywords" content="инвестиции, технологии, устойчивое развитие, ESG, startup, North West Atlas B Corp">
+    <title>North West Atlas B Corp</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Видеофон -->
+    <div class="video-container">
+        <video autoplay muted loop class="video-background">
+            <source src="northwestatlasbcorp.mp4" type="video/mp4">
+            <source src="northwestatlasbcorp.webm" type="video/webm">
+            Ваш браузер не поддерживает тег video.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Шапка -->
+    <header id="header">
+        <nav class="container">
+            <div class="logo">
+                <a href="#home" class="font-playfair">
+                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                </a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#home" class="nav-link">Главная</a></li>
+                <li><a href="#about" class="nav-link">О нас</a></li>
+                <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
+                <li><a href="#partners" class="nav-link">Партнеры</a></li>
+                <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
+                <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
+                <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Главная секция -->
+        <section id="home" class="h-screen flex items-center justify-center text-center">
+            <h1 class="site-title">
+                NORTH WEST <span class="text-gold">ATLAS<wbr> B CORP</span>
+            </h1>
+        </section>
+
+        <!-- Раздел "О нас" -->
+        <section id="about" class="py-24 px-6 bg-black/30">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">О нас</h2>
+                <blockquote class="philosophy-quote" data-aos="fade-up" data-aos-delay="100">
+                    "Мы инвестируем не только капитал, но и время, знания и репутацию..."
+                    <cite><span class="text-gold-bold">— Abraham Samuel Vladimirov</span></cite>
+                </blockquote>
+                <div class="about-container">
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="150" data-tooltip="Мы стремимся создать прочный фундамент для будущего России и мира через ответственные инвестиции в научные прорывы и инновационные решения.">
+                        <h3 class="text-gold">Наша миссия</h3>
+                        <p>Формирование глобального будущего.</p>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="200" data-tooltip="Поддержка перспективных проектов, которые готовятся к выходу на рынок в ближайшие годы. Мы инвестируем в технологии, меняющие мир, и помогаем ученым и изобретателям воплотить свои идеи в реальность.">
+                        <h3 class="text-gold">Наши цели</h3>
+                        <p>Создаем наследие будущего.</p>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="250" data-tooltip="Прозрачность: Все наши сделки основаны на четком понимании и доверии. Экспертность: Наша команда состоит из профессионалов в области науки, права и патентования. Долгосрочное мышление: Мы фокусируемся на стратегических проектах с высоким потенциалом роста.">
+                        <h3 class="text-gold">Наши принципы</h3>
+                        <p>Стратегическое мышление.</p>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="300" data-tooltip="Мы проводим детальный анализ каждого проекта с учетом финансовых, юридических и ESG-факторов. Наши эксперты обеспечивают полное сопровождение — от оценки идеи до вывода продукта на рынок.">
+                        <h3 class="text-gold">Наш подход</h3>
+                        <p>Технологичный взгляд на мир.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Экспертиза" -->
+        <section id="expertise" class="py-24 px-6 bg-black/40">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Экспертиза</h2>
+                <div class="expertise-container">
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="100" id="expertise-ai" data-expertise="ai">
+                        <div class="expertise-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="text-gold">Искусственный интеллект</h3>
+                        <p>Мы используем AI для анализа текстовых данных, прогнозирования трендов и автоматизации процессов.</p>
+                        <button class="read-more" onclick="openPopup('ai')">Подробнее</button>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="150" id="expertise-big-data" data-expertise="big-data">
+                        <div class="expertise-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="text-gold">Анализ больших данных</h3>
+                        <p>Сбор и анализ больших объемов данных позволяет нам принимать более взвешенные решения.</p>
+                        <button class="read-more" onclick="openPopup('big-data')">Подробнее</button>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="200" id="expertise-risks" data-expertise="risks">
+                        <div class="expertise-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-gold">Оценка рисков</h3>
+                        <p>Мы применяем технологии машинного обучения и анализ больших данных для точной оценки финансовых, операционных и ESG-рисков.</p>
+                        <button class="read-more" onclick="openPopup('risks')">Подробнее</button>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="250" id="expertise-scaling" data-expertise="scaling">
+                        <div class="expertise-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-gold">Масштабирование бизнеса</h3>
+                        <p>Стратегическое планирование и реализация программ масштабирования бизнеса с фокусом на устойчивый рост и долгосрочную ценность.</p>
+                        <button class="read-more" onclick="openPopup('scaling')">Подробнее</button>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="300" id="expertise-legal" data-expertise="legal">
+                        <div class="expertise-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3 class="text-gold">Юридическое сопровождение</h3>
+                        <p>Профессиональное оформление сделок, защита прав инвесторов и партнеров на всех этапах проекта.</p>
+                        <button class="read-more" onclick="openPopup('legal')">Подробнее</button>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="350" id="expertise-patents" data-expertise="patents">
+                        <div class="expertise-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="text-gold">Патентование</h3>
+                        <p>Гарантия уникальности ваших технологий через комплексное патентное обеспечение и проверку правовой чистоты.</p>
+                        <button class="read-more" onclick="openPopup('patents')">Подробнее</button>
+                    </div>
+                </div>
+                <div id="popup-modal" class="popup-modal">
+                    <div class="popup-content">
+                        <span class="close-btn" onclick="closePopup()">&times;</span>
+                                                <h3 id="popup-title" class="text-gold"></h3>
+                        <div id="popup-details"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Партнеры" -->
+        <section id="partners" class="py-24 px-6 bg-black/30 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Наши партнеры</h2>
+                <div class="partners-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="partners-marquee">
+                        <div class="partners-track">
+                            <!-- Первая группа карточек -->
+                            <div class="partner-card">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                            </div>
+                            <div class="partner-card">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rost-logo.png" alt="РОСТ">
+                            </div>
+                            <div class="partner-card">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                            </div>
+                            <!-- Вторая группа карточек (дублирующая) -->
+                            <div class="partner-card">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                            </div>
+                            <div class="partner-card">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rost-logo.png" alt="РОСТ">
+                            </div>
+                            <div class="partner-card">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Investment Focus" -->
+        <section id="investment-focus" class="py-24 px-6 bg-gradient-to-b from-black/30 to-background/30 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Investment Focus</h2>
+                <div class="investment-container">
+                    <!-- Ecotech -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="100">
+                        <div class="investment-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="investment-text">Ecotech</div>
+                    </div>
+                    <!-- Agrotech -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="200">
+                        <div class="investment-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="investment-text">Agrotech</div>
+                    </div>
+                    <!-- Eco REE Mining -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="300">
+                        <div class="investment-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div class="investment-text">Eco REE Mining</div>
+                    </div>
+                    <!-- IIoT & Blockchain -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="400">
+                        <div class="investment-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="investment-text">IIoT & Blockchain</div>
+                    </div>
+                    <!-- Smartcharity -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="500">
+                        <div class="investment-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="investment-text">Smartcharity</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Методология" -->
+        <section id="methodology" class="py-24 px-6 bg-black/40">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Методология</h2>
+                <div class="methodology-container">
+                    <!-- Карточка NLP -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="100">
+                        <i class="fas fa-language icon"></i>
+                        <h3 class="text-gold">Обработка естественного языка (NLP)</h3>
+                        <p>Мы используем технологии NLP для анализа текстовых данных, таких как финансовые отчеты, новости и социальные сети.</p>
+                    </div>
+                    <!-- Карточка Python -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="200">
+                        <i class="fab fa-python icon"></i>
+                        <h3 class="text-gold">Python</h3>
+                        <p>Python — основной инструмент для анализа данных, прогнозирования и автоматизации процессов.</p>
+                    </div>
+                    <!-- Карточка Machine Learning -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="300">
+                        <i class="fas fa-robot icon"></i>
+                        <h3 class="text-gold">Машинное обучение</h3>
+                        <p>Мы применяем алгоритмы машинного обучения для выявления скрытых трендов и факторов риска.</p>
+                    </div>
+                    <!-- Карточка Big Data -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="400">
+                        <i class="fas fa-database icon"></i>
+                        <h3 class="text-gold">Большие данные</h3>
+                        <p>Сбор и анализ больших объемов данных позволяет нам принимать более взвешенные решения.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "ESG Калькулятор" -->
+        <section id="esg-calculator" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Калькулятор ESG-рейтингов</h2>
+                <p class="max-w-3xl mx-auto mb-10 text-white/80" data-aos="fade-up" data-aos-delay="100">
+                    Наш калькулятор использует передовые технологии, такие как NLP и машинное обучение, для анализа текстовых данных и выявления ключевых ESG-факторов.
+                </p>
+                <div class="calculator-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="calculator-form">
+                        <label for="company">Выберите компанию:</label>
+                        <select id="company">
+                            <option value="solidcore">Solidcore Resources plc</option>
+                        </select>
+                        <button onclick="toggleRatings()" id="ratings-button">ЗАГРУЗИТЬ РЕЙТИНГИ</button>
+                    </div>
+                    <div id="result" class="ratings-result"></div>
+                    <div id="expert-recommendations" class="recommendations-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Обратная связь" -->
+        <section id="feedback" class="py-24 px-6 bg-gradient-to-b from-black/30 to-background/30 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Обратная связь</h2>
+                <div class="feedback-btn-container" data-aos="fade-up" data-aos-delay="100">
+                    <button id="show-contacts-btn" onclick="toggleContacts()">Показать</button>
+                </div>
+                <div id="contacts" style="display: none;">
+                    <div class="contacts-grid">
+                        <div class="contact-card" data-aos="fade-up" data-aos-delay="150">
+                            <div class="contact-icon">
+                                <span>СПб</span>
+                            </div>
+                            <div class="contact-info">
+                                <h4>Санкт-Петербург</h4>
+                                <p><a href="tel:+79310077769">Dana +7 931 007-77-69</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="contact-icon">
+                                <span>МСК</span>
+                            </div>
+                            <div class="contact-info">
+                                <h4>Москва</h4>
+                                <p><a href="tel:+79917221107">Mark +7 991 722-11-07</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-card" data-aos="fade-up" data-aos-delay="250">
+                            <div class="contact-icon">
+                                <span>UAE</span>
+                            </div>
+                            <div class="contact-info">
+                                <h4>Шарджа</h4>
+                                <p><a href="tel:+97163220669">Aram +971 6 322-06-69</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-container" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-gold">Обратная связь</h3>
+                        <form id="contact-form" action="#" method="POST">
+                            <div class="form-group">
+                                <label for="name">Имя:</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Сообщение:</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                Отправить
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Первая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="font-playfair">
+                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                    </h3>
+                                        <p>Создаем будущее, а не следуем за ним.</p>
+                </div>
+
+                <!-- Вторая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="150">
+                    <h3 class="text-gold">Навигация</h3>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#expertise">Экспертиза</a></li>
+                        <li><a href="#partners">Партнеры</a></li>
+                    </ul>
+                </div>
+
+                <!-- Третья колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-gold">Ключевые направления</h3>
+                    <ul>
+                        <li><i class="fas fa-chart-line"></i> <span>Инвестиции</span></li>
+                        <li><i class="fas fa-leaf"></i> <span>ESG Консалтинг</span></li>
+                        <li><i class="fas fa-chalkboard-teacher"></i> <span>Стратегическое планирование</span></li>
+                        <li><i class="fas fa-shield-alt"></i> <span>Оценка рисков</span></li>
+                    </ul>
+                </div>
+
+                <!-- Четвертая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="250">
+                    <h3 class="text-gold">Адрес</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Санкт-Петербург, Петровская коса д. 1, к. 1. Петроградский район, ИФНС №25. Крестовский остров.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@northwestatlas.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение AOS JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
+    <script src="script.js"></script>
+</body>
+</html>
