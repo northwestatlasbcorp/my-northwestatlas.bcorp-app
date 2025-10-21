@@ -1629,3 +1629,10 @@ section:not(:last-child)::after {
   margin: 80px auto 0;
   max-width: 400px;
 }
+
+/* Все остальные стили... */
+
+/* === Tagline === */
+.tagline {
+  white-space: nowrap;  /* Одна строка, без переносов */
+}
