@@ -194,7 +194,7 @@ ul {
   --tw-gradient-to: rgba(var(--background), 0.3);
 }
 
-/* Контейнер для видео */
+/* ===== PARTICLES.JS СТИЛИ ===== */
 .video-container {
   position: fixed;
   top: 0;
@@ -203,24 +203,51 @@ ul {
   height: 100vh;
   overflow: hidden;
   z-index: -3;
+
+  /* Анимированный градиентный фон */
+  background: linear-gradient(135deg,
+      #0d0d0d 0%,
+      #1a1a2e 25%,
+      #16213e 50%,
+      #0f3460 75%,
+      #0d0d0d 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Видеофон */
-.video-background {
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Canvas для частиц */
+#particles-js {
   width: 100%;
-  height: 100vh;
-  object-fit: cover;
+  height: 100%;
 }
 
-/* Затемнение поверх видео */
+#particles-js canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Скрываем видеофон, так как используются частицы */
+.video-background {
+  display: none;
+}
+
+/* Затемнение поверх */
 .video-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(26, 26, 55, 0.8));
+  background: rgba(0, 0, 0, 0.5);
   z-index: -1;
+  pointer-events: none;
 }
 
 /* Шапка */
