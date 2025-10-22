@@ -1930,13 +1930,28 @@ header {
 }
 
 .partner-card {
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.9); /* Белый полупрозрачный фон */
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
+
 .partner-card img {
-  filter: brightness(0) invert(1) opacity(0.7); /* белые логотипы на тёмном фоне */
+  filter: grayscale(100%); /* Чёрно-белые логотипы */
+  opacity: 0.7;
+  transition: all 0.3s ease;
 }
+
+.partner-card:hover {
+  background: rgba(255, 255, 255, 1); /* Полностью белый при hover */
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(212, 175, 55, 0.3);
+  transform: translateY(-5px);
+}
+
 .partner-card:hover img {
+  filter: grayscale(0%); /* Цветные при hover */
   opacity: 1;
 }
