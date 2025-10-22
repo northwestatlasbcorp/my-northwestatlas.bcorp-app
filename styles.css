@@ -1929,3 +1929,14 @@ header {
     }
 }
 
+.partner-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.partner-card img {
+  filter: brightness(0) invert(1) opacity(0.7); /* белые логотипы на тёмном фоне */
+}
+.partner-card:hover img {
+  opacity: 1;
+}
