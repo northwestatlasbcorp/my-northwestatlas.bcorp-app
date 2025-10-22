@@ -1173,10 +1173,36 @@ section {
   }
 }
 
+/* ИСПРАВЛЕНИЕ ЦЕНТРИРОВАНИЯ НА МОБИЛЬНЫХ */
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
+  #home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: 0 20px !important;
   }
+  
+  #main-logo {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    max-width: 85vw !important;
+    width: 85vw !important;
+    margin: 0 auto !important;
+    display: block !important;
+    opacity: 1 !important;
+    animation: glowPulse 3s ease-in-out infinite !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #main-logo {
+    max-width: 90vw !important;
+    width: 90vw !important;
+  }
+}
 
   #nav-menu {
     position: fixed;
