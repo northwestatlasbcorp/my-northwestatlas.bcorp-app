@@ -1958,9 +1958,11 @@ header {
 
 /* Премиум-логотип с живым свечением */
 .premium-logo {
-  max-width: 600px;
-  width: 90%;
+  max-width: 500px; /* Уменьшаем максимальную ширину */
+  width: 80%; /* Адаптивная ширина */
   height: auto;
+  display: block;
+  margin: 0 auto; /* Центрируем по горизонтали */
   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6))
           drop-shadow(0 0 40px rgba(212, 175, 55, 0.4))
           drop-shadow(0 0 60px rgba(212, 175, 55, 0.3));
@@ -2002,14 +2004,20 @@ header {
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .premium-logo {
     max-width: 400px;
   }
 }
 
+@media (max-width: 768px) {
+  .premium-logo {
+    max-width: 350px;
+  }
+}
+
 @media (max-width: 480px) {
   .premium-logo {
-    max-width: 300px;
+    max-width: 280px;
   }
 }
