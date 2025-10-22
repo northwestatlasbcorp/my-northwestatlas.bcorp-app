@@ -278,11 +278,16 @@ function loadRatings() {
     resultDiv.innerHTML = tableHTML;
 
     // Генерация рекомендаций
-    let recommendationsHTML = `<h3 class="recommendation-title">Экспертные рекомендации</h3><div class="recommendation-grid">`;
+    const recTitle = getCurrentLanguage() === 'en' ? 'Expert Recommendations' : 'Экспертные рекомендации';
+    let recommendationsHTML = `<h3 class="recommendation-title">${recTitle}</h3><div class="recommendation-grid">`;
     ratingsData[company].recommendations.forEach((rec) => {
         recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
     });
-    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> Скачать отчет</button>`;
+    
+    // ИСПРАВЛЕНИЕ: добавляем проверку языка для кнопки
+    const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Скачать отчет';
+    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
+    
     recommendationsDiv.innerHTML = recommendationsHTML;
 }
 
