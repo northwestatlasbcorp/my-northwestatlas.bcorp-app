@@ -2036,3 +2036,17 @@ header {
   height: auto !important;
   margin: 0 auto !important;
 }
+
+/* Точное центрирование логотипа */
+#home {
+  position: relative !important;
+}
+
+.premium-logo {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%) !important;
+  max-width: 500px !important;
+  width: 80% !important;
+  height: auto !important;
+}
