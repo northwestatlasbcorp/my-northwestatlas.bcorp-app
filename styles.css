@@ -1705,22 +1705,24 @@ header {
     z-index: 1000;
 }
 
-/* Main navbar wrapper */
+/* Main navbar wrapper - ONE BLOCK */
 .navbar-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 15px 20px 12px 20px;
 }
 
-/* Top section - Logo CENTERED */
+/* Top section - Logo - NO BORDER */
 .navbar-top {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 0;
+    border-bottom: none;
+    margin-bottom: 12px;
 }
 
 .navbar-top .logo a {
@@ -1733,15 +1735,15 @@ header {
     text-align: center;
 }
 
-/* Bottom section - Menu CENTERED + Language SEPARATE RIGHT */
+/* Bottom section - Menu CENTERED + Language SEPARATE RIGHT - NO PADDING */
 .navbar-bottom {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
     gap: 20px;
     position: relative;
+    padding: 0;
 }
 
 /* Menu - FULLY CENTERED */
@@ -1786,7 +1788,7 @@ header {
     border-left: 1px solid rgba(212, 175, 55, 0.2);
     padding-left: 15px;
     position: absolute;
-    right: 20px;
+    right: 0;
 }
 
 .lang-switcher a {
@@ -1852,7 +1854,6 @@ header {
     .lang-switcher {
         gap: 8px;
         padding-left: 12px;
-        right: 15px;
     }
 
     .lang-switcher a {
@@ -1861,7 +1862,7 @@ header {
 }
 
 @media (max-width: 768px) {
-    .navbar-top {
+    .navbar-wrapper {
         padding: 12px 15px;
     }
 
@@ -1869,10 +1870,13 @@ header {
         font-size: 14px;
     }
 
+    .navbar-top {
+        margin-bottom: 10px;
+    }
+
     .navbar-bottom {
         flex-direction: column;
         align-items: center;
-        padding: 10px 15px;
         gap: 8px;
         position: relative;
     }
@@ -1924,3 +1928,4 @@ header {
         font-size: 13px;
     }
 }
+
