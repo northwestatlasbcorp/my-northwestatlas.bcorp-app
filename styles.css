@@ -2175,3 +2175,83 @@ header {
     max-width: 280px !important;
   }
 }
+
+/* ========== ФИКС ДЛЯ МОБИЛЬНЫХ - ЦЕНТРИРОВАНИЕ И КАЧЕСТВО ========== */
+
+#main-logo {
+    opacity: 0;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    max-width: 500px !important;
+    width: 80% !important;
+    height: auto !important;
+    transform: translate(-50%, -50%) scale(0.5);
+    animation: logoEntrance 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
+               glowPulse 3s ease-in-out 1.8s infinite;
+    will-change: transform, opacity, filter;
+    transition: transform 0.3s ease;
+    
+    /* Улучшение качества изображения */
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+  #main-logo {
+    max-width: 400px !important;
+  }
+}
+
+/* ИСПРАВЛЕНИЕ ДЛЯ СМАРТФОНОВ */
+@media (max-width: 768px) {
+  #home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100vh !important;
+    padding: 0 20px !important;
+  }
+  
+  #main-logo {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: scale(1) !important;
+    max-width: 85vw !important;
+    width: 85vw !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Анимация для мобильных */
+  #main-logo {
+    animation: logoEntranceMobile 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
+               glowPulse 3s ease-in-out 1.8s infinite !important;
+  }
+  
+  @keyframes logoEntranceMobile {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(-5deg);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1) rotate(2deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  #main-logo {
+    max-width: 90vw !important;
+    width: 90vw !important;
+  }
+}
