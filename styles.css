@@ -1694,3 +1694,113 @@ section:not(:last-child)::after {
         padding: 2px 4px;
     }
 }
+/* ===== NAVBAR FIX - CENTER & ALIGNMENT ===== */
+
+/* Container for navbar */
+nav.container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    padding: 12px 20px !important;
+}
+
+/* Logo alignment */
+nav .logo {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Menu centering */
+#nav-menu {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 30px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+}
+
+#nav-menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+}
+
+/* Last item (language switcher) - push to right */
+#nav-menu li:last-child {
+    margin-left: auto !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.2) !important;
+    padding-left: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* Nav links */
+.nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    transition: color 0.3s ease !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #d4af37 !important;
+}
+
+/* Language switcher links */
+#nav-menu li:last-child a {
+    color: rgba(212, 175, 55, 0.6) !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: color 0.3s ease !important;
+}
+
+#nav-menu li:last-child a:first-child {
+    color: #d4af37 !important;
+    font-weight: bold !important;
+}
+
+#nav-menu li:last-child a:hover {
+    color: #d4af37 !important;
+}
+
+/* Separator in language switcher */
+#nav-menu li:last-child span {
+    color: #d4af37 !important;
+    font-size: 14px !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    nav.container {
+        padding: 12px 15px !important;
+    }
+
+    #nav-menu {
+        gap: 15px !important;
+    }
+
+    #nav-menu li:last-child {
+        border-left: none !important;
+        padding-left: 0 !important;
+        gap: 8px !important;
+    }
+
+    .nav-link {
+        font-size: 12px !important;
+    }
+}
