@@ -42,15 +42,22 @@
 
     <!-- Header -->
     <header id="header">
-        <nav class="container">
+    <nav class="navbar-wrapper">
+        <!-- LOGO (CENTERED TOP) -->
+        <div class="navbar-top">
             <div class="logo">
                 <a href="#home" class="font-playfair">
                     NORTH WEST <span class="text-gold">ATLAS B CORP</span>
                 </a>
             </div>
+        </div>
+
+        <!-- MENU & LANGUAGE (CENTERED BOTTOM) -->
+        <div class="navbar-bottom">
             <div class="menu-toggle" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </div>
+            
             <ul id="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
@@ -58,21 +65,18 @@
                 <li><a href="#partners" class="nav-link">Partners</a></li>
                 <li><a href="#investment-focus" class="nav-link">Investment Focus</a></li>
                 <li><a href="#esg-calculator" class="nav-link">ESG Calculator</a></li>
-                                    <li><a href="#feedback" class="nav-link">Contact</a></li>
-                    
-                    <!-- LANGUAGE SWITCHER WITH FLAGS -->
-                    <li style="margin-left: auto; border-left: 1px solid rgba(212, 175, 55, 0.2); padding-left: 15px; display: flex; align-items: center; gap: 12px;">
-                        <a href="/" style="color: rgba(212, 175, 55, 0.6); text-decoration: none; font-size: 12px; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; transition: color 0.3s ease;">
-                            🇷🇺 <span>РУ</span>
-                        </a>
-                        <span style="color: #d4af37; font-size: 14px;">|</span>
-                        <a href="/en.html" style="color: #d4af37; font-weight: bold; text-decoration: none; font-size: 12px; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
-                            🇬🇧 <span>EN</span>
-                        </a>
-                    </li>
-                </ul>
-        </nav>
-    </header>
+                <li><a href="#feedback" class="nav-link">Contact</a></li>
+            </ul>
+
+            <!-- LANGUAGE SWITCHER -->
+            <div class="lang-switcher">
+                <a href="/">🇷🇺 РУ</a>
+                <span>|</span>
+                <a href="/en.html" style="color: #d4af37; font-weight: bold;">🇬🇧 EN</a>
+            </div>
+        </div>
+    </nav>
+</header>
 
     <main>
         <!-- Hero Section -->
