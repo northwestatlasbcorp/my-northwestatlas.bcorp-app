@@ -174,8 +174,13 @@ function closePopup() {
     popup.style.display = "none";
 }
 
-// Данные для ESG-калькулятора
-const ratingsData = {
+// Detect current page language
+function getCurrentLanguage() {
+    return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
+}
+
+// ESG Calculator data - BILINGUAL
+const ratingsDataRU = {
     solidcore: {
         ratings: [
             ["Sustainalytics", "8.5"],
@@ -202,6 +207,37 @@ const ratingsData = {
         ],
     },
 };
+
+const ratingsDataEN = {
+    solidcore: {
+        ratings: [
+            ["Sustainalytics", "8.5"],
+            ["Refinitiv", "92"],
+            ["MSCI", "AA"],
+            ["RAEX Europe", "A+"],
+            ["NRA ESG", "A1.esg"],
+            ["Average rating consistency", "7.50"],
+            ["SDG #7 compliance", "High performance"],
+            ["SDG #5 compliance", "Medium performance"],
+            ["RAEX Europe historical dynamics", "+5%"],
+            ["MSCI historical dynamics", "-3%"],
+            ["ESG profile (E)", "Excellent CO2 emission management"],
+            ["ESG profile (S)", "Local community support programs"],
+            ["ESG profile (G)", "Insufficient risk management transparency"],
+        ],
+        recommendations: [
+            { title: "Originality", text: "The project demonstrates a high degree of uniqueness." },
+            { title: "Innovation", text: "The project confirms its patent cleanliness." },
+            { title: "Development", text: "The project requires more detailed goal description." },
+            { title: "Efficiency", text: "The project has high potential profitability." },
+            { title: "Resource Support", text: "The project requires additional needs analysis." },
+            { title: "Commercializability", text: "The project requires business model refinement." },
+        ],
+    },
+};
+
+// Select ratings based on language
+const ratingsData = getCurrentLanguage() === 'en' ? ratingsDataEN : ratingsDataRU;
 
 // Переключение отображения рейтингов
 function toggleRatings() {
