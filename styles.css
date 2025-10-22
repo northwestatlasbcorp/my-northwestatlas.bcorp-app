@@ -2048,3 +2048,14 @@ header {
   height: auto !important;
   display: block !important;
 }
+/* АБСОЛЮТНЫЙ ЦЕНТР ЛОГОТИПА - ФИНАЛЬНАЯ ВЕРСИЯ */
+.premium-logo {
+  transform: translateX(2%) !important; /* Смещаем на 2% вправо */
+}
+
+/* Или альтернатива - добавить margin-left */
+.premium-logo {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 5% !important; /* Компенсируем смещение PNG */
+}
