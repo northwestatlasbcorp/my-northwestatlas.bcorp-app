@@ -1733,18 +1733,17 @@ header {
     text-align: center;
 }
 
-/* Bottom section - Menu & Language IN ONE LINE */
+/* Bottom section - Menu CENTERED + Language RIGHT */
 .navbar-bottom {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 25px;
+    justify-content: space-between;
     padding: 12px 20px;
-    flex-wrap: nowrap;
+    gap: 20px;
 }
 
-/* Menu */
+/* Menu - CENTERED */
 #nav-menu {
     display: flex;
     align-items: center;
@@ -1753,7 +1752,8 @@ header {
     list-style: none;
     margin: 0;
     padding: 0;
-    flex-wrap: nowrap;
+    flex: 1;
+    flex-wrap: wrap;
 }
 
 #nav-menu li {
@@ -1761,14 +1761,6 @@ header {
     padding: 0;
     display: flex;
     align-items: center;
-    height: 100%;
-}
-
-/* Remove last-child styling from menu */
-#nav-menu li:last-child {
-    margin: 0 !important;
-    border-left: none !important;
-    padding-left: 0 !important;
 }
 
 .nav-link {
@@ -1782,3 +1774,18 @@ header {
 
 .nav-link:hover,
 .nav-link.active {
+    color: #d4af37;
+}
+
+/* Language Switcher - RIGHT SIDE */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    border-left: 1px solid rgba(212, 175, 55, 0.2);
+    padding-left: 15px;
+    flex-shrink: 0;
+}
+
+.lang-switcher a
