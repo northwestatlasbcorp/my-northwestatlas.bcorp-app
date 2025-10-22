@@ -2125,3 +2125,14 @@ header {
   transform: scale(1.05) translateX(3%) !important;
   cursor: pointer;
 }
+
+#main-logo {
+    /* Основные стили */
+    max-width: 80%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+
+    /* Визуальная коррекция — компенсируем оптическое смещение */
+    transform: translateX(3%);
+}
