@@ -241,7 +241,7 @@ function loadRatings() {
     ratingsData[company].recommendations.forEach((rec) => {
         recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
     });
-    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> Download Report</button>`;
+    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i>Full version available upon request</button>`;
     recommendationsDiv.innerHTML = recommendationsHTML;
 }
 
