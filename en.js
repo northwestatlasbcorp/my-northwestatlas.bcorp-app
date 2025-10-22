@@ -388,3 +388,24 @@ window.addEventListener('load', function() {
     });
 });
 
+// Интерактивное свечение логотипа
+document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.getElementById('main-logo');
+    
+    if (logo) {
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Изменяем интенсивность свечения в зависимости от позиции курсора
+            const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
+            const glowSize = 20 + (x + y) / 2 * 40;
+            
+            logo.style.filter = `
+                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
+                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
+                drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
+            `;
+        });
+    }
+});
