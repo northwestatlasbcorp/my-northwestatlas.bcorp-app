@@ -285,7 +285,7 @@ function loadRatings() {
     });
     
     // ИСПРАВЛЕНИЕ: добавляем проверку языка для кнопки
-    const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Скачать отчет';
+    const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Полный доступ — по запросу';
     recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
     
     recommendationsDiv.innerHTML = recommendationsHTML;
