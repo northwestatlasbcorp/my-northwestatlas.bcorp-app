@@ -250,6 +250,150 @@ ul {
   pointer-events: none;  /* ← Эта строка очень важна! */
 }
 
+/* ========== ШАПКА - БАЗОВЫЕ СТИЛИ ========== */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 1rem 2rem 0.8rem;
+}
+
+.navbar-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.navbar-top {
+  width: 100%;
+  text-align: center;
+}
+
+.navbar-top .logo a {
+  font-size: 1.1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}
+
+.navbar-top .logo a .text-gold {
+  color: var(--primary);
+}
+
+.navbar-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+#nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.3rem 0;
+  position: relative;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.lang-switcher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.lang-switcher a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.lang-switcher span {
+  color: #d4af37;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+/* ========== ДЕСКТОПНАЯ НАВИГАЦИЯ (по умолчанию) ========== */
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+
+  #nav-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    position: static !important;
+    max-height: none !important;
+    background: transparent !important;
+    border: none !important;
+    gap: 2rem !important;
+    padding: 0 !important;
+  }
+
+  #nav-menu li {
+    width: auto !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .navbar-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    position: static !important;
+  }
+}
+
 /* ========== МОБИЛЬНАЯ ШАПКА ПО МАКЕТУ ========== */
 
 @media (max-width: 768px) {
@@ -355,10 +499,6 @@ ul {
   .lang-switcher {
     font-size: 0.75rem;
   }
-}
-
-.nav-link:hover::after {
-  width: 100%;
 }
 
 /* Секции */
