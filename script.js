@@ -547,3 +547,20 @@ document.addEventListener('copy', (e) => {
     }, 300);
   }, 1700);
 });
+
+window.addEventListener('DOMContentLoaded', function() {
+    const preloaderLogo = document.querySelector('#preloader img');
+    preloaderLogo.style.opacity = 1; // плавное появление логотипа на заставке
+});
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        preloader.style.opacity = '0';
+        preloader.style.pointerEvents = 'none';
+        preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
+        setTimeout(function() {
+            preloader.remove();
+        }, 900);
+    }, 950); // задержка чтобы показать красивое появление лого
+});
