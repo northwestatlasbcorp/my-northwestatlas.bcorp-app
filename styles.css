@@ -1595,8 +1595,35 @@ footer::after {
   }
 }
 
-/* ========== PRELOADER УДАЛЕН ========== */
-/* Preloader был удален для лучшего UX и плавной анимации логотипа */
+/* ========== ПРЕМИАЛЬНЫЙ PRELOADER ========== */
+#preloader {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: radial-gradient(circle at 50% 50%, #181824 40%, #0b0b15 100%);
+  z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s cubic-bezier(.6,.9,.39,1.15);
+}
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.gold-ring-animation {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border-top: 3px solid #d4af37;
+  border-bottom: 3px solid transparent;
+  margin: 40px auto 10px;
+  box-shadow: 0 0 20px #d4af3766;
+  animation: spinRing 1.6s linear infinite;
+}
+@keyframes spinRing {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
 
 /* ========== ПРЕМИАЛЬНЫЕ TOOLTIPS ========== */
 [data-tooltip] {
@@ -1715,29 +1742,4 @@ footer::after {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-#preloader {
-  background: radial-gradient(circle at 50% 50%, #181824 40%, #0b0b15 100%);
-}
-
-.preloader-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.gold-ring-animation {
-  width: 74px;
-  height: 74px;
-  border-radius: 50%;
-  border-top: 3px solid #d4af37;
-  border-bottom: 3px solid transparent;
-  margin: 40px auto 10px;
-  box-shadow: 0 0 20px #d4af3766;
-  animation: spinRing 1.6s linear infinite;
-}
-@keyframes spinRing {
-  0% { transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
 }
