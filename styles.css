@@ -20,6 +20,47 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+/* ========== ПРЕМИАЛЬНАЯ ЗОЛОТАЯ РАМКА ========== */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid rgba(212, 175, 55, 0.4);
+  pointer-events: none;
+  z-index: 9999;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.1);
+  }
+  50% {
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: inset 0 0 40px rgba(212, 175, 55, 0.2);
+  }
+}
+
+/* Угловые декоративные элементы */
+body::after {
+  content: '';
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-top: 2px solid var(--primary);
+  border-left: 2px solid var(--primary);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.7;
+}
+
 .section-title {
   font-size: clamp(2rem, 5vw, 3rem);
   letter-spacing: -0.02em;
@@ -1453,4 +1494,127 @@ section {
 
 @media (max-width: 1024px) {
   #main-logo { max-width: 500px; }
+}
+
+/* ========== ПРЕМИАЛЬНЫЕ МИКРОАНИМАЦИИ ========== */
+
+/* Плавный скролл с offset для фиксированной шапки */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* Анимация появления секций при загрузке */
+section {
+  animation: fadeInSection 0.8s ease-in-out;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Плавное появление карточек с задержкой */
+.about-card,
+.expertise-card,
+.methodology-card,
+.investment-block {
+  animation: fadeInCard 0.6s ease-in-out backwards;
+}
+
+.about-card:nth-child(1) { animation-delay: 0.1s; }
+.about-card:nth-child(2) { animation-delay: 0.2s; }
+.about-card:nth-child(3) { animation-delay: 0.3s; }
+
+.expertise-card:nth-child(1) { animation-delay: 0.1s; }
+.expertise-card:nth-child(2) { animation-delay: 0.2s; }
+.expertise-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Плавный hover на кнопках */
+.read-more,
+.submit-btn,
+.download-button,
+#show-contacts-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.read-more::before,
+.submit-btn::before,
+.download-button::before,
+#show-contacts-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.read-more:hover::before,
+.submit-btn:hover::before,
+.download-button:hover::before,
+#show-contacts-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Параллакс-эффект для фона */
+.video-container {
+  transition: transform 0.5s ease-out;
+}
+
+/* Плавное появление текста */
+.section-title,
+h2, h3 {
+  animation: fadeInText 0.8s ease-in-out;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    letter-spacing: 0.1em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: normal;
+  }
+}
+
+/* Золотой блеск при наведении на ссылки */
+.nav-link,
+.footer-column ul li a {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(212, 175, 55, 0.3) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.6s ease;
+}
+
+.nav-link:hover,
+.footer-column ul li a:hover {
+  background-position: 0 0;
 }
