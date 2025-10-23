@@ -1636,6 +1636,17 @@ footer::after {
   transition: opacity 1s;
 }
 
+.preloader-logo {
+  max-width: 120px !important;
+  width: 100% !important;
+  height: auto !important;
+  margin-bottom: 10px !important;
+  display: block !important;
+  filter: drop-shadow(0 0 40px #d4af37a6) !important;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 /* ========== ПРЕМИАЛЬНЫЕ TOOLTIPS ========== */
 [data-tooltip] {
   position: relative !important;
