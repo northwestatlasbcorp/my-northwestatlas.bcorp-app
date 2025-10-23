@@ -1585,50 +1585,6 @@ footer {
   }
 }
 
-/* ФИКС ЛОГОТИПА ДЛЯ МОБИЛЬНЫХ */
-@media (max-width: 768px) {
-  #home {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 100vh !important;
-    padding: 0 20px !important;
-  }
-  
-  #main-logo {
-    position: relative !important;
-    left: 0 !important;
-    top: 0 !important;
-    transform: scale(1) !important;
-    max-width: 85vw !important;
-    width: 85vw !important;
-    margin: 0 auto !important;
-    display: block !important;
-    /* Анимация для мобильных */
-    animation: logoEntranceMobile 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
-               glowPulse 3s ease-in-out 1.8s infinite !important;
-  }
-  
-  @keyframes logoEntranceMobile {
-    0% {
-      opacity: 0;
-      transform: scale(0.5) rotate(-5deg);
-      filter: blur(10px) drop-shadow(0 0 0 rgba(212, 175, 55, 0));
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.1) rotate(2deg);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-      filter: blur(0) drop-shadow(0 0 20px rgba(212, 175, 55, 0.6))
-              drop-shadow(0 0 40px rgba(212, 175, 55, 0.4))
-              drop-shadow(0 0 60px rgba(212, 175, 55, 0.3));
-    }
-  }
-}
-
 @media (max-width: 480px) {
   #main-logo {
     max-width: 90vw !important;
