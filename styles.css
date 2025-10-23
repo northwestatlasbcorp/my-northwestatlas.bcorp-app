@@ -1,4 +1,16 @@
-/* ========== УЛУЧШЕННАЯ ВЕРСИЯ CSS С ОПТИМИЗАЦИЯМИ ========== */
+/* ========== CSS С ОПТИМИЗАЦИЯМИ ========== */
+
+/* Начальное состояние для анимации логотипа */
+body:not(.loaded) #main-logo {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+body.loaded #main-logo {
+  opacity: 1;
+  transform: scale(1);
+}
 
 /* Базовые настройки и переменные */
 :root {
