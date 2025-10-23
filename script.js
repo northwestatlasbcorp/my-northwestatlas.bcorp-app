@@ -500,3 +500,33 @@ window.addEventListener('load', () => {
     }, 800);
   }, 2000); // 2 секунды показа
 });
+
+// Премиальное уведомление при попытке копирования
+document.addEventListener('copy', (e) => {
+  e.preventDefault();
+  
+  // Создаём красивое уведомление
+  const notification = document.createElement('div');
+  notification.textContent = '© North West Atlas B Corp — Контент защищён';
+  notification.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: #d4af37;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 2px solid #d4af37;
+    font-size: 16px;
+    z-index: 99999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
+    animation: fadeInOut 2s ease;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 2000);
+});
