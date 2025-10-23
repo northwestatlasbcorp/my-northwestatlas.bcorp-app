@@ -22,24 +22,56 @@
     <!-- Keywords -->
     <meta name="keywords" content="инвестиции, технологии, устойчивое развитие, ESG, startup, North West Atlas B Corp">
     
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="logo-nwa-centered.png" as="image">
+    
+    <!-- Schema.org markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "North West Atlas B Corp",
+      "description": "Компания, создающая элитные решения для глобального будущего",
+      "url": "https://northwestatlas.com",
+      "logo": "https://northwestatlas.com/logo-nwa-centered.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Петровская коса д. 1, к. 1",
+        "addressLocality": "Санкт-Петербург",
+        "addressRegion": "Петроградский район"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+7-931-007-77-69",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+    
     <title>North West Atlas B Corp</title>
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="styles.css">
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <!-- Фавикон -->
+    
+    <!-- Фавикон -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
 </head>
 
-    <body>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Перейти к основному содержанию</a>
+    
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-content">
@@ -52,77 +84,77 @@
     </div>
         
     <!-- Видеофон -->
-   <div class="video-container" id="particles-js">
-    <div class="video-overlay"></div>
-</div>
+    <div class="video-container" id="particles-js">
+        <div class="video-overlay"></div>
+    </div>
 
     <!-- Шапка -->
     <header id="header">
-    <nav class="navbar-wrapper">
-        <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
-        <div class="navbar-top">
-            <div class="logo">
-                <a href="#home" class="font-playfair">
-                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                </a>
+        <nav class="navbar-wrapper">
+            <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
+            <div class="navbar-top">
+                <div class="logo">
+                    <a href="#home" class="font-playfair">
+                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
-        <div class="navbar-bottom">
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
+            <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
+            <div class="navbar-bottom">
+                <div class="menu-toggle" onclick="toggleMenu()" aria-label="Открыть меню">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul id="nav-menu">
+                    <li><a href="#home" class="nav-link">Главная</a></li>
+                    <li><a href="#about" class="nav-link">О нас</a></li>
+                    <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
+                    <li><a href="#partners" class="nav-link">Партнеры</a></li>
+                    <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
+                    <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
+                    <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
+                </ul>
+
+                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+                <div class="lang-switcher">
+                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
+                    <span>|</span>
+                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
+                </div>
             </div>
-            
-            <ul id="nav-menu">
-                <li><a href="#home" class="nav-link">Главная</a></li>
-                <li><a href="#about" class="nav-link">О нас</a></li>
-                <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
-                <li><a href="#partners" class="nav-link">Партнеры</a></li>
-                <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
-                <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
-                <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
-            </ul>
+        </nav>
+    </header>
 
-            <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
-           <div class="lang-switcher">
-    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-    <span>|</span>
-    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
-</div>
-        </div>
-    </nav>
-</header>
-
-    <main>
+    <main id="main-content" tabindex="-1">
         <!-- Главная секция -->
         <section id="home" style="
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
-    min-height: 100vh !important; 
-    padding: 0 !important; 
-    position: relative !important;
-    width: 100vw !important;
-">
-    <img 
-        src="/logo-nwa-centered.png" 
-        alt="North West Atlas B Corp" 
-        class="premium-logo" 
-        id="main-logo"
-        style="
-            max-width: 500px !important;
-            width: 80% !important;
-            height: auto !important;
-            position: absolute !important;
-            left: 50% !important;
-            top: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        "
-    >
-</section>
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            min-height: 100vh !important; 
+            padding: 0 !important; 
+            position: relative !important;
+            width: 100vw !important;
+        ">
+            <img 
+                src="/logo-nwa-centered.png" 
+                alt="North West Atlas B Corp - Премиальная инвестиционная компания" 
+                class="premium-logo" 
+                id="main-logo"
+                style="
+                    max-width: 500px !important;
+                    width: 80% !important;
+                    height: auto !important;
+                    position: absolute !important;
+                    left: 50% !important;
+                    top: 50% !important;
+                    transform: translate(-50%, -50%) !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                "
+            >
+        </section>
 
         <!-- Раздел "О нас" -->
         <section id="about" class="py-24 px-6 bg-black/30">
@@ -160,7 +192,7 @@
                 <div class="expertise-container">
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="100" id="expertise-ai" data-expertise="ai">
                         <div class="expertise-icon">
-                            <i class="fas fa-brain"></i>
+                            <i class="fas fa-brain" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Искусственный интеллект</h3>
                         <p>Мы используем AI для анализа текстовых данных, прогнозирования трендов и автоматизации процессов.</p>
@@ -168,7 +200,7 @@
                     </div>
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="150" id="expertise-big-data" data-expertise="big-data">
                         <div class="expertise-icon">
-                            <i class="fas fa-database"></i>
+                            <i class="fas fa-database" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Анализ больших данных</h3>
                         <p>Сбор и анализ больших объемов данных позволяет нам принимать более взвешенные решения.</p>
@@ -176,7 +208,7 @@
                     </div>
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="200" id="expertise-risks" data-expertise="risks">
                         <div class="expertise-icon">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Оценка рисков</h3>
                         <p>Мы применяем технологии машинного обучения и анализ больших данных для точной оценки финансовых, операционных и ESG-рисков.</p>
@@ -184,7 +216,7 @@
                     </div>
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="250" id="expertise-scaling" data-expertise="scaling">
                         <div class="expertise-icon">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fas fa-rocket" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Масштабирование бизнеса</h3>
                         <p>Стратегическое планирование и реализация программ масштабирования бизнеса с фокусом на устойчивый рост и долгосрочную ценность.</p>
@@ -192,7 +224,7 @@
                     </div>
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="300" id="expertise-legal" data-expertise="legal">
                         <div class="expertise-icon">
-                            <i class="fas fa-gavel"></i>
+                            <i class="fas fa-gavel" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Юридическое сопровождение</h3>
                         <p>Профессиональное оформление сделок, защита прав инвесторов и партнеров на всех этапах проекта.</p>
@@ -200,7 +232,7 @@
                     </div>
                     <div class="expertise-card" data-aos="zoom-in" data-aos-delay="350" id="expertise-patents" data-expertise="patents">
                         <div class="expertise-icon">
-                            <i class="fas fa-certificate"></i>
+                            <i class="fas fa-certificate" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gold">Патентование</h3>
                         <p>Гарантия уникальности ваших технологий через комплексное патентное обеспечение и проверку правовой чистоты.</p>
@@ -209,8 +241,8 @@
                 </div>
                 <div id="popup-modal" class="popup-modal">
                     <div class="popup-content">
-                        <span class="close-btn" onclick="closePopup()">&times;</span>
-                                                <h3 id="popup-title" class="text-gold"></h3>
+                        <span class="close-btn" onclick="closePopup()" aria-label="Закрыть окно">&times;</span>
+                        <h3 id="popup-title" class="text-gold"></h3>
                         <div id="popup-details"></div>
                     </div>
                 </div>
@@ -226,35 +258,35 @@
                         <div class="partners-track">
                             <!-- Первая группа карточек -->
                             <div class="partner-card">
-                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ - Государственная корпорация развития">
                             </div>
                             <div class="partner-card">
-                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк - Банк для поддержки экспорта">
                             </div>
                             <div class="partner-card">
-                                <img src="rost-logo.png" alt="РОСТ">
+                                <img src="rost-logo.png" alt="РОСТ - Российская организация содействия технологиям">
                             </div>
                             <div class="partner-card">
-                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг - Министерство промышленности и торговли РФ">
                             </div>
                             <div class="partner-card">
-                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех - Инвестиционная компания Россельхозбанка">
                             </div>
                             <!-- Вторая группа карточек (дублирующая) -->
                             <div class="partner-card">
-                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ - Государственная корпорация развития">
                             </div>
                             <div class="partner-card">
-                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк - Банк для поддержки экспорта">
                             </div>
                             <div class="partner-card">
-                                <img src="rost-logo.png" alt="РОСТ">
+                                <img src="rost-logo.png" alt="РОСТ - Российская организация содействия технологиям">
                             </div>
                             <div class="partner-card">
-                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг - Министерство промышленности и торговли РФ">
                             </div>
                             <div class="partner-card">
-                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех - Инвестиционная компания Россельхозбанка">
                             </div>
                         </div>
                     </div>
@@ -270,35 +302,35 @@
                     <!-- Ecotech -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="100">
                         <div class="investment-icon">
-                            <i class="fas fa-leaf"></i>
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
                         </div>
                         <div class="investment-text">Ecotech</div>
                     </div>
                     <!-- Agrotech -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="200">
                         <div class="investment-icon">
-                            <i class="fas fa-seedling"></i>
+                            <i class="fas fa-seedling" aria-hidden="true"></i>
                         </div>
                         <div class="investment-text">Agrotech</div>
                     </div>
                     <!-- Eco REE Mining -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="300">
                         <div class="investment-icon">
-                            <i class="fas fa-mountain"></i>
+                            <i class="fas fa-mountain" aria-hidden="true"></i>
                         </div>
                         <div class="investment-text">Eco REE Mining</div>
                     </div>
                     <!-- IIoT & Blockchain -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="400">
                         <div class="investment-icon">
-                            <i class="fas fa-link"></i>
+                            <i class="fas fa-link" aria-hidden="true"></i>
                         </div>
                         <div class="investment-text">IIoT & Blockchain</div>
                     </div>
                     <!-- Smartcharity -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="500">
                         <div class="investment-icon">
-                            <i class="fas fa-hand-holding-heart"></i>
+                            <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
                         </div>
                         <div class="investment-text">Smartcharity</div>
                     </div>
@@ -313,25 +345,25 @@
                 <div class="methodology-container">
                     <!-- Карточка NLP -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="100">
-                        <i class="fas fa-language icon"></i>
+                        <i class="fas fa-language icon" aria-hidden="true"></i>
                         <h3 class="text-gold">Обработка естественного языка (NLP)</h3>
                         <p>Мы используем технологии NLP для анализа текстовых данных, таких как финансовые отчеты, новости и социальные сети.</p>
                     </div>
                     <!-- Карточка Python -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="200">
-                        <i class="fab fa-python icon"></i>
+                        <i class="fab fa-python icon" aria-hidden="true"></i>
                         <h3 class="text-gold">Python</h3>
                         <p>Python — основной инструмент для анализа данных, прогнозирования и автоматизации процессов.</p>
                     </div>
                     <!-- Карточка Machine Learning -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="300">
-                        <i class="fas fa-robot icon"></i>
+                        <i class="fas fa-robot icon" aria-hidden="true"></i>
                         <h3 class="text-gold">Машинное обучение</h3>
                         <p>Мы применяем алгоритмы машинного обучения для выявления скрытых трендов и факторов риска.</p>
                     </div>
                     <!-- Карточка Big Data -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="400">
-                        <i class="fas fa-database icon"></i>
+                        <i class="fas fa-database icon" aria-hidden="true"></i>
                         <h3 class="text-gold">Большие данные</h3>
                         <p>Сбор и анализ больших объемов данных позволяет нам принимать более взвешенные решения.</p>
                     </div>
@@ -402,19 +434,27 @@
                         <form id="contact-form" action="#" method="POST">
                             <div class="form-group">
                                 <label for="name">Имя:</label>
-                                <input type="text" id="name" name="name" required>
+                                <input type="text" id="name" name="name" required placeholder="Ваше полное имя">
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Компания:</label>
+                                <input type="text" id="company" name="company" placeholder="Название вашей компании">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" required>
+                                <input type="email" id="email" name="email" required placeholder="your.email@company.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон:</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+7 (XXX) XXX-XX-XX">
                             </div>
                             <div class="form-group">
                                 <label for="message">Сообщение:</label>
-                                <textarea id="message" name="message" required></textarea>
+                                <textarea id="message" name="message" required placeholder="Опишите ваш запрос..."></textarea>
                             </div>
                             <button type="submit" class="submit-btn">
                                 Отправить
-                                <i class="fas fa-arrow-right"></i>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </button>
                         </form>
                     </div>
@@ -423,73 +463,73 @@
         </section>
     </main>
 
-   <!-- Футер -->
-<footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
-    <div class="container">
-        <div class="footer-grid">
-            <!-- Первая колонка -->
-            <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
-                <h3 class="font-playfair">
-                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                </h3>
-                <p class="tagline">Создаем будущее, а не следуем за ним.</p>
+    <!-- Футер -->
+    <footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Первая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="font-playfair">
+                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                    </h3>
+                    <p class="tagline">Создаем будущее, а не следуем за ним.</p>
+                </div>
+
+                <!-- Вторая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="150">
+                    <h3 class="text-gold">Навигация</h3>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#expertise">Экспертиза</a></li>
+                        <li><a href="#partners">Партнеры</a></li>
+                    </ul>
+                </div>
+
+                <!-- Третья колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-gold">Ключевые направления</h3>
+                    <ul>
+                        <li><i class="fas fa-chart-line" aria-hidden="true"></i> <span>Инвестиции</span></li>
+                        <li><i class="fas fa-leaf" aria-hidden="true"></i> <span>ESG Консалтинг</span></li>
+                        <li><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> <span>Стратегическое планирование</span></li>
+                        <li><i class="fas fa-shield-alt" aria-hidden="true"></i> <span>Оценка рисков</span></li>
+                    </ul>
+                </div>
+
+                <!-- Четвертая колонка -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="250">
+                    <h3 class="text-gold">Адрес</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span>Санкт-Петербург, Петровская коса д. 1, к. 1. Петроградский район, ИФНС №25. Крестовский остров.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>info@northwestatlas.com</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- Вторая колонка -->
-            <div class="footer-column" data-aos="fade-up" data-aos-delay="150">
-                <h3 class="text-gold">Навигация</h3>
-                <ul>
-                    <li><a href="#home">Главная</a></li>
-                    <li><a href="#about">О нас</a></li>
-                    <li><a href="#expertise">Экспертиза</a></li>
-                    <li><a href="#partners">Партнеры</a></li>
-                </ul>
+            <!-- ЛИЦЕНЗИЯ -->
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); text-align: center;">
+                <p style="color: #d4af37; font-size: 11px; margin: 0; letter-spacing: 1.5px; text-transform: uppercase;">
+                    ✓ Professional License
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 11px; margin: 8px 0 0 0; line-height: 1.6;">
+                    Government of Sharjah, UAE | License #786048 | Registration #197626
+                </p>
             </div>
 
-            <!-- Третья колонка -->
-            <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="text-gold">Ключевые направления</h3>
-                <ul>
-                    <li><i class="fas fa-chart-line"></i> <span>Инвестиции</span></li>
-                    <li><i class="fas fa-leaf"></i> <span>ESG Консалтинг</span></li>
-                    <li><i class="fas fa-chalkboard-teacher"></i> <span>Стратегическое планирование</span></li>
-                    <li><i class="fas fa-shield-alt"></i> <span>Оценка рисков</span></li>
-                </ul>
-            </div>
-
-            <!-- Четвертая колонка -->
-            <div class="footer-column" data-aos="fade-up" data-aos-delay="250">
-                <h3 class="text-gold">Адрес</h3>
-                <ul>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Санкт-Петербург, Петровская коса д. 1, к. 1. Петроградский район, ИФНС №25. Крестовский остров.</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-envelope"></i>
-                        <span>info@northwestatlas.com</span>
-                    </li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
             </div>
         </div>
+    </footer>
 
-        <!-- ДОБАВЬТЕ СЮДА ЛИЦЕНЗИЮ -->
-        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); text-align: center;">
-            <p style="color: #d4af37; font-size: 11px; margin: 0; letter-spacing: 1.5px; text-transform: uppercase;">
-                ✓ Professional License
-            </p>
-            <p style="color: rgba(255, 255, 255, 0.5); font-size: 11px; margin: 8px 0 0 0; line-height: 1.6;">
-                Government of Sharjah, UAE | License #786048 | Registration #197626
-            </p>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
-        </div>
-    </div>
-</footer>
-
-   <!-- Подключение библиотек -->
+    <!-- Подключение библиотек -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
     
