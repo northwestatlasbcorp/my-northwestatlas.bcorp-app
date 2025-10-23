@@ -1180,9 +1180,11 @@ section {
     align-items: center !important;
     justify-content: center !important;
     min-height: 100vh !important;
-    padding: 0 20px !important;
+    padding: 80px 20px 0 20px !important; /* верхний отступ для шапки */
   }
-  
+  ...
+}
+
   #main-logo {
     position: static !important;
     left: auto !important;
