@@ -532,3 +532,24 @@ window.addEventListener('scroll', () => {
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
+
+const saturn = document.querySelector('.saturn');
+let mouseX = 0;
+let mouseY = 0;
+let saturnX = 0;
+let saturnY = 0;
+const delay = 0.15;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function animateSaturn() {
+  saturnX += (mouseX - saturnX) * delay;
+  saturnY += (mouseY - saturnY) * delay;
+  saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) translate(-50%, -50%)`;
+  requestAnimationFrame(animateSaturn);
+}
+
+animateSaturn();
