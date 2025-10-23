@@ -513,3 +513,19 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
+
+// Плавная анимация появления логотипа после загрузки страницы
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
+
+// Добавление/удаление класса при прокрутке для изменения вида шапки и логотипа
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
