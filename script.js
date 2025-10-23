@@ -498,3 +498,18 @@ document.addEventListener("DOMContentLoaded", () => {
     initScrollSpy();
     initHeaderScroll();
 });
+
+// Анимация появления лого после загрузки
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
+
+// Добавление/удаление класса scrolled при прокрутке
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
