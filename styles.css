@@ -1848,3 +1848,32 @@ input, textarea, select {
     transform: translate(-50%, -50%) scale(1) !important;
   }
 }
+
+/* ========== ЗАЩИТА КОНТЕНТА — ЗАПРЕТ КОПИРОВАНИЯ ========== */
+
+body {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Разрешаем выделение только в полях ввода */
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Защита изображений */
+img {
+  pointer-events: none !important;
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+}
