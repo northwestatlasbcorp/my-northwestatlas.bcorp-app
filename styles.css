@@ -1779,3 +1779,44 @@ footer::after {
     transform: translateY(0);
   }
 }
+
+/* Логотип при загрузке — начальное состояние */
+#main-logo {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+/* После загрузки страницы — логотип проявляется */
+body.loaded #main-logo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Шапка по умолчанию */
+header {
+  position: fixed;
+  width: 100%;
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+}
+
+/* При прокрутке — шапка становится темной и с тенью */
+header.scrolled {
+  background-color: rgba(13, 13, 13, 0.95);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Логотип в шапке в нормальном состоянии */
+#main-logo {
+  max-width: 150px;
+  transition: max-width 0.4s ease, filter 0.4s ease;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+}
+
+/* Логотип в шапке при прокрутке — меньше и с усиленным свечением */
+header.scrolled #main-logo {
+  max-width: 100px;
+  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+}
