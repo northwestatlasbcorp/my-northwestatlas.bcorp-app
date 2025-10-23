@@ -1820,3 +1820,31 @@ header.scrolled #main-logo {
   max-width: 100px;
   filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
 }
+
+/* Плавные длительные переходы */
+* {
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Липкий заголовок */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(13, 13, 13, 0.95);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  transition: background-color 1s ease, box-shadow 1s ease;
+}
+
+/* Логотип в шапке */
+#main-logo {
+  max-width: 150px;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+  transition: max-width 0.7s ease, filter 0.7s ease;
+}
+
+/* Логотип уменьшается и светится при прокрутке и липком меню */
+header.scrolled #main-logo {
+  max-width: 100px;
+  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+}
