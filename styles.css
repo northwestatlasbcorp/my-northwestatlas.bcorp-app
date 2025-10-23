@@ -1179,11 +1179,9 @@ section {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: 100vh !important;
-    padding: 80px 20px 0 20px !important; /* верхний отступ для шапки */
+    min-height: calc(100vh - 80px) !important; /* ВАЖНЫЙ МОМЕНТ! */
+    padding: 0 20px !important; /* Без верхнего отступа! */
   }
-  ...
-}
 
   #main-logo {
     position: static !important;
