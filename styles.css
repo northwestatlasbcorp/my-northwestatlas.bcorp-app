@@ -1643,7 +1643,7 @@ footer::after {
   margin-bottom: 10px !important;
   display: block !important;
   filter: drop-shadow(0 0 40px #d4af37a6) !important;
-  opacity: 0;
+  opacity: 1 !important;
   transition: opacity 1s;
 }
 
