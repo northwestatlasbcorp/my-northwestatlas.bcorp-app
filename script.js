@@ -501,13 +501,21 @@ window.addEventListener('load', () => {
   }, 2000); // 2 секунды показа
 });
 
-// Премиальное уведомление при попытке копирования
+// ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
+
 document.addEventListener('copy', (e) => {
   e.preventDefault();
   
+  // Определяем язык страницы
+  const lang = document.documentElement.lang || 'ru';
+  const messages = {
+    'ru': '© North West Atlas B Corp — Контент защищён',
+    'en': '© North West Atlas B Corp — Content Protected'
+  };
+  
   // Создаём красивое уведомление
   const notification = document.createElement('div');
-  notification.textContent = '© North West Atlas B Corp — Контент защищён';
+  notification.textContent = messages[lang] || messages['en'];
   notification.style.cssText = `
     position: fixed;
     top: 50%;
@@ -519,14 +527,23 @@ document.addEventListener('copy', (e) => {
     border-radius: 10px;
     border: 2px solid #d4af37;
     font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
     z-index: 99999;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
     animation: fadeInOut 2s ease;
+    backdrop-filter: blur(10px);
   `;
   
   document.body.appendChild(notification);
   
   setTimeout(() => {
-    notification.remove();
-  }, 2000);
+    notification.style.opacity = '0';
+    notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    notification.style.transition = 'all 0.3s ease';
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
 });
