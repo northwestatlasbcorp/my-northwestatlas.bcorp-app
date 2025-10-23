@@ -1952,3 +1952,68 @@ footer::after {
 .navbar-top .logo:hover::before {
   opacity: 1;
 }
+
+/* ============================================
+   LUXURY PATCHES - Безопасная версия
+   ============================================ */
+
+/* 1. Плавные переходы */
+.about-card,
+.expertise-card,
+.methodology-card,
+.investment-block {
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+
+/* 2. Золотое свечение логотипа */
+.navbar-top .logo a:hover {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8),
+               0 0 40px rgba(212, 175, 55, 0.4);
+  transform: scale(1.03);
+  letter-spacing: 3px;
+  transition: all 0.4s ease;
+}
+
+/* 3. Улучшенная виньетка */
+.video-overlay {
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 4. Золотые разделители */
+section::after {
+  content: "✦";
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #d4af37;
+  margin: 3rem auto 0;
+  opacity: 0.6;
+  animation: sectionPulse 3s ease-in-out infinite;
+}
+
+footer::after {
+  display: none !important;
+}
+
+@keyframes sectionPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* 5. 3D-эффект карточек */
+.about-card:hover {
+  transform: translateY(-12px) rotateX(2deg) !important;
+}
+
+.expertise-card:hover {
+  transform: scale(1.05) rotateX(1deg) !important;
+}
+
+/* 6. Золотое свечение кнопок */
+.read-more:hover,
+.submit-btn:hover,
+.download-button:hover {
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+/* END PATCHES */
