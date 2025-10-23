@@ -1869,8 +1869,6 @@ body {
 /* Элемент Сатурн */
 .saturn {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 24px;
   height: 24px;
   pointer-events: none;
@@ -1878,7 +1876,6 @@ body {
   transform: translate(-50%, -50%);
   transition: transform 0.15s ease-out;
 }
-
 .saturn::before {
   content: '';
   position: absolute;
@@ -1889,11 +1886,8 @@ body {
   background: radial-gradient(circle at 30% 30%, #ffd700, #d4af37);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 
-    0 0 10px rgba(212, 175, 55, 0.8),
-    inset -2px -2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.8), inset -2px -2px 6px rgba(0, 0, 0, 0.3);
 }
-
 .saturn::after {
   content: '';
   position: absolute;
@@ -1907,7 +1901,6 @@ body {
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
   animation: saturnRotate 8s linear infinite;
 }
-
 @keyframes saturnRotate {
   0%, 100% {
     transform: translate(-50%, -50%) rotateX(70deg) rotateZ(-15deg);
