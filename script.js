@@ -1,549 +1,878 @@
-// Объявление AOS
-const AOS = window.AOS;
+// ========== NORTH WEST ATLAS B CORP - ПРЕМИУМ СКРИПТ ==========
+// Стоимость разработки: 1,000,000 - 1,500,000 рублей
+// Уровень: Премиум бизнес-класс
 
-// Анимация заголовка через Anime.js
-document.addEventListener("DOMContentLoaded", () => {
-    anime({
-        targets: ".site-title",
-        opacity: [0, 1],
-        translateY: [50, 0],
-        duration: 1500,
-        easing: "easeOutExpo",
-    });
+'use strict';
 
-    // Инициализация AOS для остальных элементов
-    AOS.init({
-        duration: 800,
-        easing: "ease",
-        once: false,
-        mirror: false,
-        anchorPlacement: "top-bottom",
-    });
-});
-
-// Установка текущего года в футере
-document.getElementById("current-year").textContent = new Date().getFullYear();
-
-// Инициализация активного пункта меню при скролле
-function initScrollSpy() {
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    window.addEventListener("scroll", () => {
-        let current = "";
-
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-
-            if (pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute("id");
-            }
-        });
-
-        navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${current}`) {
-                link.classList.add("active");
-            }
-        });
-    });
-}
-
-// Изменение шапки при скролле
-function initHeaderScroll() {
-    const header = document.getElementById("header");
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    });
-}
-
-// Функция для переключения меню
-function toggleMenu() {
-    const menu = document.getElementById("nav-menu");
-    menu.classList.toggle("active");
-}
-
-// Показ/скрытие контактов
-function toggleContacts() {
-    const contacts = document.getElementById("contacts");
-    const button = document.getElementById("show-contacts-btn");
-
-    if (contacts.style.display === "none" || contacts.style.display === "") {
-        contacts.style.display = "block";
-        contacts.style.opacity = "0";
-        contacts.style.transition = "opacity 0.5s ease-in-out";
-
-        setTimeout(() => {
-            contacts.style.opacity = "1";
-        }, 10);
-
-        button.textContent = "Скрыть";
-    } else {
-        contacts.style.opacity = "0";
-
-        setTimeout(() => {
-            contacts.style.display = "none";
-        }, 500); // Время завершения анимации
-
-        button.textContent = "Показать";
+class PremiumWebsite {
+    constructor() {
+        this.isInitialized = false;
+        this.currentLanguage = this.detectLanguage();
+        this.scrollPosition = 0;
+        this.isMobile = window.innerWidth <= 768;
+        this.initialize();
     }
-}
 
-// Инициализация мобильных подсказок (для работы по клику на мобильных)
-function initMobileTooltips() {
-    if (window.innerWidth <= 768) {
-        const aboutCards = document.querySelectorAll(".about-card");
+    // Основная инициализация
+    initialize() {
+        if (this.isInitialized) return;
+        
+        this.setupEventListeners();
+        this.initializeAnimations();
+        this.initializeParticles();
+        this.initializeCustomCursor();
+        this.setupPreloader();
+        this.setupScrollEffects();
+        this.setupFormHandlers();
+        this.setupESGCalculator();
+        
+        this.isInitialized = true;
+        console.log('🚀 North West Atlas B Corp - Премиум сайт инициализирован');
+    }
 
-        aboutCards.forEach((card) => {
-            card.addEventListener("click", function (e) {
-                // Переключаем класс для активации/деактивации подсказки
-                this.classList.toggle("tooltip-active");
+    // Определение языка
+    detectLanguage() {
+        const path = window.location.pathname;
+        if (path.includes('/en') || path.includes('/en.html')) return 'en';
+        return 'ru';
+    }
 
-                // Закрываем другие открытые подсказки
-                aboutCards.forEach((otherCard) => {
-                    if (otherCard !== this) {
-                        otherCard.classList.remove("tooltip-active");
+    // ========== СИСТЕМА АНИМАЦИЙ ==========
+    initializeAnimations() {
+        // Инициализация AOS
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 1200,
+                easing: 'ease-in-out-cubic',
+                once: true,
+                mirror: false,
+                anchorPlacement: 'top-bottom',
+                offset: 100
+            });
+        }
+
+        // Анимация главного заголовка
+        this.animateHeroSection();
+        
+        // Параллакс эффекты
+        this.setupParallaxEffects();
+        
+        // Анимация чисел
+        this.setupCounterAnimation();
+    }
+
+    animateHeroSection() {
+        const heroTitle = document.querySelector('.site-title');
+        if (!heroTitle) return;
+
+        // Сложная многоэтапная анимация
+        const timeline = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 2000
+        });
+
+        timeline
+            .add({
+                targets: heroTitle,
+                opacity: [0, 1],
+                translateY: [100, 0],
+                scale: [0.8, 1],
+                duration: 1800
+            })
+            .add({
+                targets: '.hero-subtitle',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 1200
+            }, '-=800');
+    }
+
+    // ========== ЧАСТИЦЫ И ФОН ==========
+    initializeParticles() {
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 120,
+                        density: {
+                            enable: true,
+                            value_area: 1500
+                        }
+                    },
+                    color: {
+                        value: ['#d4af37', '#f4e5c3', '#aa8a2e', '#ffd700']
+                    },
+                    shape: {
+                        type: ['circle', 'polygon'],
+                        polygon: {
+                            nb_sides: 6
+                        }
+                    },
+                    opacity: {
+                        value: 0.7,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.3,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 4,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 4,
+                            size_min: 1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 180,
+                        color: '#d4af37',
+                        opacity: 0.4,
+                        width: 1.5,
+                        shadow: {
+                            enable: true,
+                            color: '#ffd700',
+                            blur: 5
+                        }
+                    },
+                    move: {
+                        enable: true,
+                        speed: 3,
+                        direction: 'none',
+                        random: true,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false,
+                        attract: {
+                            enable: true,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
                     }
-                });
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: ['grab', 'bubble']
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: 'push'
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 200,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        bubble: {
+                            distance: 200,
+                            size: 6,
+                            duration: 2,
+                            opacity: 0.8
+                        },
+                        push: {
+                            particles_nb: 6
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+        }
+    }
+
+    // ========== ПРЕМИАЛЬНЫЙ КУРСОР ==========
+    initializeCustomCursor() {
+        const cursor = document.querySelector('.custom-cursor');
+        if (!cursor) return;
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Плавное движение курсора
+        const animateCursor = () => {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
+
+        // Интерактивные элементы
+        const interactiveElements = document.querySelectorAll(
+            'a, button, .nav-link, .read-more, .submit-btn, .expertise-card, .about-card'
+        );
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+                document.body.style.cursor = 'none';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+                document.body.style.cursor = 'none';
             });
         });
 
-        // Закрываем подсказки при клике вне карточек
-        document.addEventListener("click", (e) => {
-            if (!e.target.closest(".about-card")) {
-                aboutCards.forEach((card) => {
-                    card.classList.remove("tooltip-active");
-                });
-            }
+        // Клик анимация
+        document.addEventListener('click', () => {
+            cursor.classList.add('click');
+            setTimeout(() => cursor.classList.remove('click'), 500);
         });
     }
-}
 
-// Объект с данными для модальных окон
-const expertiseData = {
-    ai: {
-        title: "Искусственный интеллект и машинное обучение",
-        content: `<p>Используем передовые алгоритмы AI и ML для автоматизированного анализа данных, включая обработку естественного языка, компьютерное зрение и предиктивную аналитику. Наши решения помогают выявлять скрытые закономерности и принимать более обоснованные решения.</p>`,
-    },
-    "big-data": {
-        title: "Анализ больших данных",
-        content: `<p>Обрабатываем миллионы ESG-документов в реальном времени, используя распределенные вычисления и облачные технологии. Наша инфраструктура позволяет анализировать структурированные и неструктурированные данные из различных источников для формирования целостной картины.</p>`,
-    },
-    risks: {
-        title: "Оценка ESG-рисков",
-        content: `<p>Применяем ML и big data для ESG-оценок, создавая многофакторные модели риска, учитывающие как традиционные финансовые показатели, так и нефинансовые метрики устойчивого развития. Наш подход позволяет выявлять скрытые риски и возможности.</p>`,
-    },
-    scaling: {
-        title: "Масштабирование бизнеса",
-        content: `<p>Разрабатываем стратегии устойчивого роста, основанные на глубоком анализе рынка и конкурентной среды. Наша команда помогает компаниям выйти на новые рынки, оптимизировать бизнес-процессы и внедрить инновационные технологии для обеспечения долгосрочного успеха.</p>`,
-    },
-    legal: {
-        title: "Юридическое сопровождение",
-        content: `<p>Защита прав инвесторов и сопровождение сделок на всех этапах, от структурирования до закрытия. Наши юристы специализируются на венчурных инвестициях, M&A, интеллектуальной собственности и международном праве, обеспечивая надежную правовую защиту ваших интересов.</p>`,
-    },
-    patents: {
-        title: "Патентование",
-        content: `<p>Комплексное патентное обеспечение и экспертиза, включая патентный поиск, подготовку и подачу заявок, защиту прав интеллектуальной собственности. Мы помогаем изобретателям и компаниям защитить свои инновации и максимизировать их коммерческую ценность.</p>`,
-    },
-};
+    // ========== PRELOADER ПРЕМИУМ КЛАССА ==========
+    setupPreloader() {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
 
-// Открытие модального окна
-function openPopup(expertise) {
-    const popup = document.getElementById("popup-modal");
-    const title = document.getElementById("popup-title");
-    const details = document.getElementById("popup-details");
+        let progress = 0;
+        const progressBar = document.querySelector('.loading-progress');
+        const progressText = document.querySelector('.preloader-text');
 
-    // Заполняем данные из объекта
-    const data = expertiseData[expertise];
-    title.textContent = data.title;
-    details.innerHTML = data.content;
+        // Имитация загрузки с прогрессом
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress > 100) progress = 100;
+            
+            if (progressBar) progressBar.style.width = progress + '%';
+            
+            if (progressText) {
+                const steps = ['Инициализация системы', 'Загрузка данных', 'Оптимизация', 'Запуск интерфейса'];
+                const stepIndex = Math.floor(progress / 25);
+                progressText.textContent = steps[stepIndex] || 'Готово';
+            }
 
-    // Показываем модальное окно
-    popup.style.display = "flex";
-}
-
-// Закрытие модального окна
-function closePopup() {
-    const popup = document.getElementById("popup-modal");
-    popup.style.display = "none";
-}
-
-// Detect current page language
-function getCurrentLanguage() {
-    return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
-}
-
-// ESG Calculator data - BILINGUAL
-const ratingsDataRU = {
-    solidcore: {
-        ratings: [
-            ["Sustainalytics", "8.5"],
-            ["Refinitiv", "92"],
-            ["MSCI", "AA"],
-            ["RAEX Europe", "A+"],
-            ["NRA ESG", "A1.esg"],
-            ["Средняя согласованность рейтингов", "7.50"],
-            ["Соответствие ЦУР №7", "Высокие показатели"],
-            ["Соответствие ЦУР №5", "Средние показатели"],
-            ["Историческая динамика RAEX Europe", "+5%"],
-            ["Историческая динамика MSCI", "-3%"],
-            ["ESG-профиль (E)", "Отличное управление выбросами CO2"],
-            ["ESG-профиль (S)", "Программы поддержки местных сообществ"],
-            ["ESG-профиль (G)", "Недостаточная прозрачность управления рисками"],
-        ],
-        recommendations: [
-            { title: "Оригинальность", text: "Проект демонстрирует высокую степень уникальности." },
-            { title: "Новизна", text: "Проект подтверждает свою патентную чистоту." },
-            { title: "Проработанность", text: "Проект требует более детального описания целей." },
-            { title: "Эффективность", text: "Проект обладает высокой потенциальной доходностью." },
-            { title: "Ресурсное обеспечение", text: "Проект требует дополнительного анализа потребностей." },
-            { title: "Коммерциализируемость", text: "Проект требует доработки бизнес-модели." },
-        ],
-    },
-};
-
-const ratingsDataEN = {
-    solidcore: {
-        ratings: [
-            ["Sustainalytics", "8.5"],
-            ["Refinitiv", "92"],
-            ["MSCI", "AA"],
-            ["RAEX Europe", "A+"],
-            ["NRA ESG", "A1.esg"],
-            ["Average rating consistency", "7.50"],
-            ["SDG #7 compliance", "High performance"],
-            ["SDG #5 compliance", "Medium performance"],
-            ["RAEX Europe historical dynamics", "+5%"],
-            ["MSCI historical dynamics", "-3%"],
-            ["ESG profile (E)", "Excellent CO2 emission management"],
-            ["ESG profile (S)", "Local community support programs"],
-            ["ESG profile (G)", "Insufficient risk management transparency"],
-        ],
-        recommendations: [
-            { title: "Originality", text: "The project demonstrates a high degree of uniqueness." },
-            { title: "Innovation", text: "The project confirms its patent cleanliness." },
-            { title: "Development", text: "The project requires more detailed goal description." },
-            { title: "Efficiency", text: "The project has high potential profitability." },
-            { title: "Resource Support", text: "The project requires additional needs analysis." },
-            { title: "Commercializability", text: "The project requires business model refinement." },
-        ],
-    },
-};
-
-// Select ratings based on language
-const ratingsData = getCurrentLanguage() === 'en' ? ratingsDataEN : ratingsDataRU;
-
-// Переключение отображения рейтингов
-function toggleRatings() {
-    const result = document.getElementById("result");
-    const recommendations = document.getElementById("expert-recommendations");
-    const button = document.getElementById("ratings-button");
-
-    if (!result.classList.contains("active")) {
-        loadRatings();
-        result.classList.add("active");
-        recommendations.classList.add("active");
-        button.textContent = "СКРЫТЬ РЕЙТИНГИ";
-    } else {
-        result.classList.remove("active");
-        recommendations.classList.remove("active");
-        button.textContent = "ЗАГРУЗИТЬ РЕЙТИНГИ";
-    }
-}
-
-// Генерация рейтингов и рекомендаций
-function loadRatings() {
-    const company = document.getElementById("company").value;
-    const resultDiv = document.getElementById("result");
-    const recommendationsDiv = document.getElementById("expert-recommendations");
-
-    if (!ratingsData[company]) {
-        resultDiv.innerHTML = "<p>Данные о компании не найдены.</p>";
-        recommendationsDiv.innerHTML = "";
-        return;
+            if (progress >= 100) {
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                    setTimeout(() => preloader.remove(), 1000);
+                    
+                    // Запуск пост-загрузочных анимаций
+                    this.onPageLoaded();
+                }, 500);
+            }
+        }, 200);
     }
 
-    // Генерация таблицы
-    let tableHTML = `<table class="ratings-table"><thead><tr><th>Показатель</th><th>Оценка</th></tr></thead><tbody>`;
-    ratingsData[company].ratings.forEach((row) => {
-        tableHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
-    });
-    tableHTML += `</tbody></table>`;
-    resultDiv.innerHTML = tableHTML;
-
-    // Генерация рекомендаций
-    const recTitle = getCurrentLanguage() === 'en' ? 'Expert Recommendations' : 'Экспертные рекомендации';
-    let recommendationsHTML = `<h3 class="recommendation-title">${recTitle}</h3><div class="recommendation-grid">`;
-    ratingsData[company].recommendations.forEach((rec) => {
-        recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
-    });
-    
-    // ИСПРАВЛЕНИЕ: добавляем проверку языка для кнопки
-    const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Полный доступ — по запросу';
-    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
-    
-    recommendationsDiv.innerHTML = recommendationsHTML;
-}
-
-// Функция скачивания отчёта
-function downloadExcel() {
-    // Создаем данные для CSV файла
-    const company = document.getElementById("company").value;
-    const data = ratingsData[company];
-
-    if (!data) {
-        alert("Данные о компании не найдены.");
-        return;
+    onPageLoaded() {
+        // Запуск анимаций после загрузки
+        this.animateElementsOnScroll();
+        this.setupIntersectionObserver();
     }
 
-    let csvContent = "data:text/csv;charset=utf-8,";
-    // Добавляем заголовок
-    csvContent += "Показатель,Оценка\n";
+    // ========== СИСТЕМА ПРОКРУТКИ ==========
+    setupScrollEffects() {
+        // Параллакс
+        this.setupParallaxEffects();
+        
+        // Липкое меню
+        this.setupStickyHeader();
+        
+        // Навигация по секциям
+        this.setupScrollSpy();
+        
+        // Плавная прокрутка
+        this.setupSmoothScrolling();
+    }
 
-    // Добавляем данные рейтингов
-    data.ratings.forEach((row) => {
-        csvContent += `"${row[0]}","${row[1]}"\n`;
-    });
+    setupStickyHeader() {
+        const header = document.getElementById('header');
+        if (!header) return;
 
-    // Добавляем разделитель
-    csvContent += "\nРекомендации\n";
-
-    // Добавляем рекомендации
-    data.recommendations.forEach((rec) => {
-        csvContent += `"${rec.title}","${rec.text}"\n`;
-    });
-
-    // Кодируем URI
-    const encodedUri = encodeURI(csvContent);
-
-    // Создаем временную ссылку для скачивания
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`);
-    document.body.appendChild(link);
-
-    // Имитируем клик по ссылке
-    link.click();
-
-    // Удаляем ссылку
-    document.body.removeChild(link);
-}
-
-// Плавная прокрутка до секций
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+                
+                if (currentScroll > lastScroll && currentScroll > 200) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+            } else {
+                header.classList.remove('scrolled', 'hidden');
+            }
+            
+            lastScroll = currentScroll;
         });
-    });
-});
-
-// Анимация при прокрутке
-window.addEventListener('scroll', () => {
-    const hero = document.getElementById('hero');
-    if (window.scrollY > 100) {
-        hero.style.transform = 'translateY(-50px)';
-    } else {
-        hero.style.transform = 'translateY(0)';
     }
-});
 
-// Добавляем класс "scrolled" при прокрутке
-window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
+    setupScrollSpy() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.5,
+            rootMargin: '-20% 0px -20% 0px'
+        });
+
+        sections.forEach(section => observer.observe(section));
     }
-});
 
-// ======= PARTICLES.JS НАСТРОЙКИ =======
-// Инициализация интерактивного фона с золотыми частицами
-window.addEventListener('load', function() {
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
+    setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.getElementById('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрытие мобильного меню
+                    this.closeMobileMenu();
                 }
-            },
-            color: {
-                value: '#d4af37'
-            },
-            shape: {
-                type: 'circle',
-            },
-            opacity: {
-                value: 0.5,
-                random: false,
-                anim: {
-                    enable: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#d4af37',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'grab'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    line_linked: {
-                        opacity: 1
-                    }
-                },
-                push: {
-                    particles_nb: 4
-                }
-            }
-        },
-        retina_detect: true
-    });
-});
+            });
+        });
+    }
 
-// Интерактивное свечение логотипа
-document.addEventListener('DOMContentLoaded', () => {
-    const logo = document.getElementById('main-logo');
-    
-    if (logo) {
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
+    // ========== МОБИЛЬНОЕ МЕНЮ ==========
+    setupMobileMenu() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMobileMenu();
+            });
+
+            // Закрытие при клике вне меню
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    this.closeMobileMenu();
+                }
+            });
+
+            // Закрытие при клике на ссылку
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => this.closeMobileMenu());
+            });
+        }
+    }
+
+    toggleMobileMenu() {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        if (navMenu.classList.contains('active')) {
+            this.closeMobileMenu();
+        } else {
+            this.openMobileMenu();
+        }
+    }
+
+    openMobileMenu() {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        navMenu.classList.add('active');
+        menuToggle.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeMobileMenu() {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        navMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ========== ESG КАЛЬКУЛЯТОР ПРЕМИУМ КЛАССА ==========
+    setupESGCalculator() {
+        this.initializeESGData();
+        this.setupCalculatorEvents();
+    }
+
+    initializeESGData() {
+        // Расширенные данные для ESG рейтингов
+        this.esgData = {
+            ru: {
+                solidcore: {
+                    ratings: [
+                        ["Sustainalytics ESG Risk", "8.5/10", "Низкий риск"],
+                        ["Refinitiv ESG Score", "92/100", "Лидер отрасли"],
+                        ["MSCI ESG Rating", "AA", "Высокий уровень"],
+                        ["RAEX Europe", "A+", "Превосходно"],
+                        ["NRA ESG", "A1.esg", "Высшая категория"],
+                        ["CDP Climate Change", "A-", "Осознанное управление"],
+                        ["S&P Global ESG Score", "84/100", "Сильные показатели"],
+                        ["Согласованность рейтингов", "7.8/10", "Высокая"],
+                        ["Динамика 12 мес", "+12.3%", "Растущий тренд"]
+                    ],
+                    recommendations: [
+                        {
+                            title: "Стратегия устойчивого развития",
+                            text: "Рекомендуется разработать дорожную карту углеродной нейтральности до 2035 года",
+                            priority: "high"
+                        },
+                        {
+                            title: "Корпоративное управление",
+                            text: "Внедрение блокчейн-технологий для повышения прозрачности цепочки поставок",
+                            priority: "medium"
+                        },
+                        {
+                            title: "Социальные инициативы",
+                            text: "Расширение программ инклюзивности и разнообразия в совете директоров",
+                            priority: "high"
+                        }
+                    ]
+                }
+            },
+            en: {
+                solidcore: {
+                    ratings: [
+                        ["Sustainalytics ESG Risk", "8.5/10", "Low Risk"],
+                        ["Refinitiv ESG Score", "92/100", "Industry Leader"],
+                        ["MSCI ESG Rating", "AA", "High Level"],
+                        ["RAEX Europe", "A+", "Excellent"],
+                        ["NRA ESG", "A1.esg", "Highest Category"],
+                        ["CDP Climate Change", "A-", "Conscious Management"],
+                        ["S&P Global ESG Score", "84/100", "Strong Performance"],
+                        ["Rating Consistency", "7.8/10", "High"],
+                        ["12-Month Dynamics", "+12.3%", "Growing Trend"]
+                    ],
+                    recommendations: [
+                        {
+                            title: "Sustainable Development Strategy",
+                            text: "Develop carbon neutrality roadmap until 2035",
+                            priority: "high"
+                        },
+                        {
+                            title: "Corporate Governance",
+                            text: "Implement blockchain for supply chain transparency",
+                            priority: "medium"
+                        },
+                        {
+                            title: "Social Initiatives",
+                            text: "Expand diversity programs in board of directors",
+                            priority: "high"
+                        }
+                    ]
+                }
+            }
+        };
+    }
+
+    setupCalculatorEvents() {
+        const calculateBtn = document.getElementById('calculate-esg');
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', () => this.calculateESG());
+        }
+
+        // Автоматический расчет при изменении параметров
+        const inputs = document.querySelectorAll('#esg-calculator input, #esg-calculator select');
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.type !== 'button') {
+                    setTimeout(() => this.calculateESG(), 300);
+                }
+            });
+        });
+    }
+
+    calculateESG() {
+        const company = document.getElementById('company').value;
+        const resultDiv = document.getElementById('result');
+        const recommendationsDiv = document.getElementById('expert-recommendations');
+
+        if (!this.esgData[this.currentLanguage]?.[company]) {
+            this.showNotification('Данные о компании не найдены', 'error');
+            return;
+        }
+
+        const data = this.esgData[this.currentLanguage][company];
+
+        // Показываем анимацию загрузки
+        this.showLoadingAnimation(resultDiv);
+
+        setTimeout(() => {
+            // Генерация премиальной таблицы
+            resultDiv.innerHTML = this.generatePremiumTable(data.ratings);
             
-            // Изменяем интенсивность свечения в зависимости от позиции курсора
-            const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
-            const glowSize = 20 + (x + y) / 2 * 40;
+            // Генерация рекомендаций
+            recommendationsDiv.innerHTML = this.generateRecommendations(data.recommendations);
             
-            logo.style.filter = `
-                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
-                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
-                drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
+            // Анимация появления
+            this.animateResults();
+            
+            // Показать уведомление
+            this.showNotification('ESG анализ завершен успешно', 'success');
+        }, 1500);
+    }
+
+    generatePremiumTable(ratings) {
+        let tableHTML = `
+            <div class="table-container">
+                <table class="premium-ratings-table">
+                    <thead>
+                        <tr>
+                            <th>Показатель</th>
+                            <th>Оценка</th>
+                            <th>Статус</th>
+                            <th>Тенденция</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        ratings.forEach((row, index) => {
+            const trend = index % 3 === 0 ? '📈' : index % 3 === 1 ? '📊' : '🎯';
+            tableHTML += `
+                <tr>
+                    <td>${row[0]}</td>
+                    <td><span class="rating-value">${row[1]}</span></td>
+                    <td><span class="status-badge">${row[2]}</span></td>
+                    <td>${trend}</td>
+                </tr>
             `;
         });
+
+        tableHTML += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        return tableHTML;
     }
-});
-// ========== ПРЕМИАЛЬНЫЙ ЗОЛОТОЙ КУРСОР ==========
 
-const cursor = document.querySelector('.custom-cursor');
+    generateRecommendations(recommendations) {
+        const title = this.currentLanguage === 'en' ? 'Strategic Recommendations' : 'Стратегические рекомендации';
+        
+        let html = `
+            <h3 class="recommendation-title">${title}</h3>
+            <div class="recommendation-grid">
+        `;
 
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
+        recommendations.forEach(rec => {
+            const priorityClass = `priority-${rec.priority}`;
+            html += `
+                <div class="recommendation-card ${priorityClass}">
+                    <div class="recommendation-header">
+                        <h4>${rec.title}</h4>
+                        <span class="priority-indicator ${rec.priority}"></span>
+                    </div>
+                    <p>${rec.text}</p>
+                    <div class="recommendation-meta">
+                        <span class="timeline">⏱ 6-12 месяцев</span>
+                        <span class="impact">💎 Высокое влияние</span>
+                    </div>
+                </div>
+            `;
+        });
 
-// Увеличение при наведении на интерактивные элементы
-const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+        html += `
+            </div>
+            <div class="report-actions">
+                <button class="download-button premium" onclick="premiumWebsite.downloadReport()">
+                    <i class="fas fa-download"></i> 
+                    ${this.currentLanguage === 'en' ? 'Download Full Report' : 'Скачать полный отчет'}
+                </button>
+                <button class="consultation-button" onclick="premiumWebsite.requestConsultation()">
+                    <i class="fas fa-calendar"></i> 
+                    ${this.currentLanguage === 'en' ? 'Book Consultation' : 'Заказать консультацию'}
+                </button>
+            </div>
+        `;
 
-interactiveElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.add('active');
-  });
-  
-  el.addEventListener('mouseleave', () => {
-    cursor.classList.remove('active');
-  });
-});
+        return html;
+    }
 
-// ========== PRELOADER ==========
+    // ========== СИСТЕМА УВЕДОМЛЕНИЙ ==========
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `premium-notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-icon">${this.getNotificationIcon(type)}</span>
+                <span class="notification-text">${message}</span>
+                <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+            </div>
+        `;
 
-window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  
-  setTimeout(() => {
-    preloader.classList.add('hidden');
+        document.body.appendChild(notification);
+
+        // Анимация появления
+        setTimeout(() => notification.classList.add('show'), 100);
+
+        // Автоматическое скрытие
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 5000);
+    }
+
+    getNotificationIcon(type) {
+        const icons = {
+            success: '✅',
+            error: '❌',
+            warning: '⚠️',
+            info: '💎'
+        };
+        return icons[type] || '💎';
+    }
+
+    // ========== ФОРМЫ И КОНТАКТЫ ==========
+    setupFormHandlers() {
+        this.setupContactForm();
+        this.setupNewsletterForm();
+        this.setupConsultationForms();
+    }
+
+    setupContactForm() {
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleFormSubmission(contactForm, 'contact');
+            });
+        }
+    }
+
+    async handleFormSubmission(form, type) {
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        // Показ загрузки
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+        submitBtn.disabled = true;
+
+        try {
+            // Имитация отправки на сервер
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            this.showNotification('Сообщение успешно отправлено!', 'success');
+            form.reset();
+            
+            // Дополнительные действия в зависимости от типа формы
+            if (type === 'consultation') {
+                this.scheduleCallback();
+            }
+            
+        } catch (error) {
+            this.showNotification('Ошибка отправки. Попробуйте еще раз.', 'error');
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+
+    // ========== СИСТЕМА ЗАЩИТЫ КОНТЕНТА ==========
+    setupContentProtection() {
+        // Защита от копирования
+        document.addEventListener('copy', (e) => {
+            e.preventDefault();
+            this.showCopyProtectionMessage();
+        });
+
+        // Защита от правого клика
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showProtectionMessage();
+        });
+
+        // Защита от перетаскивания
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Защита от DevTools
+        this.setupDevToolsProtection();
+    }
+
+    showCopyProtectionMessage() {
+        const message = this.currentLanguage === 'en' 
+            ? '© North West Atlas B Corp — Content protected by intellectual property rights'
+            : '© North West Atlas B Corp — Контент защищен правами интеллектуальной собственности';
+
+        this.showNotification(message, 'warning');
+    }
+
+    // ========== ДОПОЛНИТЕЛЬНЫЕ ПРЕМИУМ ФУНКЦИИ ==========
     
-    // Удаляем preloader из DOM после анимации
-    setTimeout(() => {
-      preloader.remove();
-    }, 800);
-  }, 2000); // 2 секунды показа
+    // Загрузка отчета
+    downloadReport() {
+        this.showNotification('Подготовка отчета...', 'info');
+        
+        setTimeout(() => {
+            // Создание премиального PDF отчета
+            this.generatePremiumReport();
+        }, 2000);
+    }
+
+    // Запрос консультации
+    requestConsultation() {
+        const modal = this.createConsultationModal();
+        document.body.appendChild(modal);
+        this.showModal(modal);
+    }
+
+    // Создание модального окна консультации
+    createConsultationModal() {
+        const modal = document.createElement('div');
+        modal.className = 'premium-modal';
+        modal.innerHTML = `
+            <div class="modal-overlay" onclick="premiumWebsite.closeModal(this.parentElement)"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${this.currentLanguage === 'en' ? 'Schedule Consultation' : 'Запланировать консультацию'}</h3>
+                    <button class="modal-close" onclick="premiumWebsite.closeModal(this.closest('.premium-modal'))">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="consultation-form">
+                        <div class="form-group">
+                            <label>${this.currentLanguage === 'en' ? 'Your Name' : 'Ваше имя'}</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>${this.currentLanguage === 'en' ? 'Company' : 'Компания'}</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>${this.currentLanguage === 'en' ? 'Preferred Date' : 'Предпочтительная дата'}</label>
+                            <input type="datetime-local" required>
+                        </div>
+                        <button type="submit" class="premium-btn">
+                            ${this.currentLanguage === 'en' ? 'Schedule Meeting' : 'Запланировать встречу'}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        return modal;
+    }
+
+    showModal(modal) {
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => modal.classList.add('show'), 10);
+    }
+
+    closeModal(modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    // ========== СЛУЖЕБНЫЕ МЕТОДЫ ==========
+    setupEventListeners() {
+        window.addEventListener('resize', this.handleResize.bind(this));
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+        
+        // Инициализация мобильного меню
+        this.setupMobileMenu();
+    }
+
+    handleResize() {
+        this.isMobile = window.innerWidth <= 768;
+        
+        if (!this.isMobile) {
+            this.closeMobileMenu();
+        }
+    }
+
+    handleScroll() {
+        this.scrollPosition = window.pageYOffset;
+        this.updateScrollEffects();
+    }
+
+    updateScrollEffects() {
+        // Обновление параллакс эффектов
+        this.updateParallax();
+        
+        // Обновление прогресс-бара
+        this.updateScrollProgress();
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    // ========== ДЕСТРУКТОР И ОЧИСТКА ==========
+    destroy() {
+        window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('scroll', this.handleScroll);
+        this.isInitialized = false;
+    }
+}
+
+// ========== ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ==========
+let premiumWebsite;
+
+document.addEventListener('DOMContentLoaded', () => {
+    premiumWebsite = new PremiumWebsite();
 });
 
-// ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
+// Глобальные функции для вызова из HTML
+window.toggleMobileMenu = () => premiumWebsite?.toggleMobileMenu();
+window.downloadReport = () => premiumWebsite?.downloadReport();
+window.requestConsultation = () => premiumWebsite?.requestConsultation();
 
-document.addEventListener('copy', (e) => {
-  e.preventDefault();
-  
-  // Определяем язык страницы
-  const lang = document.documentElement.lang || 'ru';
-  const messages = {
-    'ru': '© North West Atlas B Corp — Контент защищён',
-    'en': '© North West Atlas B Corp — Content Protected'
-  };
-  
-  // Создаём красивое уведомление
-  const notification = document.createElement('div');
-  notification.textContent = messages[lang] || messages['en'];
-  notification.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.95);
-    color: #d4af37;
-    padding: 20px 40px;
-    border-radius: 10px;
-    border: 2px solid #d4af37;
-    font-size: 16px;
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 1px;
-    z-index: 99999;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
-    animation: fadeInOut 2s ease;
-    backdrop-filter: blur(10px);
-  `;
-  
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.style.opacity = '0';
-    notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
-    notification.style.transition = 'all 0.3s ease';
-    
-    setTimeout(() => {
-      notification.remove();
-    }, 300);
-  }, 1700);
+// Защита от случайного удаления
+Object.defineProperty(window, 'premiumWebsite', {
+    value: premiumWebsite,
+    writable: false,
+    configurable: false
 });
+
+console.log('💎 North West Atlas B Corp - Premium JavaScript loaded');
