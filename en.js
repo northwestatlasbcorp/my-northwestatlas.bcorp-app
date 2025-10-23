@@ -409,3 +409,97 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ========== PRELOADER ==========
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    setTimeout(() => {
+      preloader.classList.add('hidden');
+      setTimeout(() => {
+        preloader.remove();
+      }, 800);
+    }, 2000);
+  }
+});
+
+// ========== CUSTOM CURSOR ==========
+const cursor = document.querySelector('.custom-cursor');
+
+if (cursor) {
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('active');
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('active');
+    });
+  });
+}
+
+// ========== CONTENT PROTECTION ==========
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  return false;
+});
+
+document.addEventListener('copy', (e) => {
+  e.preventDefault();
+  showCopyNotification('© North West Atlas B Corp — Content Protected');
+});
+
+function showCopyNotification(message) {
+  const notification = document.createElement('div');
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: #d4af37;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 2px solid #d4af37;
+    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    z-index: 99999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
+    animation: fadeInOut 2s ease;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 2000);
+}
+
+// Block keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Ctrl+C / Cmd+C
+  if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+    e.preventDefault();
+    return false;
+  }
+  
+  // Ctrl+A / Cmd+A
+  if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+    e.preventDefault();
+    return false;
+  }
+  
+  // F12
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+});
