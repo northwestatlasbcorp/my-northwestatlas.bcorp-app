@@ -485,3 +485,18 @@ interactiveElements.forEach(el => {
     cursor.classList.remove('active');
   });
 });
+
+// ========== PRELOADER ==========
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+    
+    // Удаляем preloader из DOM после анимации
+    setTimeout(() => {
+      preloader.remove();
+    }, 800);
+  }, 2000); // 2 секунды показа
+});
