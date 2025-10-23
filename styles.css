@@ -967,6 +967,29 @@ section {
   text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
 }
 
+/* ========== ИКОНКИ ДЛЯ МЕТОДОЛОГИИ ========== */
+
+.methodology-card .icon {
+  font-size: 48px !important;
+  color: #d4af37 !important;
+  margin-bottom: 1rem !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+/* Убедитесь, что Font Awesome работает */
+.fas, .fab, .far, .fa {
+  display: inline-block !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  font-style: normal !important;
+}
+
+.fab {
+  font-family: "Font Awesome 6 Brands" !important;
+  font-weight: 400 !important;
+}
+
 /* Раздел "ESG Калькулятор" */
 .calculator-container {
   max-width: 800px;
