@@ -1595,7 +1595,7 @@ footer::after {
   }
 }
 
-/* ========== ПРЕМИАЛЬНЫЙ PRELOADER ========== */
+/* ========== PRELOADER ========== */
 #preloader {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -1623,6 +1623,17 @@ footer::after {
 @keyframes spinRing {
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}
+}
+
+.preloader-content img {
+  max-width: 180px;  /* можно изменить на 120-160px по вкусу */
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  display: block;
+  filter: drop-shadow(0 0 40px #d4af37a6);
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 /* ========== ПРЕМИАЛЬНЫЕ TOOLTIPS ========== */
