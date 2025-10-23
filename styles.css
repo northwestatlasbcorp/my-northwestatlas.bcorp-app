@@ -250,8 +250,8 @@ ul {
   pointer-events: none;  /* ← Эта строка очень важна! */
 }
 
-/* Шапка */
-/* Шапка */
+/* ========== ШАПКА - ИСПРАВЛЕННАЯ ========== */
+
 header {
   position: fixed;
   top: 0;
@@ -262,73 +262,61 @@ header {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 1rem 2rem;
-}
-
-header nav {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-#nav-menu {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 header.scrolled {
   background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid rgba(var(--primary-rgb), 0.3);
 }
 
-nav a {
-  margin-right: 20px; /* Расстояние между пунктами меню */
-  font-family: "ui-sans-serif", sans-serif;
-  font-size: 16px;
-  color: #333333;
-  text-decoration: none;
+/* Контейнер навигации */
+.navbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
 }
 
-/* Логотип в шапке */
+/* Логотип слева */
+.logo {
+  flex-shrink: 0;
+}
+
 .logo a {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--foreground);
   text-decoration: none;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
   white-space: nowrap;
+  font-family: "Playfair Display", serif;
 }
 
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: var(--primary);
+/* Навигация по центру */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 #nav-menu {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
 }
 
 .nav-link {
   color: var(--foreground);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   padding: 0.5rem 0;
   position: relative;
   transition: var(--transition);
-  text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+  white-space: nowrap;
 }
 
 .nav-link::after {
@@ -345,7 +333,48 @@ nav a {
 
 .nav-link:hover {
   color: var(--primary);
-  text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Переключатель языка справа */
+.lang-switcher {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.lang-switcher a {
+  color: rgba(212, 175, 55, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.lang-switcher a.active {
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.lang-switcher a:hover {
+  color: #d4af37;
+}
+
+.lang-switcher span {
+  color: #d4af37;
+}
+
+/* Бургер (скрыт на десктопе) */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--primary);
 }
 
 .nav-link:hover::after {
