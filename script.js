@@ -464,3 +464,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// ========== ПРЕМИАЛЬНЫЙ ЗОЛОТОЙ КУРСОР ==========
+
+const cursor = document.querySelector('.custom-cursor');
+
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// Увеличение при наведении на интерактивные элементы
+const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+
+interactiveElements.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('active');
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('active');
+  });
+});
