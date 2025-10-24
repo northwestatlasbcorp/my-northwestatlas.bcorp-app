@@ -3,176 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="North West Atlas B Corp">
-    <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
-    <meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-    <meta property="og:image" content="https://northwestatlas.com/og-image.jpg">
-    <meta property="og:url" content="https://northwestatlas.com">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="North West Atlas B Corp — Инвестиции в будущее">
-    <meta name="twitter:description" content="Создаем будущее, а не следуем за ним.">
-    <meta name="twitter:image" content="https://northwestatlas.com/og-image.jpg">
-    
-    <!-- Keywords -->
-    <meta name="keywords" content="инвестиции, технологии, устойчивое развитие, ESG, startup, North West Atlas B Corp">
-    
     <title>North West Atlas B Corp</title>
     
-    <!-- Font Awesome -->
+    <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- AOS CSS -->
+    <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    
-    <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    
-    <!-- Фавикон -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
-    <link rel="shortcut icon" href="/favicon.ico">
 
     <!-- INLINE CRITICAL CSS -->
     <style>
-        /* ========== CRITICAL CSS - IMMEDIATE VISIBILITY ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ========== CRITICAL CSS ========== */
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0d0d0d;
+            --text-light: #ffffff;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0d0d0d;
-            color: #ffffff;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
             overflow-x: hidden;
         }
 
         /* PRELOADER */
         #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #0d0d0d;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--dark-bg); z-index: 9999;
             display: flex; align-items: center; justify-content: center;
         }
 
         .preloader-logo {
-            width: 120px;
-            height: auto;
-            filter: drop-shadow(0 0 20px #d4af37);
+            width: 120px; height: auto;
+            filter: drop-shadow(0 0 20px var(--gold));
         }
 
         /* HEADER */
         header {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
+            position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(13, 13, 13, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 1rem 2rem;
+            z-index: 1000; padding: 1rem 2rem;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         }
 
-        .navbar-top {
-            text-align: center;
-        }
-
+        .navbar-top { text-align: center; }
         .navbar-top .logo a {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: #ffffff;
-            text-decoration: none;
+            font-size: 1.3rem; color: white; text-decoration: none;
         }
-
-        .text-gold {
-            color: #d4af37;
-        }
+        .text-gold { color: var(--gold); }
 
         /* MAIN CONTENT */
-        #home {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 80px;
-        }
-
-        #main-logo {
-            max-width: 600px;
-            width: 90%;
-            height: auto;
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
-        }
+        #home { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding-top: 80px; }
+        #main-logo { max-width: 500px; width: 80%; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8)); }
 
         /* SECTIONS */
-        section {
-            padding: 6rem 2rem;
-            position: relative;
-        }
-
+        section { padding: 4rem 1rem; }
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: #d4af37;
-            text-align: center;
-            margin-bottom: 3rem;
+            font-size: 2.5rem; color: var(--gold);
+            text-align: center; margin-bottom: 2rem;
         }
 
-        /* BASIC GRID */
-        .about-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        /* CARDS */
+        .about-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        .about-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 1.5rem; text-align: center; }
 
-        .about-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-        }
+        /* PARTICLES */
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
 
-        /* PARTICLES BACKGROUND */
-        #particles-js {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -1;
-        }
-
-        /* MOBILE MENU */
-        .menu-toggle {
-            display: none;
-            color: #d4af37;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
+        /* MOBILE */
         @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            
-            #nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%; left: 0; width: 100%;
-                background: rgba(13, 13, 13, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 1rem 0;
-            }
-            
+            .menu-toggle { display: block; color: var(--gold); font-size: 1.5rem; }
+            #nav-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(13,13,13,0.98); flex-direction: column; padding: 1rem 0; }
             #nav-menu.active { display: flex; }
         }
     </style>
@@ -181,181 +90,126 @@
 <body>
     <!-- Preloader -->
     <div id="preloader">
-        <div class="preloader-content">
-            <img src="logo-nwa-centered.png" alt="North West Atlas Logo" class="preloader-logo">
-        </div>
+        <img src="logo-nwa-centered.png" alt="NWA Logo" class="preloader-logo">
     </div>
 
     <!-- Particle Background -->
     <div id="particles-js"></div>
 
     <!-- Header -->
-    <header id="header">
-        <nav class="navbar-wrapper">
+    <header>
+        <nav>
             <div class="navbar-top">
                 <div class="logo">
-                    <a href="#home" class="font-playfair">
-                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                    </a>
+                    <a href="#home">NORTH WEST <span class="text-gold">ATLAS B CORP</span></a>
                 </div>
             </div>
-
             <div class="navbar-bottom">
                 <div class="menu-toggle" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
                 </div>
-                
                 <ul id="nav-menu">
                     <li><a href="#home" class="nav-link">Главная</a></li>
                     <li><a href="#about" class="nav-link">О нас</a></li>
                     <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
                     <li><a href="#partners" class="nav-link">Партнеры</a></li>
-                    <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
-                    <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
-                    <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
                 </ul>
-
-                <div class="lang-switcher">
-                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-                    <span>|</span>
-                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
-                </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- Главная секция -->
+        <!-- Hero Section -->
         <section id="home">
-            <div class="logo-container">
-                <img 
-                    src="logo-nwa-centered.png" 
-                    alt="North West Atlas B Corp" 
-                    id="main-logo"
-                >
-            </div>
+            <img src="logo-nwa-centered.png" alt="North West Atlas" id="main-logo">
         </section>
 
-        <!-- Раздел "О нас" -->
-        <section id="about" style="background: rgba(0,0,0,0.3);">
-            <div class="container">
-                <h2 class="section-title">О нас</h2>
-                <blockquote class="philosophy-quote">
-                    "Мы инвестируем не только капитал, но и время, знания и репутацию..."
-                    <cite><span class="text-gold">— Shamil Ibragimov, Founder & CEO</span></cite>
-                </blockquote>
-                
-                <div class="about-container">
-                    <div class="about-card">
-                        <h3 class="text-gold">Наша миссия</h3>
-                        <p>Формирование глобального будущего.</p>
-                    </div>
-
-                    <div class="about-card">
-                        <h3 class="text-gold">Наши цели</h3>
-                        <p>Создаем наследие будущего.</p>
-                    </div>
-
-                    <div class="about-card">
-                        <h3 class="text-gold">Наши принципы</h3>
-                        <p>Стратегическое мышление.</p>
-                    </div>
-
-                    <div class="about-card">
-                        <h3 class="text-gold">Наш подход</h3>
-                        <p>Технологичный взгляд на мир.</p>
-                    </div>
+        <!-- About Section -->
+        <section id="about" style="background: rgba(0,0,0,0.4);">
+            <h2 class="section-title">О нас</h2>
+            <div class="about-container">
+                <div class="about-card">
+                    <h3 class="text-gold">Наша миссия</h3>
+                    <p>Формирование глобального будущего</p>
+                </div>
+                <div class="about-card">
+                    <h3 class="text-gold">Наши цели</h3>
+                    <p>Создаем наследие будущего</p>
+                </div>
+                <div class="about-card">
+                    <h3 class="text-gold">Наши принципы</h3>
+                    <p>Стратегическое мышление</p>
                 </div>
             </div>
         </section>
 
-        <!-- Раздел "Экспертиза" -->
-        <section id="expertise" style="background: rgba(0,0,0,0.4);">
-            <div class="container">
-                <h2 class="section-title">Экспертиза</h2>
-                <div class="expertise-container">
-                    <div class="expertise-card">
-                        <div class="expertise-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3 class="text-gold">Искусственный интеллект</h3>
-                        <p>Мы используем AI для анализа текстовых данных, прогнозирования трендов и автоматизации процессов.</p>
-                        <button class="read-more" onclick="openPopup('ai')">Подробнее</button>
-                    </div>
-                    <!-- Добавьте остальные карточки экспертизы -->
+        <!-- Expertise Section -->
+        <section id="expertise" style="background: rgba(0,0,0,0.3);">
+            <h2 class="section-title">Экспертиза</h2>
+            <div class="about-container">
+                <div class="about-card">
+                    <i class="fas fa-brain text-gold" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h3 class="text-gold">Искусственный интеллект</h3>
+                    <p>AI и ML для анализа данных и прогнозирования</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-database text-gold" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                    <h3 class="text-gold">Большие данные</h3>
+                    <p>Анализ структурированных и неструктурированных данных</p>
                 </div>
             </div>
         </section>
-
-        <!-- Добавьте остальные секции -->
-
     </main>
 
-    <!-- INLINE JAVASCRIPT FOR IMMEDIATE FUNCTIONALITY -->
+    <!-- INLINE JAVASCRIPT -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // ========== IMMEDIATE FUNCTIONALITY ==========
-        console.log('🚀 Starting North West Atlas B Corp...');
-
-        // Basic mobile menu
-        function toggleMenu() {
-            const navMenu = document.getElementById('nav-menu');
-            const icon = document.querySelector('.menu-toggle i');
-            
-            if (navMenu.style.display === 'flex' || navMenu.classList.contains('active')) {
-                navMenu.style.display = 'none';
-                navMenu.classList.remove('active');
-                icon.classList.replace('fa-times', 'fa-bars');
-            } else {
-                navMenu.style.display = 'flex';
-                navMenu.classList.add('active');
-                icon.classList.replace('fa-bars', 'fa-times');
-            }
-        }
+        // ========== BASIC FUNCTIONALITY ==========
+        console.log('🚀 Starting North West Atlas...');
 
         // Preloader
         window.addEventListener('load', function() {
             setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 500);
-                }
+                document.getElementById('preloader').style.display = 'none';
             }, 1000);
         });
 
-        // Current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            const icon = document.querySelector('.menu-toggle i');
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.replace('fa-times', 'fa-bars');
+            } else {
+                menu.classList.add('active');
+                icon.classList.replace('fa-bars', 'fa-times');
+            }
+        }
 
-        // Basic particles
+        // Particles
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
                 particles: {
-                    number: { value: 40 },
+                    number: { value: 40, density: { enable: true, value_area: 800 } },
                     color: { value: '#d4af37' },
                     shape: { type: 'circle' },
-                    opacity: { value: 0.3 },
-                    size: { value: 3 },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
                     move: { enable: true, speed: 1 }
                 }
             });
         }
 
+        // AOS
+        if (typeof AOS !== 'undefined') {
+            AOS.init({ duration: 800, once: true });
+        }
+
+        // Current Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
         console.log('✅ Basic functionality loaded');
     </script>
-
-    <!-- External Libraries -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 800,
-                once: true
-            });
-        }
-    </script>
-
 </body>
 </html>
