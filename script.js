@@ -1,18 +1,60 @@
-// ========== ФИКС ДЛЯ AOS ==========
-// Проверяем, загружена ли библиотека AOS
-function checkAOS() {
-    if (typeof AOS === 'undefined') {
-        console.warn('AOS не загружен, пытаемся загрузить...');
-        // Создаем fallback если AOS не загрузился
-        const fallbackAOS = {
-            init: function() { console.log('AOS fallback activated'); },
-            refresh: function() {},
-            refreshHard: function() {}
-        };
-        window.AOS = fallbackAOS;
-        return fallbackAOS;
+// ========== ИСПРАВЛЕННАЯ ИНИЦИАЛИЗАЦИЯ AOS ==========
+function initAOS() {
+    // Ждем полной загрузки страницы
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeAOS);
+    } else {
+        initializeAOS();
     }
-    return AOS;
+}
+
+function initializeAOS() {
+    // Проверяем, загружена ли библиотека
+    if (typeof AOS === 'undefined') {
+        console.error('AOS не загружен');
+        // Fallback анимации
+        initFallbackAnimations();
+        return;
+    }
+    
+    // Инициализация AOS с улучшенными настройками
+    AOS.init({
+        duration: 800,
+        offset: 100,
+        easing: 'ease-out-cubic',
+        once: false, // Изменили на false для многократного срабатывания
+        mirror: true, // Включили mirror для обратной анимации
+        anchorPlacement: 'top-bottom',
+        disable: function() {
+            return window.innerWidth < 768;
+        },
+        startEvent: 'DOMContentLoaded',
+        animatedClassName: 'aos-animate',
+        initClassName: 'aos-init'
+    });
+    
+    console.log('✅ AOS инициализирован');
+    
+    // Принудительное обновление после загрузки всех ресурсов
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            AOS.refresh();
+        }, 500);
+    });
+    
+    // Обновление при изменении размера окна
+    window.addEventListener('resize', function() {
+        AOS.refresh();
+    });
+}
+
+// Fallback анимации если AOS не работает
+function initFallbackAnimations() {
+    const elements = document.querySelectorAll('[data-aos]');
+    elements.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+    });
 }
 
 // Detect current page language
@@ -20,21 +62,31 @@ function getCurrentLanguage() {
     return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
 }
 
-// Инициализация AOS для анимаций
-document.addEventListener("DOMContentLoaded", () => {
-    const AOS = checkAOS();
+// Запускаем инициализацию AOS
+initAOS();
+
+// Принудительное обновление AOS после полной загрузки
+window.addEventListener('load', function() {
+    if (typeof AOS !== 'undefined') {
+        setTimeout(() => {
+            AOS.refreshHard(); // Принудительное обновление
+            console.log('🔄 AOS принудительно обновлен');
+        }, 1000);
+    }
+});
+
+// Обновление при скролле (fallback)
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', function() {
+    const currentScrollY = window.scrollY;
     
-    AOS.init({
-        duration: 800,
-        offset: 100,
-        easing: 'ease-out-cubic',
-        once: true, // анимация только один раз
-        mirror: false,
-        anchorPlacement: "top-bottom",
-        disable: window.innerWidth < 768 // отключаем на мобильных для производительности
-    });
-    
-    console.log('AOS инициализирован:', AOS);
+    // Обновляем AOS при значительном скролле
+    if (Math.abs(currentScrollY - lastScrollY) > 100) {
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+        lastScrollY = currentScrollY;
+    }
 });
 
 // Установка текущего года в футере
