@@ -2591,3 +2591,34 @@ body, html {
         box-shadow: none !important;
     }
 }
+
+/* Принудительное аппаратное ускорение для критичных элементов */
+#main-logo {
+    transform: translate3d(-50%, -50%, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+
+/* Оптимизация анимаций */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Улучшение производительности скролла */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Оптимизация рендеринга */
+.about-card,
+.expertise-card,
+.methodology-card {
+    will-change: transform;
+    transform: translateZ(0);
+}
