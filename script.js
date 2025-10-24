@@ -1,3 +1,20 @@
+// ========== ФИКС ДЛЯ AOS ==========
+// Проверяем, загружена ли библиотека AOS
+function checkAOS() {
+    if (typeof AOS === 'undefined') {
+        console.warn('AOS не загружен, пытаемся загрузить...');
+        // Создаем fallback если AOS не загрузился
+        const fallbackAOS = {
+            init: function() { console.log('AOS fallback activated'); },
+            refresh: function() {},
+            refreshHard: function() {}
+        };
+        window.AOS = fallbackAOS;
+        return fallbackAOS;
+    }
+    return AOS;
+}
+
 // Detect current page language
 function getCurrentLanguage() {
     return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
@@ -5,6 +22,8 @@ function getCurrentLanguage() {
 
 // Инициализация AOS для анимаций
 document.addEventListener("DOMContentLoaded", () => {
+    const AOS = checkAOS();
+    
     AOS.init({
         duration: 800,
         offset: 100,
@@ -14,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
         anchorPlacement: "top-bottom",
         disable: window.innerWidth < 768 // отключаем на мобильных для производительности
     });
+    
+    console.log('AOS инициализирован:', AOS);
 });
 
 // Установка текущего года в футере
