@@ -3357,3 +3357,704 @@ html {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
   }
 }
+
+/* ========== МОБИЛЬНЫЕ ИСПРАВЛЕНИЯ ========== */
+
+/* Планшеты и маленькие десктопы (768px - 1024px) */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem !important;
+  }
+  
+  .section-title {
+    font-size: 2.5rem !important;
+  }
+  
+  #main-logo {
+    max-width: 70vw !important;
+  }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+  /* Базовые настройки */
+  .container {
+    padding: 0 1rem !important;
+    max-width: 100% !important;
+  }
+  
+  /* Заголовки */
+  .section-title {
+    font-size: 2rem !important;
+    margin-bottom: 2rem !important;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
+  }
+  
+  .section-title::before {
+    display: none !important;
+  }
+  
+  /* Логотип */
+  #home {
+    min-height: 100vh !important;
+    padding: 0 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  #main-logo {
+    max-width: 85vw !important;
+    width: 85vw !important;
+    height: auto !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  
+  /* Навигация */
+  header {
+    padding: 0.5rem 1rem !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+  }
+  
+  .navbar-top .logo a {
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+  }
+  
+  .navbar-bottom {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    position: relative !important;
+  }
+  
+  .menu-toggle {
+    display: flex !important;
+    font-size: 1.5rem;
+    z-index: 1001;
+    background: none;
+    border: none;
+    color: var(--gold-primary);
+    cursor: pointer;
+  }
+  
+  #nav-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 1rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 999;
+  }
+  
+  #nav-menu.active {
+    max-height: 70vh;
+    opacity: 1;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
+  
+  #nav-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  }
+  
+  #nav-menu li:last-child {
+    border-bottom: none;
+  }
+  
+  .nav-link {
+    padding: 0.8rem 0 !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 1rem !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+  }
+  
+  .nav-link:hover {
+    color: var(--gold-primary) !important;
+  }
+  
+  /* Карточки */
+  .about-container,
+  .expertise-container,
+  .methodology-container,
+  .investment-container {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .about-card,
+  .expertise-card,
+  .methodology-card,
+  .investment-block {
+    padding: 1.5rem 1rem !important;
+    margin: 0.5rem 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Упрощаем анимации для производительности */
+  .about-card:hover,
+  .expertise-card:hover,
+  .methodology-card:hover,
+  .investment-block:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+  /* Текст */
+  .about-card p,
+  .methodology-card p,
+  .expertise-card p {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .philosophy-quote {
+    padding: 1rem !important;
+    margin: 0 0.5rem 2rem !important;
+    font-size: 0.95rem !important;
+  }
+  
+  /* Отключаем тяжелые эффекты */
+  .video-container {
+    animation: none !important;
+  }
+  
+  .gold-glow::before {
+    display: none !important;
+  }
+  
+  /* Упрощаем blur эффекты */
+  .calculator-container,
+  .contact-form-container,
+  .about-card,
+  .methodology-card,
+  .expertise-card {
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  /* Контакты */
+  .contacts-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .contact-card {
+    padding: 1rem !important;
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  
+  .contact-icon {
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Футер */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  
+  .footer-column {
+    text-align: center !important;
+  }
+  
+  .footer-column ul li {
+    justify-content: center !important;
+  }
+  
+  /* Партнеры */
+  .partners-track {
+    animation: marquee 40s linear infinite !important;
+  }
+  
+  .partner-card {
+    flex: 0 0 200px !important;
+    margin: 0 10px !important;
+    height: 120px !important;
+    padding: 1rem !important;
+  }
+  
+  /* Калькулятор */
+  .calculator-container {
+    padding: 1.5rem !important;
+  }
+  
+  .calculator-form select {
+    font-size: 16px !important; /* Убираем зум на iOS */
+  }
+  
+  /* Preloader */
+  .preloader-logo {
+    max-width: 100px !important;
+  }
+  
+  /* Скрываем Saturn курсор на мобильных */
+  .saturn {
+    display: none !important;
+  }
+  
+  /* Улучшаем кнопки для touch */
+  .gold-button,
+  .read-more,
+  .submit-btn {
+    min-height: 44px !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+  }
+  
+  /* Исправляем отступы секций */
+  section {
+    padding: 3rem 0 !important;
+  }
+  
+  .py-24 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
+/* Маленькие мобильные (до 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem !important;
+  }
+  
+  .section-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  #main-logo {
+    max-width: 90vw !important;
+    width: 90vw !important;
+  }
+  
+  .navbar-top .logo a {
+    font-size: 0.8rem !important;
+  }
+  
+  .about-card,
+  .expertise-card,
+  .methodology-card,
+  .investment-block {
+    padding: 1rem 0.8rem !important;
+    margin: 0.25rem 0 !important;
+  }
+  
+  .philosophy-quote {
+    font-size: 0.9rem !important;
+    padding: 0.8rem !important;
+    margin: 0 0.25rem 1.5rem !important;
+  }
+  
+  /* Упрощаем все анимации для очень слабых устройств */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Отключаем частицы на очень слабых устройствах */
+  #particles-js {
+    display: none !important;
+  }
+  
+  /* Упрощаем видео-контейнер */
+  .video-container {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%) !important;
+  }
+  
+  /* Упрощаем футер */
+  .footer-grid {
+    gap: 1.5rem !important;
+  }
+  
+  .footer-column h3 {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Горизонтальная ориентация на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+  #home {
+    min-height: 100vh !important;
+    padding: 2rem 1rem !important;
+  }
+  
+  #main-logo {
+    max-width: 60vh !important;
+    width: 60vh !important;
+  }
+  
+  #nav-menu.active {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  header {
+    padding: 0.25rem 1rem !important;
+  }
+}
+
+/* Исправление для очень высоких экранов */
+@media (min-width: 769px) and (max-height: 600px) {
+  #home {
+    min-height: 100vh !important;
+    padding: 2rem 0 !important;
+  }
+  
+  #main-logo {
+    max-width: 50vh !important;
+  }
+}
+
+/* Гарантия что меню скрыто на десктопе */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+  
+  #nav-menu {
+    display: flex !important;
+    position: static !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  
+  #nav-menu li {
+    width: auto !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  
+  .nav-link {
+    padding: 0.3rem 0 !important;
+  }
+}
+
+/* Улучшение производительности скролла */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Оптимизация рендеринга для мобильных */
+.about-card,
+.expertise-card,
+.methodology-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Исправление тултипов для мобильных */
+@media (max-width: 768px) {
+  .about-card::before,
+  .about-card::after {
+    display: none !important;
+  }
+  
+  /* Упрощенные тултипы для мобильных */
+  .tooltip-content {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.9) !important;
+    max-width: 90vw !important;
+    width: 300px !important;
+    z-index: 10000 !important;
+    font-size: 14px !important;
+    padding: 15px !important;
+  }
+  
+  .tooltip-content.active {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+}
+
+/* Исправление модальных окон */
+@media (max-width: 768px) {
+  .popup-modal {
+    padding: 10px !important;
+    align-items: flex-start !important;
+    padding-top: 60px !important;
+  }
+  
+  .popup-content {
+    width: 95% !important;
+    max-height: 80vh !important;
+    padding: 1.5rem !important;
+    margin: 0 auto !important;
+    overflow-y: auto !important;
+  }
+  
+  .close-btn {
+    top: 10px !important;
+    right: 15px !important;
+    font-size: 1.8rem !important;
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
+
+/* Улучшение читаемости текста */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px !important; /* Предотвращаем зум на iOS */
+    line-height: 1.6 !important;
+    text-size-adjust: 100%; /* Предотвращаем автоматическое изменение размера текста */
+  }
+  
+  .about-card p,
+  .methodology-card p,
+  .expertise-card p,
+  .philosophy-quote {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    font-size: 16px !important; /* Фиксированный размер для читаемости */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    text-size-adjust: 100%;
+  }
+}
+
+/* Предотвращение зума при фокусе на iOS */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Улучшение touch-интерфейса */
+@media (max-width: 768px) {
+  /* Увеличиваем область клика для touch устройств */
+  .nav-link,
+  .gold-button,
+  .read-more,
+  .menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Улучшаем feedback при тапе */
+  .about-card:active,
+  .expertise-card:active,
+  .methodology-card:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.1s ease !important;
+  }
+  
+  .gold-button:active,
+  .read-more:active,
+  .submit-btn:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s ease !important;
+  }
+}
+
+/* Исправление для меню переключения языков */
+@media (max-width: 768px) {
+  .lang-switcher {
+    margin-top: 1rem;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .navbar-bottom {
+    flex-wrap: wrap;
+  }
+}
+
+/* Анимация появления для мобильного меню */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#nav-menu.active li {
+  animation: slideDown 0.3s ease forwards;
+}
+
+#nav-menu.active li:nth-child(1) { animation-delay: 0.1s; }
+#nav-menu.active li:nth-child(2) { animation-delay: 0.15s; }
+#nav-menu.active li:nth-child(3) { animation-delay: 0.2s; }
+#nav-menu.active li:nth-child(4) { animation-delay: 0.25s; }
+#nav-menu.active li:nth-child(5) { animation-delay: 0.3s; }
+#nav-menu.active li:nth-child(6) { animation-delay: 0.35s; }
+#nav-menu.active li:nth-child(7) { animation-delay: 0.4s; }
+
+/* Улучшение accessibility */
+@media (max-width: 768px) {
+  /* Убеждаемся, что все интерактивные элементы доступны для скринридеров */
+  .menu-toggle {
+    aria-label: "Открыть меню";
+  }
+  
+  #nav-menu[aria-hidden="true"] {
+    display: none;
+  }
+  
+  #nav-menu[aria-hidden="false"] {
+    display: flex;
+  }
+}
+
+/* Исправление для очень маленьких высот экрана */
+@media (max-height: 500px) {
+  #home {
+    min-height: 100vh !important;
+    padding: 1rem !important;
+  }
+  
+  #main-logo {
+    max-width: 70vh !important;
+    width: 70vh !important;
+  }
+}
+
+/* ========== ИСПРАВЛЕНИЕ САТУРН КУРСОРА ========== */
+.saturn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s linear;
+  display: block;
+}
+
+.saturn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #d4af37);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 15px rgba(212, 175, 55, 0.9),
+    inset -1px -1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.saturn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 8px;
+  border: 2px solid rgba(212, 175, 55, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(75deg);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+  animation: saturnSpin 6s ease-in-out infinite;
+}
+
+@keyframes saturnSpin {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotateX(75deg) rotateZ(10deg);
+  }
+}
+
+/* Скрываем стандартный курсор когда Saturn активен */
+@media (min-width: 769px) {
+  body {
+    cursor: none;
+  }
+  
+  a, button, .nav-link, .read-more, .submit-btn, .gold-button {
+    cursor: none;
+  }
+}
+
+/* ========== ИСПРАВЛЕНИЕ ПРЕЛОАДЕРА ========== */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 50%, #181824 40%, #0b0b15 100%);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(.6,.9,.39,1.15);
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gold-ring-animation {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border-top: 3px solid #d4af37;
+  border-bottom: 3px solid transparent;
+  margin: 40px auto 10px;
+  box-shadow: 0 0 20px #d4af3766;
+  animation: spinRing 1.6s linear infinite;
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.preloader-logo {
+  max-width: 120px !important;
+  width: 100% !important;
+  height: auto !important;
+  margin-bottom: 10px !important;
+  display: block !important;
+  filter: drop-shadow(0 0 40px #d4af37a6) !important;
+  opacity: 1 !important;
+  transition: opacity 1s;
+}
