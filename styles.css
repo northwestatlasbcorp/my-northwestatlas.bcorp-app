@@ -2470,7 +2470,7 @@ footer::before {
   perspective: 1000;
 }
 
-/* ========== ЭКСТРЕННОЕ ИСПРАВЛЕНИЕ ЛОГОТИПА ========== */
+/* ========== ФИКС ЦЕНТРИРОВАНИЯ ЛОГОТИПА ========== */
 #home {
     display: flex !important;
     align-items: center !important;
@@ -2481,6 +2481,7 @@ footer::before {
     width: 100% !important;
     margin: 0 !important;
     overflow: hidden !important;
+    box-sizing: border-box !important;
 }
 
 #main-logo {
@@ -2500,9 +2501,14 @@ footer::before {
 }
 
 /* Убедитесь, что body не смещает контент */
-body {
+body, html {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     overflow-x: hidden !important;
+    box-sizing: border-box !important;
+}
+
+* {
+    box-sizing: border-box !important;
 }
