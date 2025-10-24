@@ -1,17 +1,13 @@
+// Detect current page language
+function getCurrentLanguage() {
+    return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
+}
+
 // Объявление AOS
 const AOS = window.AOS;
 
-// Анимация заголовка через Anime.js
+// Инициализация AOS для анимаций
 document.addEventListener("DOMContentLoaded", () => {
-    anime({
-        targets: ".site-title",
-        opacity: [0, 1],
-        translateY: [50, 0],
-        duration: 1500,
-        easing: "easeOutExpo",
-    });
-
-    // Инициализация AOS для остальных элементов
     AOS.init({
         duration: 800,
         easing: "ease",
@@ -89,39 +85,9 @@ function toggleContacts() {
 
         setTimeout(() => {
             contacts.style.display = "none";
-        }, 500); // Время завершения анимации
+        }, 500);
 
         button.textContent = "Показать";
-    }
-}
-
-// Инициализация мобильных подсказок (для работы по клику на мобильных)
-function initMobileTooltips() {
-    if (window.innerWidth <= 768) {
-        const aboutCards = document.querySelectorAll(".about-card");
-
-        aboutCards.forEach((card) => {
-            card.addEventListener("click", function (e) {
-                // Переключаем класс для активации/деактивации подсказки
-                this.classList.toggle("tooltip-active");
-
-                // Закрываем другие открытые подсказки
-                aboutCards.forEach((otherCard) => {
-                    if (otherCard !== this) {
-                        otherCard.classList.remove("tooltip-active");
-                    }
-                });
-            });
-        });
-
-        // Закрываем подсказки при клике вне карточек
-        document.addEventListener("click", (e) => {
-            if (!e.target.closest(".about-card")) {
-                aboutCards.forEach((card) => {
-                    card.classList.remove("tooltip-active");
-                });
-            }
-        });
     }
 }
 
@@ -159,12 +125,9 @@ function openPopup(expertise) {
     const title = document.getElementById("popup-title");
     const details = document.getElementById("popup-details");
 
-    // Заполняем данные из объекта
     const data = expertiseData[expertise];
     title.textContent = data.title;
     details.innerHTML = data.content;
-
-    // Показываем модальное окно
     popup.style.display = "flex";
 }
 
@@ -172,11 +135,6 @@ function openPopup(expertise) {
 function closePopup() {
     const popup = document.getElementById("popup-modal");
     popup.style.display = "none";
-}
-
-// Detect current page language
-function getCurrentLanguage() {
-    return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
 }
 
 // ESG Calculator data - BILINGUAL
@@ -355,16 +313,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Добавляем класс "scrolled" при прокрутке
-window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
-
 // ======= PARTICLES.JS НАСТРОЙКИ =======
 // Инициализация интерактивного фона с золотыми частицами
 window.addEventListener('load', function() {
@@ -486,21 +434,6 @@ interactiveElements.forEach(el => {
   });
 });
 
-// ========== PRELOADER ==========
-
-window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  
-  setTimeout(() => {
-    preloader.classList.add('hidden');
-    
-    // Удаляем preloader из DOM после анимации
-    setTimeout(() => {
-      preloader.remove();
-    }, 800);
-  }, 2000); // 2 секунды показа
-});
-
 // ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
 
 document.addEventListener('copy', (e) => {
@@ -546,4 +479,22 @@ document.addEventListener('copy', (e) => {
       notification.remove();
     }, 300);
   }, 1700);
+});
+
+// ========== ПРЕМИАЛЬНЫЙ PRELOADER ==========
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        preloader.style.opacity = '0';
+        preloader.style.pointerEvents = 'none';
+        preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
+        setTimeout(function() {
+            preloader.remove();
+        }, 900);
+    }, 2000); // 2 секунды
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollSpy();
+    initHeaderScroll();
 });
