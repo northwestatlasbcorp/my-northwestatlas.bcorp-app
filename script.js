@@ -529,9 +529,17 @@ window.addEventListener('scroll', () => {
   }
 });
 
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
-};
+document.addEventListener('DOMContentLoaded', function() {
+    window.scrollTo(0, 0);
+});
+
+window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
+});
+
+if (window.history && window.history.scrollRestoration) {
+    window.history.scrollRestoration = 'manual';
+}
 
 const saturn = document.querySelector('.saturn');
 let mouseX = 0, mouseY = 0;
