@@ -1,121 +1,21 @@
-// ========== КАСТОМНЫЕ АНИМАЦИИ (замена AOS) ==========
-
 // Detect current page language
 function getCurrentLanguage() {
     return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
 }
 
-// Кастомная система анимаций
-class CustomAnimations {
-    constructor() {
-        this.animatedElements = new Set();
-        this.init();
-    }
+// Объявление AOS
+const AOS = window.AOS;
 
-    init() {
-        // Ждем полной загрузки страницы
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.setupAnimations());
-        } else {
-            this.setupAnimations();
-        }
-
-        // Запускаем анимации
-        setTimeout(() => {
-            this.animateOnScroll();
-        }, 100);
-
-        // Слушаем скролл
-        window.addEventListener('scroll', () => this.animateOnScroll());
-        window.addEventListener('resize', () => this.animateOnScroll());
-    }
-
-    setupAnimations() {
-        // Находим все элементы с data-aos
-        const elements = document.querySelectorAll('[data-aos]');
-        
-        elements.forEach(element => {
-            // Удаляем data-aos атрибуты чтобы не мешали
-            const animationType = element.getAttribute('data-aos');
-            const delay = element.getAttribute('data-aos-delay') || 0;
-            const duration = element.getAttribute('data-aos-duration') || 800;
-
-            // Устанавливаем начальные стили
-            this.setInitialStyles(element, animationType);
-            
-            // Сохраняем данные для анимации
-            element._animationData = {
-                type: animationType,
-                delay: parseInt(delay),
-                duration: parseInt(duration),
-                animated: false
-            };
-
-            this.animatedElements.add(element);
-        });
-
-        console.log(`🎯 Настроено ${this.animatedElements.size} элементов для анимации`);
-    }
-
-    setInitialStyles(element, type) {
-        const styles = {
-            'fade-up': { opacity: '0', transform: 'translateY(30px)' },
-            'fade-down': { opacity: '0', transform: 'translateY(-30px)' },
-            'fade-left': { opacity: '0', transform: 'translateX(-30px)' },
-            'fade-right': { opacity: '0', transform: 'translateX(30px)' },
-            'zoom-in': { opacity: '0', transform: 'scale(0.9)' },
-            'flip-left': { opacity: '0', transform: 'rotateY(-90deg)' }
-        };
-
-        const style = styles[type] || styles['fade-up'];
-        
-        Object.assign(element.style, {
-            transition: `all ${element._animationData?.duration || 800}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
-            opacity: style.opacity,
-            transform: style.transform,
-            willChange: 'transform, opacity'
-        });
-    }
-
-    animateOnScroll() {
-        const windowHeight = window.innerHeight;
-        const triggerOffset = 100;
-
-        this.animatedElements.forEach(element => {
-            if (element._animationData.animated) return;
-
-            const rect = element.getBoundingClientRect();
-            const elementTop = rect.top;
-            const elementVisible = 150;
-
-            if (elementTop < windowHeight - elementVisible) {
-                this.animateElement(element);
-            }
-        });
-    }
-
-    animateElement(element) {
-        const data = element._animationData;
-        
-        setTimeout(() => {
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0) translateX(0) scale(1) rotateY(0)';
-            element._animationData.animated = true;
-            
-            // Добавляем класс для парящего эффекта карточек
-            if (element.classList.contains('about-card') || 
-                element.classList.contains('expertise-card') || 
-                element.classList.contains('methodology-card') ||
-                element.classList.contains('investment-block')) {
-                setTimeout(() => {
-                    element.classList.add('aos-animate');
-                }, data.duration);
-            }
-        }, data.delay);
-    }
-}
-
-// ========== ОСНОВНОЙ КОД ==========
+// Инициализация AOS для анимаций
+document.addEventListener("DOMContentLoaded", () => {
+    AOS.init({
+        duration: 800,
+        easing: "ease",
+        once: false,
+        mirror: false,
+        anchorPlacement: "top-bottom",
+    });
+});
 
 // Установка текущего года в футере
 document.getElementById("current-year").textContent = new Date().getFullYear();
@@ -403,6 +303,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Анимация при прокрутке
+window.addEventListener('scroll', () => {
+    const hero = document.getElementById('hero');
+    if (window.scrollY > 100) {
+        hero.style.transform = 'translateY(-50px)';
+    } else {
+        hero.style.transform = 'translateY(0)';
+    }
+});
+
 // ======= PARTICLES.JS НАСТРОЙКИ =======
 // Инициализация интерактивного фона с золотыми частицами
 window.addEventListener('load', function() {
@@ -481,6 +391,96 @@ window.addEventListener('load', function() {
     });
 });
 
+// Интерактивное свечение логотипа
+document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.getElementById('main-logo');
+    
+    if (logo) {
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Изменяем интенсивность свечения в зависимости от позиции курсора
+            const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
+            const glowSize = 20 + (x + y) / 2 * 40;
+            
+            logo.style.filter = `
+                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
+                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
+                drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
+            `;
+        });
+    }
+});
+// ========== ПРЕМИАЛЬНЫЙ ЗОЛОТОЙ КУРСОР ==========
+
+const cursor = document.querySelector('.custom-cursor');
+
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// Увеличение при наведении на интерактивные элементы
+const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+
+interactiveElements.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('active');
+  });
+  
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('active');
+  });
+});
+
+// ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
+
+document.addEventListener('copy', (e) => {
+  e.preventDefault();
+  
+  // Определяем язык страницы
+  const lang = document.documentElement.lang || 'ru';
+  const messages = {
+    'ru': '© North West Atlas B Corp — Контент защищён',
+    'en': '© North West Atlas B Corp — Content Protected'
+  };
+  
+  // Создаём красивое уведомление
+  const notification = document.createElement('div');
+  notification.textContent = messages[lang] || messages['en'];
+  notification.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: #d4af37;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 2px solid #d4af37;
+    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
+    z-index: 99999;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
+    animation: fadeInOut 2s ease;
+    backdrop-filter: blur(10px);
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    notification.style.transition = 'all 0.3s ease';
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 1700);
+});
+
 // ========== ПРЕМИАЛЬНЫЙ PRELOADER ==========
 window.addEventListener('load', function() {
     setTimeout(function() {
@@ -494,14 +494,7 @@ window.addEventListener('load', function() {
     }, 2000); // 2 секунды
 });
 
-// ========== ИНИЦИАЛИЗАЦИЯ ВСЕГО ==========
 document.addEventListener("DOMContentLoaded", () => {
-    // Запускаем кастомные анимации
-    new CustomAnimations();
-    
-    // Инициализируем остальные функции
     initScrollSpy();
     initHeaderScroll();
-    
-    console.log("🚀 Сайт полностью загружен и готов");
 });
