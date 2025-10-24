@@ -79,7 +79,7 @@ function toggleContacts() {
             contacts.style.opacity = "1";
         }, 10);
 
-        button.textContent = "Скрыть";
+        button.textContent = getCurrentLanguage() === 'en' ? 'Hide' : 'Скрыть';
     } else {
         contacts.style.opacity = "0";
 
@@ -87,7 +87,7 @@ function toggleContacts() {
             contacts.style.display = "none";
         }, 500);
 
-        button.textContent = "Показать";
+        button.textContent = getCurrentLanguage() === 'en' ? 'Show' : 'Показать';
     }
 }
 
@@ -129,12 +129,20 @@ function openPopup(expertise) {
     title.textContent = data.title;
     details.innerHTML = data.content;
     popup.style.display = "flex";
+    
+    // Добавляем анимацию появления
+    setTimeout(() => {
+        popup.style.opacity = "1";
+    }, 10);
 }
 
 // Закрытие модального окна
 function closePopup() {
     const popup = document.getElementById("popup-modal");
-    popup.style.display = "none";
+    popup.style.opacity = "0";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 300);
 }
 
 // ESG Calculator data - BILINGUAL
@@ -207,11 +215,11 @@ function toggleRatings() {
         loadRatings();
         result.classList.add("active");
         recommendations.classList.add("active");
-        button.textContent = "СКРЫТЬ РЕЙТИНГИ";
+        button.textContent = getCurrentLanguage() === 'en' ? 'HIDE RATINGS' : 'СКРЫТЬ РЕЙТИНГИ';
     } else {
         result.classList.remove("active");
         recommendations.classList.remove("active");
-        button.textContent = "ЗАГРУЗИТЬ РЕЙТИНГИ";
+        button.textContent = getCurrentLanguage() === 'en' ? 'LOAD RATINGS' : 'ЗАГРУЗИТЬ РЕЙТИНГИ';
     }
 }
 
@@ -228,7 +236,8 @@ function loadRatings() {
     }
 
     // Генерация таблицы
-    let tableHTML = `<table class="ratings-table"><thead><tr><th>Показатель</th><th>Оценка</th></tr></thead><tbody>`;
+    const tableTitle = getCurrentLanguage() === 'en' ? 'ESG Ratings' : 'ESG Рейтинги';
+    let tableHTML = `<h3 class="recommendation-title">${tableTitle}</h3><table class="ratings-table"><thead><tr><th>${getCurrentLanguage() === 'en' ? 'Indicator' : 'Показатель'}</th><th>${getCurrentLanguage() === 'en' ? 'Rating' : 'Оценка'}</th></tr></thead><tbody>`;
     ratingsData[company].ratings.forEach((row) => {
         tableHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
     });
@@ -244,7 +253,7 @@ function loadRatings() {
     
     // ИСПРАВЛЕНИЕ: добавляем проверку языка для кнопки
     const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Полный доступ — по запросу';
-    recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
+    recommendationsHTML += `</div><button class="download-button gold-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
     
     recommendationsDiv.innerHTML = recommendationsHTML;
 }
@@ -256,26 +265,31 @@ function downloadExcel() {
     const data = ratingsData[company];
 
     if (!data) {
-        alert("Данные о компании не найдены.");
+        alert(getCurrentLanguage() === 'en' ? "Company data not found." : "Данные о компании не найдены.");
         return;
     }
 
     let csvContent = "data:text/csv;charset=utf-8,";
-    // Добавляем заголовок
-    csvContent += "Показатель,Оценка\n";
-
-    // Добавляем данные рейтингов
-    data.ratings.forEach((row) => {
-        csvContent += `"${row[0]}","${row[1]}"\n`;
-    });
-
-    // Добавляем разделитель
-    csvContent += "\nРекомендации\n";
-
-    // Добавляем рекомендации
-    data.recommendations.forEach((rec) => {
-        csvContent += `"${rec.title}","${rec.text}"\n`;
-    });
+    
+    if (getCurrentLanguage() === 'en') {
+        csvContent += "Indicator,Rating\n";
+        data.ratings.forEach((row) => {
+            csvContent += `"${row[0]}","${row[1]}"\n`;
+        });
+        csvContent += "\nRecommendations\n";
+        data.recommendations.forEach((rec) => {
+            csvContent += `"${rec.title}","${rec.text}"\n`;
+        });
+    } else {
+        csvContent += "Показатель,Оценка\n";
+        data.ratings.forEach((row) => {
+            csvContent += `"${row[0]}","${row[1]}"\n`;
+        });
+        csvContent += "\nРекомендации\n";
+        data.recommendations.forEach((rec) => {
+            csvContent += `"${rec.title}","${rec.text}"\n`;
+        });
+    }
 
     // Кодируем URI
     const encodedUri = encodeURI(csvContent);
@@ -283,7 +297,11 @@ function downloadExcel() {
     // Создаем временную ссылку для скачивания
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`);
+    const fileName = getCurrentLanguage() === 'en' 
+        ? `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`
+        : `ESG_Отчет_${company}_${new Date().toISOString().split("T")[0]}.csv`;
+    
+    link.setAttribute("download", fileName);
     document.body.appendChild(link);
 
     // Имитируем клик по ссылке
@@ -293,28 +311,181 @@ function downloadExcel() {
     document.body.removeChild(link);
 }
 
-// Плавная прокрутка до секций
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+// ========== ПРЕМИАЛЬНЫЕ ЭФФЕКТЫ ДЛЯ ЗОЛОТЫХ ЭЛЕМЕНТОВ ==========
+
+// Инициализация эффектов для элементов с data-gold-glow
+function initGoldEffects() {
+    const goldElements = document.querySelectorAll('[data-gold-glow]');
+    
+    goldElements.forEach(element => {
+        // Добавляем обработчики для интерактивных эффектов
+        if (element.classList.contains('about-card') || 
+            element.classList.contains('expertise-card') || 
+            element.classList.contains('methodology-card')) {
+            
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        }
+    });
+}
+
+// Улучшенное свечение логотипа с поддержкой премиальных эффектов
+function initPremiumLogoEffects() {
+    const logo = document.getElementById('main-logo');
+    
+    if (logo) {
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            // Более плавное изменение свечения
+            const glowIntensity = 0.6 + (x + y) / 2 * 0.4;
+            const glowSize = 25 + (x + y) / 2 * 35;
+            
+            logo.style.filter = `
+                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
+                drop-shadow(0 0 ${glowSize * 1.5}px rgba(212, 175, 55, ${glowIntensity * 0.8}))
+                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.5}))
+            `;
+            
+            // Легкое движение логотипа в ответ на курсор
+            const moveX = (x - 0.5) * 10;
+            const moveY = (y - 0.5) * 10;
+            logo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+        });
+    }
+}
+
+// ========== УЛУЧШЕННЫЙ SATURN CURSOR С ПЛАЗМОЙ ==========
+
+let mouseX = 0, mouseY = 0;
+let saturnX = 0, saturnY = 0;
+const delay = 0.08; // Увеличена скорость для более отзывчивого курсора
+
+function createSaturnCursor() {
+    const saturn = document.createElement('div');
+    saturn.className = 'saturn';
+    
+    // Добавляем плазменный эффект
+    const plasma = document.createElement('div');
+    plasma.className = 'saturn-plasma';
+    saturn.appendChild(plasma);
+    
+    document.body.appendChild(saturn);
+    return saturn;
+}
+
+function initSaturnCursor() {
+    const saturn = document.querySelector('.saturn') || createSaturnCursor();
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateSaturn() {
+        saturnX += (mouseX - saturnX) * delay;
+        saturnY += (mouseY - saturnY) * delay;
+        saturn.style.transform = `translate(${saturnX}px, ${saturnY}px)`;
+        requestAnimationFrame(animateSaturn);
+    }
+
+    // Добавляем эффекты при наведении на интерактивные элементы
+    const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn, .gold-button');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) scale(1.3)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) scale(1)`;
+        });
+    });
+
+    animateSaturn();
+}
+
+// ========== УЛУЧШЕННАЯ ОБРАБОТКА ФОРМЫ ==========
+
+function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Анимация отправки
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + 
+                                (getCurrentLanguage() === 'en' ? 'Sending...' : 'Отправка...');
+            submitBtn.disabled = true;
+            
+            // Имитация отправки
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> ' + 
+                                    (getCurrentLanguage() === 'en' ? 'Sent!' : 'Отправлено!');
+                submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    contactForm.reset();
+                }, 2000);
+            }, 1500);
+        });
+    }
+}
+
+// ========== ИНИЦИАЛИЗАЦИЯ ВСЕХ ФУНКЦИЙ ==========
+
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollSpy();
+    initHeaderScroll();
+    initGoldEffects();
+    initPremiumLogoEffects();
+    initSaturnCursor();
+    initContactForm();
+    
+    // Плавная прокрутка до секций
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 });
 
-// Анимация при прокрутке
+// Анимация появления лого после загрузки
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// Добавление/удаление класса scrolled при прокрутке
 window.addEventListener('scroll', () => {
-    const hero = document.getElementById('hero');
-    if (window.scrollY > 100) {
-        hero.style.transform = 'translateY(-50px)';
+    const header = document.querySelector('header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
     } else {
-        hero.style.transform = 'translateY(0)';
+        header.classList.remove('scrolled');
     }
 });
 
-// ======= PARTICLES.JS НАСТРОЙКИ =======
-// Инициализация интерактивного фона с золотыми частицами
+// ========== PARTICLES.JS НАСТРОЙКИ =======
 window.addEventListener('load', function() {
     particlesJS('particles-js', {
         particles: {
@@ -391,94 +562,48 @@ window.addEventListener('load', function() {
     });
 });
 
-// Интерактивное свечение логотипа
-document.addEventListener('DOMContentLoaded', () => {
-    const logo = document.getElementById('main-logo');
-    
-    if (logo) {
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            // Изменяем интенсивность свечения в зависимости от позиции курсора
-            const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
-            const glowSize = 20 + (x + y) / 2 * 40;
-            
-            logo.style.filter = `
-                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
-                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
-                drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
-            `;
-        });
-    }
-});
-// ========== ПРЕМИАЛЬНЫЙ ЗОЛОТОЙ КУРСОР ==========
-
-const cursor = document.querySelector('.custom-cursor');
-
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-// Увеличение при наведении на интерактивные элементы
-const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
-
-interactiveElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.add('active');
-  });
-  
-  el.addEventListener('mouseleave', () => {
-    cursor.classList.remove('active');
-  });
-});
-
 // ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
-
 document.addEventListener('copy', (e) => {
-  e.preventDefault();
-  
-  // Определяем язык страницы
-  const lang = document.documentElement.lang || 'ru';
-  const messages = {
-    'ru': '© North West Atlas B Corp — Контент защищён',
-    'en': '© North West Atlas B Corp — Content Protected'
-  };
-  
-  // Создаём красивое уведомление
-  const notification = document.createElement('div');
-  notification.textContent = messages[lang] || messages['en'];
-  notification.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.95);
-    color: #d4af37;
-    padding: 20px 40px;
-    border-radius: 10px;
-    border: 2px solid #d4af37;
-    font-size: 16px;
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 1px;
-    z-index: 99999;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
-    animation: fadeInOut 2s ease;
-    backdrop-filter: blur(10px);
-  `;
-  
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.style.opacity = '0';
-    notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
-    notification.style.transition = 'all 0.3s ease';
+    e.preventDefault();
+    
+    const lang = getCurrentLanguage();
+    const messages = {
+        'ru': '© North West Atlas B Corp — Контент защищён',
+        'en': '© North West Atlas B Corp — Content Protected'
+    };
+    
+    const notification = document.createElement('div');
+    notification.textContent = messages[lang] || messages['en'];
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.95);
+        color: #d4af37;
+        padding: 20px 40px;
+        border-radius: 10px;
+        border: 2px solid #d4af37;
+        font-size: 16px;
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 1px;
+        z-index: 99999;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
+        animation: fadeInOut 2s ease;
+        backdrop-filter: blur(10px);
+    `;
+    
+    document.body.appendChild(notification);
     
     setTimeout(() => {
-      notification.remove();
-    }, 300);
-  }, 1700);
+        notification.style.opacity = '0';
+        notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        notification.style.transition = 'all 0.3s ease';
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 1700);
 });
 
 // ========== ПРЕМИАЛЬНЫЙ PRELOADER ==========
@@ -491,44 +616,10 @@ window.addEventListener('load', function() {
         setTimeout(function() {
             preloader.remove();
         }, 900);
-    }, 2000); // 2 секунды
+    }, 2000);
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    initScrollSpy();
-    initHeaderScroll();
-});
-
-// Анимация появления лого после загрузки
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-});
-
-// Добавление/удаление класса scrolled при прокрутке
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-});
-
-// Плавная анимация появления логотипа после загрузки страницы
-window.addEventListener('load', () => {
-  document.body.classList.add('loaded');
-});
-
-// Добавление/удаление класса при прокрутке для изменения вида шапки и логотипа
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-});
-
+// Скролл наверх при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 });
@@ -540,22 +631,3 @@ window.addEventListener('load', function() {
 if (window.history && window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
-
-const saturn = document.querySelector('.saturn');
-let mouseX = 0, mouseY = 0;
-let saturnX = 0, saturnY = 0;
-const delay = 0.10;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-function animateSaturn() {
-  saturnX += (mouseX - saturnX) * delay;
-  saturnY += (mouseY - saturnY) * delay;
-  saturn.style.transform = `translate(${saturnX}px, ${saturnY}px)`;
-  requestAnimationFrame(animateSaturn);
-}
-
-animateSaturn();
