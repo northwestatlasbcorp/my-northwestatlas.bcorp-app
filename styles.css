@@ -4,12 +4,15 @@
 body:not(.loaded) #main-logo {
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  /* Убираем transition здесь - она конфликтует с анимацией */
 }
 
 body.loaded #main-logo {
   opacity: 1;
   transform: scale(1);
+  
+  /* Добавляем плавный переход после загрузки */
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 /* Базовые настройки и переменные */
@@ -1576,17 +1579,6 @@ footer::after {
   100% { transform: rotate(360deg);}
 }
 
-.preloader-content img {
-  max-width: 180px;  /* можно изменить на 120-160px по вкусу */
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-  display: block;
-  filter: drop-shadow(0 0 40px #d4af37a6);
-  opacity: 0;
-  transition: opacity 1s;
-}
-
 .preloader-logo {
   max-width: 120px !important;
   width: 100% !important;
@@ -1717,80 +1709,6 @@ footer::after {
   }
 }
 
-/* Логотип при загрузке — начальное состояние */
-#main-logo {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-}
-
-/* После загрузки страницы — логотип проявляется */
-body.loaded #main-logo {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Шапка по умолчанию */
-header {
-  position: fixed;
-  width: 100%;
-  background: transparent;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1000;
-}
-
-/* При прокрутке — шапка становится темной и с тенью */
-header.scrolled {
-  background-color: rgba(13, 13, 13, 0.95);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-}
-
-/* Логотип в шапке в нормальном состоянии */
-#main-logo {
-  max-width: 150px;
-  transition: max-width 0.4s ease, filter 0.4s ease;
-  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
-}
-
-/* Логотип в шапке при прокрутке — меньше и с усиленным свечением */
-header.scrolled #main-logo {
-  max-width: 100px;
-  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
-}
-
-/* Плавные длительные переходы */
-* {
-  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-/* Липкий заголовок */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: rgba(13, 13, 13, 0.95);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-  transition: background-color 1s ease, box-shadow 1s ease;
-}
-
-/* Логотип в шапке */
-#main-logo {
-  max-width: 150px;
-  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
-  transition: max-width 0.7s ease, filter 0.7s ease;
-}
-
-/* Логотип уменьшается и светится при прокрутке и липком меню */
-header.scrolled #main-logo {
-  max-width: 100px;
-  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
-}
-
-/* Оставляем стандартный курсор видимым */
-body {
-  cursor: default !important;
-}
-
 /* ========== ЭФФЕКТ САТУРНА ========== */
 .saturn {
   position: fixed;
@@ -1841,3 +1759,36 @@ body {
     transform: translate(-50%, -50%) rotateX(75deg) rotateZ(10deg);
   }
 }
+
+@media (max-width: 768px) {
+  /* Отключаем сложные анимации на мобильных */
+  .video-container {
+    animation: none !important;
+  }
+  
+  .about-card:hover,
+  .expertise-card:hover,
+  .methodology-card:hover {
+    transform: none !important;
+  }
+  
+  /* Упрощаем тени для лучшей производительности */
+  .section-title {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
+  }
+}
+
+/* ДОБАВЬТЕ: */
+.about-card p,
+.methodology-card p,
+.expertise-card p {
+  color: rgba(255, 255, 255, 0.9) !important; /* Более четкий текст */
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Улучшаем контрастность */
+.bg-black\/70 {
+  background-color: rgba(0, 0, 0, 0.85) !important; /* Более темный */
+}
+
