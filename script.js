@@ -59,11 +59,83 @@ function initHeaderScroll() {
     });
 }
 
-// Функция для переключения меню
+// Функция для переключения мобильного меню
 function toggleMenu() {
-    const menu = document.getElementById("nav-menu");
-    menu.classList.toggle("active");
+    const navMenu = document.getElementById('nav-menu');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const icon = menuToggle.querySelector('i');
+    
+    if (navMenu && menuToggle) {
+        navMenu.classList.toggle('active');
+        
+        // Обновляем aria-атрибуты для accessibility
+        const isExpanded = navMenu.classList.contains('active');
+        menuToggle.setAttribute('aria-expanded', isExpanded);
+        navMenu.setAttribute('aria-hidden', !isExpanded);
+        
+        // Меняем иконку
+        if (isExpanded) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+            // Блокируем скролл страницы когда меню открыто
+            document.body.style.overflow = 'hidden';
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+            // Разблокируем скролл
+            document.body.style.overflow = '';
+        }
+    }
 }
+
+// Закрытие меню при клике на ссылку
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const navMenu = document.getElementById('nav-menu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                
+                // Обновляем aria-атрибуты
+                menuToggle.setAttribute('aria-expanded', 'false');
+                navMenu.setAttribute('aria-hidden', 'true');
+                
+                // Разблокируем скролл
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Закрытие меню при клике вне его области
+    document.addEventListener('click', function(event) {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        if (navMenu && navMenu.classList.contains('active') && 
+            !navMenu.contains(event.target) && 
+            !menuToggle.contains(event.target)) {
+            
+            navMenu.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+            
+            // Обновляем aria-атрибуты
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
+            
+            // Разблокируем скролл
+            document.body.style.overflow = '';
+        }
+    });
+});
 
 // Показ/скрытие контактов
 function toggleContacts() {
@@ -1047,3 +1119,4 @@ const mobileTooltipCSS = `
 const style = document.createElement('style');
 style.textContent = mobileTooltipCSS;
 document.head.appendChild(style);
+
