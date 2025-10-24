@@ -3,17 +3,16 @@ function getCurrentLanguage() {
     return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
 }
 
-// Объявление AOS
-const AOS = window.AOS;
-
 // Инициализация AOS для анимаций
 document.addEventListener("DOMContentLoaded", () => {
     AOS.init({
         duration: 800,
-        easing: "ease",
-        once: false,
+        offset: 100,
+        easing: 'ease-out-cubic',
+        once: true, // анимация только один раз
         mirror: false,
         anchorPlacement: "top-bottom",
+        disable: window.innerWidth < 768 // отключаем на мобильных для производительности
     });
 });
 
