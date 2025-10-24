@@ -463,29 +463,6 @@ function initContactForm() {
 
 // ========== ИНИЦИАЛИЗАЦИЯ ВСЕХ ФУНКЦИЙ ==========
 
-document.addEventListener("DOMContentLoaded", () => {
-    initScrollSpy();
-    initHeaderScroll();
-    initOptimizedEffects();
-    handleMobileInteractions();
-    initOptimizedParticles();
-    initContactForm();
-    initTooltips(); 
-    
-    // Плавная прокрутка до секций
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-});
-
 // Анимация появления лого после загрузки
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
@@ -820,69 +797,253 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileTooltips(); // ДОБАВЬТЕ ЭТУ СТРОЧКУ
 });
 
-// ========== ФИКС ТУЛТИПОВ ДЛЯ МОБИЛЬНЫХ ==========
+// ========== ИСПРАВЛЕННАЯ СИСТЕМА ТУЛТИПОВ ==========
 
 function initTooltips() {
-    const aboutCards = document.querySelectorAll('.about-card');
+    // Обработка текстовых тултипов (.tooltip-trigger)
+    const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
     
-    aboutCards.forEach(card => {
-        let tooltipTimeout;
-        let isTooltipVisible = false;
+    tooltipTriggers.forEach(trigger => {
+        const tooltipContent = trigger.getAttribute('data-tooltip');
         
-        // Для десктопов - hover
-        card.addEventListener('mouseenter', function() {
-            clearTimeout(tooltipTimeout);
-            isTooltipVisible = true;
-        });
+        // Создаем элемент тултипа
+        const tooltipElement = document.createElement('div');
+        tooltipElement.className = 'tooltip-content';
+        tooltipElement.innerHTML = tooltipContent;
         
-        card.addEventListener('mouseleave', function() {
-            clearTimeout(tooltipTimeout);
-            isTooltipVisible = false;
-        });
+        // Добавляем тултип в DOM
+        trigger.parentNode.appendChild(tooltipElement);
         
-        // Для мобильных - tap
-        if (isMobileDevice()) {
-            card.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                clearTimeout(tooltipTimeout);
-                
-                if (!isTooltipVisible) {
-                    // Показываем тултип
-                    this.classList.add('tooltip-active');
-                    isTooltipVisible = true;
-                    
-                    // Скрываем через 3 секунды
-                    tooltipTimeout = setTimeout(() => {
-                        this.classList.remove('tooltip-active');
-                        isTooltipVisible = false;
-                    }, 3000);
-                } else {
-                    // Скрываем тултип
-                    this.classList.remove('tooltip-active');
-                    isTooltipVisible = false;
-                }
+        // Обработчики для десктопа
+        if (!isMobileDevice()) {
+            trigger.addEventListener('mouseenter', function() {
+                showTooltip(this, tooltipElement);
             });
             
-            // Предотвращаем скролл при касании карточки
-            card.addEventListener('touchmove', function(e) {
-                if (isTooltipVisible) {
-                    e.preventDefault();
+            trigger.addEventListener('mouseleave', function() {
+                hideTooltip(tooltipElement);
+            });
+            
+            tooltipElement.addEventListener('mouseenter', function() {
+                showTooltip(trigger, tooltipElement);
+            });
+            
+            tooltipElement.addEventListener('mouseleave', function() {
+                hideTooltip(tooltipElement);
+            });
+        } else {
+            // Обработчики для мобильных
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Закрываем все остальные тултипы
+                closeAllTooltips();
+                
+                // Показываем/скрываем текущий тултип
+                if (tooltipElement.classList.contains('active')) {
+                    hideTooltip(tooltipElement);
+                } else {
+                    showTooltip(this, tooltipElement);
                 }
             });
         }
     });
+    
+    // Обработка карточных тултипов (.about-card)
+    const aboutCards = document.querySelectorAll('.about-card[data-tooltip]');
+    
+    aboutCards.forEach(card => {
+        const tooltipContent = card.getAttribute('data-tooltip');
+        
+        // Создаем элемент тултипа для карточки
+        const tooltipElement = document.createElement('div');
+        tooltipElement.className = 'tooltip-content';
+        tooltipElement.innerHTML = tooltipContent;
+        
+        // Добавляем тултип в DOM
+        card.appendChild(tooltipElement);
+        
+        // Обработчики для десктопа
+        if (!isMobileDevice()) {
+            card.addEventListener('mouseenter', function() {
+                showTooltip(this, tooltipElement);
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                hideTooltip(tooltipElement);
+            });
+            
+            tooltipElement.addEventListener('mouseenter', function() {
+                showTooltip(card, tooltipElement);
+            });
+            
+            tooltipElement.addEventListener('mouseleave', function() {
+                hideTooltip(tooltipElement);
+            });
+        } else {
+            // Обработчики для мобильных
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Закрываем все остальные тултипы
+                closeAllTooltips();
+                
+                // Показываем/скрываем текущий тултип
+                if (tooltipElement.classList.contains('active')) {
+                    hideTooltip(tooltipElement);
+                } else {
+                    showTooltip(this, tooltipElement);
+                }
+            });
+        }
+    });
+    
+    // Закрытие тултипов при клике вне области
+    document.addEventListener('click', function(e) {
+        if (isMobileDevice() && 
+            !e.target.closest('.tooltip-trigger') && 
+            !e.target.closest('.tooltip-content') &&
+            !e.target.closest('.about-card')) {
+            closeAllTooltips();
+        }
+    });
+}
+
+function showTooltip(element, tooltipElement) {
+    // Позиционируем тултип
+    const rect = element.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    
+    // Для карточек позиционируем снизу, для текста - сверху
+    if (element.classList.contains('about-card')) {
+        tooltipElement.style.top = `${rect.top + scrollTop + rect.height + 10}px`;
+    } else {
+        tooltipElement.style.top = `${rect.top + scrollTop - tooltipElement.offsetHeight - 10}px`;
+    }
+    
+    tooltipElement.style.left = `${rect.left + scrollLeft + (rect.width / 2) - (tooltipElement.offsetWidth / 2)}px`;
+    
+    // Показываем тултип
+    tooltipElement.classList.add('active');
+    
+    // Для мобильных добавляем оверлей
+    if (isMobileDevice()) {
+        createTooltipOverlay();
+    }
+}
+
+function hideTooltip(tooltipElement) {
+    tooltipElement.classList.remove('active');
+    
+    // Удаляем оверлей если нет активных тултипов
+    if (isMobileDevice() && document.querySelectorAll('.tooltip-content.active').length === 0) {
+        removeTooltipOverlay();
+    }
+}
+
+function closeAllTooltips() {
+    document.querySelectorAll('.tooltip-content.active').forEach(tooltip => {
+        tooltip.classList.remove('active');
+    });
+    removeTooltipOverlay();
+}
+
+function createTooltipOverlay() {
+    if (!document.querySelector('.tooltip-overlay')) {
+        const overlay = document.createElement('div');
+        overlay.className = 'tooltip-overlay';
+        document.body.appendChild(overlay);
+        
+        overlay.addEventListener('click', closeAllTooltips);
+    }
+}
+
+function removeTooltipOverlay() {
+    const overlay = document.querySelector('.tooltip-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+// Улучшенная функция определения мобильного устройства
+function isMobileDevice() {
+    return window.innerWidth <= 768 || 
+           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 // Добавьте класс для мобильных тултипов в CSS
 const mobileTooltipCSS = `
-.about-card.tooltip-active::before {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translate(-50%, -50%) scale(1) !important;
+.tooltip-content {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    color: rgba(255, 255, 255, 0.95);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    width: 280px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.4);
+    transform: translateY(10px);
+    pointer-events: none;
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.tooltip-content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tooltip-content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(212, 175, 55, 0.6);
+}
+
+.tooltip-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+    display: none;
+}
+
+.tooltip-overlay.active {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .tooltip-content {
+        width: 250px;
+        font-size: 13px;
+        padding: 10px 14px;
+        z-index: 1001;
+    }
+    
+    .tooltip-content::after {
+        display: none;
+    }
 }
 `;
 
-// Вставка CSS для мобильных тултипов
+// Вставка CSS для тултипов
 const style = document.createElement('style');
 style.textContent = mobileTooltipCSS;
 document.head.appendChild(style);
