@@ -1765,3 +1765,291 @@ footer::after {
     transform: translateY(0);
   }
 }
+
+/* ========== ПРЕМИУМ СТИЛИ ДЛЯ ВСЕХ КАРТОЧЕК ========== */
+
+/* 💎 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КАРТОЧЕК */
+.about-card,
+.expertise-card,
+.methodology-card,
+.investment-block {
+  position: relative;
+  background: linear-gradient(145deg, 
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(30, 30, 30, 0.85) 50%,
+    rgba(20, 20, 20, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* ✨ ЗОЛОТАЯ ГРАДИЕНТНАЯ РАМКА */
+.about-card::before,
+.expertise-card::before,
+.methodology-card::before,
+.investment-block::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    transparent 0%,
+    rgba(212, 175, 55, 0.4) 25%,
+    rgba(212, 175, 55, 0.2) 50%,
+    rgba(212, 175, 55, 0.4) 75%,
+    transparent 100%);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* 💫 ПАРЯЩИЙ ЭФФЕКТ ДЛЯ КАРТОЧЕК - ТОЛЬКО БЕЗ AOS */
+.about-card:not([data-aos]),
+.expertise-card:not([data-aos]), 
+.methodology-card:not([data-aos]),
+.investment-block:not([data-aos]) {
+  animation: cardFloat 6s ease-in-out infinite;
+}
+
+.about-card:not([data-aos]):nth-child(1) { animation-delay: 0s; }
+.about-card:not([data-aos]):nth-child(2) { animation-delay: 1s; }
+.about-card:not([data-aos]):nth-child(3) { animation-delay: 2s; }
+.about-card:not([data-aos]):nth-child(4) { animation-delay: 3s; }
+
+.expertise-card:not([data-aos]):nth-child(1) { animation-delay: 0.5s; }
+.expertise-card:not([data-aos]):nth-child(2) { animation-delay: 1.5s; }
+.expertise-card:not([data-aos]):nth-child(3) { animation-delay: 2.5s; }
+.expertise-card:not([data-aos]):nth-child(4) { animation-delay: 3.5s; }
+.expertise-card:not([data-aos]):nth-child(5) { animation-delay: 4s; }
+.expertise-card:not([data-aos]):nth-child(6) { animation-delay: 4.5s; }
+
+.methodology-card:not([data-aos]):nth-child(1) { animation-delay: 0.2s; }
+.methodology-card:not([data-aos]):nth-child(2) { animation-delay: 1.2s; }
+.methodology-card:not([data-aos]):nth-child(3) { animation-delay: 2.2s; }
+.methodology-card:not([data-aos]):nth-child(4) { animation-delay: 3.2s; }
+
+@keyframes cardFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotateX(2deg); 
+  }
+}
+
+/* 🌟 HOVER-ЭФФЕКТЫ ДЛЯ КАРТОЧЕК */
+.about-card:hover,
+.expertise-card:hover,
+.methodology-card:hover,
+.investment-block:hover {
+  transform: translateY(-15px) scale(1.03) rotateX(3deg);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 175, 55, 0.8),
+    0 0 60px rgba(212, 175, 55, 0.5),
+    inset 0 0 30px rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.9);
+}
+
+.about-card:hover::before,
+.expertise-card:hover::before,
+.methodology-card:hover::before,
+.investment-block:hover::before {
+  opacity: 1;
+  animation: goldBorderFlow 3s ease-in-out infinite;
+}
+
+@keyframes goldBorderFlow {
+  0%, 100% { 
+    opacity: 0.7;
+    background-position: 0% 50%;
+  }
+  50% { 
+    opacity: 1;
+    background-position: 100% 50%;
+  }
+}
+
+/* 🏆 УНИКАЛЬНЫЕ СТИЛИ ДЛЯ КАЖДОГО ТИПА КАРТОЧЕК */
+
+/* Карточки "О нас" - более элегантные */
+.about-card {
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-card h3 {
+  font-family: var(--font-secondary);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #d4af37, #f4e5c3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Карточки "Экспертиза" - с иконками */
+.expertise-card {
+  text-align: center;
+  min-height: 280px;
+}
+
+.expertise-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--gold-primary);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.expertise-card:hover .expertise-icon {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Карточки "Методология" - технологичные */
+.methodology-card {
+  text-align: center;
+}
+
+.methodology-card .icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--gold-primary);
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+}
+
+/* Инвестиционные блоки - минималистичные */
+.investment-block {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  min-height: 180px;
+}
+
+.investment-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.4),
+    inset 0 0 10px rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+}
+
+.investment-block:hover .investment-icon {
+  transform: scale(1.1);
+  box-shadow: 
+    0 0 30px rgba(212, 175, 55, 0.6),
+    inset 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.investment-icon i {
+  font-size: 2.2rem;
+  color: var(--gold-primary);
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+}
+
+/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ КАРТОЧЕК */
+@media (max-width: 768px) {
+  .about-card,
+  .expertise-card,
+  .methodology-card,
+  .investment-block {
+    padding: 1.5rem 1rem;
+    margin: 0.5rem 0;
+    animation: none; /* Упрощаем анимации на мобильных */
+  }
+  
+  .about-card:hover,
+  .expertise-card:hover,
+  .methodology-card:hover,
+  .investment-block:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 15px 30px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(212, 175, 55, 0.6),
+      0 0 30px rgba(212, 175, 55, 0.3);
+  }
+  
+  .expertise-card {
+    min-height: 250px;
+  }
+  
+  .investment-block {
+    min-height: 150px;
+    padding: 2rem 1rem;
+  }
+}
+
+/* 💎 ДОПОЛНИТЕЛЬНЫЕ ПРЕМИУМ ЭФФЕКТЫ */
+
+/* Свечение текста в карточках */
+.about-card p,
+.expertise-card p,
+.methodology-card p {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  line-height: 1.6;
+}
+
+/* ========== ВАЖНО: ИСПРАВЛЕНИЯ ДЛЯ AOS ========== */
+
+/* Отключаем анимации появления для элементов с AOS */
+[data-aos].about-card,
+[data-aos].expertise-card, 
+[data-aos].methodology-card,
+[data-aos].investment-block {
+  opacity: 1 !important; /* AOS сам управляет opacity */
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Для элементов без AOS оставляем красивую анимацию появления */
+.about-card:not([data-aos]),
+.expertise-card:not([data-aos]),
+.methodology-card:not([data-aos]), 
+.investment-block:not([data-aos]) {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: cardReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Задержки для анимации появления ТОЛЬКО для элементов без AOS */
+.about-container .about-card:not([data-aos]):nth-child(1) { animation-delay: 0.1s; }
+.about-container .about-card:not([data-aos]):nth-child(2) { animation-delay: 0.2s; }
+.about-container .about-card:not([data-aos]):nth-child(3) { animation-delay: 0.3s; }
+.about-container .about-card:not([data-aos]):nth-child(4) { animation-delay: 0.4s; }
+
+.expertise-container .expertise-card:not([data-aos]):nth-child(1) { animation-delay: 0.1s; }
+.expertise-container .expertise-card:not([data-aos]):nth-child(2) { animation-delay: 0.2s; }
+.expertise-container .expertise-card:not([data-aos]):nth-child(3) { animation-delay: 0.3s; }
+.expertise-container .expertise-card:not([data-aos]):nth-child(4) { animation-delay: 0.4s; }
+.expertise-container .expertise-card:not([data-aos]):nth-child(5) { animation-delay: 0.5s; }
+.expertise-container .expertise-card:not([data-aos]):nth-child(6) { animation-delay: 0.6s; }
+
+.methodology-container .methodology-card:not([data-aos]):nth-child(1) { animation-delay: 0.1s; }
+.methodology-container .methodology-card:not([data-aos]):nth-child(2) { animation-delay: 0.2s; }
+.methodology-container .methodology-card:not([data-aos]):nth-child(3) { animation-delay: 0.3s; }
+.methodology-container .methodology-card:not([data-aos]):nth-child(4) { animation-delay: 0.4s; }
