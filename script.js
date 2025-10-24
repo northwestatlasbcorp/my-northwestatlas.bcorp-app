@@ -1,13 +1,16 @@
+// ========== NORTH WEST ATLAS B CORP - FIXED SCRIPT ==========
+// Исправлены AOS анимации и оптимизирована производительность
+
 // Detect current page language
 function getCurrentLanguage() {
     return window.location.pathname.includes('/en.html') ? 'en' : 'ru';
 }
 
-// Объявление AOS
-const AOS = window.AOS;
-
-// Инициализация AOS для анимаций
-document.addEventListener("DOMContentLoaded", () => {
+// ========== AOS INITIALIZATION - FIXED ==========
+document.addEventListener("DOMContentLoaded", function() {
+    console.log('🚀 DOM Content Loaded - Initializing AOS...');
+    
+    // Простая инициализация AOS как в рабочем коде
     AOS.init({
         duration: 800,
         easing: "ease",
@@ -15,7 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
         mirror: false,
         anchorPlacement: "top-bottom",
     });
+    
+    console.log('✅ AOS initialized successfully');
 });
+
+// ========== BASIC FUNCTIONS ==========
 
 // Установка текущего года в футере
 document.getElementById("current-year").textContent = new Date().getFullYear();
@@ -163,6 +170,8 @@ function toggleContacts() {
     }
 }
 
+// ========== EXPERTISE POPUPS ==========
+
 // Объект с данными для модальных окон
 const expertiseData = {
     ai: {
@@ -231,6 +240,23 @@ function closePopup() {
         document.body.style.overflow = ""; // Разблокируем скролл страницы
     }, 300);
 }
+
+// Закрытие по клику на фон
+document.addEventListener('click', function(e) {
+    const popup = document.getElementById("popup-modal");
+    if (e.target === popup) {
+        closePopup();
+    }
+});
+
+// Закрытие по ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePopup();
+    }
+});
+
+// ========== ESG CALCULATOR ==========
 
 // ESG Calculator data - BILINGUAL
 const ratingsDataRU = {
@@ -338,7 +364,6 @@ function loadRatings() {
         recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
     });
     
-    // ИСПРАВЛЕНИЕ: добавляем проверку языка для кнопки
     const downloadText = getCurrentLanguage() === 'en' ? 'Download Report' : 'Полный доступ — по запросу';
     recommendationsHTML += `</div><button class="download-button gold-button" onclick="downloadExcel()"><i class="fas fa-download"></i> ${downloadText}</button>`;
     
@@ -347,7 +372,6 @@ function loadRatings() {
 
 // Функция скачивания отчёта
 function downloadExcel() {
-    // Создаем данные для CSV файла
     const company = document.getElementById("company").value;
     const data = ratingsData[company];
 
@@ -378,10 +402,7 @@ function downloadExcel() {
         });
     }
 
-    // Кодируем URI
     const encodedUri = encodeURI(csvContent);
-
-    // Создаем временную ссылку для скачивания
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     const fileName = getCurrentLanguage() === 'en' 
@@ -390,116 +411,11 @@ function downloadExcel() {
     
     link.setAttribute("download", fileName);
     document.body.appendChild(link);
-
-    // Имитируем клик по ссылке
     link.click();
-
-    // Удаляем ссылку
     document.body.removeChild(link);
 }
 
-// ========== ПРЕМИАЛЬНЫЕ ЭФФЕКТЫ ДЛЯ ЗОЛОТЫХ ЭЛЕМЕНТОВ ==========
-
-// Инициализация эффектов для элементов с data-gold-glow
-function initGoldEffects() {
-    const goldElements = document.querySelectorAll('[data-gold-glow]');
-    
-    goldElements.forEach(element => {
-        // Добавляем обработчики для интерактивных эффектов
-        if (element.classList.contains('about-card') || 
-            element.classList.contains('expertise-card') || 
-            element.classList.contains('methodology-card')) {
-            
-            element.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            });
-            
-            element.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        }
-    });
-}
-
-// Улучшенное свечение логотипа с поддержкой премиальных эффектов
-function initPremiumLogoEffects() {
-    const logo = document.getElementById('main-logo');
-    
-    if (logo) {
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            // Более плавное изменение свечения
-            const glowIntensity = 0.6 + (x + y) / 2 * 0.4;
-            const glowSize = 25 + (x + y) / 2 * 35;
-            
-            logo.style.filter = `
-                drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
-                drop-shadow(0 0 ${glowSize * 1.5}px rgba(212, 175, 55, ${glowIntensity * 0.8}))
-                drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.5}))
-            `;
-            
-            // Легкое движение логотипа в ответ на курсор
-            const moveX = (x - 0.5) * 10;
-            const moveY = (y - 0.5) * 10;
-            logo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
-        });
-    }
-}
-
-// ========== УЛУЧШЕННЫЙ SATURN CURSOR С ПЛАЗМОЙ ==========
-
-let mouseX = 0, mouseY = 0;
-let saturnX = 0, saturnY = 0;
-const delay = 0.08; // Увеличена скорость для более отзывчивого курсора
-
-function createSaturnCursor() {
-    const saturn = document.createElement('div');
-    saturn.className = 'saturn';
-    
-    // Добавляем плазменный эффект
-    const plasma = document.createElement('div');
-    plasma.className = 'saturn-plasma';
-    saturn.appendChild(plasma);
-    
-    document.body.appendChild(saturn);
-    return saturn;
-}
-
-function initSaturnCursor() {
-    const saturn = document.querySelector('.saturn') || createSaturnCursor();
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function animateSaturn() {
-        saturnX += (mouseX - saturnX) * delay;
-        saturnY += (mouseY - saturnY) * delay;
-        saturn.style.transform = `translate(${saturnX}px, ${saturnY}px)`;
-        requestAnimationFrame(animateSaturn);
-    }
-
-    // Добавляем эффекты при наведении на интерактивные элементы
-    const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn, .gold-button');
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) scale(1.3)`;
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) scale(1)`;
-        });
-    });
-
-    animateSaturn();
-}
-
-// ========== УЛУЧШЕННАЯ ОБРАБОТКА ФОРМЫ ==========
+// ========== CONTACT FORM ==========
 
 function initContactForm() {
     const contactForm = document.getElementById('contact-form');
@@ -533,101 +449,165 @@ function initContactForm() {
     }
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ ВСЕХ ФУНКЦИЙ ==========
+// ========== PARTICLES.JS ==========
 
-// Анимация появления лого после загрузки
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Добавление/удаление класса scrolled при прокрутке
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
-
-// ========== PARTICLES.JS НАСТРОЙКИ =======
-window.addEventListener('load', function() {
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#d4af37'
-            },
-            shape: {
-                type: 'circle',
-            },
-            opacity: {
-                value: 0.5,
-                random: false,
-                anim: {
-                    enable: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#d4af37',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'grab'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    line_linked: {
-                        opacity: 1
+function initOptimizedParticles() {
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 40,
+                    density: {
+                        enable: true,
+                        value_area: 800
                     }
                 },
-                push: {
-                    particles_nb: 4
+                color: {
+                    value: '#d4af37'
+                },
+                shape: {
+                    type: 'circle',
+                },
+                opacity: {
+                    value: 0.3,
+                    random: false,
+                },
+                size: {
+                    value: 2,
+                    random: true,
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 100,
+                    color: '#d4af37',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    out_mode: 'out'
                 }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    }
+}
+
+// ========== TOOLTIPS ==========
+
+function initTooltips() {
+    // Простая инициализация тултипов
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    
+    tooltipElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            // Временное решение - показать alert для мобильных
+            if (window.innerWidth <= 768) {
+                // Для мобильных можно добавить специальное поведение
+                console.log('Tooltip:', this.getAttribute('data-tooltip'));
             }
-        },
-        retina_detect: true
+        });
     });
+}
+
+// ========== MAIN INITIALIZATION ==========
+
+document.addEventListener("DOMContentLoaded", function() {
+    console.log('🚀 Initializing North West Atlas B Corp...');
+    
+    // 1. Базовые функции
+    initScrollSpy();
+    initHeaderScroll();
+    
+    // 2. AOS уже инициализирован в начале файла
+    
+    // 3. Остальные функции
+    initContactForm();
+    initTooltips();
+    
+    // 4. Particles.js инициализируем после загрузки
+    window.addEventListener('load', function() {
+        initOptimizedParticles();
+        
+        // Обновляем AOS после полной загрузки
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+            console.log('✅ AOS refreshed after page load');
+        }
+    });
+    
+    console.log('✅ All systems initialized successfully');
 });
 
-// ========== ПРЕМИАЛЬНОЕ УВЕДОМЛЕНИЕ ПРИ КОПИРОВАНИИ ==========
+// ========== UTILITY FUNCTIONS ==========
+
+// Функция для принудительного обновления AOS (для отладки)
+function refreshAOS() {
+    if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+        console.log('🔄 AOS manually refreshed');
+    }
+}
+
+// Функция проверки статуса AOS
+function checkAOS() {
+    console.log('🔍 AOS Diagnostic:');
+    console.log('- AOS loaded:', typeof AOS !== 'undefined');
+    console.log('- Elements with data-aos:', document.querySelectorAll('[data-aos]').length);
+    console.log('- Animated elements:', document.querySelectorAll('.aos-animate').length);
+    
+    return {
+        aosLoaded: typeof AOS !== 'undefined',
+        totalElements: document.querySelectorAll('[data-aos]').length,
+        animatedElements: document.querySelectorAll('.aos-animate').length
+    };
+}
+
+// ========== PRELOADER ==========
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.pointerEvents = 'none';
+            preloader.style.transition = 'opacity 800ms ease';
+            setTimeout(function() {
+                preloader.remove();
+            }, 900);
+        }
+    }, 2000);
+});
+
+// ========== CONTENT PROTECTION ==========
+
 document.addEventListener('copy', (e) => {
     e.preventDefault();
     
@@ -671,20 +651,23 @@ document.addEventListener('copy', (e) => {
     }, 1700);
 });
 
-// ========== ПРЕМИАЛЬНЫЙ PRELOADER ==========
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        const preloader = document.getElementById('preloader');
-        preloader.style.opacity = '0';
-        preloader.style.pointerEvents = 'none';
-        preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
-        setTimeout(function() {
-            preloader.remove();
-        }, 900);
-    }, 2000);
+// ========== SMOOTH SCROLL ==========
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
 
-// Скролл наверх при загрузке
+// ========== SCROLL TO TOP ON RELOAD ==========
+
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 });
@@ -697,446 +680,4 @@ if (window.history && window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
 
-// ========== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ ==========
-
-// Функция определения мобильного устройства
-function isMobileDevice() {
-    return window.innerWidth <= 768 || 
-           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-// Оптимизированная версия инициализации
-function initOptimizedEffects() {
-    if (isMobileDevice()) {
-        // Отключаем тяжелые эффекты на мобильных
-        disableHeavyEffects();
-    } else {
-        // На десктопе включаем все эффекты
-        initPremiumEffects();
-    }
-}
-
-function disableHeavyEffects() {
-    // Отключаем Saturn курсор
-    const saturn = document.querySelector('.saturn');
-    if (saturn) saturn.style.display = 'none';
-    
-    // Упрощаем анимацию логотипа
-    const logo = document.getElementById('main-logo');
-    if (logo) {
-        logo.style.animation = 'none';
-        logo.style.filter = 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.6))';
-    }
-    
-    // Отключаем сложные обработчики мыши
-    document.removeEventListener('mousemove', handleMouseMove);
-}
-
-function initPremiumEffects() {
-    // Инициализация премиальных эффектов только для десктопа
-    initSaturnCursor();
-    initPremiumLogoEffects();
-}
-
-// Упрощенный обработчик для мобильных
-function handleMobileInteractions() {
-    if (isMobileDevice()) {
-        // Добавляем touch-оптимизированные обработчики
-        const interactiveElements = document.querySelectorAll('.about-card, .expertise-card, .methodology-card');
-        
-        interactiveElements.forEach(element => {
-            element.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.98)';
-                this.style.transition = 'transform 0.1s ease';
-            });
-            
-            element.addEventListener('touchend', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-    }
-}
-
-// Оптимизированная инициализация частиц только для десктопа
-function initOptimizedParticles() {
-    if (!isMobileDevice() && typeof particlesJS !== 'undefined') {
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 40, density: { enable: true, value_area: 800 } },
-                color: { value: '#d4af37' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.3, random: false },
-                size: { value: 2, random: true },
-                line_linked: { 
-                    enable: true, 
-                    distance: 100, 
-                    color: '#d4af37', 
-                    opacity: 0.2, 
-                    width: 1 
-                },
-                move: { 
-                    enable: true, 
-                    speed: 1, 
-                    direction: 'none',
-                    out_mode: 'out' 
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: { enable: false }, // Отключаем на мобильных
-                    onclick: { enable: false }, // Отключаем на мобильных
-                    resize: true
-                }
-            },
-            retina_detect: true
-        });
-    }
-}
-
-// Обновите главную функцию инициализации
-document.addEventListener("DOMContentLoaded", () => {
-    initScrollSpy();
-    initHeaderScroll();
-    initOptimizedEffects();
-    handleMobileInteractions();
-    initOptimizedParticles();
-    
-    // Базовые функции для всех устройств
-    initContactForm();
-    
-    // Плавная прокрутка
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-});
-
-// Закрытие по клику на фон
-document.addEventListener('click', function(e) {
-    const popup = document.getElementById("popup-modal");
-    if (e.target === popup) {
-        closePopup();
-    }
-});
-
-// Закрытие по ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closePopup();
-    }
-});
-
-// Улучшенные тултипы для мобильных
-function initMobileTooltips() {
-    if (isMobileDevice()) {
-        const aboutCards = document.querySelectorAll('.about-card');
-        
-        aboutCards.forEach(card => {
-            let tooltipTimeout;
-            
-            card.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                clearTimeout(tooltipTimeout);
-                
-                // Показываем тултип
-                this.style.setProperty('--tooltip-visible', '1');
-                
-                // Скрываем через 3 секунды
-                tooltipTimeout = setTimeout(() => {
-                    this.style.setProperty('--tooltip-visible', '0');
-                }, 3000);
-            });
-            
-            card.addEventListener('touchend', function() {
-                clearTimeout(tooltipTimeout);
-            });
-        });
-    }
-}
-
-// Добавьте вызов функции в инициализацию
-document.addEventListener("DOMContentLoaded", () => {
-    // ... ваш существующий код ...
-    initMobileTooltips(); // ДОБАВЬТЕ ЭТУ СТРОЧКУ
-});
-
-// ========== ИСПРАВЛЕННАЯ СИСТЕМА ТУЛТИПОВ ==========
-
-function initTooltips() {
-    // Обработка текстовых тултипов (.tooltip-trigger)
-    const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
-    
-    tooltipTriggers.forEach(trigger => {
-        const tooltipContent = trigger.getAttribute('data-tooltip');
-        
-        // Создаем элемент тултипа
-        const tooltipElement = document.createElement('div');
-        tooltipElement.className = 'tooltip-content';
-        tooltipElement.innerHTML = tooltipContent;
-        
-        // Добавляем тултип в DOM
-        trigger.parentNode.appendChild(tooltipElement);
-        
-        // Обработчики для десктопа
-        if (!isMobileDevice()) {
-            trigger.addEventListener('mouseenter', function() {
-                showTooltip(this, tooltipElement);
-            });
-            
-            trigger.addEventListener('mouseleave', function() {
-                hideTooltip(tooltipElement);
-            });
-            
-            tooltipElement.addEventListener('mouseenter', function() {
-                showTooltip(trigger, tooltipElement);
-            });
-            
-            tooltipElement.addEventListener('mouseleave', function() {
-                hideTooltip(tooltipElement);
-            });
-        } else {
-            // Обработчики для мобильных
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Закрываем все остальные тултипы
-                closeAllTooltips();
-                
-                // Показываем/скрываем текущий тултип
-                if (tooltipElement.classList.contains('active')) {
-                    hideTooltip(tooltipElement);
-                } else {
-                    showTooltip(this, tooltipElement);
-                }
-            });
-        }
-    });
-    
-    // Обработка карточных тултипов (.about-card)
-    const aboutCards = document.querySelectorAll('.about-card[data-tooltip]');
-    
-    aboutCards.forEach(card => {
-        const tooltipContent = card.getAttribute('data-tooltip');
-        
-        // Создаем элемент тултипа для карточки
-        const tooltipElement = document.createElement('div');
-        tooltipElement.className = 'tooltip-content';
-        tooltipElement.innerHTML = tooltipContent;
-        
-        // Добавляем тултип в DOM
-        card.appendChild(tooltipElement);
-        
-        // Обработчики для десктопа
-        if (!isMobileDevice()) {
-            card.addEventListener('mouseenter', function() {
-                showTooltip(this, tooltipElement);
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                hideTooltip(tooltipElement);
-            });
-            
-            tooltipElement.addEventListener('mouseenter', function() {
-                showTooltip(card, tooltipElement);
-            });
-            
-            tooltipElement.addEventListener('mouseleave', function() {
-                hideTooltip(tooltipElement);
-            });
-        } else {
-            // Обработчики для мобильных
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Закрываем все остальные тултипы
-                closeAllTooltips();
-                
-                // Показываем/скрываем текущий тултип
-                if (tooltipElement.classList.contains('active')) {
-                    hideTooltip(tooltipElement);
-                } else {
-                    showTooltip(this, tooltipElement);
-                }
-            });
-        }
-    });
-    
-    // Закрытие тултипов при клике вне области
-    document.addEventListener('click', function(e) {
-        if (isMobileDevice() && 
-            !e.target.closest('.tooltip-trigger') && 
-            !e.target.closest('.tooltip-content') &&
-            !e.target.closest('.about-card')) {
-            closeAllTooltips();
-        }
-    });
-}
-
-function showTooltip(element, tooltipElement) {
-    // Позиционируем тултип
-    const rect = element.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-    
-    // Для карточек позиционируем снизу, для текста - сверху
-    if (element.classList.contains('about-card')) {
-        tooltipElement.style.top = `${rect.top + scrollTop + rect.height + 10}px`;
-    } else {
-        tooltipElement.style.top = `${rect.top + scrollTop - tooltipElement.offsetHeight - 10}px`;
-    }
-    
-    tooltipElement.style.left = `${rect.left + scrollLeft + (rect.width / 2) - (tooltipElement.offsetWidth / 2)}px`;
-    
-    // Показываем тултип
-    tooltipElement.classList.add('active');
-    
-    // Для мобильных добавляем оверлей
-    if (isMobileDevice()) {
-        createTooltipOverlay();
-    }
-}
-
-function hideTooltip(tooltipElement) {
-    tooltipElement.classList.remove('active');
-    
-    // Удаляем оверлей если нет активных тултипов
-    if (isMobileDevice() && document.querySelectorAll('.tooltip-content.active').length === 0) {
-        removeTooltipOverlay();
-    }
-}
-
-function closeAllTooltips() {
-    document.querySelectorAll('.tooltip-content.active').forEach(tooltip => {
-        tooltip.classList.remove('active');
-    });
-    removeTooltipOverlay();
-}
-
-function createTooltipOverlay() {
-    if (!document.querySelector('.tooltip-overlay')) {
-        const overlay = document.createElement('div');
-        overlay.className = 'tooltip-overlay';
-        document.body.appendChild(overlay);
-        
-        overlay.addEventListener('click', closeAllTooltips);
-    }
-}
-
-function removeTooltipOverlay() {
-    const overlay = document.querySelector('.tooltip-overlay');
-    if (overlay) {
-        overlay.remove();
-    }
-}
-
-// Улучшенная функция определения мобильного устройства
-function isMobileDevice() {
-    return window.innerWidth <= 768 || 
-           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-// Добавьте класс для мобильных тултипов в CSS
-const mobileTooltipCSS = `
-.tooltip-content {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.95);
-    color: rgba(255, 255, 255, 0.95);
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 1.5;
-    width: 280px;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.4);
-    transform: translateY(10px);
-    pointer-events: none;
-    border: 1px solid rgba(212, 175, 55, 0.6);
-    backdrop-filter: blur(10px);
-}
-
-.tooltip-content.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.tooltip-content::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: rgba(212, 175, 55, 0.6);
-}
-
-.tooltip-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    backdrop-filter: blur(2px);
-    display: none;
-}
-
-.tooltip-overlay.active {
-    display: block;
-}
-
-@media (max-width: 768px) {
-    .tooltip-content {
-        width: 250px;
-        font-size: 13px;
-        padding: 10px 14px;
-        z-index: 1001;
-    }
-    
-    .tooltip-content::after {
-        display: none;
-    }
-}
-`;
-
-// Вставка CSS для тултипов
-const style = document.createElement('style');
-style.textContent = mobileTooltipCSS;
-document.head.appendChild(style);
-
-// ========== AOS DEBUG ==========
-console.log('🔍 AOS Debug:');
-console.log('- AOS loaded:', typeof AOS !== 'undefined');
-console.log('- Animated elements:', document.querySelectorAll('[data-aos]').length);
-
-// Проверка через 3 секунды
-setTimeout(() => {
-    const animatedElements = document.querySelectorAll('[data-aos]');
-    console.log('📊 After 3 seconds:');
-    console.log('- Total elements with data-aos:', animatedElements.length);
-    console.log('- Elements with aos-animate class:', document.querySelectorAll('.aos-animate').length);
-    
-    animatedElements.forEach((el, index) => {
-        console.log(`Element ${index}:`, {
-            hasAosAnimate: el.classList.contains('aos-animate'),
-            opacity: window.getComputedStyle(el).opacity,
-            transform: window.getComputedStyle(el).transform
-        });
-    });
-}, 3000);
+console.log('🎯 North West Atlas B Corp script loaded successfully!');
