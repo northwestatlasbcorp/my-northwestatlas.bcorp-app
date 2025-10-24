@@ -743,62 +743,112 @@ footer::after {
 /* Раздел "О нас" */
 .about-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
   margin-bottom: 2rem;
   position: relative;
 }
 
 .about-card {
-  background: rgba(26, 26, 26, 0.6);
+  background: rgba(26, 26, 26, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 10px;
-  padding: 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
   transition: var(--transition-smooth);
   cursor: pointer;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.37),
+    0 8px 32px rgba(0, 0, 0, 0.4),
     inset 0 1px 1px rgba(212, 175, 55, 0.1);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: visible; /* Изменили на visible */
 }
 
 .about-card:hover {
   transform: translateY(-12px) rotateX(2deg);
   box-shadow: 
-    0 24px 48px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(212, 175, 55, 0.5),
-    0 0 40px rgba(212, 175, 55, 0.2);
+    0 0 40px rgba(212, 175, 55, 0.3);
   border-color: var(--primary);
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(26, 26, 26, 0.9);
+}
+
+.about-card h3 {
+  font-family: var(--font-secondary);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #d4af37, #f4e5c3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
 }
 
 .about-card p {
   line-height: 1.6;
   color: var(--foreground-secondary);
   text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 1 !important; /* Принудительно показываем текст */
+  visibility: visible !important;
 }
 
-.philosophy-quote {
-  max-width: 800px;
-  margin: 0 auto 3rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 5px solid var(--primary);
-  border-radius: 0 10px 10px 0;
-  font-style: italic;
-  text-align: left;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(var(--primary-rgb), 0.1);
+/* Убедимся, что текст всегда виден */
+.about-card * {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.philosophy-quote cite {
-  display: block;
-  margin-top: 1rem;
-  text-align: right;
-  color: var(--primary);
-  font-style: normal;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+/* Мобильная адаптация для карточек */
+@media (max-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .about-card {
+    padding: 1.5rem 1rem;
+    min-height: 160px;
+    margin: 0.5rem 0;
+  }
+  
+  .about-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .about-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .about-card:hover {
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-card {
+    padding: 1.2rem 0.8rem;
+    min-height: 140px;
+  }
+  
+  .about-card h3 {
+    font-size: 1.1rem;
+  }
+  
+  .about-card p {
+    font-size: 0.95rem;
+  }
 }
 
 /* Раздел "Экспертиза" */
