@@ -126,22 +126,37 @@ function openPopup(expertise) {
     const details = document.getElementById("popup-details");
 
     const data = expertiseData[expertise];
+    if (!data) return;
+
     title.textContent = data.title;
     details.innerHTML = data.content;
-    popup.style.display = "flex";
     
-    // Добавляем анимацию появления
+    // Показываем модальное окно
+    popup.style.display = "flex";
+    document.body.style.overflow = "hidden"; // Блокируем скролл страницы
+    
+    // Анимация появления
     setTimeout(() => {
         popup.style.opacity = "1";
+        const content = popup.querySelector('.popup-content');
+        content.style.transform = "scale(1)";
+        content.style.opacity = "1";
     }, 10);
 }
 
 // Закрытие модального окна
 function closePopup() {
     const popup = document.getElementById("popup-modal");
+    const content = popup.querySelector('.popup-content');
+    
+    // Анимация закрытия
     popup.style.opacity = "0";
+    content.style.transform = "scale(0.9)";
+    content.style.opacity = "0";
+    
     setTimeout(() => {
         popup.style.display = "none";
+        document.body.style.overflow = ""; // Разблокируем скролл страницы
     }, 300);
 }
 
@@ -753,4 +768,53 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+});
+
+// Закрытие по клику на фон
+document.addEventListener('click', function(e) {
+    const popup = document.getElementById("popup-modal");
+    if (e.target === popup) {
+        closePopup();
+    }
+});
+
+// Закрытие по ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePopup();
+    }
+});
+
+// Улучшенные тултипы для мобильных
+function initMobileTooltips() {
+    if (isMobileDevice()) {
+        const aboutCards = document.querySelectorAll('.about-card');
+        
+        aboutCards.forEach(card => {
+            let tooltipTimeout;
+            
+            card.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                clearTimeout(tooltipTimeout);
+                
+                // Показываем тултип
+                this.style.setProperty('--tooltip-visible', '1');
+                
+                // Скрываем через 3 секунды
+                tooltipTimeout = setTimeout(() => {
+                    this.style.setProperty('--tooltip-visible', '0');
+                }, 3000);
+            });
+            
+            card.addEventListener('touchend', function() {
+                clearTimeout(tooltipTimeout);
+            });
+        });
+    }
+}
+
+// Добавьте вызов функции в инициализацию
+document.addEventListener("DOMContentLoaded", () => {
+    // ... ваш существующий код ...
+    initMobileTooltips(); // ДОБАВЬТЕ ЭТУ СТРОЧКУ
 });
