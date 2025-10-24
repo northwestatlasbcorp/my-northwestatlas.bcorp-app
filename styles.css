@@ -2075,3 +2075,23 @@ color: var(--gold-primary);
   background: rgba(20, 20, 20, 0.8) !important;
   backdrop-filter: blur(20px);
 }
+
+/* ================= ВЕРНУТЬ ЗОЛОТЫЕ ЭФФЕКТЫ НА КАРТОЧКАХ ================= */
+
+.about-card:hover,
+.expertise-card:hover,
+.methodology-card:hover {
+  border-color: rgba(212, 175, 55, 0.9) !important;
+  box-shadow:
+    0 0 25px rgba(212, 175, 55, 0.6),
+    0 0 50px rgba(212, 175, 55, 0.3),
+    inset 0 0 10px rgba(212, 175, 55, 0.2) !important;
+  transition: all 0.5s ease;
+}
+
+.about-card,
+.expertise-card,
+.methodology-card {
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.5s ease;
+}
