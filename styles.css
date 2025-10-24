@@ -766,17 +766,36 @@ footer::after {
   flex-direction: column;
   justify-content: center;
   position: relative;
-  overflow: visible; /* Изменили на visible */
+  overflow: visible;
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: cardFloat 6s ease-in-out infinite;
+}
+
+/* Задержки для парящего эффекта */
+.about-container .about-card:nth-child(1) { animation-delay: 0s; }
+.about-container .about-card:nth-child(2) { animation-delay: 1s; }
+.about-container .about-card:nth-child(3) { animation-delay: 2s; }
+.about-container .about-card:nth-child(4) { animation-delay: 3s; }
+
+@keyframes cardFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotateX(2deg); 
+  }
 }
 
 .about-card:hover {
-  transform: translateY(-12px) rotateX(2deg);
+  transform: translateY(-15px) scale(1.03) rotateX(3deg);
   box-shadow: 
-    0 24px 48px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(212, 175, 55, 0.5),
-    0 0 40px rgba(212, 175, 55, 0.3);
-  border-color: var(--primary);
-  background: rgba(26, 26, 26, 0.9);
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 175, 55, 0.8),
+    0 0 60px rgba(212, 175, 55, 0.5),
+    inset 0 0 30px rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.9);
+  animation: none; /* Отключаем основную анимацию при hover */
 }
 
 .about-card h3 {
@@ -788,6 +807,8 @@ footer::after {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-align: center;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .about-card p {
@@ -797,7 +818,7 @@ footer::after {
   text-align: center;
   font-size: 1.1rem;
   margin: 0;
-  opacity: 1 !important; /* Принудительно показываем текст */
+  opacity: 1 !important;
   visibility: visible !important;
 }
 
@@ -819,6 +840,7 @@ footer::after {
     padding: 1.5rem 1rem;
     min-height: 160px;
     margin: 0.5rem 0;
+    animation: none !important; /* Отключаем анимацию на мобильных */
   }
   
   .about-card h3 {
@@ -869,12 +891,28 @@ footer::after {
   display: flex;
   flex-direction: column;
   height: 100%;
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: cardFloat 6s ease-in-out infinite;
 }
 
+/* Задержки для парящего эффекта экспертизы */
+.expertise-container .expertise-card:nth-child(1) { animation-delay: 0.5s; }
+.expertise-container .expertise-card:nth-child(2) { animation-delay: 1.5s; }
+.expertise-container .expertise-card:nth-child(3) { animation-delay: 2.5s; }
+.expertise-container .expertise-card:nth-child(4) { animation-delay: 3.5s; }
+.expertise-container .expertise-card:nth-child(5) { animation-delay: 4s; }
+.expertise-container .expertise-card:nth-child(6) { animation-delay: 4.5s; }
+
 .expertise-card:hover {
-  transform: scale(1.05) rotateX(1deg);
-  box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.4);
-  border-color: var(--primary);
+  transform: translateY(-15px) scale(1.03) rotateX(3deg);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 175, 55, 0.8),
+    0 0 60px rgba(212, 175, 55, 0.5),
+    inset 0 0 30px rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.9);
+  animation: none;
 }
 
 .expertise-icon {
@@ -882,16 +920,33 @@ footer::after {
   margin-bottom: 10px;
   color: var(--primary);
   text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .expertise-card h3 {
   font-size: 1.4rem;
   margin-bottom: 10px;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .expertise-card p {
   margin-bottom: 20px;
   flex-grow: 1;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Мобильная адаптация для экспертизы */
+@media (max-width: 768px) {
+  .expertise-card {
+    animation: none !important;
+  }
+  
+  .expertise-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
 }
 
 /* ========== УЛУЧШЕННЫЕ КНОПКИ ========== */
@@ -1816,32 +1871,7 @@ footer::after {
   }
 }
 
-/* ========== ВАЖНО: ИСПРАВЛЕНИЯ ДЛЯ AOS ========== */
-
-/* Убеждаемся, что AOS может управлять opacity и transform */
-[data-aos] {
-  pointer-events: auto;
-}
-
-/* Для элементов с AOS - анимация парения включается только после инициализации AOS */
-.aos-init.about-card,
-.aos-init.expertise-card,
-.aos-init.methodology-card,
-.aos-init.investment-block {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.aos-animate.about-card,
-.aos-animate.expertise-card,
-.aos-animate.methodology-card,
-.aos-animate.investment-block {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ========== ПРЕМИУМ СТИЛИ ДЛЯ ВСЕХ КАРТОЧЕК С AOS ========== */
+/* ========== ПРЕМИУМ СТИЛИ ДЛЯ ВСЕХ КАРТОЧЕК ========== */
 
 /* 💎 ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ КАРТОЧЕК */
 .about-card,
@@ -1861,6 +1891,8 @@ footer::after {
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   overflow: hidden;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* ✨ ЗОЛОТАЯ ГРАДИЕНТНАЯ РАМКА */
@@ -1886,31 +1918,31 @@ footer::after {
   transition: opacity 0.5s ease;
 }
 
-/* 💫 ПАРЯЩИЙ ЭФФЕКТ ДЛЯ КАРТОЧЕК - ТОЛЬКО ПОСЛЕ AOS АНИМАЦИИ */
-.about-card.aos-animate,
-.expertise-card.aos-animate, 
-.methodology-card.aos-animate,
-.investment-block.aos-animate {
+/* 💫 ПАРЯЩИЙ ЭФФЕКТ ДЛЯ КАРТОЧЕК */
+.about-card,
+.expertise-card, 
+.methodology-card,
+.investment-block {
   animation: cardFloat 6s ease-in-out infinite;
 }
 
 /* Задержки для парящего эффекта */
-.about-container .about-card.aos-animate:nth-child(1) { animation-delay: 0s; }
-.about-container .about-card.aos-animate:nth-child(2) { animation-delay: 1s; }
-.about-container .about-card.aos-animate:nth-child(3) { animation-delay: 2s; }
-.about-container .about-card.aos-animate:nth-child(4) { animation-delay: 3s; }
+.about-container .about-card:nth-child(1) { animation-delay: 0s; }
+.about-container .about-card:nth-child(2) { animation-delay: 1s; }
+.about-container .about-card:nth-child(3) { animation-delay: 2s; }
+.about-container .about-card:nth-child(4) { animation-delay: 3s; }
 
-.expertise-container .expertise-card.aos-animate:nth-child(1) { animation-delay: 0.5s; }
-.expertise-container .expertise-card.aos-animate:nth-child(2) { animation-delay: 1.5s; }
-.expertise-container .expertise-card.aos-animate:nth-child(3) { animation-delay: 2.5s; }
-.expertise-container .expertise-card.aos-animate:nth-child(4) { animation-delay: 3.5s; }
-.expertise-container .expertise-card.aos-animate:nth-child(5) { animation-delay: 4s; }
-.expertise-container .expertise-card.aos-animate:nth-child(6) { animation-delay: 4.5s; }
+.expertise-container .expertise-card:nth-child(1) { animation-delay: 0.5s; }
+.expertise-container .expertise-card:nth-child(2) { animation-delay: 1.5s; }
+.expertise-container .expertise-card:nth-child(3) { animation-delay: 2.5s; }
+.expertise-container .expertise-card:nth-child(4) { animation-delay: 3.5s; }
+.expertise-container .expertise-card:nth-child(5) { animation-delay: 4s; }
+.expertise-container .expertise-card:nth-child(6) { animation-delay: 4.5s; }
 
-.methodology-container .methodology-card.aos-animate:nth-child(1) { animation-delay: 0.2s; }
-.methodology-container .methodology-card.aos-animate:nth-child(2) { animation-delay: 1.2s; }
-.methodology-container .methodology-card.aos-animate:nth-child(3) { animation-delay: 2.2s; }
-.methodology-container .methodology-card.aos-animate:nth-child(4) { animation-delay: 3.2s; }
+.methodology-container .methodology-card:nth-child(1) { animation-delay: 0.2s; }
+.methodology-container .methodology-card:nth-child(2) { animation-delay: 1.2s; }
+.methodology-container .methodology-card:nth-child(3) { animation-delay: 2.2s; }
+.methodology-container .methodology-card:nth-child(4) { animation-delay: 3.2s; }
 
 @keyframes cardFloat {
   0%, 100% { 
