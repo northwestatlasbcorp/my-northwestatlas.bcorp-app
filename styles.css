@@ -2988,19 +2988,372 @@ html {
 }
 
 /* ========== МОБИЛЬНЫЕ ИСПРАВЛЕНИЯ ========== */
-@media (max-width: 768px) {
-  .container { padding: 0 1rem !important; }
-  .section-title { font-size: 2rem !important; }
-  #main-logo { max-width: 90vw !important; }
-  .about-card, .expertise-card, .methodology-card { 
-    transform: none !important; 
-    margin: 0.5rem 0 !important;
+
+/* Планшеты и маленькие десктопы (768px - 1024px) */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem !important;
   }
-  .video-container { animation: none !important; }
-  .gold-glow::before { display: none !important; }
+  
+  .section-title {
+    font-size: 2.5rem !important;
+  }
+  
+  #main-logo {
+    max-width: 70vw !important;
+  }
 }
 
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+  /* Базовые настройки */
+  .container {
+    padding: 0 1rem !important;
+    max-width: 100% !important;
+  }
+  
+  /* Заголовки */
+  .section-title {
+    font-size: 2rem !important;
+    margin-bottom: 2rem !important;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
+  }
+  
+  .section-title::before {
+    display: none !important;
+  }
+  
+  /* Логотип */
+  #home {
+    min-height: 100vh !important;
+    padding: 0 1rem !important;
+  }
+  
+  #main-logo {
+    max-width: 85vw !important;
+    width: 85vw !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Навигация */
+  header {
+    padding: 0.5rem 1rem !important;
+  }
+  
+  .navbar-top .logo a {
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+  }
+  
+  .navbar-bottom {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  .menu-toggle {
+    display: flex !important;
+    font-size: 1.5rem;
+  }
+  
+  #nav-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 1rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  }
+  
+  #nav-menu.active {
+    max-height: 70vh;
+    opacity: 1;
+    padding: 1.5rem 1rem;
+  }
+  
+  #nav-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  }
+  
+  .nav-link {
+    padding: 0.8rem 0 !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 1rem !important;
+  }
+  
+  /* Карточки */
+  .about-container,
+  .expertise-container,
+  .methodology-container,
+  .investment-container {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .about-card,
+  .expertise-card,
+  .methodology-card,
+  .investment-block {
+    padding: 1.5rem 1rem !important;
+    margin: 0.5rem 0 !important;
+  }
+  
+  /* Упрощаем анимации для производительности */
+  .about-card:hover,
+  .expertise-card:hover,
+  .methodology-card:hover,
+  .investment-block:hover {
+    transform: translateY(-5px) !important;
+  }
+  
+  /* Текст */
+  .about-card p,
+  .methodology-card p,
+  .expertise-card p {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .philosophy-quote {
+    padding: 1rem !important;
+    margin: 0 0.5rem 2rem !important;
+    font-size: 0.95rem !important;
+  }
+  
+  /* Отключаем тяжелые эффекты */
+  .video-container {
+    animation: none !important;
+  }
+  
+  .gold-glow::before {
+    display: none !important;
+  }
+  
+  /* Упрощаем blur эффекты */
+  .calculator-container,
+  .contact-form-container,
+  .about-card,
+  .methodology-card,
+  .expertise-card {
+    backdrop-filter: blur(10px) !important;
+  }
+  
+  /* Контакты */
+  .contacts-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .contact-card {
+    padding: 1rem !important;
+  }
+  
+  /* Футер */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  
+  .footer-column {
+    text-align: center !important;
+  }
+  
+  /* Партнеры */
+  .partner-card {
+    flex: 0 0 200px !important;
+    margin: 0 10px !important;
+    height: 120px !important;
+  }
+  
+  /* Калькулятор */
+  .calculator-container {
+    padding: 1.5rem !important;
+  }
+  
+  /* Preloader */
+  .preloader-logo {
+    max-width: 100px !important;
+  }
+}
+
+/* Маленькие мобильные (до 480px) */
 @media (max-width: 480px) {
-  .container { padding: 0 0.5rem !important; }
-  .section-title { font-size: 1.75rem !important; }
+  .container {
+    padding: 0 0.5rem !important;
+  }
+  
+  .section-title {
+    font-size: 1.75rem !important;
+  }
+  
+  #main-logo {
+    max-width: 90vw !important;
+    width: 90vw !important;
+  }
+  
+  .navbar-top .logo a {
+    font-size: 0.8rem !important;
+  }
+  
+  .about-card,
+  .expertise-card,
+  .methodology-card,
+  .investment-block {
+    padding: 1rem 0.8rem !important;
+  }
+  
+  .philosophy-quote {
+    font-size: 0.9rem !important;
+    padding: 0.8rem !important;
+  }
+  
+  /* Упрощаем все анимации для очень слабых устройств */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Отключаем частицы на очень слабых устройствах */
+  #particles-js {
+    display: none !important;
+  }
+  
+  /* Упрощаем видео-контейнер */
+  .video-container {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%) !important;
+  }
+}
+
+/* Горизонтальная ориентация на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+  #home {
+    min-height: 100vh !important;
+    padding: 2rem 1rem !important;
+  }
+  
+  #main-logo {
+    max-width: 60vh !important;
+    width: 60vh !important;
+  }
+  
+  #nav-menu.active {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}
+
+/* Исправление для очень высоких экранов */
+@media (min-width: 769px) and (max-height: 600px) {
+  #home {
+    min-height: 100vh !important;
+    padding: 2rem 0 !important;
+  }
+  
+  #main-logo {
+    max-width: 50vh !important;
+  }
+}
+
+/* Гарантия что меню скрыто на десктопе */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+  
+  #nav-menu {
+    display: flex !important;
+    position: static !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  #nav-menu li {
+    width: auto !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+}
+
+/* Улучшение производительности скролла */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Оптимизация рендеринга для мобильных */
+.about-card,
+.expertise-card,
+.methodology-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Исправление тултипов для мобильных */
+@media (max-width: 768px) {
+  .about-card::before,
+  .about-card::after {
+    display: none !important;
+  }
+  
+  /* Показываем тултипы по тапу */
+  .about-card:active::before {
+    display: block !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-width: 90vw !important;
+    width: 300px !important;
+    z-index: 10000 !important;
+  }
+}
+
+/* Исправление модальных окон */
+@media (max-width: 768px) {
+  .popup-modal {
+    padding: 10px !important;
+    align-items: flex-start !important;
+    padding-top: 60px !important;
+  }
+  
+  .popup-content {
+    width: 95% !important;
+    max-height: 80vh !important;
+    padding: 1.5rem !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Улучшение читаемости текста */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  .about-card p,
+  .methodology-card p,
+  .expertise-card p,
+  .philosophy-quote {
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+  }
 }
