@@ -2469,3 +2469,40 @@ footer::before {
   backface-visibility: hidden;
   perspective: 1000;
 }
+
+/* ========== ЭКСТРЕННОЕ ИСПРАВЛЕНИЕ ЛОГОТИПА ========== */
+#home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+#main-logo {
+    max-width: 500px !important;
+    width: 80% !important;
+    height: auto !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    /* Сброс всех возможных конфликтующих стилей */
+    float: none !important;
+    clear: both !important;
+}
+
+/* Убедитесь, что body не смещает контент */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
