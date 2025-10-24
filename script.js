@@ -818,3 +818,70 @@ document.addEventListener("DOMContentLoaded", () => {
     // ... ваш существующий код ...
     initMobileTooltips(); // ДОБАВЬТЕ ЭТУ СТРОЧКУ
 });
+
+// ========== ФИКС ТУЛТИПОВ ДЛЯ МОБИЛЬНЫХ ==========
+
+function initTooltips() {
+    const aboutCards = document.querySelectorAll('.about-card');
+    
+    aboutCards.forEach(card => {
+        let tooltipTimeout;
+        let isTooltipVisible = false;
+        
+        // Для десктопов - hover
+        card.addEventListener('mouseenter', function() {
+            clearTimeout(tooltipTimeout);
+            isTooltipVisible = true;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            clearTimeout(tooltipTimeout);
+            isTooltipVisible = false;
+        });
+        
+        // Для мобильных - tap
+        if (isMobileDevice()) {
+            card.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                clearTimeout(tooltipTimeout);
+                
+                if (!isTooltipVisible) {
+                    // Показываем тултип
+                    this.classList.add('tooltip-active');
+                    isTooltipVisible = true;
+                    
+                    // Скрываем через 3 секунды
+                    tooltipTimeout = setTimeout(() => {
+                        this.classList.remove('tooltip-active');
+                        isTooltipVisible = false;
+                    }, 3000);
+                } else {
+                    // Скрываем тултип
+                    this.classList.remove('tooltip-active');
+                    isTooltipVisible = false;
+                }
+            });
+            
+            // Предотвращаем скролл при касании карточки
+            card.addEventListener('touchmove', function(e) {
+                if (isTooltipVisible) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+}
+
+// Добавьте класс для мобильных тултипов в CSS
+const mobileTooltipCSS = `
+.about-card.tooltip-active::before {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+`;
+
+// Вставка CSS для мобильных тултипов
+const style = document.createElement('style');
+style.textContent = mobileTooltipCSS;
+document.head.appendChild(style);
