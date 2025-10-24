@@ -518,3 +518,16 @@ document.addEventListener("DOMContentLoaded", () => {
     initScrollSpy();
     initHeaderScroll();
 });
+
+// Тестовый код для диагностики AOS
+setTimeout(() => {
+    console.log('AOS статус:', typeof AOS);
+    console.log('Элементы с data-aos:', document.querySelectorAll('[data-aos]').length);
+    
+    if (typeof AOS !== 'undefined') {
+        console.log('✅ AOS загружен');
+        AOS.refresh(); // Принудительное обновление
+    } else {
+        console.error('❌ AOS не загружен');
+    }
+}, 1000);
