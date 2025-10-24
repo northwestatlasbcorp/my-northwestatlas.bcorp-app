@@ -1,818 +1,275 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
-    <title>North West Atlas B Corp</title>
-    
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-    <!-- COMPLETE INLINE CSS -->
-    <style>
-        /* ========== NORTH WEST ATLAS B CORP - COMPLETE CSS ========== */
-        :root {
-            --gold-primary: #d4af37;
-            --gold-secondary: #f4e5c3;
-            --bg-primary: #0d0d0d;
-            --bg-secondary: #1a1a1a;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.85);
-            --font-primary: 'Inter', sans-serif;
-            --font-secondary: 'Playfair Display', serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-primary);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* ========== PRELOADER ========== */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg-primary); z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-
-        .preloader-logo {
-            width: 120px; height: auto;
-            filter: drop-shadow(0 0 20px var(--gold-primary));
-        }
-
-        /* ========== HEADER ========== */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            background: rgba(13, 13, 13, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000; padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .navbar-wrapper {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
-        }
-
-        .navbar-top { width: 100%; text-align: center; }
-        .navbar-top .logo a {
-            font-family: var(--font-secondary);
-            font-size: 1.3rem; color: var(--text-primary); text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .text-gold { color: var(--gold-primary); }
-
-        .navbar-bottom {
-            width: 100%; display: flex; flex-direction: column;
-            align-items: center; gap: 0.8rem;
-        }
-
-        #nav-menu {
-            display: flex; list-style: none; gap: 2rem;
-            margin: 0; padding: 0; justify-content: center; flex-wrap: wrap;
-        }
-
-        .nav-link {
-            color: var(--text-primary); text-decoration: none;
-            font-size: 0.9rem; padding: 0.3rem 0; position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover { color: var(--gold-primary); }
-
-        .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; color: var(--gold-primary); }
-
-        /* ========== MAIN CONTENT ========== */
-        #home {
-            position: relative; display: flex; align-items: center; 
-            justify-content: center; min-height: 100vh; padding: 0;
-        }
-
-        #main-logo {
-            max-width: 500px; width: 80%; height: auto;
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
-            transition: all 0.3s ease;
-        }
-
-        #main-logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 1));
-        }
-
-        /* ========== SECTIONS ========== */
-        section { padding: 4rem 1rem; position: relative; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-        .section-title {
-            font-family: var(--font-secondary); font-weight: 700;
-            font-size: 2.5rem; color: var(--gold-primary);
-            text-align: center; margin-bottom: 3rem;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        /* ========== ABOUT SECTION ========== */
-        .about-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem; margin-bottom: 2rem;
-        }
-
-        .about-card {
-            background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 10px;
-            padding: 2rem; transition: all 0.3s ease; cursor: pointer;
-        }
-
-        .about-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold-primary);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .philosophy-quote {
-            max-width: 800px; margin: 0 auto 3rem; padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 3px solid var(--gold-primary); border-radius: 0 8px 8px 0;
-            font-style: italic; text-align: left;
-        }
-
-        .philosophy-quote cite {
-            display: block; margin-top: 1rem; text-align: right;
-            color: var(--gold-primary); font-style: normal; font-weight: 600;
-        }
-
-        /* ========== EXPERTISE SECTION ========== */
-        .expertise-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .expertise-card {
-            background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px; padding: 2rem; transition: all 0.3s ease;
-            display: flex; flex-direction: column; height: 100%;
-        }
-
-        .expertise-card:hover {
-            transform: scale(1.03);
-            border-color: var(--gold-primary);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
-        }
-
-        .expertise-icon {
-            font-size: 2.5rem; margin-bottom: 1rem;
-            color: var(--gold-primary);
-        }
-
-        .gold-button {
-            background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);
-            border: 1px solid var(--gold-primary); padding: 0.75rem 1.5rem;
-            border-radius: 5px; cursor: pointer; transition: all 0.3s ease;
-            font-weight: 500; margin-top: auto;
-        }
-
-        .gold-button:hover {
-            background: rgba(212, 175, 55, 0.2);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* ========== PARTNERS SECTION ========== */
-        .partners-container { overflow: hidden; position: relative; width: 100%; padding: 2rem 0; }
-        .partners-marquee { width: 100%; overflow: hidden; position: relative; }
-        .partners-track { display: flex; animation: marquee 30s linear infinite; width: max-content; }
-
-        .partner-card {
-            flex: 0 0 auto; width: 180px; height: 80px; margin: 0 1.5rem;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05); border-radius: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.2); transition: all 0.3s ease;
-        }
-
-        .partner-card:hover {
-            transform: scale(1.05); border-color: var(--gold-primary);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .partner-card img { max-width: 70%; max-height: 50px; filter: brightness(0) invert(1); opacity: 0.8; }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ========== INVESTMENT SECTION ========== */
-        .investment-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem; max-width: 800px; margin: 0 auto;
-        }
-
-        .investment-block {
-            background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 10px;
-            padding: 2rem 1rem; transition: all 0.3s ease; cursor: pointer;
-            text-align: center;
-        }
-
-        .investment-block:hover {
-            transform: translateY(-5px); border-color: var(--gold-primary);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .investment-icon {
-            width: 50px; height: 50px; background: rgba(212, 175, 55, 0.1);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; margin: 0 auto 1rem;
-        }
-
-        .investment-icon i { font-size: 1.3rem; color: var(--gold-primary); }
-
-        /* ========== METHODOLOGY SECTION ========== */
-        .methodology-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .methodology-card {
-            background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 10px;
-            padding: 2rem; transition: all 0.3s ease; text-align: center;
-        }
-
-        .methodology-card:hover {
-            transform: translateY(-5px); border-color: var(--gold-primary);
-        }
-
-        .methodology-card .icon {
-            font-size: 2.5rem; margin-bottom: 1rem; color: var(--gold-primary);
-        }
-
-        /* ========== ESG CALCULATOR ========== */
-        .calculator-container {
-            max-width: 800px; margin: 0 auto; background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 10px; padding: 2rem;
-        }
-
-        .calculator-form { margin-bottom: 2rem; text-align: center; }
-        .calculator-form select {
-            width: 100%; max-width: 300px; padding: 0.75rem; margin: 1rem 0;
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 5px; color: white;
-        }
-
-        .ratings-result { display: none; margin-bottom: 2rem; }
-        .ratings-result.active { display: block; }
-
-        .ratings-table {
-            width: 100%; border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.05); border-radius: 5px; overflow: hidden;
-        }
-
-        .ratings-table th, .ratings-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .ratings-table th { background: rgba(212, 175, 55, 0.2); color: var(--gold-primary); }
-
-        .recommendations-container { display: none; }
-        .recommendations-container.active { display: block; }
-
-        .recommendation-title { color: var(--gold-primary); margin-bottom: 1rem; text-align: center; }
-        .recommendation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .recommendation-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 5px; padding: 1rem; }
-
-        /* ========== CONTACTS SECTION ========== */
-        .contacts-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem; margin-bottom: 3rem;
-        }
-
-        .contact-card {
-            background: rgba(26, 26, 26, 0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 10px;
-            padding: 1.5rem; display: flex; align-items: center; gap: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover { border-color: var(--gold-primary); transform: translateY(-3px); }
-
-        .contact-icon {
-            width: 45px; height: 45px; background: rgba(212, 175, 55, 0.1);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-weight: bold; color: var(--gold-primary);
-        }
-
-        .contact-form-container {
-            max-width: 600px; margin: 0 auto; background: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 10px; padding: 2rem;
-        }
-
-        .form-group { margin-bottom: 1.5rem; text-align: left; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--gold-primary); font-weight: 500; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 5px;
-            color: white; font-family: var(--font-primary);
-        }
-
-        .form-group textarea { height: 120px; resize: vertical; }
-
-        /* ========== FOOTER ========== */
-        footer {
-            background: rgba(0, 0, 0, 0.8); border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem; margin-bottom: 2rem; max-width: 1200px;
-            margin-left: auto; margin-right: auto; padding: 0 2rem;
-        }
-
-        .footer-column h3 { margin-bottom: 1rem; font-family: var(--font-secondary); color: var(--gold-primary); }
-        .footer-column ul { list-style: none; }
-        .footer-column ul li { margin-bottom: 0.5rem; }
-        .footer-column ul li a { color: var(--text-primary); text-decoration: none; transition: color 0.3s ease; }
-        .footer-column ul li a:hover { color: var(--gold-primary); }
-        .footer-column ul li i { width: 20px; color: var(--gold-primary); margin-right: 0.5rem; }
-
-        .footer-bottom {
-            text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary); font-size: 0.9rem;
-        }
-
-        /* ========== BACKGROUND & PARTICLES ========== */
-        .video-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 50%, #16213e 100%);
-            z-index: -3;
-        }
-
-        #particles-js {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -2;
-        }
-
-        /* ========== MOBILE RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            header { padding: 1rem; }
-            .navbar-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
-            .menu-toggle { display: flex; }
-            #nav-menu {
-                position: fixed; top: 80px; left: 0; right: 0;
-                background: rgba(13, 13, 13, 0.98); backdrop-filter: blur(20px);
-                flex-direction: column; padding: 0; max-height: 0; opacity: 0;
-                overflow: hidden; transition: all 0.4s ease;
-            }
-            #nav-menu.active { max-height: 80vh; opacity: 1; padding: 1rem 0; }
-            #nav-menu li { width: 100%; text-align: center; padding: 0.8rem 0; border-bottom: 1px solid rgba(212,175,55,0.1); }
-            .nav-link { padding: 1rem 0; display: block; font-size: 1.1rem; }
-            .section-title { font-size: 2rem; }
-            section { padding: 3rem 1rem; }
-        }
-
-        /* ========== CUSTOM CURSOR ========== */
-        .custom-cursor {
-            position: fixed; width: 20px; height: 20px; border: 2px solid var(--gold-primary);
-            border-radius: 50%; pointer-events: none; z-index: 9999;
-            mix-blend-mode: difference; transition: transform 0.1s ease;
-        }
-
-        .saturn {
-            position: fixed; width: 40px; height: 40px; border: 2px solid var(--gold-primary);
-            border-radius: 50%; pointer-events: none; z-index: 9998;
-            mix-blend-mode: difference; transition: all 0.2s ease;
-            animation: saturnOrbit 3s linear infinite;
-        }
-
-        @keyframes saturnOrbit {
-            0% { transform: rotate(0deg) translateX(25px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .custom-cursor, .saturn { display: none; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="North West Atlas B Corp — элитные инвестиции в технологии, устойчивое развитие и инновации будущего." />
+  <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее" />
+  <meta property="og:description" content="Создаем будущее, а не следуем за ним." />
+  <meta property="og:image" content="https://northwestatlas.com/og-image.jpg" />
+  <meta property="og:url" content="https://northwestatlas.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="keywords" content="инвестиции, ESG, AI, big data, North West Atlas B Corp, устойчивое развитие" />
+  <title>North West Atlas B Corp</title>
+
+  <!-- Шрифты -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Фавикон -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
 </head>
-
 <body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="preloader-content">
-            <img src="logo-nwa-centered.png" alt="North West Atlas Logo" class="preloader-logo">
-        </div>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <img src="logo-nwa-centered.png" alt="North West Atlas Logo" class="preloader-logo" />
+      <div class="gold-ring-animation"></div>
     </div>
+  </div>
 
-    <!-- Background -->
-    <div class="video-container" id="particles-js"></div>
+  <!-- Particles.js фон -->
+  <div id="particles-js"></div>
+  <div class="video-overlay"></div>
 
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
-    <div class="saturn"></div>
+  <!-- Кастомный курсор "Сатурн" -->
+  <div class="saturn"></div>
 
-    <!-- Header -->
-    <header id="header">
-        <nav class="navbar-wrapper">
-            <div class="navbar-top">
-                <div class="logo">
-                    <a href="#home" class="font-playfair">
-                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                    </a>
-                </div>
+  <!-- Шапка -->
+  <header id="header">
+    <nav class="navbar-wrapper">
+      <div class="navbar-top">
+        <div class="logo">
+          <a href="#home" class="font-playfair">NORTH WEST <span class="text-gold">ATLAS B CORP</span></a>
+        </div>
+      </div>
+      <div class="navbar-bottom">
+        <div class="menu-toggle" aria-label="Меню" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul id="nav-menu" aria-hidden="true">
+          <li><a href="#home" class="nav-link">Главная</a></li>
+          <li><a href="#about" class="nav-link">О нас</a></li>
+          <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
+          <li><a href="#partners" class="nav-link">Партнеры</a></li>
+          <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
+          <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
+          <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
+        </ul>
+        <div class="lang-switcher">
+          <a href="/" class="active-lang">🇷🇺 РУ</a>
+          <span>|</span>
+          <a href="/en.html">🇬🇧 EN</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Главная -->
+    <section id="home">
+      <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" id="main-logo" />
+    </section>
+
+    <!-- О нас -->
+    <section id="about" class="py-24 px-6 bg-black/30">
+      <div class="container">
+        <h2 class="section-title">О нас</h2>
+        <blockquote class="philosophy-quote">
+          "Мы инвестируем не только капитал, но и время, знания и репутацию..."
+          <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
+        </blockquote>
+        <div class="about-container">
+          <div class="about-card" data-tooltip="Мы стремимся создать прочный фундамент для будущего России и мира через ответственные инвестиции в научные прорывы и инновационные решения.">
+            <h3 class="text-gold">Наша миссия</h3>
+            <p>Формирование глобального будущего.</p>
+          </div>
+          <div class="about-card" data-tooltip="Поддержка перспективных проектов, которые готовятся к выходу на рынок в ближайшие годы.">
+            <h3 class="text-gold">Наши цели</h3>
+            <p>Создаем наследие будущего.</p>
+          </div>
+          <div class="about-card" data-tooltip="Прозрачность, экспертность, долгосрочное мышление.">
+            <h3 class="text-gold">Наши принципы</h3>
+            <p>Стратегическое мышление.</p>
+          </div>
+          <div class="about-card" data-tooltip="Детальный анализ с учетом финансовых, юридических и ESG-факторов.">
+            <h3 class="text-gold">Наш подход</h3>
+            <p>Технологичный взгляд на мир.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экспертиза -->
+    <section id="expertise" class="py-24 px-6 bg-black/40">
+      <div class="container">
+        <h2 class="section-title">Экспертиза</h2>
+        <div class="expertise-container">
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-brain"></i></div>
+            <h3 class="text-gold">Искусственный интеллект</h3>
+            <p>Анализ текстовых данных, прогнозирование трендов.</p>
+            <button class="read-more" onclick="openPopup('ai')">Подробнее</button>
+          </div>
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-database"></i></div>
+            <h3 class="text-gold">Анализ больших данных</h3>
+            <p>Сбор и анализ больших объемов данных.</p>
+            <button class="read-more" onclick="openPopup('big-data')">Подробнее</button>
+          </div>
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-chart-line"></i></div>
+            <h3 class="text-gold">Оценка рисков</h3>
+            <p>Точные оценки финансовых и ESG-рисков.</p>
+            <button class="read-more" onclick="openPopup('risks')">Подробнее</button>
+          </div>
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-rocket"></i></div>
+            <h3 class="text-gold">Масштабирование бизнеса</h3>
+            <p>Стратегии устойчивого роста и долгосрочной ценности.</p>
+            <button class="read-more" onclick="openPopup('scaling')">Подробнее</button>
+          </div>
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-gavel"></i></div>
+            <h3 class="text-gold">Юридическое сопровождение</h3>
+            <p>Оформление сделок и защита прав инвесторов.</p>
+            <button class="read-more" onclick="openPopup('legal')">Подробнее</button>
+          </div>
+          <div class="expertise-card">
+            <div class="expertise-icon"><i class="fas fa-certificate"></i></div>
+            <h3 class="text-gold">Патентование</h3>
+            <p>Гарантия уникальности технологий.</p>
+            <button class="read-more" onclick="openPopup('patents')">Подробнее</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Партнеры -->
+    <section id="partners" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+      <div class="container">
+        <h2 class="section-title">Наши партнеры</h2>
+        <div class="partners-container">
+          <div class="partners-marquee">
+            <div class="partners-track">
+              <div class="partner-card"><img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy" /></div>
+              <div class="partner-card"><img src="ros-eximbank-logo.png" alt="Росэксимбанк" loading="lazy" /></div>
+              <div class="partner-card"><img src="rost-logo.png" alt="РОСТ" loading="lazy" /></div>
+              <div class="partner-card"><img src="minpromtorg-logo.png" alt="Минпромторг" loading="lazy" /></div>
+              <div class="partner-card"><img src="rshb-inteh-logo.png" alt="РСХБ-Интех" loading="lazy" /></div>
+              <!-- Дубли для бесшовной прокрутки -->
+              <div class="partner-card"><img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy" /></div>
+              <div class="partner-card"><img src="ros-eximbank-logo.png" alt="Росэксимбанк" loading="lazy" /></div>
+              <div class="partner-card"><img src="rost-logo.png" alt="РОСТ" loading="lazy" /></div>
+              <div class="partner-card"><img src="minpromtorg-logo.png" alt="Минпромторг" loading="lazy" /></div>
+              <div class="partner-card"><img src="rshb-inteh-logo.png" alt="РСХБ-Интех" loading="lazy" /></div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div class="navbar-bottom">
-                <div class="menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars"></i>
-                </div>
-                
-                <ul id="nav-menu">
-                    <li><a href="#home" class="nav-link">Главная</a></li>
-                    <li><a href="#about" class="nav-link">О нас</a></li>
-                    <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
-                    <li><a href="#partners" class="nav-link">Партнеры</a></li>
-                    <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
-                    <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
-                    <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
-                </ul>
+    <!-- Investment Focus -->
+    <section id="investment-focus" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+      <div class="container">
+        <h2 class="section-title">Investment Focus</h2>
+        <div class="investment-container">
+          <div class="investment-block"><i class="fas fa-leaf investment-icon"></i><div class="investment-text">Ecotech</div></div>
+          <div class="investment-block"><i class="fas fa-seedling investment-icon"></i><div class="investment-text">Agrotech</div></div>
+          <div class="investment-block"><i class="fas fa-mountain investment-icon"></i><div class="investment-text">Eco REE Mining</div></div>
+          <div class="investment-block"><i class="fas fa-link investment-icon"></i><div class="investment-text">IIoT & Blockchain</div></div>
+          <div class="investment-block"><i class="fas fa-hand-holding-heart investment-icon"></i><div class="investment-text">Smartcharity</div></div>
+        </div>
+      </div>
+    </section>
 
-                <div class="lang-switcher">
-                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-                    <span style="margin: 0 0.5rem; color: rgba(255,255,255,0.5)">|</span>
-                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <!-- Методология -->
+    <section id="methodology" class="py-24 px-6 bg-black/40">
+      <div class="container">
+        <h2 class="section-title">Методология</h2>
+        <div class="methodology-container">
+          <div class="methodology-card"><i class="fas fa-language icon"></i><h3 class="text-gold">NLP</h3><p>Анализ финансовых отчетов и новостей.</p></div>
+          <div class="methodology-card"><i class="fab fa-python icon"></i><h3 class="text-gold">Python</h3><p>Основной инструмент анализа и автоматизации.</p></div>
+          <div class="methodology-card"><i class="fas fa-robot icon"></i><h3 class="text-gold">Машинное обучение</h3><p>Выявление скрытых трендов и рисков.</p></div>
+          <div class="methodology-card"><i class="fas fa-database icon"></i><h3 class="text-gold">Большие данные</h3><p>Принятие взвешенных решений.</p></div>
+        </div>
+      </div>
+    </section>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home">
-            <div class="logo-container">
-                <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" id="main-logo">
-            </div>
-        </section>
+    <!-- ESG Калькулятор -->
+    <section id="esg-calculator" class="py-24 px-6 bg-black/40">
+      <div class="container">
+        <h2 class="section-title">Калькулятор ESG-рейтингов</h2>
+        <p class="max-w-3xl mx-auto mb-10 text-white/80">Наш калькулятор использует NLP и ML для анализа ESG-факторов.</p>
+        <div class="calculator-container">
+          <div class="calculator-form">
+            <label for="company">Выберите компанию:</label>
+            <select id="company"><option value="solidcore">Solidcore Resources plc</option></select>
+            <button id="ratings-button" class="gold-button" onclick="toggleRatings()">Пример ESG-оценки</button>
+          </div>
+          <div id="result" class="ratings-result"></div>
+          <div id="expert-recommendations" class="recommendations-container"></div>
+        </div>
+      </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-24 px-6 bg-black/30">
-            <div class="container">
-                <h2 class="section-title">О нас</h2>
-                <blockquote class="philosophy-quote">
-                    "Мы инвестируем не только капитал, но и время, знания и репутацию..."
-                    <cite><span class="text-gold">— Shamil Ibragimov, Founder & CEO</span></cite>
-                </blockquote>
-                
-                <div class="about-container">
-                    <div class="about-card" data-tooltip="Мы стремимся создать прочный фундамент для будущего России и мира через ответственные инвестиции в научные прорывы и инновационные решения.">
-                        <h3 class="text-gold">Наша миссия</h3>
-                        <p>Формирование глобального будущего.</p>
-                    </div>
+    <!-- Обратная связь -->
+    <section id="feedback" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+      <div class="container">
+        <h2 class="section-title">Обратная связь</h2>
+        <div class="feedback-btn-container">
+          <button id="show-contacts-btn" class="gold-button" onclick="toggleContacts()">Показать</button>
+        </div>
+        <div id="contacts" style="display: none;">
+          <div class="contacts-grid">
+            <div class="contact-card"><div class="contact-icon">СПб</div><div class="contact-info"><h4 class="gold-text">Санкт-Петербург</h4><p><a href="tel:+79310077769">+7 931 007-77-69</a></p></div></div>
+            <div class="contact-card"><div class="contact-icon">МСК</div><div class="contact-info"><h4 class="gold-text">Москва</h4><p><a href="tel:+79917221107">+7 991 722-11-07</a></p></div></div>
+            <div class="contact-card"><div class="contact-icon">UAE</div><div class="contact-info"><h4 class="gold-text">Шарджа</h4><p><a href="tel:+97163220669">+971 6 322-06-69</a></p></div></div>
+          </div>
+          <div class="contact-form-container">
+            <h3 class="text-gold">Обратная связь</h3>
+            <form id="contact-form">
+              <div class="form-group"><label>Имя:</label><input type="text" required /></div>
+              <div class="form-group"><label>Email:</label><input type="email" required /></div>
+              <div class="form-group"><label>Сообщение:</label><textarea required></textarea></div>
+              <button type="submit" class="submit-btn gold-button">Отправить <i class="fas fa-arrow-right"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-                    <div class="about-card" data-tooltip="Поддержка перспективных проектов, которые готовятся к выходу на рынок в ближайшие годы. Мы инвестируем в технологии, меняющие мир, и помогаем ученым и изобретателям воплотить свои идеи в реальность.">
-                        <h3 class="text-gold">Наши цели</h3>
-                        <p>Создаем наследие будущего.</p>
-                    </div>
+  <!-- Футер -->
+  <footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3 class="font-playfair">NORTH WEST <span class="text-gold">ATLAS B CORP</span></h3>
+          <p>Создаем будущее, а не следуем за ним.</p>
+        </div>
+        <div class="footer-column"><h3 class="text-gold">Навигация</h3><ul><li><a href="#home">Главная</a></li><li><a href="#about">О нас</a></li><li><a href="#expertise">Экспертиза</a></li></ul></div>
+        <div class="footer-column"><h3 class="text-gold">Направления</h3><ul><li><i class="fas fa-chart-line"></i> <span>Инвестиции</span></li><li><i class="fas fa-leaf"></i> <span>ESG Консалтинг</span></li></ul></div>
+        <div class="footer-column"><h3 class="text-gold">Адрес</h3><ul><li><i class="fas fa-map-marker-alt"></i> <span>Санкт-Петербург, Петровская коса д. 1</span></li><li><i class="fas fa-envelope"></i> <span>info@northwestatlas.com</span></li></ul></div>
+      </div>
+      <div class="license-notice">
+        <p>✓ Professional License</p>
+        <p>Government of Sharjah, UAE | License #786048 | Registration #197626</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
 
-                    <div class="about-card" data-tooltip="Прозрачность: Все наши сделки основаны на четком понимании и доверии. Экспертность: Наша команда состоит из профессионалов в области науки, права и патентования. Долгосрочное мышление: Мы фокусируемся на стратегических проектах с высоким потенциалом роста.">
-                        <h3 class="text-gold">Наши принципы</h3>
-                        <p>Стратегическое мышление.</p>
-                    </div>
-
-                    <div class="about-card" data-tooltip="Мы проводим детальный анализ каждого проекта с учетом финансовых, юридических и ESG-факторов. Наши эксперты обеспечивают полное сопровождение — от оценки идеи до вывода продукта на рынок.">
-                        <h3 class="text-gold">Наш подход</h3>
-                        <p>Технологичный взгляд на мир.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Expertise Section -->
-        <section id="expertise" class="py-24 px-6 bg-black/40">
-            <div class="container">
-                <h2 class="section-title">Экспертиза</h2>
-                <div class="expertise-container">
-                    <div class="expertise-card">
-                        <div class="expertise-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3 class="text-gold">Искусственный интеллект</h3>
-                        <p>Мы используем AI для анализа текстовых данных, прогнозирования трендов и автоматизации процессов.</p>
-                        <button class="read-more gold-button" onclick="openPopup('ai')">Подробнее</button>
-                    </div>
-                    <div class="expertise-card">
-                        <div class="expertise-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h3 class="text-gold">Анализ больших данных</h3>
-                        <p>Сбор и анализ больших объемов данных позволяет нам принимать более взвешенные решения.</p>
-                        <button class="read-more gold-button" onclick="openPopup('big-data')">Подробнее</button>
-                    </div>
-                    <div class="expertise-card">
-                        <div class="expertise-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="text-gold">Оценка рисков</h3>
-                        <p>Мы применяем технологии машинного обучения и анализ больших данных для точной оценки финансовых, операционных и ESG-рисков.</p>
-                        <button class="read-more gold-button" onclick="openPopup('risks')">Подробнее</button>
-                    </div>
-                    <div class="expertise-card">
-                        <div class="expertise-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h3 class="text-gold">Масштабирование бизнеса</h3>
-                        <p>Стратегическое планирование и реализация программ масштабирования бизнеса с фокусом на устойчивый рост и долгосрочную ценность.</p>
-                        <button class="read-more gold-button" onclick="openPopup('scaling')">Подробнее</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Partners Section -->
-        <section id="partners" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
-            <div class="container">
-                <h2 class="section-title">Наши партнеры</h2>
-                <div class="partners-container">
-                    <div class="partners-marquee">
-                        <div class="partners-track">
-                            <!-- Partner logos will be added here -->
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 1</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 2</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 3</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 4</div>
-                            </div>
-                            <!-- Duplicate for seamless loop -->
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 1</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 2</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 3</div>
-                            </div>
-                            <div class="partner-card">
-                                <div style="color: var(--gold-primary); font-weight: bold;">Партнер 4</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Investment Focus Section -->
-        <section id="investment-focus" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
-            <div class="container">
-                <h2 class="section-title">Инвестиционные направления</h2>
-                <div class="investment-container">
-                    <div class="investment-block">
-                        <div class="investment-icon">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="investment-text">Ecotech</div>
-                    </div>
-                    <div class="investment-block">
-                        <div class="investment-icon">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <div class="investment-text">Agrotech</div>
-                    </div>
-                    <div class="investment-block">
-                        <div class="investment-icon">
-                            <i class="fas fa-mountain"></i>
-                        </div>
-                        <div class="investment-text">Eco REE Mining</div>
-                    </div>
-                    <div class="investment-block">
-                        <div class="investment-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <div class="investment-text">IIoT & Blockchain</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-column">
-                        <h3>NORTH WEST <span class="text-gold">ATLAS B CORP</span></h3>
-                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Создаем будущее, а не следуем за ним.</p>
-                    </div>
-                    <div class="footer-column">
-                        <h3 class="text-gold">Навигация</h3>
-                        <ul>
-                            <li><a href="#home">Главная</a></li>
-                            <li><a href="#about">О нас</a></li>
-                            <li><a href="#expertise">Экспертиза</a></li>
-                            <li><a href="#partners">Партнеры</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h3 class="text-gold">Контакты</h3>
-                        <ul>
-                            <li><i class="fas fa-map-marker-alt"></i> <span>Санкт-Петербург</span></li>
-                            <li><i class="fas fa-phone"></i> <span>+7 931 007-77-69</span></li>
-                            <li><i class="fas fa-envelope"></i> <span>info@northwestatlas.com</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>&copy; <span id="current-year">2024</span> North West Atlas B Corp. Все права защищены.</p>
-                </div>
-            </div>
-        </footer>
-    </main>
-
-    <!-- COMPLETE INLINE JAVASCRIPT -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        // ========== COMPLETE JAVASCRIPT FUNCTIONALITY ==========
-        console.log('🚀 Starting North West Atlas B Corp...');
-
-        // Initialize on DOM load
-        document.addEventListener("DOMContentLoaded", function() {
-            initializeAllComponents();
-        });
-
-        function initializeAllComponents() {
-            // Set current year
-            document.getElementById("current-year").textContent = new Date().getFullYear();
-            
-            // Initialize AOS
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    easing: "ease-in-out-cubic",
-                    once: true,
-                    mirror: false,
-                    disable: function() {
-                        return window.innerWidth < 768;
-                    }
-                });
-                console.log('✅ AOS initialized');
-            }
-
-            // Initialize particles
-            initParticles();
-            
-            // Initialize cursor
-            initCursor();
-            
-            // Initialize marquee
-            initMarquee();
-            
-            console.log('✅ All components initialized');
-        }
-
-        // Particles.js
-        function initParticles() {
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: 50, density: { enable: true, value_area: 800 } },
-                        color: { value: '#d4af37' },
-                        shape: { type: 'circle' },
-                        opacity: { value: 0.3, random: true },
-                        size: { value: 3, random: true },
-                        line_linked: {
-                            enable: true,
-                            distance: 150,
-                            color: '#d4af37',
-                            opacity: 0.2,
-                            width: 1
-                        },
-                        move: { enable: true, speed: 1, direction: 'none', random: true }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: {
-                            onhover: { enable: true, mode: 'grab' },
-                            onclick: { enable: true, mode: 'push' }
-                        }
-                    },
-                    retina_detect: true
-                });
-                console.log('✅ Particles initialized');
-            }
-        }
-
-        // Custom cursor
-        function initCursor() {
-            const cursor = document.querySelector('.custom-cursor');
-            const saturn = document.querySelector('.saturn');
-            
-            if (cursor && saturn) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX - 10 + 'px';
-                    cursor.style.top = e.clientY - 10 + 'px';
-                    
-                    setTimeout(() => {
-                        saturn.style.left = e.clientX - 20 + 'px';
-                        saturn.style.top = e.clientY - 20 + 'px';
-                    }, 50);
-                });
-                console.log('✅ Cursor initialized');
-            }
-        }
-
-        // Marquee animation
-        function initMarquee() {
-            const track = document.querySelector('.partners-track');
-            if (track) {
-                track.style.animation = 'none';
-                setTimeout(() => {
-                    track.style.animation = 'marquee 30s linear infinite';
-                }, 100);
-                console.log('✅ Marquee initialized');
-            }
-        }
-
-        // Mobile menu
-        function toggleMenu() {
-            const navMenu = document.getElementById('nav-menu');
-            const icon = document.querySelector('.menu-toggle i');
-            
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                icon.classList.replace('fa-times', 'fa-bars');
-                document.body.style.overflow = '';
-            } else {
-                navMenu.classList.add('active');
-                icon.classList.replace('fa-bars', 'fa-times');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Popup functionality
-        const expertiseData = {
-            ai: {
-                title: "Искусственный интеллект",
-                content: "<p>Подробная информация об AI технологиях...</p>"
-            },
-            "big-data": {
-                title: "Большие данные", 
-                content: "<p>Подробная информация о Big Data...</p>"
-            },
-            risks: {
-                title: "Оценка рисков",
-                content: "<p>Подробная информация об оценке рисков...</p>"
-            },
-            scaling: {
-                title: "Масштабирование",
-                content: "<p>Подробная информация о масштабировании...</p>"
-            }
-        };
-
-        function openPopup(expertise) {
-            alert(`Открывается модальное окно: ${expertiseData[expertise].title}`);
-            // Modal implementation would go here
-        }
-
-        // Preloader
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 500);
-                }
-            }, 1500);
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        console.log('✅ North West Atlas B Corp fully loaded!');
-    </script>
+  <!-- Скрипты -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
