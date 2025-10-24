@@ -1,41 +1,154 @@
 /* ========== CSS С ОПТИМИЗАЦИЯМИ ========== */
 
 /* Начальное состояние для анимации логотипа */
-body:not(.loaded) #main-logo {
+/* Начальное состояние для анимации логотипа */
+#main-logo {
   opacity: 0;
   transform: scale(0.8);
-  /* Убираем transition здесь - она конфликтует с анимацией */
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 body.loaded #main-logo {
   opacity: 1;
   transform: scale(1);
-  
-  /* Добавляем плавный переход после загрузки */
-  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 /* Базовые настройки и переменные */
+
+/* ========== ПЕРЕМЕННЫЕ ========== */
 :root {
-  /* Шрифты */
+  /* === ЦВЕТОВАЯ СИСТЕМА === */
+  --gold-primary: #d4af37;
+  --gold-primary-rgb: 212, 175, 55;
+  --gold-secondary: #f4e5c3;
+  --gold-accent: #aa8a2e;
+  --gold-glow: rgba(212, 175, 55, 0.6);
+  
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #262626;
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-tertiary: rgba(255, 255, 255, 0.7);
+  
+  --border-primary: rgba(212, 175, 55, 0.3);
+  --border-secondary: rgba(212, 175, 55, 0.2);
+  --border-glow: rgba(212, 175, 55, 0.4);
+
+  /* === ТИПОГРАФИЯ === */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-secondary: 'Playfair Display', 'Times New Roman', serif;
   --font-accent: 'Cormorant Garamond', 'Georgia', serif;
   
-  /* Цветовая схема */
-  --primary: #d4af37;
-  --primary-rgb: 212, 175, 55;
-  --background: #0d0d0d;
-  --background-secondary: #1a1a1a;
-  --foreground: #ffffff;
-  --foreground-secondary: rgba(255, 255, 255, 0.7);
-  --border: rgba(212, 175, 55, 0.2);
-  --radius: 0.5rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  /* === АНИМАЦИИ И ЭФФЕКТЫ === */
+  --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   
-  /* Оптимизированные переходы */
- --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
---transition-smooth: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
---transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.37);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.4);
+  
+  /* === РАЗМЕРЫ И ОТСТУПЫ === */
+  --header-height: 80px;
+  --container-max: 1200px;
+  --section-padding: 6rem;
+}
+
+/* === ПОДДЕРЖКА СВЕТЛОЙ ТЕМЫ === */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    
+    --text-primary: #1a1a1a;
+    --text-secondary: rgba(26, 26, 26, 0.85);
+    --text-tertiary: rgba(26, 26, 26, 0.7);
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* ========== СИСТЕМА ЗОЛОТОГО СВЕЧЕНИЯ ========== */
+.gold-glow {
+  position: relative;
+  transition: var(--transition-normal);
+}
+
+.gold-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    var(--gold-glow) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: var(--transition-normal);
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.gold-glow:hover::before {
+  opacity: 1;
+  animation: goldShimmer 2s ease-in-out infinite;
+}
+
+.gold-glow-primary {
+  box-shadow: 
+    0 0 20px rgba(var(--gold-primary-rgb), 0.3),
+    0 0 40px rgba(var(--gold-primary-rgb), 0.2),
+    0 0 60px rgba(var(--gold-primary-rgb), 0.1);
+}
+
+.gold-glow-intense {
+  box-shadow: 
+    0 0 30px rgba(var(--gold-primary-rgb), 0.6),
+    0 0 60px rgba(var(--gold-primary-rgb), 0.4),
+    0 0 90px rgba(var(--gold-primary-rgb), 0.2);
+}
+
+@keyframes goldShimmer {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+/* Универсальное применение */
+.section-title,
+.navbar-top .logo a,
+.about-card,
+.expertise-card,
+.methodology-card {
+  position: relative;
+  transition: var(--transition-normal);
 }
 
 /* Базовые сбросы стилей */
@@ -55,9 +168,9 @@ body {
   font-size: 16px;
   line-height: 1.7;
   letter-spacing: 0.01em;
-  color: var(--foreground);
+  color: var(--text-primary);
   text-align: center;
-  background: linear-gradient(180deg, var(--background) 0%, var(--background-secondary) 100%);
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   min-height: 100vh;
   overflow-x: hidden;
   
@@ -153,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
   left: -2rem;
   top: 0;
   font-size: 3rem;
-  color: var(--primary);
+  color: var(--gold-primary);
   opacity: 0.7;
   text-shadow: 0 0 10px var(--primary);
 }
@@ -190,8 +303,8 @@ h1, h2, h3, h4, h5, h6 {
 .mr-2 { margin-right: 0.5rem; }
 .mt-1 { margin-top: 0.25rem; }
 .text-white\/80 { color: rgba(255, 255, 255, 0.8); }
-.text-primary { color: var(--primary); }
-.bg-black\/70 { background-color: rgba(0, 0, 0, 0.7); }
+.text-primary {color: var(--gold-primary); }
+.bg-black\/70 { background-color: rgba(0, 0, 0, 0.85); }
 .bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
 .bg-black\/30 { background-color: rgba(0, 0, 0, 0.3); }
 .border-t { border-top-width: 1px; }
@@ -280,15 +393,16 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(var(--bg-primary), 0.95);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-primary);
   padding: 1rem 2rem 0.8rem;
+  transition: var(--transition-normal);
 }
 
 .navbar-wrapper {
-  max-width: 1400px;
+  max-width: var(--container-max);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -302,47 +416,48 @@ header {
   position: relative;
 }
 
+.navbar-top::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-primary),
+    transparent
+  );
+  opacity: 0.5;
+  transition: var(--transition-normal);
+}
+
+.navbar-top:hover::after {
+  width: 150px;
+  opacity: 0.8;
+}
+
 .navbar-top .logo a {
-  font-size: 1.1rem;
-  color: var(--foreground);
+  font-size: var(--text-lg);
+  color: var(--text-primary);
   text-decoration: none;
   letter-spacing: 2px;
   font-family: var(--font-secondary);
   font-weight: 400;
-  transition: var(--transition-smooth);
+  transition: var(--transition-slow);
   display: inline-block;
 }
 
 .navbar-top .logo a:hover {
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8),
-               0 0 40px rgba(212, 175, 55, 0.4);
+  color: var(--gold-primary);
   transform: scale(1.03);
   letter-spacing: 3px;
 }
 
 .navbar-top .logo a .text-gold {
-  color: var(--primary);
-}
-
-/* Золотой ореол за логотипом */
-.navbar-top .logo::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 150%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, 
-    rgba(212, 175, 55, 0.15) 0%, 
-    transparent 70%);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.navbar-top .logo:hover::before {
-  opacity: 1;
+  color: var(--gold-primary);
 }
 
 .navbar-bottom {
@@ -364,20 +479,13 @@ header {
 }
 
 .nav-link {
-  color: var(--foreground);
+  color: var(--text-primary);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   padding: 0.3rem 0;
   position: relative;
-  transition: var(--transition);
+  transition: var(--transition-normal);
   white-space: nowrap;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(212, 175, 55, 0.3) 50%, 
-    transparent 100%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  transition: background-position 0.6s ease;
 }
 
 .nav-link::after {
@@ -387,13 +495,12 @@ header {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--primary);
-  transition: var(--transition);
+  background-color: var(--gold-primary);
+  transition: var(--transition-normal);
 }
 
 .nav-link:hover {
-  color: var(--primary);
-  background-position: 0 0;
+  color: var(--gold-primary);
 }
 
 .nav-link:hover::after {
@@ -404,7 +511,7 @@ header {
 .nav-link:focus-visible,
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--gold-primary);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -414,23 +521,23 @@ a:focus-visible {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .lang-switcher a {
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: var(--transition-fast);
 }
 
 .lang-switcher span {
-  color: #d4af37;
+  color: var(--gold-primary);
 }
 
 .menu-toggle {
   display: none;
   cursor: pointer;
   font-size: 1.5rem;
-  color: var(--primary);
+  color: var(--gold-primary);
 }
 
 /* ========== АДАПТИВНАЯ НАВИГАЦИЯ ========== */
@@ -468,95 +575,107 @@ a:focus-visible {
     padding: 1rem 1.5rem 0.8rem;
   }
 
-  .navbar-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .navbar-top {
-    order: 1;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-
   .navbar-top .logo a {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     letter-spacing: 1.5px;
   }
 
   .navbar-bottom {
-    order: 2;
-    width: 100%;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    position: relative;
   }
 
   .menu-toggle {
     display: flex !important;
-    position: static;
-    order: 1;
     font-size: 1.5rem;
-  }
-
-  .lang-switcher {
-    order: 2;
-    font-size: 0.85rem;
-    gap: 0.4rem;
+    color: var(--gold-primary);
+    cursor: pointer;
   }
 
   #nav-menu {
     position: fixed;
-    top: 80px;
+    top: var(--header-height);
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(var(--bg-primary), 0.98);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
     flex-direction: column;
     gap: 0;
     width: 100%;
     max-height: 0;
+    opacity: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: 
+      max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease 0.1s;
     padding: 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 1px solid var(--border-primary);
     z-index: 999;
   }
 
   #nav-menu.active {
-    max-height: 400px;
-    padding: 1rem 0;
+    max-height: 80vh;
+    opacity: 1;
+    transition: 
+      max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease;
   }
 
   #nav-menu li {
     width: 100%;
     text-align: center;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-secondary);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
   }
 
+  #nav-menu.active li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Ступенчатая анимация пунктов меню */
+  #nav-menu.active li:nth-child(1) { transition-delay: 0.1s; }
+  #nav-menu.active li:nth-child(2) { transition-delay: 0.15s; }
+  #nav-menu.active li:nth-child(3) { transition-delay: 0.2s; }
+  #nav-menu.active li:nth-child(4) { transition-delay: 0.25s; }
+  #nav-menu.active li:nth-child(5) { transition-delay: 0.3s; }
+  #nav-menu.active li:nth-child(6) { transition-delay: 0.35s; }
+  #nav-menu.active li:nth-child(7) { transition-delay: 0.4s; }
+
+  .video-container {
+    animation: none !important;
+  }
+  
   .nav-link {
-    font-size: 1rem;
+    padding: 1.2rem 0;
     display: block;
-    width: 100%;
   }
-
-  /* Упрощаем анимации для мобильных */
-  .custom-cursor {
+  
+  .section-title {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
+  }
+  
+  .gold-glow::before {
     display: none;
   }
   
-  .about-card:hover {
-    transform: translateY(-5px) !important;
+  .about-card p,
+  .methodology-card p,
+  .expertise-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
-}
+  
+} 
 
 @media (max-width: 480px) {
   .navbar-top .logo a {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
   }
 
   .menu-toggle {
@@ -564,24 +683,95 @@ a:focus-visible {
   }
 
   .lang-switcher {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 }
 
-/* ========== СЕКЦИИ С АНИМАЦИЯМИ ========== */
-section {
-  position: relative;
-  animation: fadeInSection 0.8s ease-in-out;
+/* ========== УНИФИЦИРОВАННАЯ СИСТЕМА АНИМАЦИЙ ========== */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes fadeInSection {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+.fade-in-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.fade-in-rotate {
+  opacity: 0;
+  transform: scale(0.8) rotate(-5deg);
+  animation: fadeInRotate 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInRotate {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Применение анимаций */
+section {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.about-card,
+.expertise-card,
+.methodology-card,
+.investment-block {
+  animation: fadeInScale 0.6s ease-out forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+#main-logo {
+  opacity: 0;
+  animation: 
+    fadeInRotate 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
+    glowPulse 3s ease-in-out 1.5s infinite;
+}
+
+/* Ступенчатые задержки */
+.about-card:nth-child(1) { animation-delay: 0.1s; }
+.about-card:nth-child(2) { animation-delay: 0.2s; }
+.about-card:nth-child(3) { animation-delay: 0.3s; }
+.about-card:nth-child(4) { animation-delay: 0.4s; }
+
+.expertise-card:nth-child(1) { animation-delay: 0.1s; }
+.expertise-card:nth-child(2) { animation-delay: 0.2s; }
+.expertise-card:nth-child(3) { animation-delay: 0.3s; }
+.expertise-card:nth-child(4) { animation-delay: 0.4s; }
+.expertise-card:nth-child(5) { animation-delay: 0.5s; }
+.expertise-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Сохраняем glowPulse для логотипа */
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 30px rgba(var(--gold-primary-rgb), 0.8))
+            drop-shadow(0 0 60px rgba(var(--gold-primary-rgb), 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 50px rgba(var(--gold-primary-rgb), 1))
+            drop-shadow(0 0 100px rgba(var(--gold-primary-rgb), 0.7));
   }
 }
 
@@ -591,7 +781,7 @@ section::after {
   display: block;
   text-align: center;
   font-size: 1.5rem;
-  color: var(--primary);
+  color: var(--gold-primary);
   margin: 3rem auto 0;
   opacity: 0.6;
   animation: sectionPulse 3s ease-in-out infinite;
@@ -606,6 +796,122 @@ footer::after {
   50% { opacity: 1; }
 }
 
+/* ========== ПРЕМИУМ ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ========== */
+.section-title {
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-primary),
+    transparent
+  );
+  animation: shimmerLine 2s ease-in-out 1s forwards;
+}
+
+@keyframes shimmerLine {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    width: 4rem;
+    opacity: 0.5;
+  }
+  100% {
+    width: 6rem;
+    opacity: 0.8;
+  }
+}
+
+/* Улучшенные тени для мягкого золота */
+.gold-shadow-soft {
+  box-shadow: 
+    0 4px 20px rgba(var(--gold-primary-rgb), 0.15),
+    0 8px 40px rgba(var(--gold-primary-rgb), 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.gold-shadow-medium {
+  box-shadow: 
+    0 8px 32px rgba(var(--gold-primary-rgb), 0.25),
+    0 16px 64px rgba(var(--gold-primary-rgb), 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.gold-shadow-intense {
+  box-shadow: 
+    0 12px 48px rgba(var(--gold-primary-rgb), 0.4),
+    0 24px 96px rgba(var(--gold-primary-rgb), 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Применение улучшенных теней */
+.about-card {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.37),
+    inset 0 1px 1px rgba(212, 175, 55, 0.1);
+}
+
+.about-card:hover {
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(var(--gold-primary-rgb), 0.5),
+    0 0 40px rgba(var(--gold-primary-rgb), 0.2);
+}
+
+.expertise-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(var(--gold-primary-rgb), 0.3);
+}
+
+.expertise-card:hover {
+  box-shadow: 0 10px 20px rgba(var(--gold-primary-rgb), 0.4);
+}
+
+.navbar-top .logo a:hover {
+  text-shadow: 
+    0 0 20px rgba(var(--gold-primary-rgb), 0.8),
+    0 0 40px rgba(var(--gold-primary-rgb), 0.4);
+}
+
+/* Улучшенные золотые разделители секций */
+section::after {
+  content: "✦";
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--gold-primary);
+  margin: 3rem auto 0;
+  opacity: 0.6;
+  animation: sectionPulse 3s ease-in-out infinite;
+}
+
+@keyframes sectionPulse {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+footer::after {
+  display: none !important;
+}
+
 /* ========== ГЛАВНАЯ СЕКЦИЯ С ЛОГОТИПОМ ========== */
 #home {
   position: relative;
@@ -617,33 +923,9 @@ footer::after {
 }
 
 #main-logo {
-  opacity: 0;
-  max-width: 600px;
-  width: 85%;
-  height: auto;
-  animation: logoEntrance 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
-             glowPulse 3s ease-in-out 1.8s infinite;
   will-change: transform, opacity, filter;
   transition: transform 0.4s ease;
   image-rendering: -webkit-optimize-contrast;
-}
-
-@keyframes logoEntrance {
-  0% {
-    opacity: 0;
-    transform: scale(0.5) rotate(-5deg);
-    filter: blur(10px);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.1) rotate(2deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-    filter: blur(0) drop-shadow(0 0 30px rgba(212, 175, 55, 0.8))
-            drop-shadow(0 0 60px rgba(212, 175, 55, 0.5));
-  }
 }
 
 @keyframes glowPulse {
@@ -728,26 +1010,14 @@ footer::after {
 }
 
 .text-gold {
-  color: var(--primary);
+ color: var(--gold-primary);
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
 }
 
 .text-gold-bold {
-  color: var(--primary);
+ color: var(--gold-primary);
   font-weight: 400;
   text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.4);
-}
-
-/* ========== КАРТОЧКИ С УЛУЧШЕННОЙ ПРОИЗВОДИТЕЛЬНОСТЬЮ ========== */
-.about-card,
-.expertise-card,
-.methodology-card,
-.investment-block {
-  animation: fadeInCard 0.6s ease-in-out backwards;
-  /* Оптимизация производительности */
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
 }
 
 .about-card:nth-child(1) { animation-delay: 0.1s; }
@@ -757,17 +1027,6 @@ footer::after {
 .expertise-card:nth-child(1) { animation-delay: 0.1s; }
 .expertise-card:nth-child(2) { animation-delay: 0.2s; }
 .expertise-card:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes fadeInCard {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
 
 /* Раздел "О нас" */
 .about-container {
@@ -824,7 +1083,7 @@ footer::after {
   display: block;
   margin-top: 1rem;
   text-align: right;
-  color: var(--primary);
+ color: var(--gold-primary);
   font-style: normal;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
@@ -859,7 +1118,7 @@ footer::after {
 .expertise-icon {
   font-size: 35px;
   margin-bottom: 10px;
-  color: var(--primary);
+  color: var(--gold-primary);
   text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
 }
 
@@ -921,7 +1180,7 @@ footer::after {
   font-weight: bold;
   text-align: center;
   background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
+ color: var(--gold-primary);
   border: 1px solid var(--primary);
   border-radius: 5px;
   cursor: pointer;
@@ -962,7 +1221,7 @@ footer::after {
   top: 10px;
   right: 15px;
   font-size: 2rem;
-  color: var(--primary);
+ color: var(--gold-primary);
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -1073,7 +1332,7 @@ footer::after {
 
 .investment-icon i {
   font-size: 1.8rem;
-  color: var(--primary);
+ color: var(--gold-primary);
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
 }
 
@@ -1183,7 +1442,7 @@ footer::after {
   width: 100%;
   padding: 1rem;
   background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
+  color: var(--gold-primary);
   border: 1px solid var(--primary);
   border-radius: 5px;
   font-size: 1rem;
@@ -1223,7 +1482,7 @@ footer::after {
 }
 
 .ratings-table th {
-  color: var(--primary);
+ color: var(--gold-primary);
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
 }
 
@@ -1239,7 +1498,7 @@ footer::after {
 
 .recommendation-title {
   font-size: 1.3rem;
-  color: var(--primary);
+  color: var(--gold-primary);
   margin-bottom: 1rem;
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4);
 }
@@ -1267,7 +1526,7 @@ footer::after {
 }
 
 .recommendation-card h4 {
-  color: var(--primary);
+ color: var(--gold-primary);
   margin-bottom: 0.5rem;
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
 }
@@ -1278,7 +1537,7 @@ footer::after {
   justify-content: center;
   padding: 0.8rem 1.5rem;
   background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
+ color: var(--gold-primary);
   border: 1px solid var(--primary);
   border-radius: 5px;
   margin-top: 1.5rem;
@@ -1308,7 +1567,7 @@ footer::after {
 #show-contacts-btn {
   padding: 1rem 2rem;
   background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
+ color: var(--gold-primary);
   border: 1px solid var(--primary);
   border-radius: 5px;
   font-size: 1rem;
@@ -1369,7 +1628,7 @@ footer::after {
 }
 
 .contact-icon span {
-  color: var(--primary);
+ color: var(--gold-primary);
   font-weight: bold;
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
 }
@@ -1391,7 +1650,7 @@ footer::after {
 }
 
 .contact-info a:hover {
-  color: var(--primary);
+ color: var(--gold-primary);
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
 }
 
@@ -1419,7 +1678,7 @@ footer::after {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--primary);
+ color: var(--gold-primary);
   text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.3);
 }
 
@@ -1454,7 +1713,7 @@ footer::after {
   justify-content: center;
   padding: 0.8rem 2rem;
   background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
+ color: var(--gold-primary);
   border: 1px solid var(--primary);
   border-radius: 5px;
   font-size: 1rem;
@@ -1510,7 +1769,7 @@ footer::after {
 
 .footer-column ul li i {
   font-size: 16px;
-  color: var(--primary);
+ color: var(--gold-primary);
   margin-right: 10px;
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
 }
@@ -1536,7 +1795,7 @@ footer::after {
 }
 
 .footer-column ul li a:hover {
-  color: var(--primary);
+color: var(--gold-primary);
   text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
   background-position: 0 0;
 }
@@ -1778,17 +2037,41 @@ footer::after {
   }
 }
 
-/* ДОБАВЬТЕ: */
+/* Поддержка пользователей, которые предпочитают уменьшенное движение */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========== УЛУЧШЕНИЕ КОНТРАСТНОСТИ ТЕКСТА ========== */
 .about-card p,
 .methodology-card p,
-.expertise-card p {
-  color: rgba(255, 255, 255, 0.9) !important; /* Более четкий текст */
-  line-height: 1.6;
-  font-size: 1rem;
+.expertise-card p,
+.philosophy-quote,
+.contact-form-container,
+.popup-content {
+  color: rgba(255, 255, 255, 0.95) !important;
+  line-height: 1.7;
 }
 
-/* Улучшаем контрастность */
-.bg-black\/70 {
-  background-color: rgba(0, 0, 0, 0.85) !important; /* Более темный */
+/* Улучшение читаемости мелкого текста */
+.footer-column p,
+.footer-column ul li span,
+.footer-column ul li a,
+.contact-info a {
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
+/* Улучшение контраста для карточек */
+.about-card,
+.methodology-card,
+.expertise-card {
+  background: rgba(20, 20, 20, 0.8) !important;
+  backdrop-filter: blur(20px);
+}
