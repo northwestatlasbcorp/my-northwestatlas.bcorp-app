@@ -1,5 +1,5 @@
-/* ========== NORTH WEST ATLAS B CORP - OPTIMIZED CSS ========== */
-/* Исправлены конфликты AOS, оптимизирована производительность */
+/* ========== NORTH WEST ATLAS B CORP - RESTORED CSS ========== */
+/* Все стили восстановлены и оптимизированы */
 
 /* ========== ПЕРЕМЕННЫЕ ========== */
 :root {
@@ -69,14 +69,14 @@ body {
   line-height: 1.7;
   color: var(--text-primary);
   text-align: center;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: var(--bg-primary);
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ========== AOS FIXES - КРИТИЧЕСКИ ВАЖНО ========== */
+/* ========== AOS FIXES ========== */
 [data-aos] {
   pointer-events: auto !important;
 }
@@ -177,6 +177,10 @@ body {
 #particles-js {
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
 }
 
 #particles-js canvas {
@@ -192,7 +196,7 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(var(--bg-primary), 0.95);
+  background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border-primary);
@@ -385,6 +389,10 @@ header {
   text-shadow: 0 0 15px rgba(var(--gold-primary-rgb), 0.4);
 }
 
+.gold-text {
+  color: var(--gold-primary);
+}
+
 /* ========== КОНТЕЙНЕРЫ И УТИЛИТЫ ========== */
 .container {
   max-width: 1200px;
@@ -392,13 +400,48 @@ header {
   padding: 0 2.5rem;
 }
 
-.py-24 { padding-top: 6rem; padding-bottom: 6rem; }
-.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-.bg-black\/30 { background-color: rgba(0, 0, 0, 0.3); }
-.bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
-.bg-gradient-to-b { background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); }
-.from-primary\/5 { --tw-gradient-from: rgba(var(--gold-primary-rgb), 0.05); }
-.to-transparent { --tw-gradient-to: transparent; }
+.py-24 { 
+  padding-top: 6rem; 
+  padding-bottom: 6rem; 
+}
+
+.px-6 { 
+  padding-left: 1.5rem; 
+  padding-right: 1.5rem; 
+}
+
+.bg-black\/30 { 
+  background-color: rgba(0, 0, 0, 0.3); 
+}
+
+.bg-black\/40 { 
+  background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.bg-gradient-to-b { 
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops)); 
+}
+
+.from-primary\/5 { 
+  --tw-gradient-from: rgba(var(--gold-primary-rgb), 0.05); 
+}
+
+.to-transparent { 
+  --tw-gradient-to: transparent; 
+}
+
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 
 /* ========== КАРТОЧКИ "О НАС" ========== */
 .about-container {
@@ -917,6 +960,7 @@ header {
 footer {
   background: rgba(0, 0, 0, 0.85);
   border-top: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 4rem 0 1rem;
 }
 
 .footer-grid {
@@ -924,6 +968,10 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
 }
 
 .footer-column h3 {
@@ -963,6 +1011,37 @@ footer {
   font-size: var(--text-sm);
 }
 
+/* ========== CUSTOM CURSOR ========== */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gold-primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.saturn {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--gold-primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  transition: all 0.2s ease;
+  animation: saturnOrbit 3s linear infinite;
+}
+
+@keyframes saturnOrbit {
+  0% { transform: rotate(0deg) translateX(25px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); }
+}
+
 /* ========== АДАПТИВНОСТЬ ========== */
 @media (max-width: 768px) {
   .container {
@@ -977,10 +1056,12 @@ footer {
   .navbar-bottom {
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
   
   .menu-toggle {
     display: flex;
+    align-items: center;
   }
   
   #nav-menu {
@@ -988,15 +1069,16 @@ footer {
     top: var(--header-height);
     left: 0;
     right: 0;
-    background: rgba(var(--bg-primary), 0.98);
+    background: rgba(13, 13, 13, 0.98);
     backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     flex-direction: column;
     gap: 0;
     width: 100%;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.1s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0;
     border-bottom: 1px solid var(--border-primary);
   }
@@ -1004,18 +1086,20 @@ footer {
   #nav-menu.active {
     max-height: 80vh;
     opacity: 1;
+    padding: 1rem 0;
   }
   
   #nav-menu li {
     width: 100%;
     text-align: center;
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     border-bottom: 1px solid var(--border-secondary);
   }
   
   .nav-link {
-    padding: 1.2rem 0;
+    padding: 1rem 0;
     display: block;
+    font-size: 1.1rem;
   }
   
   .about-container,
@@ -1041,12 +1125,22 @@ footer {
     gap: 1.5rem;
   }
   
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
   /* Упрощаем анимации для мобильных */
   .about-card:hover,
   .expertise-card:hover,
   .methodology-card:hover,
   .investment-block:hover {
     transform: none;
+  }
+  
+  /* Скрываем кастомный курсор на мобильных */
+  .custom-cursor,
+  .saturn {
+    display: none;
   }
 }
 
@@ -1056,7 +1150,7 @@ footer {
   }
   
   .section-title {
-    font-size: clamp(2rem, 8vw, 3rem);
+    font-size: 2rem;
   }
   
   .popup-content {
@@ -1066,6 +1160,10 @@ footer {
   
   .contacts-grid {
     grid-template-columns: 1fr;
+  }
+  
+  header {
+    padding: 1rem;
   }
 }
 
