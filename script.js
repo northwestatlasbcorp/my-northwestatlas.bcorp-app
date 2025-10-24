@@ -534,11 +534,9 @@ window.onbeforeunload = function () {
 };
 
 const saturn = document.querySelector('.saturn');
-let mouseX = 0;
-let mouseY = 0;
-let saturnX = 0;
-let saturnY = 0;
-const delay = 0.15;
+let mouseX = 0, mouseY = 0;
+let saturnX = 0, saturnY = 0;
+const delay = 0.12;
 
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
@@ -548,7 +546,7 @@ document.addEventListener('mousemove', (e) => {
 function animateSaturn() {
   saturnX += (mouseX - saturnX) * delay;
   saturnY += (mouseY - saturnY) * delay;
-  saturn.style.transform = `translate(${saturnX}px, ${saturnY}px) translate(-50%, -50%)`;
+  saturn.style.transform = `translate(${saturnX}px, ${saturnY}px)`;
   requestAnimationFrame(animateSaturn);
 }
 
