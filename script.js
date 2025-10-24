@@ -631,3 +631,126 @@ window.addEventListener('load', function() {
 if (window.history && window.history.scrollRestoration) {
     window.history.scrollRestoration = 'manual';
 }
+
+// ========== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ ==========
+
+// Функция определения мобильного устройства
+function isMobileDevice() {
+    return window.innerWidth <= 768 || 
+           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Оптимизированная версия инициализации
+function initOptimizedEffects() {
+    if (isMobileDevice()) {
+        // Отключаем тяжелые эффекты на мобильных
+        disableHeavyEffects();
+    } else {
+        // На десктопе включаем все эффекты
+        initPremiumEffects();
+    }
+}
+
+function disableHeavyEffects() {
+    // Отключаем Saturn курсор
+    const saturn = document.querySelector('.saturn');
+    if (saturn) saturn.style.display = 'none';
+    
+    // Упрощаем анимацию логотипа
+    const logo = document.getElementById('main-logo');
+    if (logo) {
+        logo.style.animation = 'none';
+        logo.style.filter = 'drop-shadow(0 0 20px rgba(212, 175, 55, 0.6))';
+    }
+    
+    // Отключаем сложные обработчики мыши
+    document.removeEventListener('mousemove', handleMouseMove);
+}
+
+function initPremiumEffects() {
+    // Инициализация премиальных эффектов только для десктопа
+    initSaturnCursor();
+    initPremiumLogoEffects();
+}
+
+// Упрощенный обработчик для мобильных
+function handleMobileInteractions() {
+    if (isMobileDevice()) {
+        // Добавляем touch-оптимизированные обработчики
+        const interactiveElements = document.querySelectorAll('.about-card, .expertise-card, .methodology-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+                this.style.transition = 'transform 0.1s ease';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    }
+}
+
+// Оптимизированная инициализация частиц только для десктопа
+function initOptimizedParticles() {
+    if (!isMobileDevice() && typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 800 } },
+                color: { value: '#d4af37' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: false },
+                size: { value: 2, random: true },
+                line_linked: { 
+                    enable: true, 
+                    distance: 100, 
+                    color: '#d4af37', 
+                    opacity: 0.2, 
+                    width: 1 
+                },
+                move: { 
+                    enable: true, 
+                    speed: 1, 
+                    direction: 'none',
+                    out_mode: 'out' 
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: false }, // Отключаем на мобильных
+                    onclick: { enable: false }, // Отключаем на мобильных
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+    }
+}
+
+// Обновите главную функцию инициализации
+document.addEventListener("DOMContentLoaded", () => {
+    initScrollSpy();
+    initHeaderScroll();
+    initOptimizedEffects();
+    handleMobileInteractions();
+    initOptimizedParticles();
+    
+    // Базовые функции для всех устройств
+    initContactForm();
+    
+    // Плавная прокрутка
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
