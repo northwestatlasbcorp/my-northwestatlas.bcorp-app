@@ -1,5 +1,5 @@
-// ========== NORTH WEST ATLAS B CORP - FIXED SCRIPT ==========
-// Исправлены AOS анимации и оптимизирована производительность
+// ========== NORTH WEST ATLAS B CORP - OPTIMIZED SCRIPT ==========
+// Исправлены AOS конфликты и оптимизирована производительность
 
 // Detect current page language
 function getCurrentLanguage() {
@@ -10,16 +10,21 @@ function getCurrentLanguage() {
 document.addEventListener("DOMContentLoaded", function() {
     console.log('🚀 DOM Content Loaded - Initializing AOS...');
     
-    // Простая инициализация AOS как в рабочем коде
-    AOS.init({
-        duration: 800,
-        easing: "ease",
-        once: false,
-        mirror: false,
-        anchorPlacement: "top-bottom",
-    });
-    
-    console.log('✅ AOS initialized successfully');
+    // Простая и надежная инициализация AOS
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: "ease-in-out",
+            once: true, // Анимация только один раз
+            mirror: false,
+            anchorPlacement: "top-bottom",
+            disable: window.innerWidth < 768 // Отключаем на мобильных
+        });
+        
+        console.log('✅ AOS initialized successfully');
+    } else {
+        console.warn('⚠️ AOS not loaded');
+    }
 });
 
 // ========== BASIC FUNCTIONS ==========
@@ -214,30 +219,24 @@ function openPopup(expertise) {
     
     // Показываем модальное окно
     popup.style.display = "flex";
-    document.body.style.overflow = "hidden"; // Блокируем скролл страницы
+    document.body.style.overflow = "hidden";
     
     // Анимация появления
     setTimeout(() => {
-        popup.style.opacity = "1";
-        const content = popup.querySelector('.popup-content');
-        content.style.transform = "scale(1)";
-        content.style.opacity = "1";
+        popup.classList.add('active');
     }, 10);
 }
 
 // Закрытие модального окна
 function closePopup() {
     const popup = document.getElementById("popup-modal");
-    const content = popup.querySelector('.popup-content');
     
     // Анимация закрытия
-    popup.style.opacity = "0";
-    content.style.transform = "scale(0.9)";
-    content.style.opacity = "0";
+    popup.classList.remove('active');
     
     setTimeout(() => {
         popup.style.display = "none";
-        document.body.style.overflow = ""; // Разблокируем скролл страницы
+        document.body.style.overflow = "";
     }, 300);
 }
 
