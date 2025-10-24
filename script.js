@@ -1120,3 +1120,23 @@ const style = document.createElement('style');
 style.textContent = mobileTooltipCSS;
 document.head.appendChild(style);
 
+// ========== AOS DEBUG ==========
+console.log('🔍 AOS Debug:');
+console.log('- AOS loaded:', typeof AOS !== 'undefined');
+console.log('- Animated elements:', document.querySelectorAll('[data-aos]').length);
+
+// Проверка через 3 секунды
+setTimeout(() => {
+    const animatedElements = document.querySelectorAll('[data-aos]');
+    console.log('📊 After 3 seconds:');
+    console.log('- Total elements with data-aos:', animatedElements.length);
+    console.log('- Elements with aos-animate class:', document.querySelectorAll('.aos-animate').length);
+    
+    animatedElements.forEach((el, index) => {
+        console.log(`Element ${index}:`, {
+            hasAosAnimate: el.classList.contains('aos-animate'),
+            opacity: window.getComputedStyle(el).opacity,
+            transform: window.getComputedStyle(el).transform
+        });
+    });
+}, 3000);
