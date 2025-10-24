@@ -2986,3 +2986,21 @@ html {
         width: 300px;
     }
 }
+
+/* ========== МОБИЛЬНЫЕ ИСПРАВЛЕНИЯ ========== */
+@media (max-width: 768px) {
+  .container { padding: 0 1rem !important; }
+  .section-title { font-size: 2rem !important; }
+  #main-logo { max-width: 90vw !important; }
+  .about-card, .expertise-card, .methodology-card { 
+    transform: none !important; 
+    margin: 0.5rem 0 !important;
+  }
+  .video-container { animation: none !important; }
+  .gold-glow::before { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 0.5rem !important; }
+  .section-title { font-size: 1.75rem !important; }
+}
