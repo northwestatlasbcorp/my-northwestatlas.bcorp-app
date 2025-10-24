@@ -536,7 +536,7 @@ window.onbeforeunload = function () {
 const saturn = document.querySelector('.saturn');
 let mouseX = 0, mouseY = 0;
 let saturnX = 0, saturnY = 0;
-const delay = 0.12;
+const delay = 0.10;
 
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
