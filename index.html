@@ -487,15 +487,33 @@
     </div>
 </footer>
 
-   <!-- Подключение библиотек -->
+       <!-- Подключение библиотек -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
     
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
-  <div class="saturn"></div>
+    <div class="saturn"></div>
 
     <!-- Основной скрипт -->
     <script src="script.js"></script>
+
+    <!-- СКРИПТ СКРОЛЛА НАВЕРХ ПРИ ПЕРЕЗАГРУЗКЕ -->
+    <script>
+    // Скролл наверх при любой загрузке/перезагрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+    });
+
+    window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+    });
+
+    // На случай кэширования страницы
+    if (window.history && window.history.scrollRestoration) {
+        window.history.scrollRestoration = 'manual';
+    }
+    </script>
+
 </body>
 </html>
