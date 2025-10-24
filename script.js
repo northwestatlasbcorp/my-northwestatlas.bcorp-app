@@ -466,10 +466,11 @@ function initContactForm() {
 document.addEventListener("DOMContentLoaded", () => {
     initScrollSpy();
     initHeaderScroll();
-    initGoldEffects();
-    initPremiumLogoEffects();
-    initSaturnCursor();
+    initOptimizedEffects();
+    handleMobileInteractions();
+    initOptimizedParticles();
     initContactForm();
+    initTooltips(); 
     
     // Плавная прокрутка до секций
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
