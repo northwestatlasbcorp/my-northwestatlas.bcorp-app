@@ -6,22 +6,12 @@
     <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
     
     <!-- Open Graph Meta Tags -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="North West Atlas B Corp">
-<meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
-<meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-<meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/png">
-<meta property="og:url" content="https://northwestatlas.com">
-<meta property="og:locale" content="ru_RU">
-
-<!-- Дополнительно для лучшего отображения -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="North West Atlas B Corp — Инвестиции в будущее">
-<meta name="twitter:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-<meta name="twitter:image" content="https://northwestatlas.com/og-image-enhanced.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="North West Atlas B Corp">
+    <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
+    <meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
+    <meta property="og:image" content="https://northwestatlas.com/og-image.png">
+    <meta property="og:url" content="https://northwestatlas.com">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -47,6 +37,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
+
+   
     
     <style>
         /* ===== NORTHWEST ATLAS B CORP PREMIUM STYLES ===== */
@@ -292,6 +284,15 @@
             cursor: pointer;
             color: var(--primary);
         }
+
+        /* Улучшение фокуса для доступности */
+.nav-link:focus,
+button:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+
 
         /* ===== MAIN CONTENT ===== */
         main {
@@ -680,6 +681,11 @@
         .expertise-card:hover p {
             color: var(--foreground);
         }
+
+.about-card, .expertise-card {
+    will-change: transform;
+    transform: translateZ(0);
+}
 
         /* CSS Hard Hover Effects - замена кнопки */
         .expertise-hover-content {
@@ -1486,46 +1492,46 @@
     }
 }
 
-            .menu-toggle {
-                display: block;
-                position: absolute;
-                left: 1.5rem;
-            }
+.menu-toggle {
+        display: block;
+        position: absolute;
+        left: 1.5rem;
+    }
 
-            #nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                flex-direction: column;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                padding: 1.5rem;
-                gap: 1rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: var(--transition);
-                z-index: 1000;
-            }
+    #nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        gap: 1rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 1000;
+    }
 
-            #nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
+    #nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
 
-            .nav-link {
-                display: block;
-                padding: 0.8rem 0;
-                text-align: center;
-            }
+    .nav-link {
+        display: block;
+        padding: 0.8rem 0;
+        text-align: center;
+    }
 
-            .lang-switcher {
-                position: static;
-                margin-top: 1rem;
-                justify-content: center;
-            }
+    .lang-switcher {
+        position: static;
+        margin-top: 1rem;
+        justify-content: center;
+    }
 
             .premium-logo {
                 max-width: 300px;
@@ -1806,42 +1812,43 @@
     <div id="particles-js"></div>
 
     <!-- Header -->
-    <header id="header">
-        <nav class="navbar-wrapper">
-            <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
-            <div class="navbar-top">
-                <div class="logo">
-                    <a href="#home" class="font-playfair">
-                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                    </a>
-                </div>
+    <!-- Header -->
+<header id="header">
+    <nav class="navbar-wrapper" aria-label="Основная навигация">
+        <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
+        <div class="navbar-top">
+            <div class="logo">
+                <a href="#home" class="font-playfair">
+                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                </a>
             </div>
+        </div>
 
-            <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
-            <div class="navbar-bottom">
-                <div class="menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars"></i>
-                </div>
-                
-                <ul id="nav-menu">
-                    <li><a href="#home" class="nav-link">Главная</a></li>
-                    <li><a href="#about" class="nav-link">О нас</a></li>
-                    <li><a href="#expertise" class="nav-link">Экспертиза</a></li>
-                    <li><a href="#partners" class="nav-link">Партнеры</a></li>
-                    <li><a href="#investment-focus" class="nav-link">Инвестиционные направления</a></li>
-                    <li><a href="#esg-calculator" class="nav-link">ESG Калькулятор</a></li>
-                    <li><a href="#feedback" class="nav-link">Обратная связь</a></li>
-                </ul>
+        <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
+        <div class="navbar-bottom">
+            <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul id="nav-menu" role="menubar" aria-label="Основные разделы сайта">
+                <li role="none"><a href="#home" class="nav-link" role="menuitem">Главная</a></li>
+                <li role="none"><a href="#about" class="nav-link" role="menuitem">О нас</a></li>
+                <li role="none"><a href="#expertise" class="nav-link" role="menuitem">Экспертиза</a></li>
+                <li role="none"><a href="#partners" class="nav-link" role="menuitem">Партнеры</a></li>
+                <li role="none"><a href="#investment-focus" class="nav-link" role="menuitem">Инвестиционные направления</a></li>
+                <li role="none"><a href="#esg-calculator" class="nav-link" role="menuitem">ESG Калькулятор</a></li>
+                <li role="none"><a href="#feedback" class="nav-link" role="menuitem">Обратная связь</a></li>
+            </ul>
 
-                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
-                <div class="lang-switcher">
-                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-                    <span>|</span>
-                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
-                </div>
+            <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+            <div class="lang-switcher">
+                <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
+                <span>|</span>
+                <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
     <main>
         <!-- Главная секция -->
@@ -2339,6 +2346,16 @@
             menu.classList.toggle("active");
         }
 
+        function toggleMenu() {
+    const menu = document.getElementById("nav-menu");
+    const button = document.querySelector('.menu-toggle');
+    const isExpanded = menu.classList.toggle("active");
+    
+    // Обновляем ARIA атрибуты
+    button.setAttribute('aria-expanded', isExpanded);
+    button.setAttribute('aria-label', isExpanded ? 'Закрыть меню' : 'Открыть меню');
+}
+
         // Toggle contacts function
         function toggleContacts() {
             const contacts = document.getElementById("contacts");
@@ -2630,4 +2647,3 @@
     </script>
 </body>
 </html>
-
