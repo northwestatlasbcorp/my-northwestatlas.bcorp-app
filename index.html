@@ -5,28 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
     
-    <!-- Open Graph Meta Tags -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="North West Atlas B Corp">
-<meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
-<meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-<meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/png">
-<meta property="og:url" content="https://northwestatlas.com">
-<meta property="og:locale" content="ru_RU">
-
-<!-- Дополнительно для лучшего отображения -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="North West Atlas B Corp — Инвестиции в будущее">
-<meta name="twitter:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-<meta name="twitter:image" content="https://northwestatlas.com/og-image-enhanced.png">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#d4af37">
+    <link rel="manifest" href="/manifest.json">
     
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="North West Atlas B Corp">
+    <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
+    <meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
+    <meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="https://northwestatlas.com">
+    <meta property="og:locale" content="ru_RU">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="North West Atlas B Corp — Инвестиции в будущее">
-    <meta name="twitter:description" content="Создаем будущее, а не следуем за ним.">
+    <meta name="twitter:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
     <meta name="twitter:image" content="https://northwestatlas.com/og-image-enhanced.png">
     
     <!-- Keywords -->
@@ -48,8 +46,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
     <link rel="shortcut icon" href="/favicon.ico">
 
-   
-    
     <style>
         /* ===== NORTHWEST ATLAS B CORP PREMIUM STYLES ===== */
         :root {
@@ -140,18 +136,38 @@
             font-weight: 600;
         }
 
-        /* ===== PRELOADER ===== */
+        /* ===== ACCESSIBILITY ===== */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary);
+            color: var(--background);
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            z-index: 10000;
+            transition: top 0.3s ease;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* ===== SOLAR ECLIPSE PRELOADER STYLES ===== */
         #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--background);
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            overflow: hidden;
         }
 
         .preloader-content {
@@ -160,27 +176,281 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            height: 100%;
         }
 
-        .preloader-logo {
-            width: 150px;
-            height: auto;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
-        }
-
-        .gold-ring-animation {
+        /* Основной солнечный диск */
+        .solar-disk {
+            position: absolute;
             width: 200px;
             height: 200px;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-top: 2px solid var(--primary);
+            background: radial-gradient(circle at 30% 30%, 
+                #ffd700 0%,
+                #ff6b00 30%,
+                #ff4500 50%,
+                #8b0000 70%,
+                #4b0082 100%);
             border-radius: 50%;
-            animation: spin 1.5s linear infinite;
-            margin-top: 2rem;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.8),
+                0 0 120px rgba(255, 107, 0, 0.6),
+                0 0 180px rgba(255, 69, 0, 0.4),
+                inset 0 0 60px rgba(255, 255, 255, 0.3);
+            animation: solarPulse 4s ease-in-out infinite;
+            will-change: transform, opacity;
+            backface-visibility: hidden;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Ядро солнца */
+        .solar-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, 
+                #ffffff 0%,
+                #ffd700 30%,
+                #ff4500 70%);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: coreFlicker 2s ease-in-out infinite;
+        }
+
+        /* Солнечная корона */
+        .solar-corona {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0%,
+                rgba(255, 215, 0, 0.3) 10%,
+                rgba(255, 107, 0, 0.2) 20%,
+                transparent 30%,
+                rgba(255, 69, 0, 0.3) 40%,
+                rgba(139, 0, 0, 0.2) 50%,
+                transparent 60%,
+                rgba(255, 215, 0, 0.3) 70%,
+                rgba(255, 107, 0, 0.2) 80%,
+                transparent 90%,
+                rgba(255, 69, 0, 0.3) 100%
+            );
+            animation: coronaRotate 8s linear infinite;
+            filter: blur(1px);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .solar-corona.delay-1 {
+            width: 350px;
+            height: 350px;
+            animation: coronaRotate 12s linear infinite reverse;
+            opacity: 0.7;
+        }
+
+        .solar-corona.delay-2 {
+            width: 400px;
+            height: 400px;
+            animation: coronaRotate 16s linear infinite;
+            opacity: 0.5;
+        }
+
+        /* Луна для затмения */
+        .eclipse-moon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 70% 30%, 
+                #1a1a1a 0%,
+                #0a0a0a 30%,
+                #000000 70%);
+            border-radius: 50%;
+            box-shadow: 
+                inset 0 0 20px rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(0, 0, 0, 0.8);
+            animation: eclipseMove 6s ease-in-out infinite;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Солнечные вспышки */
+        .solar-flare {
+            position: absolute;
+            background: radial-gradient(ellipse, 
+                rgba(255, 215, 0, 0.8) 0%,
+                transparent 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: flarePulse 3s ease-in-out infinite;
+        }
+
+        .flare-1 {
+            width: 40px;
+            height: 15px;
+            top: 30%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .flare-2 {
+            width: 25px;
+            height: 8px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+
+        .flare-3 {
+            width: 35px;
+            height: 12px;
+            top: 80%;
+            left: 40%;
+            animation-delay: 2s;
+        }
+
+        /* Логотип поверх эффекта */
+        .eclipse-logo {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 3rem;
+        }
+
+        .eclipse-logo .preloader-logo {
+            width: 120px;
+            height: auto;
+            filter: 
+                drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
+                drop-shadow(0 0 40px rgba(212, 175, 55, 0.6))
+                drop-shadow(0 0 60px rgba(212, 175, 55, 0.4));
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        /* Текстовый элемент */
+        .eclipse-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .eclipse-text span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 10px rgba(212, 175, 55, 0.8),
+                0 0 20px rgba(212, 175, 55, 0.6),
+                0 0 30px rgba(212, 175, 55, 0.4);
+            animation: textPulse 2s ease-in-out infinite;
+        }
+
+        /* Анимации */
+        @keyframes solarPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 60px rgba(255, 215, 0, 0.8),
+                    0 0 120px rgba(255, 107, 0, 0.6),
+                    0 0 180px rgba(255, 69, 0, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 80px rgba(255, 215, 0, 1),
+                    0 0 160px rgba(255, 107, 0, 0.8),
+                    0 0 220px rgba(255, 69, 0, 0.6);
+            }
+        }
+
+        @keyframes coreFlicker {
+            0%, 100% { 
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            25% { 
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            50% { 
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            75% { 
+                opacity: 0.9;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        @keyframes coronaRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes eclipseMove {
+            0%, 100% { 
+                transform: translate(-50%, -50%) translateX(-20px) translateY(-10px);
+            }
+            25% { 
+                transform: translate(-50%, -50%) translateX(15px) translateY(5px);
+            }
+            50% { 
+                transform: translate(-50%, -50%) translateX(10px) translateY(-15px);
+            }
+            75% { 
+                transform: translate(-50%, -50%) translateX(-15px) translateY(10px);
+            }
+        }
+
+        @keyframes flarePulse {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes logoGlow {
+            0% { 
+                filter: 
+                    drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
+                    drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));
+            }
+            100% { 
+                filter: 
+                    drop-shadow(0 0 30px rgba(212, 175, 55, 1))
+                    drop-shadow(0 0 60px rgba(212, 175, 55, 0.8))
+                    drop-shadow(0 0 90px rgba(212, 175, 55, 0.6));
+            }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { 
+                opacity: 0.8;
+                text-shadow: 
+                    0 0 10px rgba(212, 175, 55, 0.8),
+                    0 0 20px rgba(212, 175, 55, 0.6);
+            }
+            50% { 
+                opacity: 1;
+                text-shadow: 
+                    0 0 15px rgba(212, 175, 55, 1),
+                    0 0 30px rgba(212, 175, 55, 0.8),
+                    0 0 45px rgba(212, 175, 55, 0.6);
+            }
         }
 
         /* ===== PARTICLES BACKGROUND ===== */
@@ -296,13 +566,11 @@
         }
 
         /* Улучшение фокуса для доступности */
-.nav-link:focus,
-button:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
-
-
+        .nav-link:focus,
+        button:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
 
         /* ===== MAIN CONTENT ===== */
         main {
@@ -425,6 +693,9 @@ button:focus {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .about-card::before {
@@ -592,6 +863,9 @@ button:focus {
             min-height: 360px;
             display: flex;
             flex-direction: column;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .expertise-card::before {
@@ -691,11 +965,6 @@ button:focus {
         .expertise-card:hover p {
             color: var(--foreground);
         }
-
-.about-card, .expertise-card {
-    will-change: transform;
-    transform: translateZ(0);
-}
 
         /* CSS Hard Hover Effects - замена кнопки */
         .expertise-hover-content {
@@ -811,6 +1080,9 @@ button:focus {
             box-shadow: 
                 0 8px 32px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
         }
 
         .investment-block::before {
@@ -1285,6 +1557,34 @@ button:focus {
             margin-left: 0.5rem;
         }
 
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.success {
+            background: #10b981;
+            border-left: 4px solid #059669;
+        }
+
+        .notification.error {
+            background: #ef4444;
+            border-left: 4px solid #dc2626;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
         /* ===== ИСПРАВЛЕННЫЙ ФУТЕР ===== */
         footer {
             background: rgba(0, 0, 0, 0.7);
@@ -1438,110 +1738,68 @@ button:focus {
         @media (max-width: 768px) {
             .section-title {
                 font-size: 2rem;
+                margin-bottom: 2rem;
             }
 
-/* Добавьте в медиа-запросы */
-@media (max-width: 768px) {
-    .navbar-top .logo a {
-        font-size: 1.1rem;
-        white-space: nowrap;
-        letter-spacing: 0.3px;
-    }
-}
+            .premium-logo {
+                max-width: 280px;
+                width: 90%;
+            }
 
-@media (max-width: 400px) {
-    .navbar-top .logo a {
-        font-size: 1rem;
-        letter-spacing: 0.2px;
-    }
-}
+            .navbar-top .logo a {
+                font-size: 1.1rem;
+                white-space: nowrap;
+                letter-spacing: 0.3px;
+            }
 
-@media (max-width: 360px) {
-    .navbar-top .logo a {
-        font-size: 0.95rem;
-    }
-}
+            .navbar-top .logo a .text-gold::after {
+                content: " B CORP";
+            }
+            
+            .navbar-top .logo a .text-gold {
+                font-size: 0.95em;
+            }
 
-/* Добавьте этот код в медиа-запросы */
-@media (max-width: 768px) {
-    .navbar-top .logo a .text-gold::after {
-        content: " B CORP";
-    }
-    
-    .navbar-top .logo a .text-gold {
-        font-size: 0.95em;
-    }
-}
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                left: 1.5rem;
+            }
 
-@media (max-width: 400px) {
-    .navbar-top .logo a .text-gold::after {
-        content: "";
-    }
-}
+            #nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 1.5rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 1000;
+            }
 
-/* Обновите этот стиль */
-.footer-bottom p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.75rem;
-    padding: 0 10px;
-    line-height: 1.3;
-}
+            #nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
 
-@media (max-width: 480px) {
-    .footer-bottom p {
-        font-size: 0.7rem;
-        letter-spacing: -0.2px;
-    }
-}
+            .nav-link {
+                display: block;
+                padding: 0.8rem 0;
+                text-align: center;
+            }
 
-@media (max-width: 360px) {
-    .footer-bottom p {
-        font-size: 0.65rem;
-    }
-}
-
-.menu-toggle {
-        display: block;
-        position: absolute;
-        left: 1.5rem;
-    }
-
-    #nav-menu {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 1.5rem;
-        gap: 1rem;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: var(--transition);
-        z-index: 1000;
-    }
-
-    #nav-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-link {
-        display: block;
-        padding: 0.8rem 0;
-        text-align: center;
-    }
-
-    .lang-switcher {
-        position: static;
-        margin-top: 1rem;
-        justify-content: center;
-    }
+            .lang-switcher {
+                position: static;
+                margin-top: 1rem;
+                justify-content: center;
+            }
 
             .premium-logo {
                 max-width: 300px;
@@ -1595,6 +1853,41 @@ button:focus {
             .expertise-card {
                 min-height: 340px;
                 padding: 2rem 1.5rem;
+            }
+
+            /* Солнечное затмение адаптив */
+            .solar-disk {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .eclipse-moon {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .solar-corona {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .solar-corona.delay-1 {
+                width: 260px;
+                height: 260px;
+            }
+            
+            .solar-corona.delay-2 {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .eclipse-logo .preloader-logo {
+                width: 100px;
+            }
+            
+            .eclipse-text span {
+                font-size: 1rem;
+                letter-spacing: 1px;
             }
 
             /* Мобильная адаптация футера */
@@ -1694,6 +1987,47 @@ button:focus {
             }
         }
 
+        @media (max-width: 400px) {
+            .navbar-top .logo a {
+                font-size: 1rem;
+                letter-spacing: 0.2px;
+            }
+
+            .navbar-top .logo a .text-gold::after {
+                content: "";
+            }
+
+            .footer-bottom p {
+                font-size: 0.7rem;
+                letter-spacing: -0.2px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .navbar-top .logo a {
+                font-size: 0.95rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .navbar-top .logo a {
+                font-size: 0.88rem;
+                letter-spacing: 0.1px;
+            }
+            
+            .lang-switcher {
+                font-size: 0.75rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.65rem;
+            }
+        }
+
         /* Стилизация ползунка прокрутки */
         ::-webkit-scrollbar {
             width: 10px;
@@ -1722,99 +2056,109 @@ button:focus {
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
         }
 
-/* Добавьте в конец CSS */
-.footer-bottom p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.75rem;
-}
+        .footer-bottom p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.75rem;
+            padding: 0 10px;
+            line-height: 1.3;
+        }
 
-@media (max-width: 480px) {
-    .footer-bottom p {
-        font-size: 0.7rem;
-        padding: 0 10px;
-    }
-}
+        .calculator-intro {
+            max-width: 550px !important;
+            margin: 0 auto 1.5rem auto !important;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            text-align: center;
+            padding: 0 15px;
+        }
 
-/* Обновите этот класс */
-.calculator-intro {
-    max-width: 550px !important;
-    margin: 0 auto 1.5rem auto !important;
-    font-size: 0.92rem;
-    line-height: 1.5;
-    text-align: center;
-    padding: 0 15px;
-}
+        @media (max-width: 768px) {
+            .calculator-intro {
+                font-size: 0.88rem;
+                line-height: 1.45;
+                margin-bottom: 1.2rem !important;
+            }
+        }
 
-@media (max-width: 768px) {
-    .calculator-intro {
-        font-size: 0.88rem;
-        line-height: 1.45;
-        margin-bottom: 1.2rem !important;
-    }
-}
+        /* Выравнивание языкового переключателя */
+        .lang-switcher {
+            position: absolute;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
 
-@media (max-width: 320px) {
-    .navbar-top .logo a {
-        font-size: 0.88rem;
-        letter-spacing: 0.1px;
-    }
-    
-    .lang-switcher {
-        font-size: 0.75rem;
-    }
-}
+        /* Балансировка отступов */
+        .section-title {
+            margin: 0 auto 2.5rem auto;
+        }
 
-/* Выравнивание языкового переключателя */
-.lang-switcher {
-    position: absolute;
-    right: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem; /* Уменьшаем */
-}
+        /* Оптимизация межбуквенных интервалов */
+        .navbar-top .logo a {
+            letter-spacing: 0.5px;
+        }
 
-/* Балансировка отступов */
-.section-title {
-    margin: 0 auto 2.5rem auto; /* Уменьшаем отступ */
-}
+        @media (max-width: 768px) {
+            .navbar-top .logo a {
+                letter-spacing: 0.3px;
+            }
+        }
 
-/* Оптимизация межбуквенных интервалов */
-.navbar-top .logo a {
-    letter-spacing: 0.5px;
-}
-
-@media (max-width: 768px) {
-    .navbar-top .logo a {
-        letter-spacing: 0.3px;
-    }
-}
-
-@media (max-width: 320px) {
-    .navbar-top .logo a {
-        font-size: 0.9rem;
-    }
-    
-    .lang-switcher {
-        font-size: 0.8rem;
-    }
-    
-    .footer-bottom p {
-        font-size: 0.65rem;
-    }
-}
-
+        @media (max-width: 320px) {
+            .navbar-top .logo a {
+                font-size: 0.9rem;
+            }
+            
+            .lang-switcher {
+                font-size: 0.8rem;
+            }
+            
+            .footer-bottom p {
+                font-size: 0.65rem;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Skip Link для доступности -->
+    <a href="#main" class="skip-link">Перейти к основному содержанию</a>
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-content">
-            <img src="logo-nwa-centered.png" alt="North West Atlas Logo" class="preloader-logo">
-            <div class="gold-ring-animation"></div>
+            <!-- Основное "солнце" -->
+            <div class="solar-disk">
+                <!-- Внутреннее свечение -->
+                <div class="solar-core"></div>
+                
+                <!-- Корона - внешнее свечение -->
+                <div class="solar-corona"></div>
+                <div class="solar-corona delay-1"></div>
+                <div class="solar-corona delay-2"></div>
+                
+                <!-- Луна для эффекта затмения -->
+                <div class="eclipse-moon"></div>
+                
+                <!-- Вспышки на поверхности солнца -->
+                <div class="solar-flare flare-1"></div>
+                <div class="solar-flare flare-2"></div>
+                <div class="solar-flare flare-3"></div>
+            </div>
+            
+            <!-- Логотип поверх эффекта -->
+            <div class="eclipse-logo">
+                <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" class="preloader-logo">
+            </div>
+            
+            <!-- Текстовый элемент -->
+            <div class="eclipse-text">
+                <span class="text-gold">NORTH WEST ATLAS B CORP</span>
+            </div>
         </div>
     </div>
 
@@ -1822,51 +2166,51 @@ button:focus {
     <div id="particles-js"></div>
 
     <!-- Header -->
-    <!-- Header -->
-<header id="header">
-    <nav class="navbar-wrapper" aria-label="Основная навигация">
-        <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
-        <div class="navbar-top">
-            <div class="logo">
-                <a href="#home" class="font-playfair">
-                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                </a>
+    <header id="header">
+        <nav class="navbar-wrapper" aria-label="Основная навигация">
+            <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
+            <div class="navbar-top">
+                <div class="logo">
+                    <a href="#home" class="font-playfair">
+                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
-        <div class="navbar-bottom">
-            <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul id="nav-menu" role="menubar" aria-label="Основные разделы сайта">
-                <li role="none"><a href="#home" class="nav-link" role="menuitem">Главная</a></li>
-                <li role="none"><a href="#about" class="nav-link" role="menuitem">О нас</a></li>
-                <li role="none"><a href="#expertise" class="nav-link" role="menuitem">Экспертиза</a></li>
-                <li role="none"><a href="#partners" class="nav-link" role="menuitem">Партнеры</a></li>
-                <li role="none"><a href="#investment-focus" class="nav-link" role="menuitem">Инвестиционные направления</a></li>
-                <li role="none"><a href="#esg-calculator" class="nav-link" role="menuitem">ESG Калькулятор</a></li>
-                <li role="none"><a href="#feedback" class="nav-link" role="menuitem">Обратная связь</a></li>
-            </ul>
+            <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
+            <div class="navbar-bottom">
+                <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul id="nav-menu" role="menubar" aria-label="Основные разделы сайта">
+                    <li role="none"><a href="#home" class="nav-link" role="menuitem">Главная</a></li>
+                    <li role="none"><a href="#about" class="nav-link" role="menuitem">О нас</a></li>
+                    <li role="none"><a href="#expertise" class="nav-link" role="menuitem">Экспертиза</a></li>
+                    <li role="none"><a href="#partners" class="nav-link" role="menuitem">Партнеры</a></li>
+                    <li role="none"><a href="#investment-focus" class="nav-link" role="menuitem">Инвестиционные направления</a></li>
+                    <li role="none"><a href="#esg-calculator" class="nav-link" role="menuitem">ESG Калькулятор</a></li>
+                    <li role="none"><a href="#feedback" class="nav-link" role="menuitem">Обратная связь</a></li>
+                </ul>
 
-            <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
-            <div class="lang-switcher">
-                <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-                <span>|</span>
-                <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
+                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
+                <div class="lang-switcher">
+                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
+                    <span>|</span>
+                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Главная секция -->
         <section id="home">
             <img 
                 src="logo-nwa-centered.png" 
                 alt="North West Atlas B Corp" 
-                class="premium-logo" 
+                class="premium-logo"
+                loading="lazy"
                 id="main-logo"
             >
         </section>
@@ -2019,7 +2363,6 @@ button:focus {
             </div>
         </section>
 
-        <!-- Остальные секции остаются без изменений -->
         <!-- Раздел "Партнеры" -->
         <section id="partners" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
@@ -2029,35 +2372,35 @@ button:focus {
                         <div class="partners-track">
                             <!-- Первая группа карточек -->
                             <div class="partner-card">
-                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="rost-logo.png" alt="РОСТ">
+                                <img src="rost-logo.png" alt="РОСТ" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех" loading="lazy">
                             </div>
                             <!-- Вторая группа карточек (дублирующая) -->
                             <div class="partner-card">
-                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ">
+                                <img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк">
+                                <img src="ros-eximbank-logo.png" alt="Росэксимбанк" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="rost-logo.png" alt="РОСТ">
+                                <img src="rost-logo.png" alt="РОСТ" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="minpromtorg-logo.png" alt="Минпромторг">
+                                <img src="minpromtorg-logo.png" alt="Минпромторг" loading="lazy">
                             </div>
                             <div class="partner-card">
-                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех">
+                                <img src="rshb-inteh-logo.png" alt="РСХБ-Интех" loading="lazy">
                             </div>
                         </div>
                     </div>
@@ -2146,10 +2489,9 @@ button:focus {
         <section id="esg-calculator" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Калькулятор ESG-рейтингов</h2>
-                <!-- ЗАМЕНИТЕ этот параграф -->
-<p class="calculator-intro" data-aos="fade-up" data-aos-delay="100">
-    Наш калькулятор использует NLP и машинное обучение для анализа данных и выявления ESG-факторов.
-</p>
+                <p class="calculator-intro" data-aos="fade-up" data-aos-delay="100">
+                    Наш калькулятор использует NLP и машинное обучение для анализа данных и выявления ESG-факторов.
+                </p>
                 <div class="calculator-container" data-aos="fade-up" data-aos-delay="200">
                     <div class="calculator-form">
                         <label for="company">Выберите компанию:</label>
@@ -2353,18 +2695,13 @@ button:focus {
         // Toggle menu function
         function toggleMenu() {
             const menu = document.getElementById("nav-menu");
-            menu.classList.toggle("active");
+            const button = document.querySelector('.menu-toggle');
+            const isExpanded = menu.classList.toggle("active");
+            
+            // Обновляем ARIA атрибуты
+            button.setAttribute('aria-expanded', isExpanded);
+            button.setAttribute('aria-label', isExpanded ? 'Закрыть меню' : 'Открыть меню');
         }
-
-        function toggleMenu() {
-    const menu = document.getElementById("nav-menu");
-    const button = document.querySelector('.menu-toggle');
-    const isExpanded = menu.classList.toggle("active");
-    
-    // Обновляем ARIA атрибуты
-    button.setAttribute('aria-expanded', isExpanded);
-    button.setAttribute('aria-label', isExpanded ? 'Закрыть меню' : 'Открыть меню');
-}
 
         // Toggle contacts function
         function toggleContacts() {
@@ -2514,42 +2851,135 @@ button:focus {
             document.body.removeChild(link);
         }
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling with offset for fixed header
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerHeight = document.getElementById('header').offsetHeight;
+                
+                window.scrollTo({
+                    top: target.offsetTop - headerHeight - 20,
                     behavior: 'smooth'
+                });
+            });
+        });
+
+        // Contact form validation and submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email || !message) {
+                showNotification('Пожалуйста, заполните все поля', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('Пожалуйста, введите корректный email', 'error');
+                return;
+            }
+            
+            // Simulate form submission
+            const formData = new FormData(this);
+            
+            // In a real application, you would send this to your server
+            // fetch('/api/contact', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then(response => {
+            //     if (response.ok) {
+            //         showNotification('Сообщение отправлено успешно!', 'success');
+            //         this.reset();
+            //     } else {
+            //         showNotification('Ошибка при отправке сообщения', 'error');
+            //     }
+            // });
+            
+            // For demo purposes, simulate success
+            setTimeout(() => {
+                showNotification('Сообщение отправлено успешно!', 'success');
+                this.reset();
+            }, 1000);
+        });
+
+        // Email validation helper
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide and remove notification
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        // Analytics tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track CTA clicks
+            document.querySelectorAll('.nav-link, .submit-btn, .download-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // In a real application, send this to your analytics service
+                    console.log('CTA clicked:', this.textContent.trim());
+                    
+                    // Example for Google Analytics:
+                    // gtag('event', 'click', {
+                    //     'event_category': 'CTA',
+                    //     'event_label': this.textContent.trim()
+                    // });
                 });
             });
         });
 
         // Particles.js initialization
         function initParticles() {
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: '#d4af37' },
-                    shape: { type: 'circle' },
-                    opacity: { value: 0.5, random: false, anim: { enable: false } },
-                    size: { value: 3, random: true, anim: { enable: false } },
-                    line_linked: { enable: true, distance: 150, color: '#d4af37', opacity: 0.4, width: 1 },
-                    move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-                },
-                interactivity: {
-                    detect_on: 'canvas',
-                    events: {
-                        onhover: { enable: true, mode: 'grab' },
-                        onclick: { enable: true, mode: 'push' },
-                        resize: true
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: '#d4af37' },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.5, random: false, anim: { enable: false } },
+                        size: { value: 3, random: true, anim: { enable: false } },
+                        line_linked: { enable: true, distance: 150, color: '#d4af37', opacity: 0.4, width: 1 },
+                        move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
                     },
-                    modes: {
-                        grab: { distance: 140, line_linked: { opacity: 1 } },
-                        push: { particles_nb: 4 }
-                    }
-                },
-                retina_detect: true
-            });
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: {
+                            onhover: { enable: true, mode: 'grab' },
+                            onclick: { enable: true, mode: 'push' },
+                            resize: true
+                        },
+                        modes: {
+                            grab: { distance: 140, line_linked: { opacity: 1 } },
+                            push: { particles_nb: 4 }
+                        }
+                    },
+                    retina_detect: true
+                });
+            }
         }
 
         // Interactive logo glow
@@ -2577,23 +3007,25 @@ button:focus {
         // Premium custom cursor
         const cursor = document.querySelector('.custom-cursor');
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Enlarge on hover for interactive elements
-        const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
-
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('active');
+        if (cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
             });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('active');
+
+            // Enlarge on hover for interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('active');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('active');
+                });
             });
-        });
+        }
 
         // Premium copy protection notification
         document.addEventListener('copy', (e) => {
@@ -2638,13 +3070,18 @@ button:focus {
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const preloader = document.getElementById('preloader');
-                preloader.style.opacity = '0';
-                preloader.style.pointerEvents = 'none';
-                preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
-                setTimeout(function() {
-                    preloader.remove();
-                }, 900);
-            }, 2000); // 2 seconds
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.pointerEvents = 'none';
+                    preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
+                    setTimeout(function() {
+                        preloader.remove();
+                        // Enable scrolling after preloader
+                        document.body.style.overflow = 'auto';
+                        document.documentElement.style.scrollBehavior = 'smooth';
+                    }, 900);
+                }
+            }, 3000); // 3 seconds for better eclipse effect
         });
 
         // Initialize all functionality
@@ -2655,6 +3092,22 @@ button:focus {
             initLogoInteractions();
         });
     </script>
+
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(12345678, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/12345678" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>
-
