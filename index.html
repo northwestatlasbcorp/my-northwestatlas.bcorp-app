@@ -2,32 +2,37 @@
 <html lang="ru">
 <head>
     <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104858335', 'ym');
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104858335', 'ym');
 
-    ym(104858335, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/104858335" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+        ym(104858335, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/104858335" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="North West Atlas B Corp — компания, создающая элитные решения для глобального будущего. Инвестиции в технологии, устойчивое развитие и социальную ответственность.">
-    
+    <meta name="keywords" content="инвестиции, технологии, устойчивое развитие, ESG, startup, North West Atlas B Corp">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://northwestatlas.com/" />
+
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#d4af37">
     <link rel="manifest" href="/manifest.json">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="North West Atlas B Corp">
     <meta property="og:title" content="North West Atlas B Corp — Инвестиции в будущее">
     <meta property="og:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-    <meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
+    <meta property="og:image" content="https://northwestatlas.com/logo-nwa-centered.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/png">
@@ -38,21 +43,17 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="North West Atlas B Corp — Инвестиции в будущее">
     <meta name="twitter:description" content="Создаем будущее, а не следуем за ним. Инвестиции, ESG консалтинг, стратегическое планирование.">
-    <meta name="twitter:image" content="https://northwestatlas.com/og-image-enhanced.png">
-    
-    <!-- Keywords -->
-    <meta name="keywords" content="инвестиции, технологии, устойчивое развитие, ESG, startup, North West Atlas B Corp">
-    
+    <meta name="twitter:image" content="https://northwestatlas.com/logo-nwa-centered.png">
+
     <title>North West Atlas B Corp</title>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
@@ -83,9 +84,25 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
-        html {
+        input, textarea, [contenteditable] {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        button {
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
@@ -135,6 +152,7 @@
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
@@ -193,7 +211,6 @@
             height: 100%;
         }
 
-        /* Основной солнечный диск */
         .solar-disk {
             position: absolute;
             width: 200px;
@@ -215,7 +232,6 @@
             backface-visibility: hidden;
         }
 
-        /* Ядро солнца */
         .solar-core {
             position: absolute;
             top: 50%;
@@ -232,7 +248,6 @@
             animation: coreFlicker 2s ease-in-out infinite;
         }
 
-        /* Солнечная корона */
         .solar-corona {
             position: absolute;
             top: 50%;
@@ -276,7 +291,6 @@
             opacity: 0.5;
         }
 
-        /* Луна для затмения */
         .eclipse-moon {
             position: absolute;
             top: 50%;
@@ -297,7 +311,6 @@
             backface-visibility: hidden;
         }
 
-        /* Солнечные вспышки */
         .solar-flare {
             position: absolute;
             background: radial-gradient(ellipse, 
@@ -332,7 +345,6 @@
             animation-delay: 2s;
         }
 
-        /* Логотип поверх эффекта */
         .eclipse-logo {
             position: relative;
             z-index: 10;
@@ -349,7 +361,6 @@
             animation: logoGlow 3s ease-in-out infinite alternate;
         }
 
-        /* Текстовый элемент */
         .eclipse-text {
             position: relative;
             z-index: 10;
@@ -368,7 +379,6 @@
             animation: textPulse 2s ease-in-out infinite;
         }
 
-        /* Анимации */
         @keyframes solarPulse {
             0%, 100% { 
                 transform: scale(1);
@@ -387,22 +397,10 @@
         }
 
         @keyframes coreFlicker {
-            0%, 100% { 
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            25% { 
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            50% { 
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            75% { 
-                opacity: 0.9;
-                transform: translate(-50%, -50%) scale(1.05);
-            }
+            0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            25% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(0.9); }
+            75% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
         }
 
         @keyframes coronaRotate {
@@ -411,29 +409,15 @@
         }
 
         @keyframes eclipseMove {
-            0%, 100% { 
-                transform: translate(-50%, -50%) translateX(-20px) translateY(-10px);
-            }
-            25% { 
-                transform: translate(-50%, -50%) translateX(15px) translateY(5px);
-            }
-            50% { 
-                transform: translate(-50%, -50%) translateX(10px) translateY(-15px);
-            }
-            75% { 
-                transform: translate(-50%, -50%) translateX(-15px) translateY(10px);
-            }
+            0%, 100% { transform: translate(-50%, -50%) translateX(-20px) translateY(-10px); }
+            25% { transform: translate(-50%, -50%) translateX(15px) translateY(5px); }
+            50% { transform: translate(-50%, -50%) translateX(10px) translateY(-15px); }
+            75% { transform: translate(-50%, -50%) translateX(-15px) translateY(10px); }
         }
 
         @keyframes flarePulse {
-            0%, 100% { 
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.8;
-                transform: scale(1.3);
-            }
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.3); }
         }
 
         @keyframes logoGlow {
@@ -485,62 +469,89 @@
             z-index: 1000;
             transition: var(--transition);
             padding: 1rem 0;
+            height: 80px; /* 2cm equivalent */
+            display: flex;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        #header::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            animation: borderGlow 2s ease-in-out infinite alternate;
         }
 
         #header.scrolled {
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.98);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            padding: 0.5rem 0;
         }
 
-        .navbar-wrapper {
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
         }
 
-        .navbar-top {
-            margin-bottom: 1rem;
-        }
-
-        .logo a {
+        .logo-main {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
             font-weight: 400;
-            letter-spacing: 1px;
+            font-size: 24px;
+            line-height: 32px;
+            text-align: center;
+            margin-bottom: 0.5rem;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
 
-        .navbar-bottom {
+        .nav-section {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 2rem;
             width: 100%;
-            position: relative;
         }
 
         #nav-menu {
             display: flex;
             align-items: center;
             gap: 2rem;
+            justify-content: center;
+            flex: 1;
         }
 
         .nav-link {
-            position: relative;
-            font-size: 0.9rem;
+            font-family: ui-sans-serif, sans-serif;
             font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 0.5rem 0;
+            font-size: 16px;
+            line-height: 24px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 0;
             height: 1px;
@@ -548,27 +559,18 @@
             transition: var(--transition);
         }
 
-        .nav-link:hover::after,
-        .nav-link.active::after {
+        .nav-link:hover::after {
             width: 100%;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--primary);
-        }
-
         .lang-switcher {
-            position: absolute;
-            right: 0;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .lang-switcher span {
-            color: rgba(255, 255, 255, 0.3);
+            font-family: ui-sans-serif, sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            white-space: nowrap;
         }
 
         .menu-toggle {
@@ -576,19 +578,26 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary);
+            background: transparent;
+            border: none;
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
         }
 
-        /* Улучшение фокуса для доступности */
-        .nav-link:focus,
-        button:focus {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
+        .menu-toggle i {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            transition: var(--transition);
         }
 
         /* ===== MAIN CONTENT ===== */
         main {
             position: relative;
             z-index: 1;
+            margin-top: 80px; /* Header height */
         }
 
         section {
@@ -601,10 +610,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             padding: 0;
             position: relative;
-            width: 100vw;
+            width: 100%;
         }
 
         .premium-logo {
@@ -633,6 +642,13 @@
             width: 100%;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            animation: borderGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
         }
 
         /* ===== ABOUT SECTION ===== */
@@ -677,7 +693,6 @@
             font-style: normal;
         }
 
-        /* ===== ИСПРАВЛЕННАЯ СЕТКА ДЛЯ ABOUT CARDS ===== */
         .about-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -686,7 +701,6 @@
             margin: 0 auto;
         }
 
-        /* ===== PROFILE CARD HOVER EFFECT FOR ABOUT SECTION ===== */
         .about-card {
             background: var(--card-glass);
             backdrop-filter: blur(20px);
@@ -833,7 +847,6 @@
             50% { background-position: 100% 50%; }
         }
 
-        /* Floating animation for cards */
         @keyframes cardFloat {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -979,7 +992,6 @@
             color: var(--foreground);
         }
 
-        /* CSS Hard Hover Effects - замена кнопки */
         .expertise-hover-content {
             position: absolute;
             bottom: 0;
@@ -1257,6 +1269,13 @@
         }
 
         /* ===== ESG CALCULATOR SECTION ===== */
+        .calculator-intro {
+    text-align: center; /* ← ДОБАВИТЬ ЭТУ СТРОКУ */
+    margin: 0 auto 2rem; /* ← ОПЦИОНАЛЬНО: центрировать и добавить отступ снизу */
+    font-size: 1.1rem;
+    color: var(--foreground-secondary);
+    line-height: 1.6;
+}
         #esg-calculator {
             background: rgba(0, 0, 0, 0.4);
             background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), transparent);
@@ -1598,17 +1617,28 @@
             transform: translateX(0);
         }
 
-        /* ===== ИСПРАВЛЕННЫЙ ФУТЕР ===== */
+        /* ===== FOOTER ===== */
         footer {
             background: rgba(0, 0, 0, 0.7);
             border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding-top: 3rem;
-            padding-bottom: 1rem;
+            padding: 3rem 0 1rem;
+            position: relative;
+        }
+
+        .footer-top-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            animation: borderGlow 2s ease-in-out infinite alternate;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -1617,24 +1647,44 @@
             text-align: left;
         }
 
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 22px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            white-space: nowrap; /* ← ДОБАВИТЬ ЭТУ СТРОКУ */
+    display: block; /* ← ДОБАВИТЬ ЭТУ СТРОКУ */
+        }
+
+        .footer-tagline {
+            font-family: ui-sans-serif, sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--foreground-secondary);
+            margin-bottom: 1.5rem;
+             white-space: nowrap; /* ← ДОБАВИТЬ ЭТУ СТРОКУ */
+        }
+
         .footer-column h3 {
             font-family: 'Playfair Display', serif;
             font-weight: 400;
-            font-size: 1.1rem;
+            font-size: 19px;
+            line-height: 22px;
             margin-bottom: 1rem;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
             position: relative;
             display: inline-block;
-            white-space: nowrap;
         }
 
         .footer-column h3::after {
             content: '';
             position: absolute;
             bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70%;
+            left: 0;
+            width: 100%;
             height: 1px;
             background: linear-gradient(90deg, 
                 transparent 0%, 
@@ -1642,14 +1692,6 @@
                 var(--primary) 75%, 
                 transparent 100%);
             border-radius: 1px;
-        }
-
-        .tagline {
-            font-weight: 400;
-            font-size: 0.85rem;
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(212, 175, 55, 0.1);
-            line-height: 1.5;
         }
 
         .footer-column ul {
@@ -1674,16 +1716,20 @@
         }
 
         .footer-column ul li span {
-            font-size: 0.8rem;
-            line-height: 1.5;
+            font-family: ui-sans-serif, sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
             color: var(--foreground-secondary);
         }
 
         .footer-column ul li a {
-            font-size: 0.8rem;
+            font-family: ui-sans-serif, sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
             color: var(--foreground-secondary);
             transition: var(--transition);
-            line-height: 1.5;
         }
 
         .footer-column ul li a:hover {
@@ -1691,12 +1737,14 @@
         }
 
         .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            color: var(--foreground-secondary);
-            font-size: 0.8rem;
-        }
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    color: var(--foreground-secondary);
+    font-size: 0.8rem;
+    position: relative; /* Добавляем это */
+    z-index: 3; /* Добавляем это - выше чем .footer-content */
+}
 
         .license-info {
             margin-top: 2rem;
@@ -1720,6 +1768,25 @@
             line-height: 1.6;
         }
 
+        /* ДОБАВИТЬ ЭТИ СТИЛИ ДЛЯ ФИКСА ФУТЕРА */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 3rem 0 1rem;
+            position: relative;
+            overflow: hidden; /* Добавляем это */
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Убедимся, что анимации AOS не ломают layout */
+        [data-aos] {
+            pointer-events: auto !important;
+        }
+
         /* ===== CUSTOM CURSOR ===== */
         .custom-cursor {
             position: fixed;
@@ -1741,307 +1808,21 @@
             background: rgba(212, 175, 55, 0.5);
         }
 
-        /* ===== RESPONSIVE STYLES ===== */
+        /* Скрываем курсор на тач-устройствах */
+        @media (hover: none) and (pointer: coarse) {
+            .custom-cursor {
+                display: none;
+            }
+        }
+
+        /* Альтернатива для старых браузеров */
         @media (max-width: 1024px) {
-            .section-title {
-                font-size: 2.5rem;
+            .custom-cursor {
+                display: none;
             }
         }
 
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .premium-logo {
-                max-width: 280px;
-                width: 90%;
-            }
-
-            .navbar-top .logo a {
-                font-size: 1.1rem;
-                white-space: nowrap;
-                letter-spacing: 0.3px;
-            }
-
-            .navbar-top .logo a .text-gold::after {
-                content: " B CORP";
-            }
-            
-            .navbar-top .logo a .text-gold {
-                font-size: 0.95em;
-            }
-
-            .menu-toggle {
-                display: block;
-                position: absolute;
-                left: 1.5rem;
-            }
-
-            #nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                flex-direction: column;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                padding: 1.5rem;
-                gap: 1rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: var(--transition);
-                z-index: 1000;
-            }
-
-            #nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-link {
-                display: block;
-                padding: 0.8rem 0;
-                text-align: center;
-            }
-
-            .lang-switcher {
-                position: static;
-                margin-top: 1rem;
-                justify-content: center;
-            }
-
-            .premium-logo {
-                max-width: 300px;
-            }
-
-            .partners-track {
-                animation: marquee 20s linear infinite;
-            }
-
-            .partner-card {
-                flex: 0 0 200px;
-            }
-
-            .philosophy-quote {
-                font-size: 1.2rem;
-            }
-
-            /* Мобильная адаптация для about cards */
-            .about-container {
-                grid-template-columns: 1fr;
-                max-width: 100%;
-                gap: 1.5rem;
-            }
-
-            .about-card {
-                min-height: 250px;
-                padding: 1.5rem;
-            }
-            
-            .about-card-front,
-            .about-card-back {
-                padding: 1.5rem;
-            }
-            
-            .about-card h3 {
-                font-size: 1.2rem;
-            }
-            
-            .about-card-back h4 {
-                font-size: 1.1rem;
-            }
-            
-            .about-card-back p {
-                font-size: 0.85rem;
-            }
-            
-            .principles-list li {
-                font-size: 0.8rem;
-            }
-
-            .expertise-card {
-                min-height: 340px;
-                padding: 2rem 1.5rem;
-            }
-
-            /* Солнечное затмение адаптив */
-            .solar-disk {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .eclipse-moon {
-                width: 130px;
-                height: 130px;
-            }
-            
-            .solar-corona {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .solar-corona.delay-1 {
-                width: 260px;
-                height: 260px;
-            }
-            
-            .solar-corona.delay-2 {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .eclipse-logo .preloader-logo {
-                width: 100px;
-            }
-            
-            .eclipse-text span {
-                font-size: 1rem;
-                letter-spacing: 1px;
-            }
-
-            /* Мобильная адаптация футера */
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .footer-column h3 {
-                font-size: 1rem;
-            }
-
-            .tagline {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .expertise-card,
-            .about-card,
-            .investment-block,
-            .methodology-card {
-                padding: 1.5rem 1rem;
-            }
-
-            .expertise-icon,
-            .investment-icon {
-                width: 60px;
-                height: 60px;
-            }
-
-            .expertise-icon i {
-                font-size: 1.5rem;
-            }
-
-            .partners-track {
-                animation: marquee 15s linear infinite;
-            }
-
-            .partner-card {
-                flex: 0 0 150px;
-                margin: 0 10px;
-                padding: 1rem;
-                height: 120px;
-            }
-
-            .partner-card img {
-                max-height: 80px;
-            }
-
-            .philosophy-quote {
-                font-size: 1rem;
-                padding: 1rem;
-            }
-
-            .philosophy-quote::before,
-            .philosophy-quote::after {
-                font-size: 2.5rem;
-            }
-
-            .about-card {
-                min-height: 230px;
-            }
-            
-            .about-card-front,
-            .about-card-back {
-                padding: 1.2rem;
-            }
-            
-            .about-card h3 {
-                font-size: 1.1rem;
-            }
-            
-            .about-card-back h4 {
-                font-size: 1rem;
-            }
-            
-            .about-card-back p {
-                font-size: 0.8rem;
-            }
-            
-            .principles-list li {
-                font-size: 0.75rem;
-            }
-
-            .expertise-card {
-                min-height: 320px;
-                padding: 1.5rem 1rem;
-            }
-
-            .expertise-hover-content {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .navbar-top .logo a {
-                font-size: 1rem;
-                letter-spacing: 0.2px;
-            }
-
-            .navbar-top .logo a .text-gold::after {
-                content: "";
-            }
-
-            .footer-bottom p {
-                font-size: 0.7rem;
-                letter-spacing: -0.2px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .navbar-top .logo a {
-                font-size: 0.95rem;
-            }
-
-            .footer-bottom p {
-                font-size: 0.65rem;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .navbar-top .logo a {
-                font-size: 0.88rem;
-                letter-spacing: 0.1px;
-            }
-            
-            .lang-switcher {
-                font-size: 0.75rem;
-            }
-
-            .footer-bottom p {
-                font-size: 0.65rem;
-            }
-        }
-
-        /* Стилизация ползунка прокрутки */
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -2061,183 +1842,795 @@
             background: var(--primary-light);
         }
 
-        /* Анимация для fadeInOut */
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-        }
+        .nav-link.active {
+    color: var(--primary);
+    font-weight: 600;
+}
 
-        .footer-bottom p {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 0.75rem;
-            padding: 0 10px;
-            line-height: 1.3;
-        }
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
 
-        .calculator-intro {
-            max-width: 550px !important;
-            margin: 0 auto 1.5rem auto !important;
-            font-size: 0.92rem;
-            line-height: 1.5;
-            text-align: center;
-            padding: 0 15px;
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 1024px) {
+            .section-title { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .calculator-intro {
-                font-size: 0.88rem;
-                line-height: 1.45;
-                margin-bottom: 1.2rem !important;
+            .section-title { font-size: 2rem; margin-bottom: 2rem; }
+            .premium-logo { max-width: 280px; width: 90%; }
+            
+            /* Header Mobile Styles */
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
-        }
-
-        /* Выравнивание языкового переключателя */
-        .lang-switcher {
-            position: absolute;
-            right: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        /* Балансировка отступов */
-        .section-title {
-            margin: 0 auto 2.5rem auto;
-        }
-
-        /* Оптимизация межбуквенных интервалов */
-        .navbar-top .logo a {
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar-top .logo a {
-                letter-spacing: 0.3px;
+            
+            .logo-main {
+                font-size: 18px;
+                line-height: 24px;
+                margin-bottom: 0;
+                text-align: left;
             }
-        }
-
-        @media (max-width: 320px) {
-            .navbar-top .logo a {
-                font-size: 0.9rem;
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-section {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateX(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                z-index: 1000;
+            }
+            
+            .nav-section.active {
+                transform: translateX(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            #nav-menu {
+                flex-direction: column;
+                gap: 1.5rem;
+                width: 100%;
+            }
+            
+            .nav-link {
+                font-size: 18px;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+                width: 100%;
+                text-align: center;
             }
             
             .lang-switcher {
-                font-size: 0.8rem;
+                margin-top: 2rem;
+                font-size: 16px;
             }
             
-            .footer-bottom p {
-                font-size: 0.65rem;
-            }
+            .partners-track { animation: marquee 20s linear infinite; }
+            .partner-card { flex: 0 0 200px; }
+            .philosophy-quote { font-size: 1.2rem; }
+            .about-container { grid-template-columns: 1fr; max-width: 100%; gap: 1.5rem; }
+            .about-card { min-height: 250px; padding: 1.5rem; }
+            .expertise-card { min-height: 340px; padding: 2rem 1.5rem; }
+            .solar-disk { width: 150px; height: 150px; }
+            .eclipse-moon { width: 130px; height: 130px; }
+            .solar-corona { width: 220px; height: 220px; }
+            .solar-corona.delay-1 { width: 260px; height: 260px; }
+            .solar-corona.delay-2 { width: 300px; height: 300px; }
+            .eclipse-logo .preloader-logo { width: 100px; }
+            .eclipse-text span { font-size: 1rem; letter-spacing: 1px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+            .footer-column h3 { font-size: 17px; }
+            .footer-tagline { font-size: 13px; }
         }
+
+        @media (max-width: 576px) {
+            .section-title { font-size: 1.8rem; }
+            .expertise-card, .about-card, .investment-block, .methodology-card { padding: 1.5rem 1rem; }
+            .expertise-icon, .investment-icon { width: 60px; height: 60px; }
+            .expertise-icon i { font-size: 1.5rem; }
+            .partners-track { animation: marquee 15s linear infinite; }
+            .partner-card { flex: 0 0 150px; margin: 0 10px; padding: 1rem; height: 120px; }
+            .partner-card img { max-height: 80px; }
+            .philosophy-quote { font-size: 1rem; padding: 1rem; }
+            .philosophy-quote::before, .philosophy-quote::after { font-size: 2.5rem; }
+            .about-card { min-height: 230px; }
+            .about-card-front, .about-card-back { padding: 1.2rem; }
+            .about-card h3 { font-size: 1.1rem; }
+            .about-card-back h4 { font-size: 1rem; }
+            .about-card-back p { font-size: 0.8rem; }
+            .principles-list li { font-size: 0.75rem; }
+            .expertise-card { min-height: 320px; padding: 1.5rem 1rem; }
+            .expertise-hover-content { padding: 1.5rem; }
+        }
+
+        @media (max-width: 400px) {
+            .logo-main { font-size: 16px; }
+            .footer-bottom p { font-size: 0.7rem; }
+        }
+
+/* ===== NEON GLOW EFFECTS ===== */
+.neon-glow {
+    text-shadow: 
+        0 0 5px rgba(212, 175, 55, 0.5),
+        0 0 10px rgba(212, 175, 55, 0.3),
+        0 0 15px rgba(212, 175, 55, 0.2),
+        0 0 20px rgba(212, 175, 55, 0.1);
+    animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+.neon-glow-strong {
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 0 30px rgba(212, 175, 55, 0.4),
+        0 0 40px rgba(212, 175, 55, 0.2);
+    animation: neonPulse 2s ease-in-out infinite alternate;
+}
+
+.neon-border {
+    box-shadow: 
+        inset 0 0 10px rgba(212, 175, 55, 0.2),
+        0 0 10px rgba(212, 175, 55, 0.3),
+        0 0 20px rgba(212, 175, 55, 0.2),
+        0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+.neon-card {
+    box-shadow: 
+        inset 0 0 20px rgba(212, 175, 55, 0.1),
+        0 0 20px rgba(212, 175, 55, 0.2),
+        0 0 40px rgba(212, 175, 55, 0.15),
+        0 0 60px rgba(212, 175, 55, 0.1);
+    animation: cardNeonPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+    0% {
+        text-shadow: 
+            0 0 5px rgba(212, 175, 55, 0.5),
+            0 0 10px rgba(212, 175, 55, 0.3),
+            0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    100% {
+        text-shadow: 
+            0 0 10px rgba(212, 175, 55, 0.8),
+            0 0 20px rgba(212, 175, 55, 0.5),
+            0 0 30px rgba(212, 175, 55, 0.3),
+            0 0 40px rgba(212, 175, 55, 0.1);
+    }
+}
+
+@keyframes cardNeonPulse {
+    0% {
+        box-shadow: 
+            inset 0 0 20px rgba(212, 175, 55, 0.1),
+            0 0 20px rgba(212, 175, 55, 0.2),
+            0 0 40px rgba(212, 175, 55, 0.15);
+    }
+    100% {
+        box-shadow: 
+            inset 0 0 30px rgba(212, 175, 55, 0.2),
+            0 0 30px rgba(212, 175, 55, 0.4),
+            0 0 60px rgba(212, 175, 55, 0.3),
+            0 0 90px rgba(212, 175, 55, 0.2);
+    }
+}
+
+/* Применяем неоновые эффекты к элементам */
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin: 0 auto 3rem auto;
+    position: relative;
+    display: block;
+    width: fit-content;
+    /* Добавляем неоновый эффект */
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 0 30px rgba(212, 175, 55, 0.4);
+    animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+/* Неоновый эффект для карточек */
+.about-card, .expertise-card, .investment-block, .methodology-card {
+    /* Добавляем к существующим стилям */
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        /* Неоновое свечение */
+        0 0 20px rgba(212, 175, 55, 0.2),
+        0 0 40px rgba(212, 175, 55, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-card:hover, .expertise-card:hover, .investment-block:hover, .methodology-card:hover {
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-rgb), 0.2),
+        0 0 40px rgba(var(--primary-rgb), 0.5),
+        /* Усиленное неоновое свечение при ховере */
+        0 0 30px rgba(212, 175, 55, 0.4),
+        0 0 60px rgba(212, 175, 55, 0.3),
+        0 0 90px rgba(212, 175, 55, 0.2);
+}
+
+/* Неоновый эффект для навигации */
+.nav-link {
+    position: relative;
+    transition: var(--transition);
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    transition: var(--transition);
+}
+
+.nav-link:hover::before {
+    width: 100%;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 1);
+}
+
+/* Неоновый эффект для кнопок */
+.calculator-form button, .download-button, .submit-btn, .feedback-btn-container button {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Неоновый эффект */
+    box-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+.calculator-form button:hover, .download-button:hover, .submit-btn:hover, .feedback-btn-container button:hover {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.6),
+        inset 0 0 20px rgba(212, 175, 55, 0.2);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+/* Неоновый эффект для иконок */
+.expertise-icon, .investment-icon, .contact-icon {
+    /* Добавляем к существующим стилям */
+    box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.expertise-icon i, .investment-icon i {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Неоновый эффект для логотипа */
+.premium-logo {
+    max-width: 500px;
+    width: 80%;
+    height: auto;
+    filter: 
+        drop-shadow(0 0 20px rgba(212, 175, 55, 0.5))
+        drop-shadow(0 0 40px rgba(212, 175, 55, 0.3))
+        drop-shadow(0 0 60px rgba(212, 175, 55, 0.1));
+    transition: filter 0.3s ease;
+}
+
+/* Неоновый эффект для границ секций */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    box-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.5),
+        0 0 20px rgba(212, 175, 55, 0.3);
+    animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+/* Неоновый эффект для футера */
+.footer-top-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    box-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.5),
+        0 0 20px rgba(212, 175, 55, 0.3);
+    animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+/* ===== SOLAR ECLIPSE PRELOADER STYLES ===== */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.preloader-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.solar-disk {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at 30% 30%, 
+        #ffd700 0%,
+        #ff6b00 30%,
+        #ff4500 50%,
+        #8b0000 70%,
+        #4b0082 100%);
+    border-radius: 50%;
+    /* НЕОНОВОЕ СВЕЧЕНИЕ */
+    box-shadow: 
+        0 0 60px rgba(255, 215, 0, 0.8),
+        0 0 120px rgba(255, 107, 0, 0.6),
+        0 0 180px rgba(255, 69, 0, 0.4),
+        0 0 240px rgba(139, 0, 0, 0.3),
+        0 0 300px rgba(75, 0, 130, 0.2),
+        inset 0 0 60px rgba(255, 255, 255, 0.3);
+    animation: solarPulse 4s ease-in-out infinite;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    filter: brightness(1.2) contrast(1.1);
+}
+
+.solar-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, 
+        #ffffff 0%,
+        #ffd700 30%,
+        #ff4500 70%);
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: coreFlicker 2s ease-in-out infinite;
+    /* НЕОНОВОЕ ЯДРО */
+    box-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.8),
+        0 0 60px rgba(255, 215, 0, 0.6),
+        0 0 90px rgba(255, 107, 0, 0.4);
+}
+
+.solar-corona {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0%,
+        rgba(255, 215, 0, 0.4) 10%,
+        rgba(255, 107, 0, 0.3) 20%,
+        transparent 30%,
+        rgba(255, 69, 0, 0.4) 40%,
+        rgba(139, 0, 0, 0.3) 50%,
+        transparent 60%,
+        rgba(255, 215, 0, 0.4) 70%,
+        rgba(255, 107, 0, 0.3) 80%,
+        transparent 90%,
+        rgba(255, 69, 0, 0.4) 100%
+    );
+    animation: coronaRotate 8s linear infinite;
+    filter: blur(1px);
+    will-change: transform;
+    backface-visibility: hidden;
+    /* НЕОНОВАЯ КОРОНА */
+    box-shadow: 
+        inset 0 0 50px rgba(255, 215, 0, 0.2),
+        0 0 80px rgba(255, 215, 0, 0.3);
+}
+
+.solar-corona.delay-1 {
+    width: 350px;
+    height: 350px;
+    animation: coronaRotate 12s linear infinite reverse;
+    opacity: 0.7;
+    /* ДОПОЛНИТЕЛЬНОЕ СВЕЧЕНИЕ */
+    box-shadow: 
+        inset 0 0 60px rgba(255, 107, 0, 0.2),
+        0 0 100px rgba(255, 107, 0, 0.25);
+}
+
+.solar-corona.delay-2 {
+    width: 400px;
+    height: 400px;
+    animation: coronaRotate 16s linear infinite;
+    opacity: 0.5;
+    /* ВНЕШНЕЕ СВЕЧЕНИЕ */
+    box-shadow: 
+        inset 0 0 70px rgba(255, 69, 0, 0.15),
+        0 0 120px rgba(255, 69, 0, 0.2);
+}
+
+.eclipse-moon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle at 70% 30%, 
+        #1a1a1a 0%,
+        #0a0a0a 30%,
+        #000000 70%);
+    border-radius: 50%;
+    box-shadow: 
+        inset 0 0 20px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(0, 0, 0, 0.8);
+    animation: eclipseMove 6s ease-in-out infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    /* НЕОНОВЫЙ КОНТУР ЛУНЫ */
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        inset 0 0 20px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 215, 0, 0.2);
+}
+
+.solar-flare {
+    position: absolute;
+    background: radial-gradient(ellipse, 
+        rgba(255, 215, 0, 0.9) 0%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: flarePulse 3s ease-in-out infinite;
+    /* НЕОНОВЫЕ ВСПЫШКИ */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+.flare-1 {
+    width: 40px;
+    height: 15px;
+    top: 30%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.flare-2 {
+    width: 25px;
+    height: 8px;
+    top: 60%;
+    left: 70%;
+    animation-delay: 1s;
+}
+
+.flare-3 {
+    width: 35px;
+    height: 12px;
+    top: 80%;
+    left: 40%;
+    animation-delay: 2s;
+}
+
+.eclipse-logo {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 3rem;
+}
+
+.eclipse-logo .preloader-logo {
+    width: 120px;
+    height: auto;
+    /* УСИЛЕННОЕ НЕОНОВОЕ СВЕЧЕНИЕ ЛОГОТИПА */
+    filter: 
+        drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
+        drop-shadow(0 0 40px rgba(212, 175, 55, 0.6))
+        drop-shadow(0 0 60px rgba(212, 175, 55, 0.4))
+        drop-shadow(0 0 80px rgba(212, 175, 55, 0.2));
+    animation: logoGlow 3s ease-in-out infinite alternate;
+}
+
+.eclipse-text {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.eclipse-text span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    /* НЕОНОВЫЙ ТЕКСТ */
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 0 30px rgba(212, 175, 55, 0.4),
+        0 0 40px rgba(212, 175, 55, 0.2);
+    animation: textPulse 2s ease-in-out infinite;
+}
+
+/* УСИЛЕННЫЕ АНИМАЦИИ ДЛЯ НЕОНА */
+@keyframes solarPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 0 60px rgba(255, 215, 0, 0.8),
+            0 0 120px rgba(255, 107, 0, 0.6),
+            0 0 180px rgba(255, 69, 0, 0.4),
+            0 0 240px rgba(139, 0, 0, 0.3);
+        filter: brightness(1.2) contrast(1.1);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 
+            0 0 80px rgba(255, 215, 0, 1),
+            0 0 160px rgba(255, 107, 0, 0.8),
+            0 0 220px rgba(255, 69, 0, 0.6),
+            0 0 280px rgba(139, 0, 0, 0.4);
+        filter: brightness(1.4) contrast(1.2);
+    }
+}
+
+@keyframes coreFlicker {
+    0%, 100% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(255, 215, 0, 0.6);
+    }
+    25% { 
+        opacity: 0.8; 
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 
+            0 0 40px rgba(255, 255, 255, 1),
+            0 0 80px rgba(255, 215, 0, 0.8);
+    }
+    50% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(0.9);
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.6),
+            0 0 50px rgba(255, 215, 0, 0.5);
+    }
+    75% { 
+        opacity: 0.9; 
+        transform: translate(-50%, -50%) scale(1.05);
+        box-shadow: 
+            0 0 35px rgba(255, 255, 255, 0.9),
+            0 0 70px rgba(255, 215, 0, 0.7);
+    }
+}
+
+@keyframes logoGlow {
+    0% { 
+        filter: 
+            drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
+            drop-shadow(0 0 40px rgba(212, 175, 55, 0.6))
+            drop-shadow(0 0 60px rgba(212, 175, 55, 0.4));
+    }
+    100% { 
+        filter: 
+            drop-shadow(0 0 30px rgba(212, 175, 55, 1))
+            drop-shadow(0 0 60px rgba(212, 175, 55, 0.8))
+            drop-shadow(0 0 90px rgba(212, 175, 55, 0.6))
+            drop-shadow(0 0 120px rgba(212, 175, 55, 0.4));
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% { 
+        opacity: 0.8;
+        text-shadow: 
+            0 0 10px rgba(212, 175, 55, 0.8),
+            0 0 20px rgba(212, 175, 55, 0.6),
+            0 0 30px rgba(212, 175, 55, 0.4);
+    }
+    50% { 
+        opacity: 1;
+        text-shadow: 
+            0 0 15px rgba(212, 175, 55, 1),
+            0 0 30px rgba(212, 175, 55, 0.8),
+            0 0 45px rgba(212, 175, 55, 0.6),
+            0 0 60px rgba(212, 175, 55, 0.4);
+    }
+}
+
+/* ДОПОЛНИТЕЛЬНЫЙ НЕОНОВЫЙ ФОН ДЛЯ ПРЕЛОАДЕРА */
+#preloader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Улучшаем существующую анимацию borderGlow */
+@keyframes borderGlow {
+    0% { 
+        box-shadow: 
+            0 0 10px rgba(212, 175, 55, 0.5),
+            0 0 20px rgba(212, 175, 55, 0.3);
+    }
+    100% { 
+        box-shadow: 
+            0 0 20px rgba(212, 175, 55, 0.8),
+            0 0 40px rgba(212, 175, 55, 0.5),
+            0 0 60px rgba(212, 175, 55, 0.3);
+    }
+}
+
+/* Неоновый эффект для текста в футере */
+.footer-column h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    margin-bottom: 1rem;
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.2);
+    position: relative;
+    display: inline-block;
+}
+
+/* Глобальный неоновый оверлей для атмосферы */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    /* Добавляем неоновое свечение */
+    box-shadow: 
+        inset 0 0 100px rgba(212, 175, 55, 0.05),
+        inset 0 0 200px rgba(212, 175, 55, 0.03);
+}
+
     </style>
 </head>
-
 <body>
-    <!-- Skip Link для доступности -->
     <a href="#main" class="skip-link">Перейти к основному содержанию</a>
 
-    <!-- Preloader -->
     <div id="preloader">
         <div class="preloader-content">
-            <!-- Основное "солнце" -->
             <div class="solar-disk">
-                <!-- Внутреннее свечение -->
                 <div class="solar-core"></div>
-                
-                <!-- Корона - внешнее свечение -->
                 <div class="solar-corona"></div>
                 <div class="solar-corona delay-1"></div>
                 <div class="solar-corona delay-2"></div>
-                
-                <!-- Луна для эффекта затмения -->
                 <div class="eclipse-moon"></div>
-                
-                <!-- Вспышки на поверхности солнца -->
                 <div class="solar-flare flare-1"></div>
                 <div class="solar-flare flare-2"></div>
                 <div class="solar-flare flare-3"></div>
             </div>
-            
-            <!-- Логотип поверх эффекта -->
             <div class="eclipse-logo">
                 <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" class="preloader-logo">
             </div>
-            
-            <!-- Текстовый элемент -->
             <div class="eclipse-text">
                 <span class="text-gold">NORTH WEST ATLAS B CORP</span>
             </div>
         </div>
     </div>
 
-    <!-- Particles Background -->
     <div id="particles-js"></div>
 
-    <!-- Header -->
     <header id="header">
-        <nav class="navbar-wrapper" aria-label="Основная навигация">
-            <!-- ЛОГОТИП (ПО ЦЕНТРУ СВЕРХУ) -->
-            <div class="navbar-top">
-                <div class="logo">
-                    <a href="#home" class="font-playfair">
-                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                    </a>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo-main">
+                    NORTH WEST <span class="text-gold">ATLAS B CORP</span>
                 </div>
-            </div>
-
-            <!-- МЕНЮ И ЯЗЫК (ПО ЦЕНТРУ СНИЗУ) -->
-            <div class="navbar-bottom">
-                <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="nav-menu" aria-label="Открыть меню">
+                <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="nav-section" aria-label="Открыть меню">
                     <i class="fas fa-bars"></i>
                 </button>
-                
-                <ul id="nav-menu" role="menubar" aria-label="Основные разделы сайта">
-                    <li role="none"><a href="#home" class="nav-link" role="menuitem">Главная</a></li>
-                    <li role="none"><a href="#about" class="nav-link" role="menuitem">О нас</a></li>
-                    <li role="none"><a href="#expertise" class="nav-link" role="menuitem">Экспертиза</a></li>
-                    <li role="none"><a href="#partners" class="nav-link" role="menuitem">Партнеры</a></li>
-                    <li role="none"><a href="#investment-focus" class="nav-link" role="menuitem">Инвестиционные направления</a></li>
-                    <li role="none"><a href="#esg-calculator" class="nav-link" role="menuitem">ESG Калькулятор</a></li>
-                    <li role="none"><a href="#feedback" class="nav-link" role="menuitem">Обратная связь</a></li>
-                </ul>
-
-                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ -->
-                <div class="lang-switcher">
-                    <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
-                    <span>|</span>
-                    <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
+                <div class="nav-section" id="nav-section">
+                    <ul id="nav-menu" role="menubar" aria-label="Основные разделы сайта">
+                       <li role="none"><a href="#home" class="nav-link" role="menuitem">Главная</a></li>
+                        <li role="none"><a href="#about" class="nav-link" role="menuitem">О нас</a></li>
+                        <li role="none"><a href="#expertise" class="nav-link" role="menuitem">Экспертиза</a></li>
+                        <li role="none"><a href="#partners" class="nav-link" role="menuitem">Партнеры</a></li>
+                        <li role="none"><a href="#investment-focus" class="nav-link" role="menuitem">Инвестиционные направления</a></li>
+                        <li role="none"><a href="#esg-calculator" class="nav-link" role="menuitem">ESG Калькулятор</a></li>
+                        <li role="none"><a href="#feedback" class="nav-link" role="menuitem">Обратная связь</a></li>
+                    </ul>
+                    <div class="lang-switcher">
+                        <a href="/" style="color: #d4af37; font-weight: bold;">🇷🇺 РУ</a>
+                        <span>|</span>
+                        <a href="/en.html" style="color: rgba(212, 175, 55, 0.6);">🇬🇧 EN</a>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main id="main" tabindex="-1">
-        <!-- Главная секция -->
         <section id="home">
-            <img 
-                src="logo-nwa-centered.png" 
-                alt="North West Atlas B Corp" 
-                class="premium-logo"
-                loading="lazy"
-                id="main-logo"
-            >
+           <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" class="premium-logo neon-glow" loading="lazy" id="main-logo">
         </section>
 
-        <!-- Раздел "О нас" -->
         <section id="about" class="py-24 px-6 bg-black/30">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">О нас</h2>
+                <h2 class="section-title neon-glow-strong" data-aos="fade-up">О нас</h2>
                 <blockquote class="philosophy-quote" data-aos="fade-up" data-aos-delay="100">
                     "Мы инвестируем не только капитал, но и время, знания и репутацию..."
                     <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
                 </blockquote>
                 <div class="about-container">
-                    <!-- Карточка 1: Миссия -->
                     <div class="about-card" data-aos="fade-up" data-aos-delay="150">
                         <div class="about-card-content">
                             <div class="about-card-front">
@@ -2250,8 +2643,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Карточка 2: Цели -->
                     <div class="about-card" data-aos="fade-up" data-aos-delay="200">
                         <div class="about-card-content">
                             <div class="about-card-front">
@@ -2264,8 +2655,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Карточка 3: Принципы -->
                     <div class="about-card" data-aos="fade-up" data-aos-delay="250">
                         <div class="about-card-content">
                             <div class="about-card-front">
@@ -2283,8 +2672,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Карточка 4: Подход -->
                     <div class="about-card" data-aos="fade-up" data-aos-delay="300">
                         <div class="about-card-content">
                             <div class="about-card-front">
@@ -2301,7 +2688,7 @@
             </div>
         </section>
 
-        <!-- Раздел "Экспертиза" -->
+        <!-- Остальные секции остаются без изменений -->
         <section id="expertise" class="py-24 px-6 bg-black/40">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Экспертиза</h2>
@@ -2376,14 +2763,12 @@
             </div>
         </section>
 
-        <!-- Раздел "Партнеры" -->
         <section id="partners" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Наши партнеры</h2>
                 <div class="partners-container" data-aos="fade-up" data-aos-delay="100">
                     <div class="partners-marquee">
                         <div class="partners-track">
-                            <!-- Первая группа карточек -->
                             <div class="partner-card">
                                 <img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy">
                             </div>
@@ -2399,7 +2784,6 @@
                             <div class="partner-card">
                                 <img src="rshb-inteh-logo.png" alt="РСХБ-Интех" loading="lazy">
                             </div>
-                            <!-- Вторая группа карточек (дублирующая) -->
                             <div class="partner-card">
                                 <img src="veb-rf-logo.png" alt="ВЭБ.РФ" loading="lazy">
                             </div>
@@ -2421,40 +2805,34 @@
             </div>
         </section>
 
-        <!-- Раздел "Investment Focus" -->
         <section id="investment-focus" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Investment Focus</h2>
                 <div class="investment-container">
-                    <!-- Ecotech -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="100">
                         <div class="investment-icon">
                             <i class="fas fa-leaf"></i>
                         </div>
                         <div class="investment-text">Ecotech</div>
                     </div>
-                    <!-- Agrotech -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="200">
                         <div class="investment-icon">
                             <i class="fas fa-seedling"></i>
                         </div>
                         <div class="investment-text">Agrotech</div>
                     </div>
-                    <!-- Eco REE Mining -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="300">
                         <div class="investment-icon">
                             <i class="fas fa-mountain"></i>
                         </div>
                         <div class="investment-text">Eco REE Mining</div>
                     </div>
-                    <!-- IIoT & Blockchain -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="400">
                         <div class="investment-icon">
                             <i class="fas fa-link"></i>
                         </div>
                         <div class="investment-text">IIoT & Blockchain</div>
                     </div>
-                    <!-- Smartcharity -->
                     <div class="investment-block" data-aos="flip-left" data-aos-delay="500">
                         <div class="investment-icon">
                             <i class="fas fa-hand-holding-heart"></i>
@@ -2465,30 +2843,25 @@
             </div>
         </section>
 
-        <!-- Раздел "Методология" -->
         <section id="methodology" class="py-24 px-6 bg-black/40">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Методология</h2>
                 <div class="methodology-container">
-                    <!-- Карточка NLP -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="100">
                         <i class="fas fa-language icon"></i>
                         <h3 class="text-gold">Обработка естественного языка (NLP)</h3>
                         <p>Мы используем технологии NLP для анализа текстовых данных, таких как финансовые отчеты, новости и социальные сети.</p>
                     </div>
-                    <!-- Карточка Python -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="200">
                         <i class="fab fa-python icon"></i>
                         <h3 class="text-gold">Python</h3>
                         <p>Python — основной инструмент для анализа данных, прогнозирования и автоматизации процессов.</p>
                     </div>
-                    <!-- Карточка Machine Learning -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="300">
                         <i class="fas fa-robot icon"></i>
                         <h3 class="text-gold">Машинное обучение</h3>
                         <p>Мы применяем алгоритмы машинного обучения для выявления скрытых трендов и факторов риска.</p>
                     </div>
-                    <!-- Карточка Big Data -->
                     <div class="methodology-card" data-aos="fade-right" data-aos-delay="400">
                         <i class="fas fa-database icon"></i>
                         <h3 class="text-gold">Большие данные</h3>
@@ -2498,7 +2871,6 @@
             </div>
         </section>
 
-        <!-- Раздел "ESG Калькулятор" -->
         <section id="esg-calculator" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Калькулятор ESG-рейтингов</h2>
@@ -2519,12 +2891,11 @@
             </div>
         </section>
 
-        <!-- Раздел "Обратная связь" -->
         <section id="feedback" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Обратная связь</h2>
                 <div class="feedback-btn-container" data-aos="fade-up" data-aos-delay="100">
-                    <button id="show-contacts-btn" onclick="toggleContacts()">Показать</button>
+                    <button id="show-contacts-btn" onclick="toggleContacts()">ПОКАЗАТЬ</button>
                 </div>
                 <div id="contacts" style="display: none;">
                     <div class="contacts-grid">
@@ -2571,7 +2942,7 @@
                                 <label for="message">Сообщение:</label>
                                 <textarea id="message" name="message" required></textarea>
                             </div>
-                            <button type="submit" class="submit-btn">
+                            <button type="submit" class="submit-btn" aria-label="Отправить форму обратной связи">
                                 Отправить
                                 <i class="fas fa-arrow-right"></i>
                             </button>
@@ -2582,30 +2953,26 @@
         </section>
     </main>
 
-    <!-- Футер -->
-    <footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
+    <footer class="bg-black/70 pt-16 pb-4">
+        <div class="footer-top-border"></div>
         <div class="container">
+            <!-- ДОБАВЛЕНЫ АТРИБУТЫ AOS ДЛЯ АНИМАЦИИ ФУТЕРА -->
             <div class="footer-grid">
-                <!-- Первая колонка -->
                 <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="font-playfair">
+                    <div class="footer-logo">
                         NORTH WEST <span class="text-gold">ATLAS B CORP</span>
-                    </h3>
-                    <p class="tagline">Создаем будущее, а не следуем за ним.</p>
+                    </div>
+                    <p class="footer-tagline">Создаем будущее, а не следуем за ним.</p>
                 </div>
-
-                <!-- Вторая колонка -->
                 <div class="footer-column" data-aos="fade-up" data-aos-delay="150">
                     <h3 class="text-gold">Навигация</h3>
                     <ul>
-                        <li><a href="#home">Главная</a></li>
+                        <li><a href="/">Главная</a></li>
                         <li><a href="#about">О нас</a></li>
                         <li><a href="#expertise">Экспертиза</a></li>
                         <li><a href="#partners">Партнеры</a></li>
                     </ul>
                 </div>
-
-                <!-- Третья колонка -->
                 <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="text-gold">Ключевые направления</h3>
                     <ul>
@@ -2615,8 +2982,6 @@
                         <li><i class="fas fa-shield-alt"></i> <span>Оценка рисков</span></li>
                     </ul>
                 </div>
-
-                <!-- Четвертая колонка -->
                 <div class="footer-column" data-aos="fade-up" data-aos-delay="250">
                     <h3 class="text-gold">Адрес</h3>
                     <ul>
@@ -2631,478 +2996,352 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- ЛИЦЕНЗИЯ -->
-            <div class="license-info">
-                <p>✓ Professional License</p>
+            <div class="license-info" data-aos="fade-up" data-aos-delay="300">
+                <p>✓ PROFESSIONAL LICENSE</p>
                 <p>Government of Sharjah, UAE | License #786048 | Registration #197626</p>
             </div>
-
             <div class="footer-bottom">
-                <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
-            </div>
+    <p>&copy; <span id="current-year"></span> North West Atlas B Corp. Все права защищены.</p>
+</div>
         </div>
     </footer>
 
-    <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
-    <!-- AOS Library -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    
-    <!-- Main Script -->
+    <!-- Deferred Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+
     <script>
-        // Initialize AOS
-        document.addEventListener("DOMContentLoaded", () => {
-            AOS.init({
-                duration: 800,
-                easing: "ease",
-                once: false,
-                mirror: false,
-                anchorPlacement: "top-bottom",
-            });
-        });
-
-        // Set current year in footer
-        document.getElementById("current-year").textContent = new Date().getFullYear();
-
-        // Initialize scroll spy
-        function initScrollSpy() {
-            const sections = document.querySelectorAll("section");
-            const navLinks = document.querySelectorAll(".nav-link");
-
-            window.addEventListener("scroll", () => {
-                let current = "";
-
-                sections.forEach((section) => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-
-                    if (pageYOffset >= sectionTop - 200) {
-                        current = section.getAttribute("id");
-                    }
-                });
-
-                navLinks.forEach((link) => {
-                    link.classList.remove("active");
-                    if (link.getAttribute("href") === `#${current}`) {
-                        link.classList.add("active");
-                    }
-                });
-            });
-        }
-
-        // Initialize header scroll effect
-        function initHeaderScroll() {
-            const header = document.getElementById("header");
-
-            window.addEventListener("scroll", () => {
-                if (window.scrollY > 50) {
-                    header.classList.add("scrolled");
-                } else {
-                    header.classList.remove("scrolled");
-                }
-            });
-        }
-
-        // Toggle menu function
-        function toggleMenu() {
-            const menu = document.getElementById("nav-menu");
-            const button = document.querySelector('.menu-toggle');
-            const isExpanded = menu.classList.toggle("active");
-            
-            // Обновляем ARIA атрибуты
-            button.setAttribute('aria-expanded', isExpanded);
-            button.setAttribute('aria-label', isExpanded ? 'Закрыть меню' : 'Открыть меню');
-        }
-
-        // Toggle contacts function
-        function toggleContacts() {
-            const contacts = document.getElementById("contacts");
-            const button = document.getElementById("show-contacts-btn");
-
-            if (contacts.style.display === "none" || contacts.style.display === "") {
-                contacts.style.display = "block";
-                contacts.style.opacity = "0";
-                contacts.style.transition = "opacity 0.5s ease-in-out";
-
-                setTimeout(() => {
-                    contacts.style.opacity = "1";
-                }, 10);
-
-                button.textContent = "Скрыть";
-            } else {
-                contacts.style.opacity = "0";
-
-                setTimeout(() => {
-                    contacts.style.display = "none";
-                }, 500);
-
-                button.textContent = "Показать";
-            }
-        }
-
-        // ESG Calculator data
-        const ratingsData = {
-            solidcore: {
-                ratings: [
-                    ["Sustainalytics", "8.5"],
-                    ["Refinitiv", "92"],
-                    ["MSCI", "AA"],
-                    ["RAEX Europe", "A+"],
-                    ["NRA ESG", "A1.esg"],
-                    ["Средняя согласованность рейтингов", "7.50"],
-                    ["Соответствие ЦУР №7", "Высокие показатели"],
-                    ["Соответствие ЦУР №5", "Средние показатели"],
-                    ["Историческая динамика RAEX Europe", "+5%"],
-                    ["Историческая динамика MSCI", "-3%"],
-                    ["ESG-профиль (E)", "Отличное управление выбросами CO2"],
-                    ["ESG-профиль (S)", "Программы поддержки местных сообществ"],
-                    ["ESG-профиль (G)", "Недостаточная прозрачность управления рисками"],
-                ],
-                recommendations: [
-                    { title: "Оригинальность", text: "Проект демонстрирует высокую степень уникальности." },
-                    { title: "Новизна", text: "Проект подтверждает свою патентную чистоту." },
-                    { title: "Проработанность", text: "Проект требует более детального описания целей." },
-                    { title: "Эффективность", text: "Проект обладает высокой потенциальной доходностью." },
-                    { title: "Ресурсное обеспечение", text: "Проект требует дополнительного анализа потребностей." },
-                    { title: "Коммерциализируемость", text: "Проект требует доработки бизнес-модели." },
-                ],
-            },
-        };
-
-        // Toggle ratings function
-        function toggleRatings() {
-            const result = document.getElementById("result");
-            const recommendations = document.getElementById("expert-recommendations");
-            const button = document.getElementById("ratings-button");
-
-            if (!result.classList.contains("active")) {
-                loadRatings();
-                result.classList.add("active");
-                recommendations.classList.add("active");
-                button.textContent = "СКРЫТЬ РЕЙТИНГИ";
-            } else {
-                result.classList.remove("active");
-                recommendations.classList.remove("active");
-                button.textContent = "ЗАГРУЗИТЬ РЕЙТИНГИ";
-            }
-        }
-
-        // Load ratings function
-        function loadRatings() {
-            const company = document.getElementById("company").value;
-            const resultDiv = document.getElementById("result");
-            const recommendationsDiv = document.getElementById("expert-recommendations");
-
-            if (!ratingsData[company]) {
-                resultDiv.innerHTML = "<p>Данные о компании не найдены.</p>";
-                recommendationsDiv.innerHTML = "";
-                return;
-            }
-
-            // Generate table
-            let tableHTML = `<table class="ratings-table"><thead><tr><th>Показатель</th><th>Оценка</th></tr></thead><tbody>`;
-            ratingsData[company].ratings.forEach((row) => {
-                tableHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
-            });
-            tableHTML += `</tbody></table>`;
-            resultDiv.innerHTML = tableHTML;
-
-            // Generate recommendations
-            let recommendationsHTML = `<h3 class="recommendation-title">Экспертные рекомендации</h3><div class="recommendation-grid">`;
-            ratingsData[company].recommendations.forEach((rec) => {
-                recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
-            });
-            
-            recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> Полный доступ — по запросу</button>`;
-            
-            recommendationsDiv.innerHTML = recommendationsHTML;
-        }
-
-        // Download Excel function
-        function downloadExcel() {
-            // Create data for CSV file
-            const company = document.getElementById("company").value;
-            const data = ratingsData[company];
-
-            if (!data) {
-                alert("Данные о компании не найдены.");
-                return;
-            }
-
-            let csvContent = "data:text/csv;charset=utf-8,";
-            // Add header
-            csvContent += "Показатель,Оценка\n";
-
-            // Add ratings data
-            data.ratings.forEach((row) => {
-                csvContent += `"${row[0]}","${row[1]}"\n`;
-            });
-
-            // Add separator
-            csvContent += "\nРекомендации\n";
-
-            // Add recommendations
-            data.recommendations.forEach((rec) => {
-                csvContent += `"${rec.title}","${rec.text}"\n`;
-            });
-
-            // Encode URI
-            const encodedUri = encodeURI(csvContent);
-
-            // Create temporary download link
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`);
-            document.body.appendChild(link);
-
-            // Simulate click on link
-            link.click();
-
-            // Remove link
-            document.body.removeChild(link);
-        }
-
-        // Smooth scrolling with offset for fixed header
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                const headerHeight = document.getElementById('header').offsetHeight;
-                
-                window.scrollTo({
-                    top: target.offsetTop - headerHeight - 20,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Contact form validation and submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Basic validation
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            if (!name || !email || !message) {
-                showNotification('Пожалуйста, заполните все поля', 'error');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showNotification('Пожалуйста, введите корректный email', 'error');
-                return;
-            }
-            
-            // Simulate form submission
-            const formData = new FormData(this);
-            
-            // In a real application, you would send this to your server
-            // fetch('/api/contact', {
-            //     method: 'POST',
-            //     body: formData
-            // }).then(response => {
-            //     if (response.ok) {
-            //         showNotification('Сообщение отправлено успешно!', 'success');
-            //         this.reset();
-            //     } else {
-            //         showNotification('Ошибка при отправке сообщения', 'error');
-            //     }
-            // });
-            
-            // For demo purposes, simulate success
-            setTimeout(() => {
-                showNotification('Сообщение отправлено успешно!', 'success');
-                this.reset();
-            }, 1000);
-        });
-
-        // Email validation helper
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Notification system
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // Show notification
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            // Hide and remove notification
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 4000);
-        }
-
-        // Analytics tracking
-        document.addEventListener('DOMContentLoaded', function() {
-            // Track CTA clicks
-            document.querySelectorAll('.nav-link, .submit-btn, .download-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    // In a real application, send this to your analytics service
-                    console.log('CTA clicked:', this.textContent.trim());
-                    
-                    // Example for Google Analytics:
-                    // gtag('event', 'click', {
-                    //     'event_category': 'CTA',
-                    //     'event_label': this.textContent.trim()
-                    // });
-                });
-            });
-        });
-
-        // Particles.js initialization
-        function initParticles() {
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: 80, density: { enable: true, value_area: 800 } },
-                        color: { value: '#d4af37' },
-                        shape: { type: 'circle' },
-                        opacity: { value: 0.5, random: false, anim: { enable: false } },
-                        size: { value: 3, random: true, anim: { enable: false } },
-                        line_linked: { enable: true, distance: 150, color: '#d4af37', opacity: 0.4, width: 1 },
-                        move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: {
-                            onhover: { enable: true, mode: 'grab' },
-                            onclick: { enable: true, mode: 'push' },
-                            resize: true
-                        },
-                        modes: {
-                            grab: { distance: 140, line_linked: { opacity: 1 } },
-                            push: { particles_nb: 4 }
-                        }
-                    },
-                    retina_detect: true
-                });
-            }
-        }
-
-        // Interactive logo glow
-        function initLogoInteractions() {
-            const logo = document.getElementById('main-logo');
-            
-            if (logo) {
-                document.addEventListener('mousemove', (e) => {
-                    const x = e.clientX / window.innerWidth;
-                    const y = e.clientY / window.innerHeight;
-                    
-                    // Change glow intensity based on cursor position
-                    const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
-                    const glowSize = 20 + (x + y) / 2 * 40;
-                    
-                    logo.style.filter = `
-                        drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
-                        drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
-                        drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
-                    `;
-                });
-            }
-        }
-
-        // Premium custom cursor
-        const cursor = document.querySelector('.custom-cursor');
-
-        if (cursor) {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // Enlarge on hover for interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
-
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('active');
-                });
-                
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('active');
-                });
-            });
-        }
-
-        // Premium copy protection notification
-        document.addEventListener('copy', (e) => {
-            e.preventDefault();
-            
-            // Create beautiful notification
-            const notification = document.createElement('div');
-            notification.textContent = '© North West Atlas B Corp — Контент защищён';
-            notification.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, 0.95);
-                color: #d4af37;
-                padding: 20px 40px;
-                border-radius: 10px;
-                border: 2px solid #d4af37;
-                font-size: 16px;
-                font-family: 'Playfair Display', serif;
-                letter-spacing: 1px;
-                z-index: 99999;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.5);
-                animation: fadeInOut 2s ease;
-                backdrop-filter: blur(10px);
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translate(-50%, -50%) scale(0.9)';
-                notification.style.transition = 'all 0.3s ease';
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 1700);
-        });
-
-        // Premium preloader
+        // === Ускоренный preloader (1.5 сек) ===
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const preloader = document.getElementById('preloader');
                 if (preloader) {
                     preloader.style.opacity = '0';
                     preloader.style.pointerEvents = 'none';
-                    preloader.style.transition = 'opacity 800ms cubic-bezier(.6,.9,.39,1.15)';
+                    preloader.style.transition = 'opacity 500ms cubic-bezier(.6,.9,.39,1.15)';
                     setTimeout(function() {
                         preloader.remove();
-                        // Enable scrolling after preloader
                         document.body.style.overflow = 'auto';
-                        document.documentElement.style.scrollBehavior = 'smooth';
-                    }, 900);
+                    }, 500);
                 }
-            }, 3000); // 3 seconds for better eclipse effect
+            }, 1500);
         });
 
-        // Initialize all functionality
+        // === Основной скрипт (выполняется после загрузки DOM и скриптов) ===
         document.addEventListener("DOMContentLoaded", () => {
+            // AOS с настройками для футера
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    easing: "ease",
+                    once: false,
+                    mirror: false,
+                    anchorPlacement: "top-bottom",
+                    // Добавляем настройки для лучшей работы с футером
+                    offset: 120,
+                    delay: 0,
+                });
+            }
+
+            // Текущий год
+            document.getElementById("current-year").textContent = new Date().getFullYear();
+
+            // Scroll Spy
+            // Fixed Scroll Spy
+function initScrollSpy() {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    function updateActiveLink() {
+        let current = "";
+        const scrollY = window.pageYOffset;
+
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 120; // Offset for header
+            const sectionId = section.getAttribute("id");
+
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                current = sectionId;
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            const href = link.getAttribute("href");
+            
+            // Handle both #home and / links for homepage
+            if (href === `#${current}` || 
+                (href === "#home" && current === "home") ||
+                (href === "/" && current === "home") ||
+                (href === "#" && current === "home")) {
+                link.classList.add("active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", updateActiveLink);
+    window.addEventListener("resize", updateActiveLink);
+    // Initial call to set active state on page load
+    updateActiveLink();
+}
+            // Header scroll effect
+            function initHeaderScroll() {
+                const header = document.getElementById("header");
+                window.addEventListener("scroll", () => {
+                    header.classList.toggle("scrolled", window.scrollY > 50);
+                });
+            }
+
+            // Toggle menu
+            window.toggleMenu = function() {
+                const navSection = document.getElementById("nav-section");
+                const button = document.querySelector('.menu-toggle');
+                const isExpanded = navSection.classList.toggle("active");
+                button.setAttribute('aria-expanded', isExpanded);
+                button.setAttribute('aria-label', isExpanded ? 'Закрыть меню' : 'Открыть меню');
+            };
+
+            // Toggle contacts
+            window.toggleContacts = function() {
+                const contacts = document.getElementById("contacts");
+                const button = document.getElementById("show-contacts-btn");
+                if (contacts.style.display === "none" || contacts.style.display === "") {
+                    contacts.style.display = "block";
+                    contacts.style.opacity = "0";
+                    contacts.style.transition = "opacity 0.5s ease-in-out";
+                    setTimeout(() => contacts.style.opacity = "1", 10);
+                    button.textContent = "СКРЫТЬ";
+                } else {
+                    contacts.style.opacity = "0";
+                    setTimeout(() => contacts.style.display = "none", 500);
+                    button.textContent = "ПОКАЗАТЬ";
+                }
+            };
+
+            // ESG Calculator
+            const ratingsData = {
+                solidcore: {
+                    ratings: [
+                        ["Sustainalytics", "8.5"],
+                        ["Refinitiv", "92"],
+                        ["MSCI", "AA"],
+                        ["RAEX Europe", "A+"],
+                        ["NRA ESG", "A1.esg"],
+                        ["Средняя согласованность рейтингов", "7.50"],
+                        ["Соответствие ЦУР №7", "Высокие показатели"],
+                        ["Соответствие ЦУР №5", "Средние показатели"],
+                        ["Историческая динамика RAEX Europe", "+5%"],
+                        ["Историческая динамика MSCI", "-3%"],
+                        ["ESG-профиль (E)", "Отличное управление выбросами CO2"],
+                        ["ESG-профиль (S)", "Программы поддержки местных сообществ"],
+                        ["ESG-профиль (G)", "Недостаточная прозрачность управления рисками"],
+                    ],
+                    recommendations: [
+                        { title: "Оригинальность", text: "Проект демонстрирует высокую степень уникальности." },
+                        { title: "Новизна", text: "Проект подтверждает свою патентную чистоту." },
+                        { title: "Проработанность", text: "Проект требует более детального описания целей." },
+                        { title: "Эффективность", text: "Проект обладает высокой потенциальной доходностью." },
+                        { title: "Ресурсное обеспечение", text: "Проект требует дополнительного анализа потребностей." },
+                        { title: "Коммерциализируемость", text: "Проект требует доработки бизнес-модели." },
+                    ],
+                },
+            };
+
+            window.toggleRatings = function() {
+                const result = document.getElementById("result");
+                const recommendations = document.getElementById("expert-recommendations");
+                const button = document.getElementById("ratings-button");
+                if (!result.classList.contains("active")) {
+                    loadRatings();
+                    result.classList.add("active");
+                    recommendations.classList.add("active");
+                    button.textContent = "СКРЫТЬ РЕЙТИНГИ";
+                } else {
+                    result.classList.remove("active");
+                    recommendations.classList.remove("active");
+                    button.textContent = "ЗАГРУЗИТЬ РЕЙТИНГИ";
+                }
+            };
+
+            function loadRatings() {
+                const company = document.getElementById("company").value;
+                const resultDiv = document.getElementById("result");
+                const recommendationsDiv = document.getElementById("expert-recommendations");
+                if (!ratingsData[company]) {
+                    resultDiv.innerHTML = "<p>Данные о компании не найдены.</p>";
+                    recommendationsDiv.innerHTML = "";
+                    return;
+                }
+                let tableHTML = `<table class="ratings-table"><thead><tr><th>Показатель</th><th>Оценка</th></tr></thead><tbody>`;
+                ratingsData[company].ratings.forEach((row) => {
+                    tableHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
+                });
+                tableHTML += `</tbody></table>`;
+                resultDiv.innerHTML = tableHTML;
+                let recommendationsHTML = `<h3 class="recommendation-title">Экспертные рекомендации</h3><div class="recommendation-grid">`;
+                ratingsData[company].recommendations.forEach((rec) => {
+                    recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
+                });
+                recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> Полный доступ — по запросу</button>`;
+                recommendationsDiv.innerHTML = recommendationsHTML;
+            }
+
+            window.downloadExcel = function() {
+                const company = document.getElementById("company").value;
+                const data = ratingsData[company];
+                if (!data) {
+                    alert("Данные о компании не найдены.");
+                    return;
+                }
+                let csvContent = "data:text/csv;charset=utf-8,Показатель,Оценка\n";
+                data.ratings.forEach((row) => {
+                    csvContent += `"${row[0]}","${row[1]}"\n`;
+                });
+                csvContent += "\nРекомендации\n";
+                data.recommendations.forEach((rec) => {
+                    csvContent += `"${rec.title}","${rec.text}"\n`;
+                });
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (!target) return;
+                    const headerHeight = document.getElementById('header')?.offsetHeight || 0;
+                    window.scrollTo({
+                        top: target.offsetTop - headerHeight - 20,
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    const navSection = document.getElementById('nav-section');
+                    if (navSection.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Contact form
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                if (!name || !email || !message) {
+                    showNotification('Пожалуйста, заполните все поля', 'error');
+                    return;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showNotification('Пожалуйста, введите корректный email', 'error');
+                    return;
+                }
+                setTimeout(() => {
+                    showNotification('Сообщение отправлено успешно!', 'success');
+                    this.reset();
+                }, 1000);
+            });
+
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.classList.add('show'), 100);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }, 4000);
+            }
+
+            // Particles.js
+            function initParticles() {
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { value: 80, density: { enable: true, value_area: 800 } },
+                            color: { value: '#d4af37' },
+                            shape: { type: 'circle' },
+                            opacity: { value: 0.5, random: false, anim: { enable: false } },
+                            size: { value: 3, random: true, anim: { enable: false } },
+                            line_linked: { enable: true, distance: 150, color: '#d4af37', opacity: 0.4, width: 1 },
+                            move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                        },
+                        interactivity: {
+                            detect_on: 'canvas',
+                            events: {
+                                onhover: { enable: true, mode: 'grab' },
+                                onclick: { enable: true, mode: 'push' },
+                                resize: true
+                            },
+                            modes: {
+                                grab: { distance: 140, line_linked: { opacity: 1 } },
+                                push: { particles_nb: 4 }
+                            }
+                        },
+                        retina_detect: true
+                    });
+                }
+            }
+
+            // Interactive logo
+            function initLogoInteractions() {
+                const logo = document.getElementById('main-logo');
+                if (logo) {
+                    document.addEventListener('mousemove', (e) => {
+                        const x = e.clientX / window.innerWidth;
+                        const y = e.clientY / window.innerHeight;
+                        const glowIntensity = 0.5 + (x + y) / 2 * 0.5;
+                        const glowSize = 20 + (x + y) / 2 * 40;
+                        logo.style.filter = `
+                            drop-shadow(0 0 ${glowSize}px rgba(212, 175, 55, ${glowIntensity}))
+                            drop-shadow(0 0 ${glowSize * 2}px rgba(212, 175, 55, ${glowIntensity * 0.7}))
+                            drop-shadow(0 0 ${glowSize * 3}px rgba(212, 175, 55, ${glowIntensity * 0.4}))
+                        `;
+                    });
+                }
+            }
+
+            // Custom cursor
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+                const interactiveElements = document.querySelectorAll('a, button, .nav-link, .read-more, .submit-btn');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                    el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+                });
+            }
+
+            // Обновление AOS при скролле для футера
+            function refreshAOS() {
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+            }
+
+            // === Инициализация ===
             initScrollSpy();
             initHeaderScroll();
             initParticles();
             initLogoInteractions();
+            
+            // Обновляем AOS после загрузки всех элементов
+            setTimeout(refreshAOS, 1000);
         });
     </script>
 </body>
