@@ -1842,20 +1842,25 @@
             background: var(--primary-light);
         }
 
-        .nav-link.active {
+       .nav-link {
+    font-family: ui-sans-serif, sans-serif;
+    font-weight: 400; /* Всегда обычный вес */
+    font-size: 16px;
+    line-height: 24px;
+    transition: all 0.3s ease; /* Плавный переход для всех свойств */
+    position: relative;
+}
+
+.nav-link.active {
     color: var(--primary);
-    font-weight: 600;
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.8),
+        0 0 20px rgba(212, 175, 55, 0.4);
+    animation: neonPulse 2s ease-in-out infinite alternate;
 }
 
 .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--primary);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    display: none; /* Скрываем подчеркивание */
 }
 
         /* ===== RESPONSIVE STYLES ===== */
@@ -1869,18 +1874,29 @@
             .premium-logo { max-width: 280px; width: 90%; }
             
             /* Header Mobile Styles */
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .logo-main {
-                font-size: 18px;
-                line-height: 24px;
-                margin-bottom: 0;
-                text-align: left;
-            }
+.header-content {
+    flex-direction: row;
+    justify-content: center; /* ← ЦЕНТРИРУЕМ */
+    align-items: center;
+    position: relative; /* ← ДОБАВЛЯЕМ */
+    padding: 0 50px; /* ← ДОБАВЛЯЕМ отступы для кнопки меню */
+}
+
+.logo-main {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 0;
+    text-align: center; /* ← ЦЕНТРИРУЕМ ТЕКСТ */
+    white-space: nowrap; /* ← ДОБАВЛЯЕМ чтобы текст не переносился */
+}
+
+.menu-toggle {
+    display: block;
+    position: absolute; /* ← ДОБАВЛЯЕМ абсолютное позиционирование */
+    left: 1.5rem; /* ← Позиционируем слева */
+    top: 50%;
+    transform: translateY(-50%);
+}
             
             .menu-toggle {
                 display: block;
@@ -2012,16 +2028,14 @@
 @keyframes neonPulse {
     0% {
         text-shadow: 
-            0 0 5px rgba(212, 175, 55, 0.5),
-            0 0 10px rgba(212, 175, 55, 0.3),
-            0 0 15px rgba(212, 175, 55, 0.2);
+            0 0 10px rgba(212, 175, 55, 0.8),
+            0 0 20px rgba(212, 175, 55, 0.4);
     }
     100% {
         text-shadow: 
-            0 0 10px rgba(212, 175, 55, 0.8),
-            0 0 20px rgba(212, 175, 55, 0.5),
-            0 0 30px rgba(212, 175, 55, 0.3),
-            0 0 40px rgba(212, 175, 55, 0.1);
+            0 0 15px rgba(212, 175, 55, 1),
+            0 0 30px rgba(212, 175, 55, 0.6),
+            0 0 45px rgba(212, 175, 55, 0.3);
     }
 }
 
@@ -2561,6 +2575,28 @@ body::after {
         inset 0 0 200px rgba(212, 175, 55, 0.03);
 }
 
+
+/* Анимации для цитаты */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Задержки для слов */
+.quote-word:nth-child(1) { animation-delay: 0.1s; }
+.quote-word:nth-child(2) { animation-delay: 0.2s; }
+.quote-word:nth-child(3) { animation-delay: 0.3s; }
+.quote-word:nth-child(4) { animation-delay: 0.4s; }
+.quote-word:nth-child(5) { animation-delay: 0.5s; }
+.quote-word:nth-child(6) { animation-delay: 0.6s; }
+.quote-word:nth-child(7) { animation-delay: 0.7s; }
+.quote-word:nth-child(8) { animation-delay: 0.8s; }
+.quote-word:nth-child(9) { animation-delay: 0.9s; }
+.quote-word:nth-child(10) { animation-delay: 1.0s; }
+.quote-word:nth-child(11) { animation-delay: 1.1s; }
+
     </style>
 </head>
 <body>
@@ -2627,9 +2663,22 @@ body::after {
             <div class="container">
                 <h2 class="section-title neon-glow-strong" data-aos="fade-up">О нас</h2>
                 <blockquote class="philosophy-quote" data-aos="fade-up" data-aos-delay="100">
-                    "Мы инвестируем не только капитал, но и время, знания и репутацию..."
-                    <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
-                </blockquote>
+    <div class="quote-content">
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="200">Мы</span>
+        <span class="quote-word highlight" data-aos="fade-up" data-aos-delay="250" data-tooltip="Финансовые вложения">инвестируем</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="300">не</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="350">только</span>
+        <span class="quote-word highlight" data-aos="fade-up" data-aos-delay="400" data-tooltip="Долгосрочные ресурсы">капитал</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="450">, но и</span>
+        <span class="quote-word highlight" data-aos="fade-up" data-aos-delay="500" data-tooltip="Годы опыта">время</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="550">,</span>
+        <span class="quote-word highlight" data-aos="fade-up" data-aos-delay="600" data-tooltip="Экспертиза команды">знания</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="650">и</span>
+        <span class="quote-word highlight" data-aos="fade-up" data-aos-delay="700" data-tooltip="Деловая репутация">репутацию</span>
+        <span class="quote-word" data-aos="fade-up" data-aos-delay="750">...</span>
+    </div>
+    <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
+</blockquote>
                 <div class="about-container">
                     <div class="about-card" data-aos="fade-up" data-aos-delay="150">
                         <div class="about-card-content">
@@ -3339,10 +3388,36 @@ function initScrollSpy() {
             initHeaderScroll();
             initParticles();
             initLogoInteractions();
-            
+            initQuoteEffects();
             // Обновляем AOS после загрузки всех элементов
             setTimeout(refreshAOS, 1000);
         });
+
+        // Добавьте эту функцию в ваш существующий скрипт
+function initQuoteEffects() {
+    const highlightWords = document.querySelectorAll('.quote-word.highlight');
+    
+    highlightWords.forEach(word => {
+        // Добавляем дополнительные эффекты при клике
+        word.addEventListener('click', function() {
+            this.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 500);
+        });
+        
+        // Парящий эффект при загрузке
+        setTimeout(() => {
+            word.style.transition = 'all 0.3s ease';
+        }, 2000);
+    });
+}
+
+// Вызовите функцию в DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+    // ... ваш существующий код ...
+    initQuoteEffects();
+});
     </script>
 </body>
 </html>
