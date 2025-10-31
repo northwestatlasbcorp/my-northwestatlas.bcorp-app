@@ -1218,6 +1218,53 @@
             background: rgba(var(--primary-rgb), 0.2);
             box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.4);
         }
+
+        /* ===== ИСПРАВЛЕНИЯ ДЛЯ АНАЛИТИКИ ===== */
+.analytics-badge i,
+.meta-item i,
+.analytics-icon-main i,
+.medium-link i {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    display: inline-block;
+    line-height: 1;
+}
+
+/* Специфично для брендовых иконок (Medium) */
+.medium-link i {
+    font-family: 'Font Awesome 6 Brands', sans-serif;
+    font-weight: 400;
+}
+
+/* Убедимся, что псевдоэлементы работают */
+.analytics-badge i::before,
+.meta-item i::before,
+.analytics-icon-main i::before,
+.medium-link i::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Исправляем размеры и выравнивание */
+.meta-item i {
+    width: 16px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.analytics-badge i {
+    font-size: 0.85rem;
+}
+
+.analytics-icon-main i {
+    font-size: 3rem;
+}
+
+.medium-link i {
+    font-size: 1.3rem;
+}
         
         /* Раздел "ESG Калькулятор" */
         #esg-calculator {
@@ -2831,5 +2878,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
