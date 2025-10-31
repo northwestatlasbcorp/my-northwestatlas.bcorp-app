@@ -2296,6 +2296,8 @@
                 <!-- Главная иконка -->
                 <div class="analytics-icon-main">
                     <i class="fas fa-chart-network"></i>
+                    <!-- Fallback текст -->
+                    <span style="display: none;">📊</span>
                 </div>
                 
                 <div class="analytics-content">
@@ -2316,11 +2318,11 @@
                     <div class="analytics-meta">
                         <div class="meta-item">
                             <i class="fas fa-user-edit"></i>
-                            <span>Shamil Ibragimov</span>
+                            <span class="author-name">Shamil Ibragimov</span>
                         </div>
                         <div class="meta-item">
                             <i class="fas fa-clock"></i>
-                            <span>15 мин чтения</span>
+                            <span class="reading-time">15 мин чтения</span>
                         </div>
                     </div>
                     
@@ -2785,7 +2787,49 @@
             // Гарантируем, что элементы остаются видимыми после анимации
             e.detail.style.visibility = 'visible';
         });
-    </script>
+ 
+// Диагностика Font Awesome
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, checking Font Awesome...');
+    
+    // Проверяем, загружен ли Font Awesome
+    const styleSheets = Array.from(document.styleSheets);
+    const hasFontAwesome = styleSheets.some(sheet => {
+        try {
+            return sheet.href && sheet.href.includes('font-awesome');
+        } catch (e) {
+            return false;
+        }
+    });
+    
+    console.log('Font Awesome loaded:', hasFontAwesome);
+    
+    // Проверяем отображение иконок
+    const icons = document.querySelectorAll('i.fas, i.fab, i.far, i.fal, i.fad');
+    console.log('Found icons:', icons.length);
+    
+    icons.forEach((icon, index) => {
+        const computedStyle = window.getComputedStyle(icon, '::before');
+        const content = computedStyle.content;
+        console.log(`Icon ${index}:`, {
+            element: icon,
+            classes: icon.className,
+            content: content,
+            fontFamily: computedStyle.fontFamily
+        });
+    });
+    
+    // Если Font Awesome не загружен, покажем fallback
+    if (!hasFontAwesome || icons.length === 0) {
+        console.log('Font Awesome not working, showing fallback icons');
+        document.querySelectorAll('.analytics-icon-main').forEach(iconContainer => {
+            const fallback = iconContainer.querySelector('span');
+            if (fallback) fallback.style.display = 'inline';
+        });
+    }
+});
+</script>
 </body>
 </html>
+
 
