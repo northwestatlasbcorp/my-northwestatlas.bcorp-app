@@ -1406,6 +1406,42 @@
             text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
         }
 
+        /* Стили для правовой информации */
+        .legal-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .legal-info h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .legal-content {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-rgb), 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content p {
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--foreground-secondary);
+        }
+
+        .legal-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .legal-content strong {
+            color: var(--primary);
+        }
+
         .license-info {
             text-align: center;
             margin-top: 2rem;
@@ -1554,6 +1590,11 @@
 
             #feedback {
                 padding-bottom: 4rem;
+            }
+
+            /* Адаптивность для правовой информации */
+            .legal-content {
+                padding: 1rem;
             }
         }
 
@@ -2075,10 +2116,25 @@
                 </div>
             </div>
 
-            <!-- License Information -->
-            <div class="license-info" data-aos="fade-up" data-aos-delay="300">
-                <p>✓ PROFESSIONAL LICENSE</p>
-                <p>Government of Sharjah, UAE | License #786048 | Registration #197626</p>
+            <!-- Правовая информация -->
+            <div class="legal-section" data-aos="fade-up" data-aos-delay="300">
+                <div class="legal-info">
+                    <h4>Правовая информация</h4>
+                    <div class="legal-content">
+                        <p><strong>North West Atlas B Corp</strong> — международная компания, осуществляющая деятельность через сеть зарегистрированных подразделений и партнёрских структур.</p>
+                        
+                        <p>Обозначение <strong>«B Corp»</strong> используется в соответствии с принципами международного стандарта B Lab и отражает приверженность компании высоким требованиям социальной и экологической ответственности. В настоящее время компания проходит процедуру верификации соответствия указанным стандартам.</p>
+                        
+                        <p>Упоминания государственных и корпоративных институтов (<strong>ВЭБ.РФ, РЭЦ, ЭКСАР</strong> и иных) относятся исключительно к использованию их публично доступных программ, инициатив и инструментов поддержки и не подразумевают наличия формальных партнёрских, агентских или иных юридических отношений.</p>
+                        
+                        <p>Вся информация, представленная на настоящем сайте, носит аналитический и ознакомительный характер и не является публичной офертой в смысле статьи 437 Гражданского кодекса Российской Федерации.</p>
+                    </div>
+                </div>
+                
+                <div class="license-info">
+                    <p>✓ PROFESSIONAL LICENSE</p>
+                    <p>Government of Sharjah, UAE | License #786048 | Registration #197626</p>
+                </div>
             </div>
 
             <div class="footer-bottom">
@@ -2362,5 +2418,3 @@
     </script>
 </body>
 </html>
-
-
