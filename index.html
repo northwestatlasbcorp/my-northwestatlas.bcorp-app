@@ -227,7 +227,7 @@
             gap: 0.5rem;
         }
 
-        .language-switcher a {
+        .lang-btn {
             background: transparent;
             border: 1px solid rgba(212, 175, 55, 0.3);
             color: var(--foreground-secondary);
@@ -236,17 +236,15 @@
             cursor: pointer;
             transition: var(--transition);
             font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .language-switcher a.active {
+        .lang-btn.active {
             background: rgba(212, 175, 55, 0.1);
             color: var(--primary);
             border-color: var(--primary);
         }
 
-        .language-switcher a:hover {
+        .lang-btn:hover {
             background: rgba(212, 175, 55, 0.1);
             color: var(--primary);
         }
@@ -914,319 +912,319 @@
         }
 
         /* ===== ANALYTICS SECTION ===== */
-        #analytics {
-            background: rgba(0, 0, 0, 0.4);
-        }
+#analytics {
+    background: rgba(0, 0, 0, 0.4);
+}
 
-        .analytics-container {
-            max-width: 800px;
-            margin: 0 auto 3rem;
-        }
+.analytics-container {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
 
-        .analytics-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 3rem;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-        }
+.analytics-card {
+    background: var(--card-glass);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 3rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
 
-        .analytics-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                transparent 0%,
-                rgba(var(--primary-rgb), 0.5) 25%,
-                rgba(var(--primary-rgb), 0.2) 50%,
-                rgba(var(--primary-rgb), 0.5) 75%,
-                transparent 100%);
-            background-size: 200% 200%;
-            border-radius: 22px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            animation: borderFlow 3s linear infinite;
-        }
+.analytics-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        transparent 0%,
+        rgba(var(--primary-rgb), 0.5) 25%,
+        rgba(var(--primary-rgb), 0.2) 50%,
+        rgba(var(--primary-rgb), 0.5) 75%,
+        transparent 100%);
+    background-size: 200% 200%;
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: borderFlow 3s linear infinite;
+}
 
-        .analytics-card:hover::before {
-            opacity: 1;
-        }
+.analytics-card:hover::before {
+    opacity: 1;
+}
 
-        .analytics-card:hover {
-            transform: translateY(-8px);
-            background: var(--card-glass-hover);
-            border-color: rgba(var(--primary-rgb), 0.3);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(var(--primary-rgb), 0.2),
-                0 0 40px rgba(var(--primary-rgb), 0.5);
-        }
+.analytics-card:hover {
+    transform: translateY(-8px);
+    background: var(--card-glass-hover);
+    border-color: rgba(var(--primary-rgb), 0.3);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-rgb), 0.2),
+        0 0 40px rgba(var(--primary-rgb), 0.5);
+}
 
-        .analytics-card::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
-            mix-blend-mode: overlay;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.6;
-        }
+.analytics-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+}
 
-        .analytics-content {
-            position: relative;
-            z-index: 2;
-            margin-bottom: 2rem;
-        }
+.analytics-content {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2rem;
+}
 
-        /* Главная иконка аналитики - ИСПРАВЛЕННАЯ */
-        .analytics-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            transition: var(--transition);
-        }
+/* Главная иконка аналитики - ИСПРАВЛЕННАЯ */
+.analytics-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: var(--transition);
+}
 
-        .analytics-icon i {
-            font-size: 2rem;
-            color: var(--primary);
-            transition: var(--transition);
-        }
+.analytics-icon i {
+    font-size: 2rem;
+    color: var(--primary);
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .analytics-icon {
-            transform: scale(1.15) rotate(8deg);
-            background: rgba(212, 175, 55, 0.2);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
+.analytics-card:hover .analytics-icon {
+    transform: scale(1.15) rotate(8deg);
+    background: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
 
-        .analytics-card:hover .analytics-icon i {
-            transform: scale(1.1);
-        }
+.analytics-card:hover .analytics-icon i {
+    transform: scale(1.1);
+}
 
-        .analytics-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(var(--primary-rgb), 0.1);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            border: 1px solid rgba(var(--primary-rgb), 0.3);
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
+.analytics-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .analytics-badge {
-            background: rgba(var(--primary-rgb), 0.2);
-            transform: translateY(-2px);
-        }
+.analytics-card:hover .analytics-badge {
+    background: rgba(var(--primary-rgb), 0.2);
+    transform: translateY(-2px);
+}
 
-        .analytics-title {
-            font-family: var(--font-secondary);
-            font-size: 1.8rem;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-            color: var(--foreground);
-            text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
-            transition: var(--transition);
-        }
+.analytics-title {
+    font-family: var(--font-secondary);
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    color: var(--foreground);
+    text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .analytics-title {
-            color: var(--primary);
-            text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.5);
-        }
+.analytics-card:hover .analytics-title {
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.5);
+}
 
-        .analytics-excerpt {
-            color: var(--foreground-secondary);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
+.analytics-excerpt {
+    color: var(--foreground-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .analytics-excerpt {
-            color: var(--foreground);
-        }
+.analytics-card:hover .analytics-excerpt {
+    color: var(--foreground);
+}
 
-        .analytics-meta {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
+.analytics-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--foreground-secondary);
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--foreground-secondary);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .meta-item {
-            color: var(--foreground);
-        }
+.analytics-card:hover .meta-item {
+    color: var(--foreground);
+}
 
-        .meta-item i {
-            color: var(--primary);
-            font-size: 0.9rem;
-            width: 16px;
-            text-align: center;
-        }
+.meta-item i {
+    color: var(--primary);
+    font-size: 0.9rem;
+    width: 16px;
+    text-align: center;
+}
 
-        .analytics-tags {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
+.analytics-tags {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
 
-        .tag {
-            background: rgba(var(--primary-rgb), 0.1);
-            color: var(--primary);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(var(--primary-rgb), 0.2);
-            transition: var(--transition);
-        }
+.tag {
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    transition: var(--transition);
+}
 
-        .analytics-card:hover .tag {
-            background: rgba(var(--primary-rgb), 0.2);
-            transform: translateY(-2px);
-        }
+.analytics-card:hover .tag {
+    background: rgba(var(--primary-rgb), 0.2);
+    transform: translateY(-2px);
+}
 
-        .analytics-cta {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
+.analytics-cta {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
 
-        .medium-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.2));
-            color: var(--primary);
-            text-decoration: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            border: 1px solid rgba(var(--primary-rgb), 0.3);
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
+.medium-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.2));
+    color: var(--primary);
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: 1px solid rgba(var(--primary-rgb), 0.3);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
 
-        .medium-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(var(--primary-rgb), 0.2), transparent);
-            transition: left 0.6s ease;
-        }
+.medium-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(var(--primary-rgb), 0.2), transparent);
+    transition: left 0.6s ease;
+}
 
-        .medium-link:hover::before {
-            left: 100%;
-        }
+.medium-link:hover::before {
+    left: 100%;
+}
 
-        .medium-link:hover {
-            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.3));
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.3),
-                0 0 20px rgba(var(--primary-rgb), 0.4);
-        }
+.medium-link:hover {
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.3));
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(var(--primary-rgb), 0.4);
+}
 
-        .medium-link i {
-            font-size: 1.3rem;
-            transition: var(--transition);
-        }
+.medium-link i {
+    font-size: 1.3rem;
+    transition: var(--transition);
+}
 
-        .medium-link:hover i {
-            transform: scale(1.2);
-        }
+.medium-link:hover i {
+    transform: scale(1.2);
+}
 
-        .analytics-footer {
-            text-align: center;
-            color: var(--foreground-secondary);
-            font-size: 1rem;
-        }
+.analytics-footer {
+    text-align: center;
+    color: var(--foreground-secondary);
+    font-size: 1rem;
+}
 
-        .inline-link {
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
-        }
+.inline-link {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+    text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+}
 
-        .inline-link:hover {
-            text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
-        }
+.inline-link:hover {
+    text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+}
 
-        /* Адаптивность для аналитики */
-        @media (max-width: 768px) {
-            .analytics-card {
-                padding: 2rem 1.5rem;
-            }
-            
-            .analytics-title {
-                font-size: 1.5rem;
-            }
-            
-            .analytics-excerpt {
-                font-size: 1rem;
-            }
-            
-            .analytics-meta {
-                gap: 1rem;
-            }
-            
-            .medium-link {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-        }
+/* Адаптивность для аналитики */
+@media (max-width: 768px) {
+    .analytics-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .analytics-title {
+        font-size: 1.5rem;
+    }
+    
+    .analytics-excerpt {
+        font-size: 1rem;
+    }
+    
+    .analytics-meta {
+        gap: 1rem;
+    }
+    
+    .medium-link {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
 
-        @media (max-width: 576px) {
-            .analytics-card {
-                padding: 1.5rem 1rem;
-            }
-            
-            .analytics-title {
-                font-size: 1.3rem;
-            }
-            
-            .analytics-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
+@media (max-width: 576px) {
+    .analytics-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .analytics-title {
+        font-size: 1.3rem;
+    }
+    
+    .analytics-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
         
         /* Раздел "ESG Калькулятор" */
         #esg-calculator {
@@ -1819,6 +1817,11 @@
                 gap: 0.5rem;
             }
 
+            .lang-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
             #nav-menu {
                 position: fixed;
                 top: 70px;
@@ -2021,8 +2024,8 @@
 
             <div class="nav-right">
                 <div class="language-switcher">
-                    <a href="index-ru.html" class="active">RU</a>
-                    <a href="index-en.html">EN</a>
+                    <button class="lang-btn active">RU</button>
+                    <button class="lang-btn">EN</button>
                 </div>
                 <div class="menu-toggle" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
@@ -2291,65 +2294,65 @@
         </section>
 
         <!-- Раздел "Аналитика" -->
-        <section id="analytics" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Аналитика</h2>
+<section id="analytics" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Аналитика</h2>
+        
+        <div class="analytics-container" data-aos="fade-up" data-aos-delay="100">
+            <div class="analytics-card">
+                <!-- Главная иконка РАЗДЕЛА - аналитика данных -->
+                <div class="analytics-icon">
+                   <i class="fas fa-brain"></i>
+                </div>
                 
-                <div class="analytics-container" data-aos="fade-up" data-aos-delay="100">
-                    <div class="analytics-card">
-                        <!-- Главная иконка РАЗДЕЛА - аналитика данных -->
-                        <div class="analytics-icon">
-                           <i class="fas fa-brain"></i>
+                <!-- Контент КОНКРЕТНОЙ статьи -->
+                <div class="analytics-content">
+                    <div class="analytics-badge">
+                        <i class="fas fa-chart-bar"></i><!-- А здесь иконка статьи -->
+                        <span>Экспертная статья</span>
+                    </div>
+                    
+                    <h3 class="analytics-title">
+                        Скрытые риски стартапов: почему иллюзии стоят дороже
+                    </h3>
+                    
+                    <p class="analytics-excerpt">
+                        Глубокий анализ неочевидных рисков инвестирования в стартапы и стратегии их минимизации. 
+                        Как отличить перспективный проект от иллюзии и сделать осознанные инвестиции вашим стратегическим активом.
+                    </p>
+                    
+                    <div class="analytics-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-user-edit"></i>
+                            <span class="author-name">Shamil Ibragimov</span>
                         </div>
-                        
-                        <!-- Контент КОНКРЕТНОЙ статьи -->
-                        <div class="analytics-content">
-                            <div class="analytics-badge">
-                                <i class="fas fa-chart-bar"></i><!-- А здесь иконка статьи -->
-                                <span>Экспертная статья</span>
-                            </div>
-                            
-                            <h3 class="analytics-title">
-                                Скрытые риски стартапов: почему иллюзии стоят дороже
-                            </h3>
-                            
-                            <p class="analytics-excerpt">
-                                Глубокий анализ неочевидных рисков инвестирования в стартапы и стратегии их минимизации. 
-                                Как отличить перспективный проект от иллюзии и сделать осознанные инвестиции вашим стратегическим активом.
-                            </p>
-                            
-                            <div class="analytics-meta">
-                                <div class="meta-item">
-                                    <i class="fas fa-user-edit"></i>
-                                    <span class="author-name">Shamil Ibragimov</span>
-                                </div>
-                                <div class="meta-item">
-                                    <i class="fas fa-clock"></i>
-                                    <span class="reading-time">15 мин чтения</span>
-                                </div>
-                            </div>
-                            
-                            <div class="analytics-tags">
-                                <span class="tag">#Инвестиции</span>
-                                <span class="tag">#Стартапы</span>
-                                <span class="tag">#Аналитика</span>
-                                <span class="tag">#Риски</span>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-cta">
-                            <a href="https://medium.com/@ceo.northwestatlas.bcorp/аналитика-nwa-b-corp-скрытые-риски-стартапов-осознанные-инвестиции-как-стратегический-актив-17dfdf110b83" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="medium-link">
-                                <span>Читать на Medium</span>
-                                <i class="fab fa-medium"></i>
-                            </a>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="reading-time">15 мин чтения</span>
                         </div>
                     </div>
+                    
+                    <div class="analytics-tags">
+                        <span class="tag">#Инвестиции</span>
+                        <span class="tag">#Стартапы</span>
+                        <span class="tag">#Аналитика</span>
+                        <span class="tag">#Риски</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-cta">
+                    <a href="https://medium.com/@ceo.northwestatlas.bcorp/аналитика-nwa-b-corp-скрытые-риски-стартапов-осознанные-инвестиции-как-стратегический-актив-17dfdf110b83" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="medium-link">
+                        <span>Читать на Medium</span>
+                        <i class="fab fa-medium"></i>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <!-- Раздел "ESG Калькулятор" -->
         <section id="esg-calculator" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
@@ -2602,6 +2605,14 @@
             menu.classList.toggle("active");
         }
 
+        // Переключение языка
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
         // Функция для переключения контактов
         function toggleContacts() {
             const contacts = document.getElementById("contacts");
@@ -2782,6 +2793,47 @@
             // Гарантируем, что элементы остаются видимыми после анимации
             e.detail.style.visibility = 'visible';
         });
-    </script>
+ 
+// Диагностика Font Awesome
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, checking Font Awesome...');
+    
+    // Проверяем, загружен ли Font Awesome
+    const styleSheets = Array.from(document.styleSheets);
+    const hasFontAwesome = styleSheets.some(sheet => {
+        try {
+            return sheet.href && sheet.href.includes('font-awesome');
+        } catch (e) {
+            return false;
+        }
+    });
+    
+    console.log('Font Awesome loaded:', hasFontAwesome);
+    
+    // Проверяем отображение иконок
+    const icons = document.querySelectorAll('i.fas, i.fab, i.far, i.fal, i.fad');
+    console.log('Found icons:', icons.length);
+    
+    icons.forEach((icon, index) => {
+        const computedStyle = window.getComputedStyle(icon, '::before');
+        const content = computedStyle.content;
+        console.log(`Icon ${index}:`, {
+            element: icon,
+            classes: icon.className,
+            content: content,
+            fontFamily: computedStyle.fontFamily
+        });
+    });
+    
+    // Если Font Awesome не загружен, покажем fallback
+    if (!hasFontAwesome || icons.length === 0) {
+        console.log('Font Awesome not working, showing fallback icons');
+        document.querySelectorAll('.analytics-icon-main').forEach(iconContainer => {
+            const fallback = iconContainer.querySelector('span');
+            if (fallback) fallback.style.display = 'inline';
+        });
+    }
+});
+</script>
 </body>
 </html>
