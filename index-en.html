@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="North West Atlas B Corp — company creating elite solutions for the global future. Investments in technology, sustainable development and social responsibility.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://northwestatlas.com/" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#d4af37">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="North West Atlas B Corp">
+    <meta property="og:title" content="North West Atlas B Corp — Investing in the Future">
+    <meta property="og:description" content="Creating the future, not following it. Investments, ESG consulting, strategic planning.">
+    <meta property="og:image" content="https://northwestatlas.com/logo-nwa-centered.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="https://northwestatlas.com">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="North West Atlas B Corp — Investing in the Future">
+    <meta name="twitter:description" content="Creating the future, not following it. Investments, ESG consulting, strategic planning.">
+    <meta name="twitter:image" content="https://northwestatlas.com/logo-nwa-centered.png">
+
+    <title>North West Atlas B Corp</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <style>
+        :root {
+            --primary: #d4af37;
+            --primary-rgb: 212, 175, 55;
+            --secondary-gold: #e8c96a;
+            --background: #0A0A0F;
+            --background-secondary: #1a1a1a;
+            --foreground: #ffffff;
+            --foreground-secondary: rgba(255, 255, 255, 0.8);
+            --border: rgba(212, 175, 55, 0.2);
+            --radius: 0.5rem;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-primary: 'Inter', sans-serif;
+            --font-secondary: 'Playfair Display', serif;
+            --card-glass: rgba(255, 255, 255, 0.08);
+            --card-glass-hover: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--foreground);
+            background: var(--background);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            line-height: 1.75;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            overscroll-behavior-y: none;
+        }
+
+        main {
+            flex: 1 0 auto;
+            width: 100%;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .font-playfair {
+            font-family: var(--font-secondary);
+        }
+
+        .text-gold {
+            color: var(--primary);
+        }
+
+        .text-gold-bold {
+            color: var(--primary);
+            font-weight: 400;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.5);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.6s ease;
+        }
+
+        /* Video Background */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -3;
+        }
+
+        .video-background {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(26, 26, 55, 0.8));
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
+            transition: var(--transition);
+            padding: 0.5rem 0;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .logo {
+            flex: 0 0 auto;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+        }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 2rem;
+        }
+
+        .nav-right {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--foreground-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .lang-btn.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .lang-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        #nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--foreground);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+            white-space: nowrap;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+            box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Main Section */
+        #home {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-nwa-centered {
+            max-width: 500px;
+            width: 80%;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5))
+                    drop-shadow(0 0 40px rgba(212, 175, 55, 0.3))
+                    drop-shadow(0 0 60px rgba(212, 175, 55, 0.1));
+            transition: filter 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .site-title {
+            font-family: var(--font-secondary);
+            font-weight: 400;
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1.2;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(var(--primary-rgb), 0.6);
+            opacity: 0;
+            animation: fadeInTitle 2s ease forwards;
+            position: relative;
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .site-title::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 5rem;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            z-index: 1;
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            padding: 8rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.4);
+            letter-spacing: -0.02em;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4rem;
+            height: 3px;
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .philosophy-quote {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .philosophy-quote::before,
+        .philosophy-quote::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .philosophy-quote::before {
+            top: 0;
+            left: 0;
+        }
+
+        .philosophy-quote::after {
+            bottom: -2rem;
+            right: 0;
+        }
+
+        .philosophy-quote cite {
+            display: block;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            font-style: normal;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 0%,
+                rgba(var(--primary-rgb), 0.5) 25%,
+                rgba(var(--primary-rgb), 0.2) 50%,
+                rgba(var(--primary-rgb), 0.5) 75%,
+                transparent 100%);
+            background-size: 200% 200%;
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .about-card:hover::before {
+            opacity: 1;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            background: var(--card-glass-hover);
+            border-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(var(--primary-rgb), 0.2),
+                0 0 40px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .about-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .about-card-content {
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .about-card-front {
+            transition: all 0.4s ease;
+        }
+
+        .about-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-align: center;
+        }
+
+        .about-card:hover .about-card-front {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .about-card:hover .about-card-back {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+
+        .about-card p {
+            color: var(--foreground-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .principles-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .principles-list li {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+            color: var(--foreground-secondary);
+            text-align: center;
+        }
+
+        .gold-bullet {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        @keyframes borderFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ===== EXPERTISE SECTION ===== */
+        #expertise {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .expertise-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .expertise-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 0%,
+                rgba(var(--primary-rgb), 0.5) 25%,
+                rgba(var(--primary-rgb), 0.2) 50%,
+                rgba(var(--primary-rgb), 0.5) 75%,
+                transparent 100%);
+            background-size: 200% 200%;
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .expertise-card:hover::before {
+            opacity: 1;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-8px);
+            background: var(--card-glass-hover);
+            border-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(var(--primary-rgb), 0.2),
+                0 0 40px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .expertise-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .expertise-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: var(--transition);
+        }
+
+        .expertise-card:hover .expertise-icon {
+            transform: scale(1.15) rotate(8deg);
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .expertise-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .expertise-card:hover .expertise-icon i {
+            transform: scale(1.1);
+        }
+
+        .expertise-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .expertise-card:hover h3 {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .expertise-card p {
+            color: var(--foreground-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            transition: var(--transition);
+        }
+
+        .expertise-card:hover p {
+            color: var(--foreground);
+        }
+
+        .expertise-hover-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 0 0 16px 16px;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .expertise-card:hover .expertise-hover-content {
+            transform: translateY(0);
+        }
+
+        .expertise-hover-content h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .expertise-hover-content p {
+            color: var(--foreground-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Partners Section */
+        #partners {
+            background: rgba(0, 0, 0, 0.3);
+            background-image: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), transparent);
+        }
+
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partners-marquee {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .partners-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .partner-card {
+            flex: 0 0 250px;
+            margin: 0 20px;
+            background: var(--foreground);
+            border-radius: 10px;
+            padding: 1.5rem;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .partner-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-rgb), 0.5);
+            transform: translateY(-5px);
+            border: 1px solid var(--primary);
+        }
+
+        .partner-card img {
+            max-width: 100%;
+            max-height: 100px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .partner-card:hover img {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        /* Investment Focus Section */
+        #investment-focus {
+            background-image: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), transparent);
+        }
+
+        .investment-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .investment-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 10px;
+            padding: 2rem 1rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .investment-block:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-rgb), 0.4);
+            background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.1), rgba(0, 0, 0, 0.5));
+        }
+
+        .investment-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(var(--primary-rgb), 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .investment-icon i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .investment-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        /* Methodology Section */
+        #methodology {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .methodology-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .methodology-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .methodology-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-rgb), 0.4);
+            border-color: var(--primary);
+            background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.1), rgba(0, 0, 0, 0.5));
+        }
+
+        .methodology-card .icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+
+        .methodology-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .methodology-card p {
+            line-height: 1.6;
+            color: var(--foreground-secondary);
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+        }
+
+        /* ===== ANALYTICS SECTION ===== */
+        #analytics {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .analytics-container {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .analytics-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 0%,
+                rgba(var(--primary-rgb), 0.5) 25%,
+                rgba(var(--primary-rgb), 0.2) 50%,
+                rgba(var(--primary-rgb), 0.5) 75%,
+                transparent 100%);
+            background-size: 200% 200%;
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .analytics-card:hover::before {
+            opacity: 1;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-8px);
+            background: var(--card-glass-hover);
+            border-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(var(--primary-rgb), 0.2),
+                0 0 40px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .analytics-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .analytics-content {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2rem;
+        }
+
+        /* Analytics icon - FIXED */
+        .analytics-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: var(--transition);
+        }
+
+        .analytics-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .analytics-icon {
+            transform: scale(1.15) rotate(8deg);
+            background: rgba(212, 175, 55, 0.2);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .analytics-card:hover .analytics-icon i {
+            transform: scale(1.1);
+        }
+
+        .analytics-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .analytics-badge {
+            background: rgba(var(--primary-rgb), 0.2);
+            transform: translateY(-2px);
+        }
+
+        .analytics-title {
+            font-family: var(--font-secondary);
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            color: var(--foreground);
+            text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .analytics-title {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .analytics-excerpt {
+            color: var(--foreground-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .analytics-excerpt {
+            color: var(--foreground);
+        }
+
+        .analytics-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--foreground-secondary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .meta-item {
+            color: var(--foreground);
+        }
+
+        .meta-item i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .analytics-tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            transition: var(--transition);
+        }
+
+        .analytics-card:hover .tag {
+            background: rgba(var(--primary-rgb), 0.2);
+            transform: translateY(-2px);
+        }
+
+        .analytics-cta {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .medium-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.2));
+            color: var(--primary);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .medium-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(var(--primary-rgb), 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .medium-link:hover::before {
+            left: 100%;
+        }
+
+        .medium-link:hover {
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.3));
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .medium-link i {
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .medium-link:hover i {
+            transform: scale(1.2);
+        }
+
+        .analytics-footer {
+            text-align: center;
+            color: var(--foreground-secondary);
+            font-size: 1rem;
+        }
+
+        .inline-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .inline-link:hover {
+            text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.5);
+        }
+
+        /* Responsive for analytics */
+        @media (max-width: 768px) {
+            .analytics-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .analytics-title {
+                font-size: 1.5rem;
+            }
+            
+            .analytics-excerpt {
+                font-size: 1rem;
+            }
+            
+            .analytics-meta {
+                gap: 1rem;
+            }
+            
+            .medium-link {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .analytics-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .analytics-title {
+                font-size: 1.3rem;
+            }
+            
+            .analytics-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* ESG Calculator Section */
+        #esg-calculator {
+            background: rgba(0, 0, 0, 0.4);
+            background-image: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), transparent);
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--primary-rgb), 0.2);
+            cursor: help;
+            position: relative;
+        }
+
+        .calculator-form {
+            margin-bottom: 2rem;
+        }
+
+        .calculator-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            text-align: left;
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .calculator-form select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            border-radius: 5px;
+            color: var(--foreground);
+            font-size: 1rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 5px rgba(var(--primary-rgb), 0.2);
+        }
+
+        #ratings-button {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #ratings-button:hover {
+            background: linear-gradient(to right, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.3));
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+            transform: translateY(-2px);
+        }
+
+        .ratings-result {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .ratings-result.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .ratings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .ratings-table th,
+        .ratings-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
+        }
+
+        .ratings-table th {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .recommendations-container {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .recommendations-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .recommendation-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .recommendation-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 5px;
+            padding: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .recommendation-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(var(--primary-rgb), 0.3);
+            background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), rgba(0, 0, 0, 0.3));
+        }
+
+        .recommendation-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.5rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .download-button:hover {
+            background: linear-gradient(to right, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.3));
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+            transform: translateY(-2px);
+        }
+
+        .download-button i {
+            margin-right: 0.5rem;
+        }
+
+        /* Feedback Section */
+        #feedback {
+            background-image: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), transparent);
+            padding-bottom: 6rem;
+        }
+
+        .feedback-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        #show-contacts-btn {
+            padding: 1rem 2rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+        }
+
+        #show-contacts-btn:hover {
+            background: linear-gradient(to right, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.3));
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Contacts section styles */
+        .contacts-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .contacts-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .contacts-section.active .contacts-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-card-1,
+        .contact-card-2,
+        .contact-card-3,
+        .contact-form-animated {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        /* Animation classes */
+        .contacts-section.active .contact-card-1 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+        .contacts-section.active .contact-card-2 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        .contacts-section.active .contact-card-3 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.5s;
+        }
+
+        .contacts-section.active .contact-form-animated {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.7s;
+        }
+
+        #contacts {
+            display: none;
+            margin-top: 2rem;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #contacts.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(var(--primary-rgb), 0.3);
+            background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05), rgba(0, 0, 0, 0.5));
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(var(--primary-rgb), 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .contact-icon span {
+            color: var(--primary);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-info h4 {
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .contact-info a {
+            color: var(--foreground-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .contact-info a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .contact-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .contact-form-container h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            border-radius: 5px;
+            color: var(--foreground);
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 5px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.3));
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn i {
+            margin-left: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 1px solid rgba(var(--primary-rgb), 0.2);
+            padding-top: 4rem;
+            padding-bottom: 1rem;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-top-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5),
+                        0 0 20px rgba(212, 175, 55, 0.3);
+            animation: borderGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.5),
+                            0 0 20px rgba(212, 175, 55, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.7),
+                            0 0 30px rgba(212, 175, 55, 0.5);
+            }
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .footer-column p {
+            color: var(--foreground-secondary);
+            line-height: 1.6;
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .footer-column ul li i {
+            font-size: 16px;
+            color: var(--primary);
+            margin-right: 10px;
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .footer-column ul li span {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--foreground-secondary);
+        }
+
+        .footer-column ul li a {
+            color: var(--foreground-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        /* Legal information styles */
+        .legal-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .legal-info h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .legal-content {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-rgb), 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content p {
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--foreground-secondary);
+        }
+
+        .legal-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .legal-content strong {
+            color: var(--primary);
+        }
+
+        .license-info {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .license-info p {
+            color: var(--foreground-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .license-info p:first-child {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(var(--primary-rgb), 0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: var(--foreground-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Media queries */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .site-title {
+                font-size: 3rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 0.5rem;
+            }
+
+            .lang-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            #nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1.5rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+
+            #nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 0.8rem 0;
+            }
+
+            .site-title {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem 5rem;
+            }
+
+            .partners-track {
+                animation: marquee 20s linear infinite;
+            }
+
+            .partner-card {
+                flex: 0 0 200px;
+            }
+
+            /* Mobile optimization for contacts */
+            .contacts-section {
+                margin-top: 1.5rem;
+            }
+            
+            .contacts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+            
+            /* Speed up animations on mobile */
+            .contacts-content,
+            .contact-card-1,
+            .contact-card-2,
+            .contact-card-3,
+            .contact-form-animated {
+                transition-duration: 0.4s;
+            }
+            
+            .contacts-section.active .contact-card-1 {
+                transition-delay: 0.05s;
+            }
+            
+            .contacts-section.active .contact-card-2 {
+                transition-delay: 0.15s;
+            }
+            
+            .contacts-section.active .contact-card-3 {
+                transition-delay: 0.25s;
+            }
+            
+            .contacts-section.active .contact-form-animated {
+                transition-delay: 0.35s;
+            }
+
+            #feedback {
+                padding-bottom: 4rem;
+            }
+
+            /* Responsiveness for legal information */
+            .legal-content {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .site-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .expertise-card,
+            .about-card,
+            .investment-block {
+                padding: 1.5rem 1rem;
+            }
+
+            .expertise-icon,
+            .investment-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .expertise-icon i,
+            .investment-icon i {
+                font-size: 1.5rem;
+            }
+
+            .partners-track {
+                animation: marquee 15s linear infinite;
+            }
+
+            .partner-card {
+                flex: 0 0 150px;
+                margin: 0 10px;
+                padding: 1rem;
+                height: 120px;
+            }
+
+            .partner-card img {
+                max-height: 80px;
+            }
+
+            section {
+                padding: 3rem 1rem 4rem;
+            }
+            
+            #feedback {
+                padding-bottom: 3rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #be8f15;
+            border-radius: 5px;
+            border: 2px solid rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop class="video-background">
+            <source src="northwestatlasbcorp.mp4" type="video/mp4">
+            <source src="northwestatlasbcorp.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav class="container">
+            <div class="logo">
+                <a href="#home">
+                    <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" class="logo-header">
+                </a>
+            </div>
+            
+            <div class="nav-center">
+                <ul id="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#expertise" class="nav-link">Expertise</a></li>
+                    <li><a href="#partners" class="nav-link">Ecosystem</a></li>
+                    <li><a href="#investment-focus" class="nav-link">Investment Focus</a></li>
+                    <li><a href="#methodology" class="nav-link">Methodology</a></li>
+                    <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                    <li><a href="#esg-calculator" class="nav-link">ESG Calculator</a></li>
+                    <li><a href="#feedback" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
+                    <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                </div>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="h-screen flex items-center justify-center text-center">
+            <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" class="logo-nwa-centered" data-aos="fade-up" data-aos-duration="1500">
+            <h1 class="site-title" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">
+                <blockquote class="philosophy-quote" data-aos="fade-up" data-aos-delay="100">
+                    "We invest not only capital, but also time, knowledge and reputation..."
+                    <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
+                </blockquote>
+            </h1>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6 bg-black/30">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">About Us</h2>
+                
+                <div class="about-container">
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="about-card-front">
+                            <h3 class="text-gold">Our Mission</h3>
+                            <p>Shaping the global future.</p>
+                        </div>
+                        <div class="about-card-back">
+                            <p>We strive to create a solid foundation for the future of Russia and the world through responsible investments in scientific breakthroughs and innovative solutions.</p>
+                        </div>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="about-card-front">
+                            <h3 class="text-gold">Our Goals</h3>
+                            <p>Creating a legacy for the future.</p>
+                        </div>
+                        <div class="about-card-back">
+                            <p>Supporting promising projects that are preparing to enter the market in the coming years. We invest in world-changing technologies and help scientists and inventors bring their ideas to life.</p>
+                        </div>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="about-card-front">
+                            <h3 class="text-gold">Our Principles</h3>
+                            <p>Strategic thinking.</p>
+                        </div>
+                        <div class="about-card-back">
+                            <ul class="principles-list">
+                                <li><span class="gold-bullet">•</span> Transparency: All our deals are based on clear understanding and trust.</li>
+                                <li><span class="gold-bullet">•</span> Expertise: Our team consists of professionals in science, law and patenting.</li>
+                                <li><span class="gold-bullet">•</span> Long-term thinking: We focus on strategic projects with high growth potential.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="about-card-front">
+                            <h3 class="text-gold">Our Approach</h3>
+                            <p>Technological view of the world.</p>
+                        </div>
+                        <div class="about-card-back">
+                            <p>We conduct detailed analysis of each project considering financial, legal and ESG factors. Our experts provide full support - from idea evaluation to product market launch.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expertise Section -->
+        <section id="expertise" class="py-24 px-6 bg-black/40">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Expertise</h2>
+                <div class="expertise-container">
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="expertise-icon">
+                            <i class='fas fa-project-diagram'></i>
+                        </div>
+                        <h3 class="text-gold">Artificial Intelligence</h3>
+                        <p>We use AI for text data analysis, trend forecasting and process automation.</p>
+                        <div class="expertise-hover-content">
+                            <h4>AI & Machine Learning</h4>
+                            <p>Using advanced AI and ML algorithms for automated data analysis, including natural language processing, computer vision and predictive analytics.</p>
+                        </div>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="150">
+                        <div class="expertise-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="text-gold">Big Data Analysis</h3>
+                        <p>Collecting and analyzing large volumes of data allows us to make more informed decisions.</p>
+                        <div class="expertise-hover-content">
+                            <h4>Big Data Analytics</h4>
+                            <p>Processing millions of ESG documents in real time using distributed computing and cloud technologies.</p>
+                        </div>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="expertise-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-gold">Risk Assessment</h3>
+                        <p>We apply machine learning technologies and big data analysis for accurate assessment of financial, operational and ESG risks.</p>
+                        <div class="expertise-hover-content">
+                            <h4>Risk Assessment</h4>
+                            <p>Applying ML and big data for ESG assessments, creating multifactor risk models that consider both traditional financial indicators and non-financial sustainability metrics.</p>
+                        </div>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="250">
+                        <div class="expertise-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-gold">Business Scaling</h3>
+                        <p>Strategic planning and implementation of business scaling programs with focus on sustainable growth and long-term value.</p>
+                        <div class="expertise-hover-content">
+                            <h4>Business Scaling</h4>
+                            <p>Developing sustainable growth strategies based on deep market and competitive environment analysis.</p>
+                        </div>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="expertise-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3 class="text-gold">Legal Support</h3>
+                        <p>Professional deal structuring, protection of investor and partner rights at all project stages.</p>
+                        <div class="expertise-hover-content">
+                            <h4>Legal Support</h4>
+                            <p>Protecting investor rights and deal support at all stages, from structuring to closing.</p>
+                        </div>
+                    </div>
+                    <div class="expertise-card" data-aos="zoom-in" data-aos-delay="350">
+                        <div class="expertise-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="text-gold">Patent Services</h3>
+                        <p>Guaranteeing the uniqueness of your technologies through comprehensive patent support and legal clearance verification.</p>
+                        <div class="expertise-hover-content">
+                            <h4>Patent Services</h4>
+                            <p>Comprehensive patent support and expertise, including patent search, application preparation and filing, intellectual property rights protection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ecosystem Section -->
+        <section id="partners" class="py-24 px-6 bg-black/30 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Ecosystem</h2>
+                <div class="partners-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="partners-marquee">
+                        <div class="partners-track">
+                            <!-- First group of cards -->
+                            <div class="partner-card">
+                                <img src="veb-rf-logo.png" alt="VEB.RF">
+                            </div>
+                            <div class="partner-card">
+                                <img src="ros-eximbank-logo.png" alt="Roseximbank">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rost-logo.png" alt="ROST">
+                            </div>
+                            <div class="partner-card">
+                                <img src="minpromtorg-logo.png" alt="Minpromtorg">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rshb-inteh-logo.png" alt="RSHB-Intech">
+                            </div>
+                            <!-- Second group of cards (duplicate) -->
+                            <div class="partner-card">
+                                <img src="veb-rf-logo.png" alt="VEB.RF">
+                            </div>
+                            <div class="partner-card">
+                                <img src="ros-eximbank-logo.png" alt="Roseximbank">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rost-logo.png" alt="ROST">
+                            </div>
+                            <div class="partner-card">
+                                <img src="minpromtorg-logo.png" alt="Minpromtorg">
+                            </div>
+                            <div class="partner-card">
+                                <img src="rshb-inteh-logo.png" alt="RSHB-Intech">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Focus Section -->
+        <section id="investment-focus" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Investment Focus</h2>
+                <div class="investment-container">
+                    <!-- Ecotech -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="100">
+                        <div class="investment-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="investment-text">Ecotech</div>
+                    </div>
+                    <!-- Agrotech -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="200">
+                        <div class="investment-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="investment-text">Agrotech</div>
+                    </div>
+                    <!-- Eco REE Mining -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="300">
+                        <div class="investment-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div class="investment-text">Eco REE Mining</div>
+                    </div>
+                    <!-- IIoT & Blockchain -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="400">
+                        <div class="investment-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="investment-text">IIoT & Blockchain</div>
+                    </div>
+                    <!-- Smartcharity -->
+                    <div class="investment-block" data-aos="flip-left" data-aos-delay="500">
+                        <div class="investment-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="investment-text">Smartcharity</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Methodology Section -->
+        <section id="methodology" class="py-24 px-6 bg-black/40">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Methodology</h2>
+                <div class="methodology-container">
+                    <!-- NLP Card -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="100">
+                        <i class="fas fa-language icon"></i>
+                        <h3 class="text-gold">Natural Language Processing (NLP)</h3>
+                        <p>We use NLP technologies to analyze textual data such as financial reports, news and social media.</p>
+                    </div>
+                    <!-- Python Card -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="200">
+                        <i class="fab fa-python icon"></i>
+                        <h3 class="text-gold">Python</h3>
+                        <p>Python is the main tool for data analysis, forecasting and process automation.</p>
+                    </div>
+                    <!-- Machine Learning Card -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="300">
+                        <i class="fas fa-robot icon"></i>
+                        <h3 class="text-gold">Machine Learning</h3>
+                        <p>We apply machine learning algorithms to identify hidden trends and risk factors.</p>
+                    </div>
+                    <!-- Big Data Card -->
+                    <div class="methodology-card" data-aos="fade-right" data-aos-delay="400">
+                        <i class="fas fa-database icon"></i>
+                        <h3 class="text-gold">Big Data</h3>
+                        <p>Collecting and analyzing large volumes of data allows us to make more informed decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Analytics</h2>
+                
+                <div class="analytics-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="analytics-card">
+                        <!-- Main SECTION icon - data analytics -->
+                        <div class="analytics-icon">
+                           <i class="fas fa-brain"></i>
+                        </div>
+                        
+                        <!-- Content of SPECIFIC article -->
+                        <div class="analytics-content">
+                            <div class="analytics-badge">
+                                <i class="fas fa-chart-bar"></i><!-- Article icon here -->
+                                <span>Expert Article</span>
+                            </div>
+                            
+                            <h3 class="analytics-title">
+                                Hidden Startup Risks: Why Illusions Cost More
+                            </h3>
+                            
+                            <p class="analytics-excerpt">
+                                Deep analysis of non-obvious risks of investing in startups and strategies for their minimization. 
+                                How to distinguish a promising project from an illusion and make conscious investments your strategic asset.
+                            </p>
+                            
+                            <div class="analytics-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span class="author-name">Shamil Ibragimov</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span class="reading-time">15 min read</span>
+                                </div>
+                            </div>
+                            
+                            <div class="analytics-tags">
+                                <span class="tag">#Investments</span>
+                                <span class="tag">#Startups</span>
+                                <span class="tag">#Analytics</span>
+                                <span class="tag">#Risks</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-cta">
+                            <a href="https://medium.com/@ceo.northwestatlas.bcorp/аналитика-nwa-b-corp-скрытые-риски-стартапов-осознанные-инвестиции-как-стратегический-актив-17dfdf110b83" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="medium-link">
+                                <span>Read on Medium</span>
+                                <i class="fab fa-medium"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESG Calculator Section -->
+        <section id="esg-calculator" class="py-24 px-6 bg-black/40 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">ESG Ratings Calculator</h2>
+                <p class="max-w-3xl mx-auto mb-10 text-white/80" data-aos="fade-up" data-aos-delay="100">
+                    Our calculator uses advanced technologies such as NLP and machine learning to analyze textual data and identify key ESG factors.
+                </p>
+                <div class="calculator-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="calculator-form">
+                        <label for="company">Select company:</label>
+                        <select id="company">
+                            <option value="solidcore">Solidcore Resources plc</option>
+                        </select>
+                        <button onclick="toggleRatings()" id="ratings-button">LOAD RATINGS</button>
+                    </div>
+                    <div id="result" class="ratings-result"></div>
+                    <div id="expert-recommendations" class="recommendations-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="feedback" class="py-24 px-6 bg-gradient-to-b from-primary/5 to-transparent">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Contact</h2>
+                <div class="feedback-btn-container" data-aos="fade-up" data-aos-delay="100">
+                    <button id="show-contacts-btn" onclick="toggleContacts()">Show Contacts</button>
+                </div>
+                
+                <!-- Contacts container -->
+                <div id="contacts" class="contacts-section">
+                    <div class="contacts-content" id="contacts-content">
+                        <div class="contacts-grid">
+                            <div class="contact-card contact-card-1">
+                                <div class="contact-icon">
+                                    <span>SPb</span>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Saint Petersburg</h4>
+                                    <p><a href="tel:+79310077769">Dana +7 931 007-77-69</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-card contact-card-2">
+                                <div class="contact-icon">
+                                    <span>MSC</span>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Moscow</h4>
+                                    <p><a href="tel:+79917221107">Mark +7 991 722-11-07</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-card contact-card-3">
+                                <div class="contact-icon">
+                                    <span>UAE</span>
+                                </div>
+                                <div class="contact-info">
+                                    <h4>Sharjah</h4>
+                                    <p><a href="tel:+97163220669">Aram +971 6 322-06-69</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-form-container contact-form-animated">
+                            <h3 class="text-gold">Contact Form</h3>
+                            <form id="contact-form" action="#" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message:</label>
+                                    <textarea id="message" name="message" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    Send
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/70 border-t border-primary/20 pt-16 pb-4">
+        <div class="footer-top-border"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- First column -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="font-playfair">
+                        NORTH WEST <span class="text-gold">ATLAS B CORP</span>
+                    </h3>
+                    <p>Creating the future, not following it</p>
+                </div>
+
+                <!-- Second column -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="150">
+                    <h3 class="text-gold">Navigation</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#expertise">Expertise</a></li>
+                        <li><a href="#partners">Ecosystem</a></li>
+                    </ul>
+                </div>
+
+                <!-- Third column -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-gold">Key Areas</h3>
+                    <ul>
+                        <li><i class="fas fa-chart-line"></i> <span>Investments</span></li>
+                        <li><i class="fas fa-leaf"></i> <span>ESG Consulting</span></li>
+                        <li><i class="fas fa-chalkboard-teacher"></i> <span>Strategic Planning</span></li>
+                        <li><i class="fas fa-shield-alt"></i> <span>Risk Assessment</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fourth column -->
+                <div class="footer-column" data-aos="fade-up" data-aos-delay="250">
+                    <h3 class="text-gold">Address</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Saint Petersburg, Petrovskaya Kosa 1, bld. 1. Petrogradsky District, IFTS No. 25. Krestovsky Island.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@northwestatlas.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Legal Information -->
+            <div class="legal-section" data-aos="fade-up" data-aos-delay="300">
+                <div class="legal-info">
+                    <h4>Legal Information</h4>
+                    <div class="legal-content">
+                        <p><strong>North West Atlas B Corp</strong> is an international company operating through a network of registered divisions and partner structures.</p>
+                        
+                        <p>The designation <strong>"B Corp"</strong> is used in accordance with the principles of the international B Lab standard and reflects the company's commitment to high standards in social and environmental responsibility. At the time of publication, the company is in the process of official verification of compliance with these standards.</p>
+                        
+                        <p><strong>Relations with development institutions:</strong><br>
+                        Communication with state and corporate institutions (VEB.RF, REC, EXIAR and others) is carried out exclusively within the framework of publicly available programs, initiatives and support procedures. North West Atlas B Corp is not an affiliated structure of these organizations, and such mentions do not indicate the existence of agency, resident, lobbying or other contractual relationships.</p>
+                        
+                        <p>All information presented on this website is for analytical and informational purposes only and is not a public offer as defined by Article 437 of the Civil Code of the Russian Federation.</p>
+                    </div>
+                </div>
+                
+                <div class="license-info">
+                    <p>✓ PROFESSIONAL LICENSE</p>
+                    <p>Government of Sharjah, UAE | License #786048 | Registration #197626</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> North West Atlas B Corp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS with fixed settings
+        AOS.init({
+            duration: 800,
+            easing: 'ease',
+            once: false,
+            mirror: false,
+            offset: 100
+        });
+
+        // Set current year in footer
+        document.getElementById("current-year").textContent = new Date().getFullYear();
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+            cursorFollower.style.transform = 'scale(1.2)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+            cursorFollower.style.transform = 'scale(1)';
+        });
+
+        // Initialize active menu item on scroll
+        function initScrollSpy() {
+            const sections = document.querySelectorAll("section");
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            window.addEventListener("scroll", () => {
+                let current = "";
+
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute("id");
+                    }
+                });
+
+                navLinks.forEach((link) => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${current}`) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+        }
+
+        // Change header on scroll
+        function initHeaderScroll() {
+            const header = document.getElementById("header");
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+            });
+        }
+
+        // Function to toggle menu
+        function toggleMenu() {
+            const menu = document.getElementById("nav-menu");
+            menu.classList.toggle("active");
+        }
+
+        // Language switching function
+        function switchLanguage(lang) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Here you would normally load the appropriate language content
+            // For now, we'll just show an alert
+            if (lang === 'ru') {
+                alert('Switching to Russian version. In a real implementation, this would load Russian content.');
+                // In a real implementation, you would:
+                // 1. Load Russian content via AJAX
+                // 2. Or have a separate Russian version of the page
+                // 3. Or use a translation library
+            } else {
+                // Already in English
+                console.log('English version active');
+            }
+        }
+
+        // Function to toggle contacts
+        function toggleContacts() {
+            const contacts = document.getElementById("contacts");
+            const button = document.getElementById("show-contacts-btn");
+            
+            if (contacts.classList.contains('active')) {
+                // Hide contacts
+                contacts.classList.remove('active');
+                setTimeout(() => {
+                    contacts.style.display = 'none';
+                }, 500);
+                button.textContent = "Show Contacts";
+            } else {
+                // Show contacts
+                contacts.style.display = 'block';
+                // Give time for display: block to apply
+                setTimeout(() => {
+                    contacts.classList.add('active');
+                }, 50);
+                button.textContent = "Hide Contacts";
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                // Here you can add server submission
+                alert('Message sent! We will contact you shortly.');
+                this.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Data for ESG calculator
+        const ratingsData = {
+            solidcore: {
+                ratings: [
+                    ["Sustainalytics", "8.5"],
+                    ["Refinitiv", "92"],
+                    ["MSCI", "AA"],
+                    ["RAEX Europe", "A+"],
+                    ["NRA ESG", "A1.esg"],
+                    ["Average rating consistency", "7.50"],
+                    ["SDG #7 compliance", "High indicators"],
+                    ["SDG #5 compliance", "Medium indicators"],
+                    ["RAEX Europe historical dynamics", "+5%"],
+                    ["MSCI historical dynamics", "-3%"],
+                    ["ESG profile (E)", "Excellent CO2 emissions management"],
+                    ["ESG profile (S)", "Local community support programs"],
+                    ["ESG profile (G)", "Insufficient risk management transparency"],
+                ],
+                recommendations: [
+                    { title: "Originality", text: "The project demonstrates a high degree of uniqueness." },
+                    { title: "Novelty", text: "The project confirms its patent purity." },
+                    { title: "Elaboration", text: "The project requires more detailed description of goals." },
+                    { title: "Efficiency", text: "The project has high potential profitability." },
+                    { title: "Resource provision", text: "The project requires additional analysis of needs." },
+                    { title: "Commercializability", text: "The project requires business model refinement." },
+                ],
+            },
+        };
+
+        // Function: Toggle ratings display
+        function toggleRatings() {
+            const result = document.getElementById("result");
+            const recommendations = document.getElementById("expert-recommendations");
+            const button = document.getElementById("ratings-button");
+
+            if (result.style.display === "none" || result.style.display === "") {
+                loadRatings();
+                result.style.display = "block";
+                recommendations.style.display = "block";
+                button.textContent = "HIDE RATINGS";
+            } else {
+                result.style.display = "none";
+                recommendations.style.display = "none";
+                button.textContent = "LOAD RATINGS";
+            }
+        }
+
+        // Generate ratings and recommendations
+        function loadRatings() {
+            const company = document.getElementById("company").value;
+            const resultDiv = document.getElementById("result");
+            const recommendationsDiv = document.getElementById("expert-recommendations");
+
+            if (!ratingsData[company]) {
+                resultDiv.innerHTML = "<p>Company data not found.</p>";
+                recommendationsDiv.innerHTML = "";
+                return;
+            }
+
+            // Generate table
+            let tableHTML = `<table class="ratings-table"><thead><tr><th>Indicator</th><th>Rating</th></tr></thead><tbody>`;
+            ratingsData[company].ratings.forEach((row) => {
+                tableHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
+            });
+            tableHTML += `</tbody></table>`;
+            resultDiv.innerHTML = tableHTML;
+
+            // Generate recommendations
+            let recommendationsHTML = `<h3 class="recommendation-title">Expert Recommendations</h3><div class="recommendation-grid">`;
+            ratingsData[company].recommendations.forEach((rec) => {
+                recommendationsHTML += `<div class="recommendation-card"><h4>${rec.title}</h4><p>${rec.text}</p></div>`;
+            });
+            recommendationsHTML += `</div><button class="download-button" onclick="downloadExcel()"><i class="fas fa-download"></i> Download Report</button>`;
+            recommendationsDiv.innerHTML = recommendationsHTML;
+        }
+
+        // Function to download report
+        function downloadExcel() {
+            // Create data for CSV file
+            const company = document.getElementById("company").value;
+            const data = ratingsData[company];
+
+            if (!data) {
+                alert("Company data not found.");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            // Add header
+            csvContent += "Indicator,Rating\n";
+
+            // Add ratings data
+            data.ratings.forEach((row) => {
+                csvContent += `"${row[0]}","${row[1]}"\n`;
+            });
+
+            // Add separator
+            csvContent += "\nRecommendations\n";
+
+            // Add recommendations
+            data.recommendations.forEach((rec) => {
+                csvContent += `"${rec.title}","${rec.text}"\n`;
+            });
+
+            // Encode URI
+            const encodedUri = encodeURI(csvContent);
+
+            // Create temporary download link
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `ESG_Report_${company}_${new Date().toISOString().split("T")[0]}.csv`);
+            document.body.appendChild(link);
+
+            // Simulate link click
+            link.click();
+
+            // Remove link
+            document.body.removeChild(link);
+        }
+
+        // Smooth scrolling to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize functions
+        initScrollSpy();
+        initHeaderScroll();
+
+        // Additional protection against AOS conflicts
+        document.addEventListener('aos:in', function(e) {
+            // Ensure elements remain visible after animation
+            e.detail.style.visibility = 'visible';
+        });
+ 
+        // Font Awesome diagnostics
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking Font Awesome...');
+            
+            // Check if Font Awesome is loaded
+            const styleSheets = Array.from(document.styleSheets);
+            const hasFontAwesome = styleSheets.some(sheet => {
+                try {
+                    return sheet.href && sheet.href.includes('font-awesome');
+                } catch (e) {
+                    return false;
+                }
+            });
+            
+            console.log('Font Awesome loaded:', hasFontAwesome);
+            
+            // Check icon display
+            const icons = document.querySelectorAll('i.fas, i.fab, i.far, i.fal, i.fad');
+            console.log('Found icons:', icons.length);
+            
+            icons.forEach((icon, index) => {
+                const computedStyle = window.getComputedStyle(icon, '::before');
+                const content = computedStyle.content;
+                console.log(`Icon ${index}:`, {
+                    element: icon,
+                    classes: icon.className,
+                    content: content,
+                    fontFamily: computedStyle.fontFamily
+                });
+            });
+            
+            // If Font Awesome not loaded, show fallback
+            if (!hasFontAwesome || icons.length === 0) {
+                console.log('Font Awesome not working, showing fallback icons');
+                document.querySelectorAll('.analytics-icon-main').forEach(iconContainer => {
+                    const fallback = iconContainer.querySelector('span');
+                    if (fallback) fallback.style.display = 'inline';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
