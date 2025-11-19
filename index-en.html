@@ -223,31 +223,33 @@
         }
 
         .language-switcher {
-            display: flex;
-            gap: 0.5rem;
-        }
+    display: flex;
+    gap: 0.5rem;
+}
 
-        .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--foreground-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
+.language-switcher a {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: var(--foreground-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-block;
+}
 
-        .lang-btn.active {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--primary);
-            border-color: var(--primary);
-        }
+.language-switcher a.active {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary);
+    border-color: var(--primary);
+}
 
-        .lang-btn:hover {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--primary);
-        }
+.language-switcher a:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary);
+}
 
         .menu-toggle {
             display: none;
