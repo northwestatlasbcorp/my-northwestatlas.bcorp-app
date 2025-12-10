@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTITUTIONAL CAPITAL SURVIVAL SYSTEM | Shamil Ibragimov | North West Atlas B Corp</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Operational Framework for Capital Management Under Structural Uncertainty. The Artificial Intelligence Bubble: Systemic Anatomy and Protocols for Institutional Survival 2025-2030.">
+    <meta name="author" content="Shamil Ibragimov, Ph.D.">
+    <meta name="keywords" content="institutional capital, AI bubble, systemic risk, capital management, North West Atlas, Shamil Ibragimov">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="INSTITUTIONAL CAPITAL SURVIVAL SYSTEM">
+    <meta property="og:description" content="Operational Framework for Capital Management Under Structural Uncertainty by Shamil Ibragimov, Ph.D.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="North West Atlas B Corp">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #A77A3D;
+            --gold-light: #D4A76A;
+            --gold-dark: #8B6333;
+            --gold-accent: #C9A227;
+            --bg-dark: #0D0D14;
+            --bg-header: #12121A;
+            --bg-card: #1A1A2E;
+            --text-light: #F0F2F5;
+            --text-muted: #8A9099;
+            --border: #2D2D44;
+            --font-serif: 'Source Serif 4', 'Libre Baskerville', 'Computer Modern', Georgia, serif;
+            --font-heading: 'Libre Baskerville', 'Source Serif 4', Georgia, serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            background: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 16px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: linear-gradient(180deg, var(--bg-header) 0%, var(--bg-dark) 100%);
+            padding: 80px 32px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Декоративная линия сверху */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        /* Subtle grid pattern */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(167, 122, 61, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(167, 122, 61, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .org-label {
+            font-family: var(--font-serif);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--gold);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+        }
+
+        .subtitle {
+            font-family: var(--font-serif);
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        /* Theme Block */
+        .theme-block {
+            margin: 40px 0;
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+        }
+
+        .theme-block::before,
+        .theme-block::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+        .theme-block::before { top: -3px; }
+        .theme-block::after { bottom: -3px; }
+
+        .theme-title {
+            font-family: var(--font-heading);
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .theme-sub {
+            font-family: var(--font-serif);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Author Section */
+        .author-section {
+            margin-top: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        .author-name {
+            font-family: var(--font-heading);
+            color: var(--gold-light);
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .author-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .author-title {
+            font-family: var(--font-serif);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        .author-title strong {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Download Section */
+        .download-section {
+            margin-top: 48px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+        }
+
+        .download-btn {
+            font-family: var(--font-serif);
+            display: inline-block;
+            padding: 18px 56px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow:
+                0 4px 20px rgba(167, 122, 61, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid var(--gold-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 12px 40px rgba(167, 122, 61, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.15);
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+        }
+
+        /* Premium shine effect */
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .meta-info {
+            font-family: var(--font-serif);
+            margin-top: 24px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .meta-info span {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ========== MAIN ========== */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 48px 24px;
+            background: var(--bg-dark);
+        }
+
+        .pdf-container {
+            width: 100%;
+            max-width: 1100px;
+            height: calc(100vh - 420px);
+            min-height: 550px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: #080810;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(167, 122, 61, 0.1);
+            position: relative;
+        }
+
+        .pdf-container::before {
+            content: 'Loading document...';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            z-index: 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #080810 100%);
+        }
+
+        .footer-badge {
+            font-family: var(--font-serif);
+            display: inline-block;
+            padding: 12px 28px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            color: var(--gold);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-badge:hover {
+            background: rgba(167, 122, 61, 0.1);
+        }
+
+        .footer-locations {
+            font-family: var(--font-serif);
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .footer-locations span {
+            color: var(--gold);
+            margin: 0 8px;
+        }
+
+        .copyright {
+            font-family: var(--font-serif);
+            margin-top: 16px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* ========== WATERMARK ========== */
+        body::after {
+            content: "CONFIDENTIAL — NORTH WEST ATLAS INTERNAL";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            color: rgba(167, 122, 61, 0.025);
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 10px;
+            white-space: nowrap;
+            font-family: 'Libre Baskerville', serif;
+            user-select: none;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 20px 48px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                letter-spacing: 1px;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .download-btn {
+                padding: 16px 40px;
+                font-size: 0.9rem;
+            }
+
+            .pdf-container {
+                min-height: 400px;
+                height: calc(100vh - 350px);
+            }
+
+            .footer-locations span {
+                display: block;
+                margin: 4px 0;
+            }
+        }
+
+        /* ========== PRINT STYLES ========== */
+        @media print {
+            body::after {
+                display: none;
+            }
+            header, footer {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="org-label">North West Atlas B Corp</div>
+
+            <h1>INSTITUTIONAL CAPITAL<br>SURVIVAL SYSTEM</h1>
+
+            <p class="subtitle">Operational Framework for Capital Management<br>Under Structural Uncertainty</p>
+
+            <div class="theme-block">
+                <div class="theme-title">THE ARTIFICIAL INTELLIGENCE BUBBLE</div>
+                <div class="theme-sub">Systemic Anatomy&ensp;|&ensp;Protocols for Institutional Survival&ensp;|&ensp;2025–2030</div>
+            </div>
+
+            <div class="author-section">
+                <div class="author-name">Shamil Ibragimov</div>
+                <div class="author-title">
+                    <strong>Founder & CEO</strong>, North West Atlas B Corp<br>
+                    Ph.D. in Strategic Planning
+                </div>
+            </div>
+
+            <div class="download-section">
+                <a href="NWA_Institutional_Capital_Survival_System.pdf" class="download-btn" download>
+                    Download Full Monograph
+                </a>
+                <div class="meta-info">
+                    <span>208</span> pages&ensp;|&ensp;<span>1.4 MB</span>&ensp;|&ensp;December 2025&ensp;|&ensp;MA4-ICS-2025-12-v6.2
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="pdf-container">
+            <iframe
+                src="NWA_Institutional_Capital_Survival_System.pdf"
+                type="application/pdf"
+                title="INSTITUTIONAL CAPITAL SURVIVAL SYSTEM - Full Monograph">
+            </iframe>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-badge">Limited Circulation&ensp;|&ensp;Confidential&ensp;|&ensp;Institutional Investors Only</div>
+        <div class="footer-locations">
+            North West Atlas B Corp<span>|</span>Zurich<span>|</span>Singapore<span>|</span>Dubai<span>|</span>Saint Petersburg
+        </div>
+        <div class="copyright">&copy; 2025 North West Atlas B Corp. All rights reserved.</div>
+    </footer>
+</body>
+</html>
