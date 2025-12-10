@@ -30,7 +30,8 @@
     <meta name="twitter:description" content="Creating the future, not following it. Investments, ESG consulting, strategic planning.">
     <meta name="twitter:image" content="https://northwestatlas.com/logo-nwa-centered.png">
 
-    <title>North West Atlas B Corp</title>
+    <title>North West Atlas B Corp | Shamil Ibragimov, Ph.D. — Investing in the Future</title>
+    <meta name="author" content="Shamil Ibragimov, Ph.D., Founder & CEO">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -259,14 +260,15 @@
         #nav-menu {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.2rem;
             align-items: center;
+            flex-wrap: nowrap;
         }
 
         .nav-link {
             color: var(--foreground);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             padding: 0.5rem 0;
             position: relative;
             transition: var(--transition);
@@ -422,6 +424,15 @@
             margin-top: 1.5rem;
             font-size: 1rem;
             font-style: normal;
+        }
+
+        .cite-title {
+            font-size: 0.85rem;
+            color: var(--foreground-secondary);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-top: 0.3rem;
+            display: inline-block;
         }
 
         .about-container {
@@ -847,7 +858,23 @@
             justify-content: center;
             margin-bottom: 1rem;
             box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3);
+            animation: investmentGlow 4s ease-in-out infinite;
         }
+
+        @keyframes investmentGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.2);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.5);
+            }
+        }
+
+        .investment-block:nth-child(1) .investment-icon { animation-delay: 0s; }
+        .investment-block:nth-child(2) .investment-icon { animation-delay: 0.5s; }
+        .investment-block:nth-child(3) .investment-icon { animation-delay: 1s; }
+        .investment-block:nth-child(4) .investment-icon { animation-delay: 1.5s; }
+        .investment-block:nth-child(5) .investment-icon { animation-delay: 2s; }
 
         .investment-icon i {
             font-size: 1.8rem;
@@ -917,8 +944,11 @@
         }
 
         .analytics-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .analytics-card {
@@ -1168,6 +1198,82 @@
 
         .medium-link:hover i {
             transform: scale(1.2);
+        }
+
+        /* ===== RESEARCH CARD STYLING ===== */
+        .research-card {
+            border: 1px solid rgba(var(--primary-rgb), 0.4) !important;
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.08) 0%, rgba(0,0,0,0.4) 100%) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::after {
+            content: 'CONFIDENTIAL';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: rgba(var(--primary-rgb), 0.15);
+            color: var(--primary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 4px 40px;
+            transform: rotate(45deg);
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+        }
+
+        .research-card:hover {
+            border-color: var(--primary) !important;
+            box-shadow:
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(var(--primary-rgb), 0.3),
+                0 0 60px rgba(var(--primary-rgb), 0.3),
+                inset 0 0 30px rgba(var(--primary-rgb), 0.05);
+        }
+
+        .research-icon {
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.1)) !important;
+            border: 2px solid rgba(var(--primary-rgb), 0.5) !important;
+        }
+
+        .research-badge {
+            background: linear-gradient(90deg, rgba(var(--primary-rgb), 0.2), rgba(var(--primary-rgb), 0.1)) !important;
+            border: 1px solid rgba(var(--primary-rgb), 0.4) !important;
+        }
+
+        .research-portal-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #b8960f 100%);
+            color: #000 !important;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow:
+                0 4px 20px rgba(var(--primary-rgb), 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-portal-link:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 12px 35px rgba(var(--primary-rgb), 0.5),
+                0 0 30px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .research-portal-link i {
+            transition: transform 0.3s ease;
+        }
+
+        .research-portal-link:hover i {
+            transform: translateX(5px);
         }
 
         .analytics-footer {
@@ -2031,10 +2137,11 @@ input, textarea, [contenteditable="true"] {
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#expertise" class="nav-link">Expertise</a></li>
                     <li><a href="#partners" class="nav-link">Ecosystem</a></li>
-                    <li><a href="#investment-focus" class="nav-link">Investment Focus</a></li>
+                    <li><a href="#investment-focus" class="nav-link">Investments</a></li>
                     <li><a href="#methodology" class="nav-link">Methodology</a></li>
                     <li><a href="#analytics" class="nav-link">Analytics</a></li>
-                    <li><a href="#esg-calculator" class="nav-link">ESG Calculator</a></li>
+                    <li><a href="research.html" class="nav-link">Research</a></li>
+                    <li><a href="#esg-calculator" class="nav-link">ESG</a></li>
                     <li><a href="#feedback" class="nav-link">Contact</a></li>
                 </ul>
             </div>
@@ -2057,7 +2164,7 @@ input, textarea, [contenteditable="true"] {
             <h1 class="site-title" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1500">
                 <blockquote class="philosophy-quote" data-aos="fade-up" data-aos-delay="100">
                     "We invest not only capital, but also time, knowledge and reputation..."
-                    <cite><span class="text-gold-bold">— Shamil Ibragimov, Founder & CEO</span></cite>
+                    <cite><span class="text-gold-bold">— Shamil Ibragimov, Ph.D.</span><br><span class="cite-title">Founder & CEO, North West Atlas B Corp</span></cite>
                 </blockquote>
             </h1>
         </section>
@@ -2357,12 +2464,59 @@ input, textarea, [contenteditable="true"] {
                         </div>
                         
                         <div class="analytics-cta">
-                            <a href="https://medium.com/@ceo.northwestatlas.bcorp/аналитика-nwa-b-corp-скрытые-риски-стартапов-осознанные-инвестиции-как-стратегический-актив-17dfdf110b83" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
+                            <a href="https://medium.com/@ceo.northwestatlas.bcorp/аналитика-nwa-b-corp-скрытые-риски-стартапов-осознанные-инвестиции-как-стратегический-актив-17dfdf110b83"
+                               target="_blank"
+                               rel="noopener noreferrer"
                                class="medium-link">
                                 <span>Read on Medium</span>
                                 <i class="fab fa-medium"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- RESEARCH MONOGRAPH CARD -->
+                    <div class="analytics-card research-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="analytics-icon research-icon">
+                           <i class="fas fa-book"></i>
+                        </div>
+
+                        <div class="analytics-content">
+                            <div class="analytics-badge research-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Monograph • Institutional Investors</span>
+                            </div>
+
+                            <h3 class="analytics-title">
+                                INSTITUTIONAL CAPITAL SURVIVAL SYSTEM
+                            </h3>
+
+                            <p class="analytics-excerpt">
+                                Operational framework for capital management under structural uncertainty.
+                                Systemic anatomy of the AI bubble and institutional capital survival protocols 2025–2030.
+                            </p>
+
+                            <div class="analytics-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span class="author-name">Shamil Ibragimov, Ph.D.</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span class="reading-time">208 pages</span>
+                                </div>
+                            </div>
+
+                            <div class="analytics-tags">
+                                <span class="tag">#AI_Bubble</span>
+                                <span class="tag">#Systemic_Risk</span>
+                                <span class="tag">#Capital_Management</span>
+                            </div>
+                        </div>
+
+                        <div class="analytics-cta">
+                            <a href="research.html" class="research-portal-link">
+                                <span>Open Research Portal</span>
+                                <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -2479,6 +2633,7 @@ input, textarea, [contenteditable="true"] {
                         <li><a href="#about">About</a></li>
                         <li><a href="#expertise">Expertise</a></li>
                         <li><a href="#partners">Ecosystem</a></li>
+                        <li><a href="research.html">Research Portal</a></li>
                     </ul>
                 </div>
 
@@ -2503,7 +2658,7 @@ input, textarea, [contenteditable="true"] {
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>ceo.northwestatlas.bcorp@gmail.com</span>
+                            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88ebede7a6e6e7fafce0ffedfbfce9fce4e9fba6eaebe7faf8c8efe5e9e1e4a6ebe7e5">[email&#160;protected]</a></span>
                         </li>
                     </ul>
                 </div>
@@ -2538,7 +2693,7 @@ input, textarea, [contenteditable="true"] {
     </footer>
 
     <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         // Initialize AOS with fixed settings
         AOS.init({
