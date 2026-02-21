@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bubble Analytics | North West Atlas B Corp</title>
+    <meta name="description" content="Institutional-grade AI sector analytics, bubble scoring, and capital protection protocols. NWA Coverage Universe: 68 companies.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:wght@200;300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================================
+           NWA TOOLKIT v5.0 — INSTITUTIONAL ANALYTICS
+           Unified design language with main site
+           ================================================================ */
+
+        :root {
+            --gold: #C5A059;
+            --gold-light: #E8D5B5;
+            --gold-dark: #8B6F4C;
+            --gold-rgb: 197, 160, 89;
+
+            --navy: #0C0C12;
+            --navy-deep: #07070A;
+            --charcoal: #1A1A24;
+
+            --text-primary: #F0F0F0;
+            --text-secondary: #A0A8B5;
+            --text-muted: #7A7F8B;
+
+            --success: #7FAF95;
+            --success-rgb: 127, 175, 149;
+            --warning: #B59B6A;
+            --warning-rgb: 181, 155, 106;
+            --danger: #B47C7C;
+            --danger-rgb: 180, 124, 124;
+            --info: #6A8EB5;
+
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 3rem;
+            --space-xl: 5rem;
+            --space-2xl: 8rem;
+
+            --radius-sm: 2px;
+            --radius-md: 4px;
+            --radius-lg: 8px;
+
+            --font-primary: 'EB Garamond', Georgia, serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+
+            --ease-slow: cubic-bezier(0.4, 0, 0.2, 1);
+            --duration-slow: 0.6s;
+
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+            --shadow-gold: 0 0 30px rgba(var(--gold-rgb), 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background: var(--navy-deep); }
+
+        body {
+            font-family: var(--font-primary);
+            font-size: 17px;
+            line-height: 1.65;
+            letter-spacing: 0.01em;
+            color: var(--text-secondary);
+            background: var(--navy-deep);
+            min-height: 100vh;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: rgba(var(--gold-rgb), 0.25);
+            color: var(--text-primary);
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .section-label {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: var(--space-sm);
+            display: block;
+            opacity: 0.7;
+        }
+
+        .gold-text { color: var(--gold); }
+
+        /* ===== ACCESSIBILITY ===== */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid rgba(var(--gold-rgb), 0.4);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
+        }
+
+        /* ===== LAYOUT ===== */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 260px;
+            background: rgba(7,7,10,0.96);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-right: 1px solid rgba(var(--gold-rgb), 0.04);
+            padding: var(--space-lg) var(--space-md);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform var(--duration-slow) var(--ease-slow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 3px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(var(--gold-rgb), 0.15); }
+
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.06);
+        }
+
+        .sidebar-logo a {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .sidebar-logo img {
+            max-width: 140px;
+            height: auto;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 15px rgba(var(--gold-rgb), 0.08));
+            transition: filter var(--duration-slow) var(--ease-slow);
+        }
+
+        .sidebar-logo a:hover img {
+            filter: drop-shadow(0 0 20px rgba(var(--gold-rgb), 0.15));
+        }
+
+        .sidebar-logo-line {
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            margin: var(--space-sm) auto 0;
+            opacity: 0.25;
+        }
+
+        .sidebar-back {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-xs) var(--space-sm);
+            transition: color 0.4s ease;
+        }
+        .sidebar-back:hover { color: var(--gold); }
+        .sidebar-back svg {
+            width: 12px; height: 12px;
+            stroke: currentColor; fill: none;
+            stroke-width: 1.5;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-back:hover svg { transform: translateX(-2px); }
+
+        .nav-section-label {
+            font-size: 0.5rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.5;
+            padding: var(--space-sm) var(--space-sm) var(--space-xs);
+            margin-top: var(--space-sm);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 0.6rem var(--space-sm);
+            margin-bottom: 1px;
+            color: var(--text-muted);
+            transition: all 0.4s var(--ease-slow);
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: rgba(var(--gold-rgb), 0.03);
+            color: var(--text-secondary);
+            border-color: rgba(var(--gold-rgb), 0.06);
+        }
+
+        .nav-item.active {
+            background: rgba(var(--gold-rgb), 0.05);
+            color: var(--gold);
+            border-color: rgba(var(--gold-rgb), 0.1);
+        }
+
+        .nav-item .nav-icon {
+            width: 16px; height: 16px;
+            stroke-width: 1.2;
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+
+        .nav-item.active .nav-icon { opacity: 0.8; }
+
+        .live-badge {
+            margin-left: auto;
+            padding: 1px 6px;
+            background: rgba(var(--gold-rgb), 0.04);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: 10px;
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid rgba(var(--gold-rgb), 0.04);
+            padding-top: var(--space-md);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: var(--space-lg);
+            max-width: calc(100vw - 260px);
+            min-height: 100vh;
+        }
+
+        /* ===== STICKY HEADER ===== */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: rgba(7,7,10,0.94);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.04);
+            padding: 0.6rem var(--space-lg);
+            margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-lg);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .header-metrics {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .metric-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 3px 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(var(--gold-rgb), 0.06);
+            border-radius: 14px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .metric-pill .value {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.65rem;
+            color: var(--success);
+            padding: 3px 8px;
+            background: rgba(var(--success-rgb), 0.06);
+            border-radius: 14px;
+            letter-spacing: 0.03em;
+        }
+
+        .header-time {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+        }
+
+        /* ===== TABS ===== */
+        .tabcontent {
+            display: none;
+            animation: fadeIn 0.5s var(--ease-slow);
+        }
+        .tabcontent.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GRIDS ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+        @media (max-width: 1024px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: rgba(26,26,36,0.5);
+            border: 1px solid rgba(var(--gold-rgb), 0.04);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            transition: all var(--duration-slow) var(--ease-slow);
+        }
+
+        .card:hover {
+            border-color: rgba(var(--gold-rgb), 0.08);
+            background: rgba(30,30,40,0.6);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.04);
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .card-header h3 i,
+        .card-header h3 svg {
+            color: var(--gold);
+            opacity: 0.5;
+        }
+
+        .card-executive {
+            background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.06) 0%, rgba(26,26,36,0.7) 100%);
+            border-color: rgba(var(--gold-rgb), 0.1);
+        }
+
+        /* ===== METRICS ===== */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.03);
+            font-size: 0.88rem;
+        }
+        .metric-row:last-child { border-bottom: none; }
+
+        .metric-label { color: var(--text-muted); }
+        .metric-value { font-weight: 500; }
+
+        .value-gold { color: var(--gold); }
+        .value-rose { color: var(--danger); }
+        .value-mint { color: var(--success); }
+        .value-warning { color: var(--warning); }
+
+        /* ===== HEATMAP ===== */
+        .heatmap-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: var(--space-sm);
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: var(--space-xs);
+            margin-top: var(--space-md);
+        }
+        .heatmap-container::-webkit-scrollbar { width: 3px; }
+        .heatmap-container::-webkit-scrollbar-track { background: transparent; }
+        .heatmap-container::-webkit-scrollbar-thumb { background: rgba(var(--gold-rgb), 0.15); }
+
+        .heatmap-item {
+            padding: var(--space-sm) var(--space-xs);
+            border: 1px solid rgba(var(--gold-rgb), 0.04);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            background: rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-slow);
+        }
+        .heatmap-item:hover {
+            border-color: rgba(var(--gold-rgb), 0.15);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .heatmap-symbol {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        .heatmap-score {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            line-height: 1;
+            margin: 4px 0;
+        }
+        .heatmap-price {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .heatmap-change {
+            font-size: 0.65rem;
+        }
+
+        /* ===== BUTTONS ===== */
+        button {
+            font-family: var(--font-primary);
+            background: rgba(var(--gold-rgb), 0.04);
+            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-slow);
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        button:hover {
+            background: rgba(var(--gold-rgb), 0.08);
+            border-color: rgba(var(--gold-rgb), 0.2);
+            color: var(--text-secondary);
+        }
+
+        .btn-primary {
+            background: rgba(var(--gold-rgb), 0.08);
+            border-color: rgba(var(--gold-rgb), 0.25);
+            color: var(--gold);
+        }
+        .btn-primary:hover {
+            background: rgba(var(--gold-rgb), 0.12);
+            border-color: var(--gold);
+        }
+
+        .sort-group {
+            display: flex;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+        .sort-btn {
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.3);
+        }
+        .sort-btn.active {
+            background: rgba(var(--gold-rgb), 0.08);
+            border-color: rgba(var(--gold-rgb), 0.25);
+            color: var(--gold);
+        }
+
+        /* ===== INPUTS ===== */
+        .search-box {
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 0.82rem;
+            width: 100%;
+            max-width: 280px;
+            transition: border-color 0.4s var(--ease-slow);
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        .search-box::placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ===== TABLES ===== */
+        .table-container {
+            overflow-x: auto;
+            margin-top: var(--space-md);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        th {
+            text-align: left;
+            padding: var(--space-xs) var(--space-sm);
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.06);
+        }
+        td {
+            padding: var(--space-xs) var(--space-sm);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.02);
+        }
+        tr:hover td {
+            background: rgba(var(--gold-rgb), 0.015);
+        }
+
+        /* ===== PROTOCOL ===== */
+        .protocol-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid rgba(var(--gold-rgb), 0.04);
+            border-radius: var(--radius-sm);
+            margin-bottom: 2px;
+            transition: all 0.4s var(--ease-slow);
+        }
+        .protocol-item.triggered {
+            border-color: rgba(var(--danger-rgb), 0.2);
+            background: rgba(var(--danger-rgb), 0.02);
+        }
+        .protocol-level {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--gold);
+            min-width: 40px;
+            opacity: 0.6;
+        }
+        .protocol-desc {
+            flex: 1;
+            padding: 0 var(--space-md);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .protocol-status {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-active {
+            background: rgba(var(--success-rgb), 0.08);
+            color: var(--success);
+        }
+        .status-triggered {
+            background: rgba(var(--danger-rgb), 0.08);
+            color: var(--danger);
+        }
+
+        /* ===== NEWS ===== */
+        .news-item {
+            padding: var(--space-sm) var(--space-md);
+            border-left: 1px solid rgba(var(--gold-rgb), 0.15);
+            background: rgba(var(--gold-rgb), 0.01);
+            margin-bottom: var(--space-sm);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-slow);
+        }
+        .news-item:hover {
+            background: rgba(var(--gold-rgb), 0.02);
+            border-left-color: var(--gold);
+        }
+        .news-title {
+            font-weight: 400;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+        .news-meta {
+            display: flex;
+            gap: var(--space-sm);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+        .news-sentiment {
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .sentiment-positive { background: rgba(var(--success-rgb), 0.08); color: var(--success); }
+        .sentiment-negative { background: rgba(var(--danger-rgb), 0.08); color: var(--danger); }
+        .sentiment-neutral { background: rgba(var(--warning-rgb), 0.08); color: var(--warning); }
+
+        /* ===== SLIDERS ===== */
+        .slider-container { margin-bottom: var(--space-md); }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .slider-value { color: var(--gold); }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 1px;
+            background: rgba(var(--gold-rgb), 0.12);
+            border-radius: 1px;
+            cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px; height: 12px;
+            background: var(--gold);
+            border: 1px solid rgba(var(--gold-rgb), 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* ===== DETAIL PANEL ===== */
+        .detail-panel {
+            position: fixed;
+            right: -380px;
+            top: 0;
+            width: 340px;
+            height: 100vh;
+            background: rgba(7,7,10,0.98);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(var(--gold-rgb), 0.06);
+            padding: var(--space-xl) var(--space-lg);
+            transition: right var(--duration-slow) var(--ease-slow);
+            z-index: 1001;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+        .detail-panel.active { right: 0; }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.04);
+        }
+        .panel-header h3 {
+            font-size: 1.3rem;
+            font-weight: 200;
+        }
+        .close-btn {
+            cursor: pointer;
+            padding: var(--space-xs);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: var(--radius-sm);
+            background: none;
+            color: var(--text-muted);
+            transition: all 0.4s;
+        }
+        .close-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(7,7,10,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--duration-slow) var(--ease-slow);
+        }
+        .modal.active { opacity: 1; pointer-events: all; }
+
+        .modal-content {
+            background: rgba(26,26,36,0.95);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: var(--radius-md);
+            padding: var(--space-xl);
+            max-width: 420px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-header {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid rgba(var(--gold-rgb), 0.04);
+        }
+        .modal-header h3 { font-size: 1.2rem; font-weight: 200; }
+
+        .form-group { margin-bottom: var(--space-md); }
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-size: 0.85rem;
+            transition: border-color 0.4s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        .form-group small {
+            color: var(--text-muted);
+            display: block;
+            margin-top: 4px;
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        /* ===== LOADER ===== */
+        .loader {
+            width: 24px; height: 24px;
+            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: var(--space-xl) auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(7,7,10,0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--duration-slow) var(--ease-slow);
+        }
+        .loading-overlay.active { opacity: 1; pointer-events: all; }
+
+        .loading-content { text-align: center; }
+        .loading-content .loader {
+            width: 40px; height: 40px;
+            border-width: 2px;
+        }
+        .loading-text {
+            margin-top: var(--space-md);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: rgba(7,7,10,0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 2px solid var(--gold);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            z-index: 10000;
+            animation: slideIn 0.3s var(--ease-slow);
+            max-width: 320px;
+            font-size: 0.78rem;
+        }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.success { border-left-color: var(--success); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== EXPORT BAR ===== */
+        .export-bar {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
+            flex-wrap: wrap;
+        }
+
+        /* ===== CHART ===== */
+        .chart-wrapper {
+            position: relative;
+            height: 320px;
+            margin-top: var(--space-md);
+        }
+
+        /* ===== CALLOUT ===== */
+        .callout {
+            margin-top: var(--space-lg);
+            padding: var(--space-md);
+            background: rgba(0,0,0,0.25);
+            border-left: 1px solid var(--gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        .callout h4 {
+            color: var(--gold);
+            margin-bottom: var(--space-xs);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+        .callout p {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        /* ===== MOBILE ===== */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 12px; left: 12px;
+            z-index: 1002;
+            background: rgba(7,7,10,0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            cursor: pointer;
+            color: var(--gold);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; max-width: 100vw; }
+            .mobile-menu-btn { display: block; }
+            .grid { grid-template-columns: 1fr; }
+            .heatmap-container { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .detail-panel { width: 100%; right: -100%; }
+            .sticky-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 60px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .heatmap-container { grid-template-columns: repeat(2, 1fr); }
+            .metric-pill { font-size: 0.65rem; padding: 3px 6px; }
+        }
+
+        /* ===== UTILITIES ===== */
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .mb-xl { margin-bottom: var(--space-xl); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mt-xl { margin-top: var(--space-xl); }
+
+        /* ===== PRINT ===== */
+        @media print {
+            .sidebar, .mobile-menu-btn, .sticky-header,
+            .export-bar, .detail-panel, .modal, .loading-overlay,
+            .toast { display: none !important; }
+            .main-content { margin-left: 0; max-width: 100%; }
+            body { background: #fff; color: #000; }
+            .card { border-color: #ddd; background: #fff; }
+            .metric-value { color: #000; }
+            .value-gold { color: #8B6F4C; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="assertive">
+        <div class="loading-content">
+            <div class="loader" aria-hidden="true"></div>
+            <div class="loading-text">Initializing analytics</div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle sidebar navigation" aria-expanded="false">
+        <i data-lucide="menu"></i>
+    </button>
+
+    <div class="app-container">
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <nav class="sidebar" id="sidebar" aria-label="Analytics navigation">
+            <div class="sidebar-logo">
+                <a href="index.html" aria-label="Return to main site">
+                    <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" width="140" height="35" loading="eager">
+                </a>
+                <span class="sidebar-logo-line" aria-hidden="true"></span>
+            </div>
+
+            <a href="index.html" class="sidebar-back">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Main Site
+            </a>
+
+            <div class="nav-section-label">Analytics</div>
+
+            <button class="nav-item active" data-tab="Dashboard" aria-current="page">
+                <i data-lucide="layout-dashboard" class="nav-icon"></i>
+                <span>Dashboard</span>
+                <span class="live-badge">LIVE</span>
+            </button>
+
+            <button class="nav-item" data-tab="Heatmap">
+                <i data-lucide="map" class="nav-icon"></i>
+                <span>AI Heatmap</span>
+                <span class="live-badge">68</span>
+            </button>
+
+            <button class="nav-item" data-tab="Protocol">
+                <i data-lucide="shield" class="nav-icon"></i>
+                <span>Protocol</span>
+            </button>
+
+            <button class="nav-item" data-tab="DCF">
+                <i data-lucide="calculator" class="nav-icon"></i>
+                <span>DCF Model</span>
+            </button>
+
+            <button class="nav-item" data-tab="News">
+                <i data-lucide="radio" class="nav-icon"></i>
+                <span>News Feed</span>
+                <span class="live-badge">RSS</span>
+            </button>
+
+            <button class="nav-item" data-tab="Screener">
+                <i data-lucide="filter" class="nav-icon"></i>
+                <span>Screener</span>
+            </button>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" id="autoRefreshBtn" aria-pressed="true">
+                    <i data-lucide="refresh-cw" class="nav-icon"></i>
+                    <span id="autoLabel">Auto-Refresh: ON</span>
+                </button>
+
+                <button class="nav-item" id="settingsBtn">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- ==================== MAIN ==================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- Sticky Header -->
+            <div class="sticky-header" role="status" aria-label="Market status">
+                <div class="header-metrics">
+                    <div class="metric-pill">
+                        <i data-lucide="activity" width="12"></i>
+                        <span>CCI:</span>
+                        <span class="value" id="headerCci">&mdash;</span>
+                    </div>
+                    <div class="metric-pill">
+                        <i data-lucide="alert-triangle" width="12"></i>
+                        <span>Crisis:</span>
+                        <span class="value" id="headerCrisis">&mdash;</span>
+                    </div>
+                    <div class="metric-pill">
+                        <i data-lucide="bar-chart-3" width="12"></i>
+                        <span>Bubble:</span>
+                        <span class="value" id="headerBubble">&mdash;</span>
+                    </div>
+                    <div class="api-status" id="apiStatus">
+                        <i data-lucide="wifi" width="10"></i>
+                        <span>Yahoo Finance</span>
+                    </div>
+                </div>
+                <span class="header-time" id="currentTime"></span>
+            </div>
+
+            <!-- ===== DASHBOARD TAB ===== -->
+            <section id="Dashboard" class="tabcontent active" role="tabpanel" aria-label="Dashboard">
+
+                <!-- Executive Summary -->
+                <div class="card card-executive mb-xl">
+                    <div class="card-header">
+                        <h3><i data-lucide="shield-check"></i> Capital Protection Status</h3>
+                        <div style="display: flex; gap: var(--space-xs);">
+                            <span id="regimeBadge" style="padding: 2px 10px; background: var(--gold); color: var(--navy); border-radius: 12px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em;">PEAK</span>
+                            <span id="confidenceBadge" style="padding: 2px 10px; background: rgba(var(--success-rgb), 0.12); color: var(--success); border-radius: 12px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em;">HIGH</span>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl);">
+                        <div>
+                            <p id="executiveSummary" style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">Analyzing market conditions&hellip;</p>
+                            <div class="callout">
+                                <h4>Recommended Actions</h4>
+                                <p id="executiveActions">Loading&hellip;</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--gold); margin-bottom: var(--space-md); font-size: 0.85rem; font-weight: 400;">Quick Stats</h4>
+                            <div id="quickStats"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="trending-up"></i> Market Snapshot</h3></div>
+                        <div id="marketSnapshot"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="cpu"></i> AI Leaders</h3></div>
+                        <div id="aiLeaders"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="alert-triangle"></i> Risk Analytics</h3></div>
+                        <div id="riskMetrics"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="shield"></i> Protocol Status</h3></div>
+                        <div id="protocolStatus"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i data-lucide="line-chart"></i> NASDAQ-100 vs NVDA (30 Days)</h3>
+                        <button class="sort-btn" id="resetZoomBtn">Reset Zoom</button>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="dashboardChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="export-bar">
+                    <button id="exportDashCSV"><i data-lucide="file-text"></i> Export CSV</button>
+                    <button class="btn-primary" id="exportDashPDF"><i data-lucide="download"></i> Export PDF</button>
+                </div>
+            </section>
+
+            <!-- ===== HEATMAP TAB ===== -->
+            <section id="Heatmap" class="tabcontent" role="tabpanel" aria-label="AI Heatmap">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i data-lucide="map"></i> AI Bubble Heatmap</h3>
+                        <span style="color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.1em;" id="heatmapCount">68 Companies</span>
+                    </div>
+
+                    <div class="sort-group">
+                        <button class="sort-btn active" data-sort="score">Bubble Score</button>
+                        <button class="sort-btn" data-sort="sector">Sector</button>
+                        <button class="sort-btn" data-sort="mcap">Market Cap</button>
+                        <button class="sort-btn" data-sort="change">% Change</button>
+                    </div>
+
+                    <label for="heatmapSearch" class="sr-only">Search AI companies</label>
+                    <input type="text" class="search-box" id="heatmapSearch" placeholder="Search symbols&hellip;" style="margin-bottom: var(--space-md); max-width: 100%;">
+
+                    <div class="heatmap-container" id="heatmapContainer" role="grid" aria-label="Heatmap grid">
+                        <div class="loader" aria-hidden="true"></div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-lg);">
+                        <div class="metric-row">
+                            <span>Average Score</span>
+                            <span class="metric-value value-gold" id="avgScore">&mdash;</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Extreme (&gt;8)</span>
+                            <span class="metric-value value-rose" id="extremeCount">&mdash;</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Safe (&lt;5)</span>
+                            <span class="metric-value value-mint" id="safeCount">&mdash;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-bar">
+                    <button id="exportHeatCSV"><i data-lucide="file-text"></i> Export CSV</button>
+                    <button class="btn-primary" id="exportHeatXLSX"><i data-lucide="table"></i> Export Excel</button>
+                </div>
+            </section>
+
+            <!-- ===== PROTOCOL TAB ===== -->
+            <section id="Protocol" class="tabcontent" role="tabpanel" aria-label="Protocol triggers">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i data-lucide="shield"></i> Protocol Trigger Status</h3>
+                        <span class="live-badge">AUTO</span>
+                    </div>
+                    <div id="protocolContainer" role="list" aria-label="Protocol trigger levels"></div>
+
+                    <div class="mt-xl">
+                        <h4 style="color: var(--gold); margin-bottom: var(--space-md); font-size: 0.85rem; font-weight: 400;">Manual Override Flags</h4>
+                        <div style="display: flex; gap: var(--space-xs); flex-wrap: wrap;">
+                            <button class="sort-btn" id="flagASML" aria-pressed="false">ASML Guidance Cut</button>
+                            <button class="sort-btn" id="flagTaiwan" aria-pressed="false">Taiwan Activity</button>
+                            <button class="sort-btn" id="flagMSFT" aria-pressed="false">Reduce MSFT</button>
+                            <button class="sort-btn" id="flagNVDA" aria-pressed="false">Exit NVDA</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== DCF TAB ===== -->
+            <section id="DCF" class="tabcontent" role="tabpanel" aria-label="DCF model">
+                <div class="grid grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="calculator"></i> NVIDIA DCF Model</h3>
+                            <button class="sort-btn" id="resetDCFBtn">Reset</button>
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="waccSlider">WACC (Discount Rate)</label>
+                                <span class="slider-value" id="waccDisplay">8.5%</span>
+                            </div>
+                            <input type="range" id="waccSlider" min="5" max="15" step="0.1" value="8.5" aria-label="WACC discount rate">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="growthSlider">Revenue Growth (5yr)</label>
+                                <span class="slider-value" id="growthDisplay">25%</span>
+                            </div>
+                            <input type="range" id="growthSlider" min="10" max="50" step="1" value="25" aria-label="Revenue growth rate">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="terminalSlider">Terminal Growth</label>
+                                <span class="slider-value" id="terminalDisplay">2.5%</span>
+                            </div>
+                            <input type="range" id="terminalSlider" min="1" max="5" step="0.1" value="2.5" aria-label="Terminal growth rate">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="fcfSlider">FCF Margin</label>
+                                <span class="slider-value" id="fcfDisplay">25%</span>
+                            </div>
+                            <input type="range" id="fcfSlider" min="15" max="40" step="1" value="25" aria-label="Free cash flow margin">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i data-lucide="target"></i> Valuation Results</h3>
+                        </div>
+                        <div class="metric-row"><span>Current Price</span><span class="metric-value value-gold" id="dcfPrice">&mdash;</span></div>
+                        <div class="metric-row"><span>Fair Value (DCF)</span><span class="metric-value" id="fairValue">&mdash;</span></div>
+                        <div class="metric-row"><span>Bubble-Adjusted FV</span><span class="metric-value" id="adjFairValue">&mdash;</span></div>
+                        <div class="metric-row"><span>Upside / Downside</span><span class="metric-value" id="upside">&mdash;</span></div>
+                        <div class="metric-row"><span>Recommendation</span><span class="metric-value" id="recommendation">&mdash;</span></div>
+
+                        <div class="callout">
+                            <h4>Analysis</h4>
+                            <p id="dcfAnalysis">Calculating&hellip;</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-bar">
+                    <button id="exportDCF"><i data-lucide="download"></i> Export Model</button>
+                </div>
+            </section>
+
+            <!-- ===== NEWS TAB ===== -->
+            <section id="News" class="tabcontent" role="tabpanel" aria-label="AI sector news">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i data-lucide="radio"></i> AI Sector Intelligence</h3>
+                        <div style="display: flex; gap: var(--space-sm); align-items: center;">
+                            <span id="newsUpdateTime" style="color: var(--text-muted); font-size: 0.65rem;">&mdash;</span>
+                            <button class="sort-btn" id="refreshNewsBtn"><i data-lucide="refresh-cw"></i> Refresh</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: var(--space-sm); margin-bottom: var(--space-lg); flex-wrap: wrap;">
+                        <div class="metric-pill">
+                            <span style="width: 5px; height: 5px; background: var(--success); border-radius: 50%; flex-shrink: 0;"></span>
+                            <span>Positive: <strong id="newsPositive">0</strong></span>
+                        </div>
+                        <div class="metric-pill">
+                            <span style="width: 5px; height: 5px; background: var(--danger); border-radius: 50%; flex-shrink: 0;"></span>
+                            <span>Negative: <strong id="newsNegative">0</strong></span>
+                        </div>
+                        <div class="metric-pill">
+                            <span style="width: 5px; height: 5px; background: var(--warning); border-radius: 50%; flex-shrink: 0;"></span>
+                            <span>Neutral: <strong id="newsNeutral">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div id="newsContainer" role="feed" aria-label="News articles">
+                        <div class="loader" aria-hidden="true"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SCREENER TAB ===== -->
+            <section id="Screener" class="tabcontent" role="tabpanel" aria-label="Stock screener">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i data-lucide="filter"></i> AI Stock Screener</h3>
+                        <div>
+                            <label for="screenerSearch" class="sr-only">Search stocks</label>
+                            <input type="text" class="search-box" id="screenerSearch" placeholder="Search&hellip;">
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table aria-label="AI stock screener data">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Symbol</th>
+                                    <th scope="col">Company</th>
+                                    <th scope="col">Sector</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Change %</th>
+                                    <th scope="col">Bubble Score</th>
+                                    <th scope="col">Signal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="screenerBody">
+                                <tr><td colspan="7" style="text-align: center; padding: var(--space-xl); color: var(--text-muted);">Loading data&hellip;</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="export-bar">
+                    <button id="exportScreenerCSV"><i data-lucide="file-text"></i> Export CSV</button>
+                    <button class="btn-primary" id="exportScreenerXLSX"><i data-lucide="table"></i> Export Excel</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Detail Panel -->
+    <aside class="detail-panel" id="detailPanel" role="dialog" aria-label="Stock detail" aria-modal="false">
+        <div class="panel-header">
+            <h3 id="detailTitle">&mdash;</h3>
+            <button class="close-btn" id="closeDetailBtn" aria-label="Close detail panel">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div id="detailContent">
+            <div class="loader" aria-hidden="true"></div>
+        </div>
+    </aside>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" role="dialog" aria-label="Settings" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+            </div>
+            <div class="form-group">
+                <label for="fmpKey">FMP API Key</label>
+                <input type="text" id="fmpKey" placeholder="demo" autocomplete="off">
+                <small>Get free key at financialmodelingprep.com</small>
+            </div>
+            <div class="form-group">
+                <label for="alphaKey">Alpha Vantage API Key (fallback)</label>
+                <input type="text" id="alphaKey" placeholder="optional" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="refreshInterval">Auto-Refresh Interval (minutes)</label>
+                <input type="number" id="refreshInterval" min="1" max="60" value="5">
+            </div>
+            <div style="display: flex; gap: var(--space-sm); justify-content: flex-end; margin-top: var(--space-lg);">
+                <button id="cancelSettingsBtn">Cancel</button>
+                <button class="btn-primary" id="saveSettingsBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Libraries (deferred) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
+    <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+        <script>
+    // ================================================================
+    // NWA TOOLKIT v5.0 — INSTITUTIONAL ANALYTICS ENGINE
+    // ================================================================
+
+    (function() {
+        'use strict';
+
+        // ==================== CONFIG ====================
+        var CONFIG = {
+            version: '5.0.0',
+            proxies: [
+                'https://nwa-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/?url=',
+                'https://corsproxy.io/?',
+                'https://api.allorigins.win/raw?url='
+            ],
+            currentProxy: 0,
+            refreshInterval: parseInt(localStorage.getItem('refreshInterval') || '5') * 60000,
+            apiKeys: {
+                fmp: localStorage.getItem('fmp_key') || 'demo',
+                alpha: localStorage.getItem('alpha_key') || ''
+            },
+            manualFlags: {
+                asml: localStorage.getItem('flag_asml') === 'true',
+                taiwan: localStorage.getItem('flag_taiwan') === 'true',
+                msft: localStorage.getItem('flag_msft') === 'true',
+                nvda: localStorage.getItem('flag_nvda') === 'true'
+            }
+        };
+
+        // ==================== AI COMPANIES (68) ====================
+        var AI_COMPANIES = [
+            {symbol:'NVDA',name:'NVIDIA Corporation',sector:'Semiconductors'},
+            {symbol:'AMD',name:'Advanced Micro Devices',sector:'Semiconductors'},
+            {symbol:'AVGO',name:'Broadcom Inc.',sector:'Semiconductors'},
+            {symbol:'QCOM',name:'Qualcomm Inc.',sector:'Semiconductors'},
+            {symbol:'INTC',name:'Intel Corporation',sector:'Semiconductors'},
+            {symbol:'MRVL',name:'Marvell Technology',sector:'Semiconductors'},
+            {symbol:'ARM',name:'Arm Holdings',sector:'Semiconductors'},
+            {symbol:'TSM',name:'Taiwan Semiconductor',sector:'Semiconductors'},
+            {symbol:'ASML',name:'ASML Holding',sector:'Semiconductors'},
+            {symbol:'MU',name:'Micron Technology',sector:'Semiconductors'},
+            {symbol:'NXPI',name:'NXP Semiconductors',sector:'Semiconductors'},
+            {symbol:'ON',name:'ON Semiconductor',sector:'Semiconductors'},
+            {symbol:'MCHP',name:'Microchip Technology',sector:'Semiconductors'},
+            {symbol:'ADI',name:'Analog Devices',sector:'Semiconductors'},
+            {symbol:'TXN',name:'Texas Instruments',sector:'Semiconductors'},
+            {symbol:'STM',name:'STMicroelectronics',sector:'Semiconductors'},
+            {symbol:'IFNNY',name:'Infineon Technologies',sector:'Semiconductors'},
+            {symbol:'POWI',name:'Power Integrations',sector:'Semiconductors'},
+            {symbol:'MSFT',name:'Microsoft Corporation',sector:'Cloud'},
+            {symbol:'GOOGL',name:'Alphabet Inc.',sector:'Cloud'},
+            {symbol:'AMZN',name:'Amazon.com Inc.',sector:'Cloud'},
+            {symbol:'META',name:'Meta Platforms',sector:'Cloud'},
+            {symbol:'ORCL',name:'Oracle Corporation',sector:'Cloud'},
+            {symbol:'IBM',name:'IBM Corporation',sector:'Cloud'},
+            {symbol:'CRM',name:'Salesforce Inc.',sector:'Cloud'},
+            {symbol:'SNOW',name:'Snowflake Inc.',sector:'Cloud'},
+            {symbol:'DDOG',name:'Datadog Inc.',sector:'Cloud'},
+            {symbol:'NET',name:'Cloudflare Inc.',sector:'Cloud'},
+            {symbol:'BABA',name:'Alibaba Group',sector:'Cloud'},
+            {symbol:'BIDU',name:'Baidu Inc.',sector:'Cloud'},
+            {symbol:'TCEHY',name:'Tencent Holdings',sector:'Cloud'},
+            {symbol:'WDAY',name:'Workday Inc.',sector:'Cloud'},
+            {symbol:'PLTR',name:'Palantir Technologies',sector:'Software'},
+            {symbol:'AI',name:'C3.ai Inc.',sector:'Software'},
+            {symbol:'BBAI',name:'BigBear.ai Holdings',sector:'Software'},
+            {symbol:'SOUN',name:'SoundHound AI',sector:'Software'},
+            {symbol:'PATH',name:'UiPath Inc.',sector:'Software'},
+            {symbol:'ADBE',name:'Adobe Inc.',sector:'Software'},
+            {symbol:'NOW',name:'ServiceNow Inc.',sector:'Software'},
+            {symbol:'PANW',name:'Palo Alto Networks',sector:'Software'},
+            {symbol:'CRWD',name:'CrowdStrike Holdings',sector:'Software'},
+            {symbol:'ZS',name:'Zscaler Inc.',sector:'Software'},
+            {symbol:'OKTA',name:'Okta Inc.',sector:'Software'},
+            {symbol:'MDB',name:'MongoDB Inc.',sector:'Software'},
+            {symbol:'SNPS',name:'Synopsys Inc.',sector:'Software'},
+            {symbol:'CDNS',name:'Cadence Design Systems',sector:'Software'},
+            {symbol:'SMCI',name:'Super Micro Computer',sector:'Hardware'},
+            {symbol:'DELL',name:'Dell Technologies',sector:'Hardware'},
+            {symbol:'HPE',name:'Hewlett Packard Enterprise',sector:'Hardware'},
+            {symbol:'ANET',name:'Arista Networks',sector:'Hardware'},
+            {symbol:'NTAP',name:'NetApp Inc.',sector:'Hardware'},
+            {symbol:'PSTG',name:'Pure Storage',sector:'Hardware'},
+            {symbol:'WDC',name:'Western Digital',sector:'Hardware'},
+            {symbol:'STX',name:'Seagate Technology',sector:'Hardware'},
+            {symbol:'JNPR',name:'Juniper Networks',sector:'Hardware'},
+            {symbol:'CSCO',name:'Cisco Systems',sector:'Hardware'},
+            {symbol:'KEYS',name:'Keysight Technologies',sector:'Hardware'},
+            {symbol:'COHR',name:'Coherent Corp.',sector:'Hardware'},
+            {symbol:'AMAT',name:'Applied Materials',sector:'Equipment'},
+            {symbol:'LRCX',name:'Lam Research',sector:'Equipment'},
+            {symbol:'KLAC',name:'KLA Corporation',sector:'Equipment'},
+            {symbol:'TER',name:'Teradyne Inc.',sector:'Equipment'},
+            {symbol:'AEHR',name:'Aehr Test Systems',sector:'Equipment'},
+            {symbol:'ACMR',name:'ACM Research',sector:'Equipment'},
+            {symbol:'VECO',name:'Veeco Instruments',sector:'Equipment'},
+            {symbol:'UCTT',name:'Ultra Clean Holdings',sector:'Equipment'},
+            {symbol:'ICHR',name:'Ichor Holdings',sector:'Equipment'},
+            {symbol:'CAMT',name:'Camtek Ltd.',sector:'Equipment'}
+        ];
+
+        // ==================== UTILITIES ====================
+        var utils = {
+            formatCurrency: function(num) {
+                if (num == null) return '\u2014';
+                return new Intl.NumberFormat('en-US', {style:'currency',currency:'USD'}).format(num);
+            },
+            formatPercent: function(num, d) {
+                if (num == null) return '\u2014';
+                d = d || 1;
+                return (num > 0 ? '+' : '') + num.toFixed(d) + '%';
+            },
+            formatNumber: function(num, d) {
+                if (num == null) return '\u2014';
+                return num.toFixed(d || 2);
+            },
+            debounce: function(func, wait) {
+                var timeout;
+                return function() {
+                    var args = arguments, ctx = this;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() { func.apply(ctx, args); }, wait);
+                };
+            },
+            showToast: function(message, type) {
+                type = type || 'info';
+                var existing = document.querySelector('.toast');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast ' + type;
+                t.innerHTML = '<div style="display:flex;align-items:center;gap:0.5rem;"><i data-lucide="' +
+                    (type === 'error' ? 'alert-circle' : type === 'success' ? 'check-circle' : 'info') +
+                    '"></i><span>' + message + '</span></div>';
+                document.body.appendChild(t);
+                if (window.lucide) lucide.createIcons();
+                setTimeout(function() { t.remove(); }, 3000);
+            },
+            showLoading: function(show, text) {
+                var o = document.getElementById('loadingOverlay');
+                var tx = o.querySelector('.loading-text');
+                if (tx) tx.textContent = text || 'Loading\u2026';
+                o.classList.toggle('active', !!show);
+            }
+        };
+
+        // ==================== CACHE ====================
+        function CacheManager(prefix) {
+            this.prefix = prefix || 'nwa_v5_';
+        }
+        CacheManager.prototype.get = function(key, maxAge) {
+            maxAge = maxAge || 300;
+            try {
+                var item = localStorage.getItem(this.prefix + key);
+                if (!item) return null;
+                var parsed = JSON.parse(item);
+                if ((Date.now() - parsed.timestamp) / 1000 > maxAge) {
+                    localStorage.removeItem(this.prefix + key);
+                    return null;
+                }
+                return parsed.value;
+            } catch(e) { return null; }
+        };
+        CacheManager.prototype.set = function(key, value) {
+            try {
+                localStorage.setItem(this.prefix + key, JSON.stringify({value:value, timestamp:Date.now()}));
+            } catch(e) {}
+        };
+
+        var cache = new CacheManager();
+
+        // ==================== REQUEST QUEUE ====================
+        function RequestQueue(max) {
+            this.max = max || 3;
+            this.running = 0;
+            this.queue = [];
+        }
+        RequestQueue.prototype.add = function(fn, priority) {
+            var self = this;
+            return new Promise(function(resolve, reject) {
+                self.queue.push({fn:fn, resolve:resolve, reject:reject, priority:priority||0});
+                self.queue.sort(function(a,b) { return b.priority - a.priority; });
+                self._next();
+            });
+        };
+        RequestQueue.prototype._next = function() {
+            if (this.running >= this.max || !this.queue.length) return;
+            var item = this.queue.shift();
+            var self = this;
+            this.running++;
+            item.fn().then(item.resolve).catch(item.reject).finally(function() {
+                self.running--;
+                self._next();
+            });
+        };
+
+        var requestQueue = new RequestQueue(3);
+
+        // ==================== API ====================
+        var api = {
+            fetchWithProxy: function(url, retries) {
+                retries = retries || 3;
+                return (async function() {
+                    for (var attempt = 0; attempt < retries; attempt++) {
+                        try {
+                            var direct = await fetch(url, {headers:{'Accept':'application/json'}, signal:AbortSignal.timeout(8000)});
+                            if (direct.ok) return direct;
+                        } catch(e) {}
+                        for (var p = 0; p < CONFIG.proxies.length; p++) {
+                            try {
+                                var proxyUrl = CONFIG.proxies[p] + encodeURIComponent(url);
+                                var response = await fetch(proxyUrl, {signal:AbortSignal.timeout(10000)});
+                                if (response.ok) { CONFIG.currentProxy = p; return response; }
+                            } catch(e) {}
+                        }
+                        if (attempt < retries - 1) await new Promise(function(r){setTimeout(r, 1000*Math.pow(2,attempt));});
+                    }
+                    throw new Error('Failed to fetch ' + url);
+                })();
+            },
+            fetchYahooQuote: function(symbol) {
+                var cacheKey = 'quote_' + symbol;
+                var cached = cache.get(cacheKey, 30);
+                if (cached) return Promise.resolve(cached);
+                var yahooMap = {'NDX':'^NDX','GSPC':'^GSPC','VIX':'^VIX','DXY':'DX-Y.NYB'};
+                var ySymbol = yahooMap[symbol] || symbol;
+                var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ySymbol + '?interval=1m&range=1d';
+                var self = this;
+                return requestQueue.add(async function() {
+                    try {
+                        var response = await self.fetchWithProxy(url);
+                        var data = await response.json();
+                        var meta = data.chart && data.chart.result && data.chart.result[0] && data.chart.result[0].meta;
+                        if (!meta) throw new Error('No metadata');
+                        var price = parseFloat(meta.regularMarketPrice);
+                        var prevClose = parseFloat(meta.chartPreviousClose || meta.previousClose || price);
+                        var change = price - prevClose;
+                        var changePercent = (change / prevClose) * 100;
+                        var quote = {price:price, change:change, changePercent:changePercent, timestamp:Date.now()};
+                        cache.set(cacheKey, quote);
+                        localStorage.setItem('fallback_' + symbol, JSON.stringify(quote));
+                        return quote;
+                    } catch(e) {
+                        var fallback = localStorage.getItem('fallback_' + symbol);
+                        if (fallback) return JSON.parse(fallback);
+                        return null;
+                    }
+                }, symbol === 'NDX' || symbol === 'VIX' ? 5 : 1);
+            },
+            fetchDailyCloses: function(symbol, range) {
+                range = range || '1mo';
+                var cacheKey = 'daily_' + symbol + '_' + range;
+                var cached = cache.get(cacheKey, 300);
+                if (cached) return Promise.resolve(cached);
+                var yahooMap = {'NDX':'^NDX','GSPC':'^GSPC'};
+                var ySymbol = yahooMap[symbol] || symbol;
+                var url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ySymbol + '?interval=1d&range=' + range;
+                var self = this;
+                return (async function() {
+                    try {
+                        var response = await self.fetchWithProxy(url);
+                        var data = await response.json();
+                        var closes = (data.chart.result[0].indicators.quote[0].close || []).filter(function(v){return v!=null;});
+                        cache.set(cacheKey, closes);
+                        return closes;
+                    } catch(e) { return []; }
+                })();
+            },
+            fetchRSS: function() {
+                var feeds = [
+                    'https://techcrunch.com/tag/artificial-intelligence/feed/',
+                    'https://www.wired.com/feed/tag/ai/latest/rss',
+                    'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml'
+                ];
+                var self = this;
+                return (async function() {
+                    var items = [];
+                    for (var f = 0; f < feeds.length; f++) {
+                        try {
+                            var response = await self.fetchWithProxy(feeds[f]);
+                            var text = await response.text();
+                            var xml = new DOMParser().parseFromString(text, 'text/xml');
+                            xml.querySelectorAll('item').forEach(function(item) {
+                                var title = (item.querySelector('title') || {}).textContent || '';
+                                var link = (item.querySelector('link') || {}).textContent || '';
+                                var desc = (item.querySelector('description') || {}).textContent || '';
+                                var pubDate = (item.querySelector('pubDate') || {}).textContent;
+                                var content = (title + ' ' + desc).toLowerCase();
+                                var posWords = ['positive','bullish','gain','surge','rally','beat','strong','growth'];
+                                var negWords = ['negative','bearish','loss','decline','drop','miss','weak','risk'];
+                                var posCount = posWords.filter(function(w){return content.includes(w);}).length;
+                                var negCount = negWords.filter(function(w){return content.includes(w);}).length;
+                                var sentiment = posCount > negCount ? 'positive' : negCount > posCount ? 'negative' : 'neutral';
+                                items.push({
+                                    title: title.trim(),
+                                    link: link.trim(),
+                                    summary: desc.replace(/<[^>]*>/g, '').trim().substring(0, 200) + '\u2026',
+                                    source: new URL(feeds[f]).hostname.replace('www.', ''),
+                                    date: pubDate ? new Date(pubDate) : new Date(),
+                                    sentiment: sentiment
+                                });
+                            });
+                        } catch(e) { continue; }
+                    }
+                    return items.sort(function(a,b){return b.date - a.date;}).slice(0, 30);
+                })();
+            }
+        };
+
+        // ==================== CALCULATIONS ====================
+        var calc = {
+            bubbleScore: function(price, changePercent, vol) {
+                if (!price) return 5;
+                vol = vol || 0.3;
+                var momentum = Math.abs(changePercent) / 10;
+                var volatility = vol * 10;
+                return Math.min(10, Math.max(1, parseFloat((5 + momentum + volatility).toFixed(1))));
+            },
+            crisisProb: function(vix, corr) {
+                if (!vix) return 45;
+                corr = corr || 0.6;
+                var vixFactor = Math.min(1, (vix - 12) / 40);
+                return Math.min(95, Math.round((vixFactor * 0.6 + corr * 0.4) * 100));
+            },
+            cci: function(vix, prev, curr) {
+                if (!vix) return 0.12;
+                prev = prev || 0.5; curr = curr || 0.6;
+                return Math.min(0.5, Math.max(0, parseFloat(((curr - prev) * vix / 20).toFixed(3))));
+            },
+            evaluateProtocol: async function() {
+                var ndxCloses = await api.fetchDailyCloses('NDX', '1mo');
+                var vix = (state.market.vix && state.market.vix.price) || 20;
+                if (ndxCloses.length < 5) return state.protocol;
+                var checkDrawdown = function(days, threshold) {
+                    var recent = ndxCloses.slice(-days);
+                    var peak = Math.max.apply(null, recent);
+                    var current = recent[recent.length - 1];
+                    return ((current - peak) / peak) * 100 <= threshold;
+                };
+                return {
+                    t1: checkDrawdown(3, -20) || vix > 25,
+                    t2: checkDrawdown(2, -30) || vix > 30,
+                    t3: checkDrawdown(1, -40) || vix > 35,
+                    t4: checkDrawdown(1, -50) || vix > 40,
+                    t5: checkDrawdown(5, -60) && vix > 50
+                };
+            },
+            dcf: function(params) {
+                var fcf = params.revenue * (params.fcfMargin / 100);
+                var npv = 0;
+                for (var y = 1; y <= 5; y++) {
+                    fcf *= (1 + params.growth / 100);
+                    npv += fcf / Math.pow(1 + params.wacc / 100, y);
+                }
+                var termFCF = fcf * (1 + params.terminal / 100);
+                var tv = termFCF / ((params.wacc - params.terminal) / 100);
+                npv += tv / Math.pow(1 + params.wacc / 100, 5);
+                return npv / params.shares;
+            }
+        };
+
+        // ==================== STATE ====================
+        var state = {
+            market: {},
+            stocks: {},
+            heatmap: [],
+            news: [],
+            screener: [],
+            protocol: {t1:false, t2:false, t3:false, t4:false, t5:false},
+            autoRefresh: true,
+            charts: {}
+        };
+
+        // ==================== DATA LOADERS ====================
+        var loaders = {
+            loadMarketData: async function() {
+                var indices = ['NDX','GSPC','VIX','DXY'];
+                var results = await Promise.allSettled(indices.map(function(s){return api.fetchYahooQuote(s);}));
+                results.forEach(function(r, i) {
+                    if (r.status === 'fulfilled' && r.value) state.market[indices[i].toLowerCase()] = r.value;
+                });
+                ui.updateHeader();
+            },
+            loadStockData: async function() {
+                var stocks = ['NVDA','AMD','MSFT','GOOGL','META','AMZN','TSLA','AVGO','SMCI','PLTR'];
+                var results = await Promise.allSettled(stocks.map(function(s){return api.fetchYahooQuote(s);}));
+                results.forEach(function(r, i) {
+                    if (r.status === 'fulfilled' && r.value) state.stocks[stocks[i]] = r.value;
+                });
+                ui.updateDashboard();
+            },
+            loadHeatmapData: async function() {
+                utils.showLoading(true, 'Loading 68 AI companies\u2026');
+                var batchSize = 10;
+                state.heatmap = [];
+                for (var i = 0; i < AI_COMPANIES.length; i += batchSize) {
+                    var batch = AI_COMPANIES.slice(i, i + batchSize);
+                    var results = await Promise.allSettled(batch.map(function(c){return api.fetchYahooQuote(c.symbol);}));
+                    results.forEach(function(r, j) {
+                        if (r.status === 'fulfilled' && r.value) {
+                            var c = batch[j], q = r.value;
+                            state.heatmap.push(Object.assign({}, c, q, {score: calc.bubbleScore(q.price, q.changePercent)}));
+                        }
+                    });
+                    ui.renderHeatmap();
+                    await new Promise(function(r){setTimeout(r, 200);});
+                }
+                utils.showLoading(false);
+                utils.showToast('Loaded ' + state.heatmap.length + ' companies', 'success');
+            },
+            loadNews: async function() {
+                utils.showLoading(true, 'Fetching news\u2026');
+                state.news = await api.fetchRSS();
+                ui.renderNews();
+                utils.showLoading(false);
+            },
+            loadScreener: async function() {
+                var companies = AI_COMPANIES.slice(0, 30);
+                var results = await Promise.allSettled(companies.map(function(c){return api.fetchYahooQuote(c.symbol);}));
+                state.screener = [];
+                results.forEach(function(r, i) {
+                    if (r.status === 'fulfilled' && r.value) {
+                        var c = companies[i], q = r.value;
+                        state.screener.push(Object.assign({}, c, q, {score: calc.bubbleScore(q.price, q.changePercent)}));
+                    }
+                });
+                ui.renderScreener();
+            },
+            loadProtocol: async function() {
+                state.protocol = await calc.evaluateProtocol();
+                ui.renderProtocol();
+            },
+            loadAll: async function() {
+                utils.showLoading(true, 'Initializing\u2026');
+                await loaders.loadMarketData();
+                await loaders.loadStockData();
+                await loaders.loadProtocol();
+                utils.showLoading(false);
+            }
+        };
+
+        // ==================== UI ====================
+        var ui = {
+            updateHeader: function() {
+                var vix = (state.market.vix && state.market.vix.price) || 20;
+                var cci = calc.cci(vix);
+                var crisis = calc.crisisProb(vix);
+                var nvda = state.stocks.NVDA;
+                var bubble = nvda ? calc.bubbleScore(nvda.price, nvda.changePercent) : 5;
+                document.getElementById('headerCci').textContent = utils.formatNumber(cci, 3);
+                document.getElementById('headerCrisis').textContent = crisis + '%';
+                document.getElementById('headerBubble').textContent = utils.formatNumber(bubble, 1);
+                document.getElementById('currentTime').textContent = new Date().toLocaleTimeString();
+            },
+            updateDashboard: function() {
+                var marketHTML = Object.entries(state.market).map(function(e) {
+                    var key = e[0], data = e[1];
+                    if (!data) return '';
+                    var cls = data.change >= 0 ? 'value-mint' : 'value-rose';
+                    return '<div class="metric-row"><span class="metric-label">' + key.toUpperCase() + '</span><span class="metric-value ' + cls + '">' + utils.formatCurrency(data.price) + ' (' + utils.formatPercent(data.changePercent) + ')</span></div>';
+                }).join('');
+                document.getElementById('marketSnapshot').innerHTML = marketHTML;
+
+                var topStocks = Object.entries(state.stocks).filter(function(e){return e[1];}).slice(0, 5);
+                document.getElementById('aiLeaders').innerHTML = topStocks.map(function(e) {
+                    var cls = e[1].change >= 0 ? 'value-mint' : 'value-rose';
+                    return '<div class="metric-row"><span class="metric-label">' + e[0] + '</span><span class="metric-value ' + cls + '">' + utils.formatCurrency(e[1].price) + ' (' + utils.formatPercent(e[1].changePercent) + ')</span></div>';
+                }).join('');
+
+                var vix = (state.market.vix && state.market.vix.price) || 20;
+                document.getElementById('riskMetrics').innerHTML =
+                    '<div class="metric-row"><span>VIX</span><span class="metric-value ' + (vix > 25 ? 'value-rose' : vix > 20 ? 'value-warning' : 'value-mint') + '">' + utils.formatNumber(vix, 2) + '</span></div>' +
+                    '<div class="metric-row"><span>Crisis Probability</span><span class="metric-value ' + (vix > 25 ? 'value-rose' : 'value-warning') + '">' + calc.crisisProb(vix) + '%</span></div>' +
+                    '<div class="metric-row"><span>CCI</span><span class="metric-value">' + utils.formatNumber(calc.cci(vix), 3) + '</span></div>';
+
+                var activeCount = Object.values(state.protocol).filter(Boolean).length;
+                document.getElementById('protocolStatus').innerHTML =
+                    '<div class="metric-row"><span>Active Triggers</span><span class="metric-value ' + (activeCount > 0 ? 'value-rose' : 'value-mint') + '">' + activeCount + '/5</span></div>' +
+                    '<div class="metric-row"><span>Current Regime</span><span class="metric-value value-gold">' + (activeCount === 0 ? 'PEAK' : activeCount > 3 ? 'CRISIS' : 'CAUTION') + '</span></div>' +
+                    '<div class="metric-row"><span>Manual Flags</span><span class="metric-value">' + Object.values(CONFIG.manualFlags).filter(Boolean).length + '/4</span></div>';
+
+                document.getElementById('quickStats').innerHTML =
+                    '<div class="metric-row"><span>VIX</span><span class="metric-value">' + utils.formatNumber(vix, 1) + '</span></div>' +
+                    '<div class="metric-row"><span>NASDAQ</span><span class="metric-value">' + (state.market.ndx ? utils.formatNumber(state.market.ndx.price, 0) : '\u2014') + '</span></div>' +
+                    '<div class="metric-row"><span>NVDA</span><span class="metric-value">' + utils.formatCurrency(state.stocks.NVDA && state.stocks.NVDA.price) + '</span></div>';
+
+                var vixLevel = vix > 30 ? 'elevated' : vix > 20 ? 'moderate' : 'low';
+                var regime = vix > 30 ? 'CRISIS' : vix > 25 ? 'CORRECTION' : vix > 20 ? 'CAUTION' : 'EXPANSION';
+                document.getElementById('regimeBadge').textContent = regime;
+                document.getElementById('confidenceBadge').textContent = vix < 20 ? 'HIGH' : vix < 25 ? 'MEDIUM' : 'LOW';
+
+                document.getElementById('executiveSummary').innerHTML =
+                    'Current market regime shows <strong style="color:var(--gold-light);">' + vixLevel + '</strong> volatility (VIX: ' + utils.formatNumber(vix, 2) + '). AI sector correlation remains ' +
+                    (calc.cci(vix) > 0.15 ? 'elevated' : 'moderate') + ' with CCI at ' + utils.formatNumber(calc.cci(vix), 3) + '. Crisis probability estimated at <strong style="color:' +
+                    (calc.crisisProb(vix) > 60 ? 'var(--danger)' : 'var(--warning)') + ';">' + calc.crisisProb(vix) + '%</strong> within 6 months.' +
+                    (activeCount > 0 ? '<br><br><strong style="color:var(--danger);">\u26A0 ' + activeCount + ' protocol trigger(s) active.</strong>' : '');
+
+                document.getElementById('executiveActions').innerHTML = vix > 30
+                    ? '\u2022 <strong>Execute risk reduction immediately</strong><br>\u2022 Activate hedging strategies<br>\u2022 Increase cash to 40%+<br>\u2022 Review stop-losses'
+                    : vix > 25
+                    ? '\u2022 Monitor positions closely<br>\u2022 Consider partial profit-taking<br>\u2022 Increase cash reserves to 20\u201330%<br>\u2022 Prepare contingency plans'
+                    : '\u2022 Maintain current allocation<br>\u2022 Monitor key support levels<br>\u2022 Review portfolio hedges<br>\u2022 Prepare trigger action plans';
+
+                if (window.lucide) lucide.createIcons();
+            },
+            renderHeatmap: function() {
+                var container = document.getElementById('heatmapContainer');
+                if (!state.heatmap.length) { container.innerHTML = '<div class="loader"></div>'; return; }
+                container.innerHTML = '';
+                state.heatmap.forEach(function(item) {
+                    var scoreClass = item.score > 8 ? 'value-rose' : item.score > 6 ? 'value-warning' : 'value-mint';
+                    var changeClass = item.changePercent >= 0 ? 'value-mint' : 'value-rose';
+                    var div = document.createElement('div');
+                    div.className = 'heatmap-item';
+                    div.setAttribute('role', 'gridcell');
+                    div.setAttribute('tabindex', '0');
+                    div.setAttribute('aria-label', item.symbol + ' bubble score ' + utils.formatNumber(item.score, 1));
+                    div.innerHTML = '<div class="heatmap-symbol">' + item.symbol + '</div><div class="heatmap-score ' + scoreClass + '">' + utils.formatNumber(item.score, 1) + '</div><div class="heatmap-price">' + utils.formatCurrency(item.price) + '</div><div class="heatmap-change ' + changeClass + '">' + utils.formatPercent(item.changePercent) + '</div>';
+                    div.onclick = function() { ui.showDetail(item); };
+                    div.onkeydown = function(e) { if (e.key === 'Enter') ui.showDetail(item); };
+                    container.appendChild(div);
+                });
+                var scores = state.heatmap.map(function(i){return i.score;});
+                var avg = scores.reduce(function(a,b){return a+b;}, 0) / scores.length;
+                document.getElementById('avgScore').textContent = utils.formatNumber(avg, 1);
+                document.getElementById('extremeCount').textContent = scores.filter(function(s){return s > 8;}).length;
+                document.getElementById('safeCount').textContent = scores.filter(function(s){return s < 5;}).length;
+                document.getElementById('heatmapCount').textContent = state.heatmap.length + ' Companies';
+            },
+            renderProtocol: function() {
+                var container = document.getElementById('protocolContainer');
+                if (!container) return;
+                var triggers = [
+                    {level:'T1', desc:'NDX \u221220% over 3 days OR VIX > 25', active:state.protocol.t1},
+                    {level:'T2', desc:'NDX \u221230% over 2 days OR VIX > 30', active:state.protocol.t2},
+                    {level:'T3', desc:'NDX \u221240% in 1 day OR VIX > 35', active:state.protocol.t3},
+                    {level:'T4', desc:'NDX \u221250% in 1 day OR VIX > 40', active:state.protocol.t4},
+                    {level:'T5', desc:'NDX \u221260% over 5 days AND VIX > 50', active:state.protocol.t5}
+                ];
+                container.innerHTML = triggers.map(function(t) {
+                    return '<div class="protocol-item ' + (t.active ? 'triggered' : '') + '" role="listitem"><div class="protocol-level">' + t.level + '</div><div class="protocol-desc">' + t.desc + '</div><div class="protocol-status ' + (t.active ? 'status-triggered' : 'status-active') + '">' + (t.active ? 'TRIGGERED' : 'INACTIVE') + '</div></div>';
+                }).join('');
+            },
+            renderNews: function() {
+                var container = document.getElementById('newsContainer');
+                if (!container) return;
+                if (!state.news.length) { container.innerHTML = '<div class="loader"></div>'; return; }
+                document.getElementById('newsUpdateTime').textContent = new Date().toLocaleTimeString();
+                container.innerHTML = state.news.map(function(item) {
+                    return '<article class="news-item" onclick="window.open(\'' + item.link + '\',\'_blank\')" role="article" tabindex="0"><div class="news-title">' + item.title + '</div><div class="news-meta"><span>' + item.source + '</span><span>' + item.date.toLocaleString() + '</span><span class="news-sentiment sentiment-' + item.sentiment + '">' + item.sentiment + '</span></div><div style="color:var(--text-muted);font-size:0.8rem;">' + item.summary + '</div></article>';
+                }).join('');
+                var counts = {positive:0, negative:0, neutral:0};
+                state.news.forEach(function(n) { counts[n.sentiment]++; });
+                document.getElementById('newsPositive').textContent = counts.positive;
+                document.getElementById('newsNegative').textContent = counts.negative;
+                document.getElementById('newsNeutral').textContent = counts.neutral;
+            },
+            renderScreener: function() {
+                var tbody = document.getElementById('screenerBody');
+                if (!tbody || !state.screener.length) return;
+                tbody.innerHTML = state.screener.map(function(item) {
+                    var chgCls = item.changePercent >= 0 ? 'value-mint' : 'value-rose';
+                    var scoreCls = item.score > 8 ? 'value-rose' : item.score > 6 ? 'value-warning' : 'value-mint';
+                    var signal = 'HOLD', sigCls = 'value-warning';
+                    if (item.score > 8) { signal = 'SELL'; sigCls = 'value-rose'; }
+                    else if (item.score < 4) { signal = 'BUY'; sigCls = 'value-mint'; }
+                    return '<tr><td><strong>' + item.symbol + '</strong></td><td>' + item.name + '</td><td>' + item.sector + '</td><td>' + utils.formatCurrency(item.price) + '</td><td><span class="' + chgCls + '">' + utils.formatPercent(item.changePercent) + '</span></td><td><span class="' + scoreCls + '">' + utils.formatNumber(item.score, 1) + '</span></td><td><strong class="' + sigCls + '">' + signal + '</strong></td></tr>';
+                }).join('');
+            },
+            updateDCF: function() {
+                var wacc = parseFloat(document.getElementById('waccSlider').value);
+                var growth = parseFloat(document.getElementById('growthSlider').value);
+                var terminal = parseFloat(document.getElementById('terminalSlider').value);
+                var fcfMargin = parseFloat(document.getElementById('fcfSlider').value);
+                document.getElementById('waccDisplay').textContent = wacc.toFixed(1) + '%';
+                document.getElementById('growthDisplay').textContent = growth.toFixed(0) + '%';
+                document.getElementById('terminalDisplay').textContent = terminal.toFixed(1) + '%';
+                document.getElementById('fcfDisplay').textContent = fcfMargin.toFixed(0) + '%';
+                var nvda = state.stocks.NVDA;
+                if (!nvda) return;
+                var fv = calc.dcf({revenue:60.92, wacc:wacc, growth:growth, terminal:terminal, fcfMargin:fcfMargin, shares:2.46});
+                var bs = calc.bubbleScore(nvda.price, nvda.changePercent);
+                var adj = Math.max(0.5, Math.min(1, 1 - (bs - 5) * 0.08));
+                var adjFV = fv * adj;
+                var upside = ((adjFV - nvda.price) / nvda.price) * 100;
+                document.getElementById('dcfPrice').textContent = utils.formatCurrency(nvda.price);
+                document.getElementById('fairValue').textContent = utils.formatCurrency(fv);
+                document.getElementById('adjFairValue').textContent = utils.formatCurrency(adjFV);
+                document.getElementById('upside').innerHTML = '<span class="' + (upside > 0 ? 'value-mint' : 'value-rose') + '">' + utils.formatPercent(upside) + '</span>';
+                var rec = 'HOLD', recCls = 'value-warning';
+                if (upside > 20) { rec = 'STRONG BUY'; recCls = 'value-mint'; }
+                else if (upside > 10) { rec = 'BUY'; recCls = 'value-mint'; }
+                else if (upside < -15) { rec = 'STRONG SELL'; recCls = 'value-rose'; }
+                else if (upside < -5) { rec = 'SELL'; recCls = 'value-rose'; }
+                document.getElementById('recommendation').innerHTML = '<strong class="' + recCls + '">' + rec + '</strong>';
+                document.getElementById('dcfAnalysis').innerHTML = upside > 0
+                    ? 'Current valuation suggests <strong style="color:var(--success);">' + utils.formatPercent(upside) + ' upside</strong> based on DCF with bubble adjustment of ' + adj.toFixed(2) + 'x.'
+                    : 'Current price implies <strong style="color:var(--danger);">' + utils.formatPercent(Math.abs(upside)) + ' downside</strong>. Bubble score of ' + bs.toFixed(1) + ' suggests elevated risk.';
+            },
+            showDetail: function(item) {
+                var panel = document.getElementById('detailPanel');
+                document.getElementById('detailTitle').textContent = item.symbol;
+                panel.classList.add('active');
+                var scoreCls = item.score > 8 ? 'value-rose' : item.score > 6 ? 'value-warning' : 'value-mint';
+                var chgCls = item.changePercent >= 0 ? 'value-mint' : 'value-rose';
+                var analysis = item.score > 8
+                    ? '<strong style="color:var(--danger);">High bubble risk.</strong> Consider reducing exposure.'
+                    : item.score > 6
+                    ? '<strong style="color:var(--warning);">Moderate bubble signals.</strong> Monitor closely.'
+                    : '<strong style="color:var(--success);">Relatively stable.</strong> Suitable for institutional holding.';
+                document.getElementById('detailContent').innerHTML =
+                    '<div class="metric-row"><span>Company</span><span class="metric-value">' + item.name + '</span></div>' +
+                    '<div class="metric-row"><span>Sector</span><span class="metric-value value-gold">' + item.sector + '</span></div>' +
+                    '<div class="metric-row"><span>Price</span><span class="metric-value value-gold">' + utils.formatCurrency(item.price) + '</span></div>' +
+                    '<div class="metric-row"><span>Change</span><span class="metric-value ' + chgCls + '">' + utils.formatPercent(item.changePercent) + '</span></div>' +
+                    '<div class="metric-row"><span>Bubble Score</span><span class="metric-value ' + scoreCls + '">' + utils.formatNumber(item.score, 1) + ' / 10</span></div>' +
+                    '<div class="callout"><h4>Analysis</h4><p>' + analysis + '</p></div>';
+            }
+        };
+
+        // ==================== CHARTS ====================
+        var charts = {
+            initDashboard: async function() {
+                var ctx = document.getElementById('dashboardChart');
+                if (!ctx) return;
+                ctx = ctx.getContext('2d');
+                var ndx = await api.fetchDailyCloses('NDX', '1mo');
+                var nvda = await api.fetchDailyCloses('NVDA', '1mo');
+                var labels = Array.from({length: Math.min(30, ndx.length)}, function(_,i){return i+1;});
+                if (state.charts.dashboard) state.charts.dashboard.destroy();
+                state.charts.dashboard = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {label:'NASDAQ-100', data:ndx.slice(-30), borderColor:'#C5A059', backgroundColor:'rgba(197,160,89,0.04)', tension:0.4, borderWidth:1.5, pointRadius:0, pointHoverRadius:3, yAxisID:'y'},
+                            {label:'NVDA', data:nvda.slice(-30), borderColor:'#7FAF95', backgroundColor:'rgba(127,175,149,0.04)', tension:0.4, borderWidth:1.5, pointRadius:0, pointHoverRadius:3, yAxisID:'y1'}
+                        ]
+                    },
+                    options: {
+                        responsive:true, maintainAspectRatio:false,
+                        interaction: {mode:'index', intersect:false},
+                        plugins: {
+                            legend: {labels:{color:'#A0A8B5', font:{size:10, family:'EB Garamond'}}},
+                            tooltip: {backgroundColor:'rgba(7,7,10,0.96)', titleColor:'#C5A059', bodyColor:'#A0A8B5', borderColor:'rgba(197,160,89,0.15)', borderWidth:1, titleFont:{family:'EB Garamond',size:11}, bodyFont:{family:'EB Garamond',size:10}},
+                            zoom: {zoom:{wheel:{enabled:true}, pinch:{enabled:true}, mode:'x'}, pan:{enabled:true, mode:'x'}}
+                        },
+                        scales: {
+                            y: {position:'left', grid:{color:'rgba(197,160,89,0.03)'}, ticks:{color:'#7A7F8B', font:{size:9, family:'EB Garamond'}}},
+                            y1: {position:'right', grid:{drawOnChartArea:false}, ticks:{color:'#7A7F8B', font:{size:9, family:'EB Garamond'}}},
+                            x: {grid:{color:'rgba(197,160,89,0.03)'}, ticks:{color:'#7A7F8B', font:{size:8, family:'EB Garamond'}}}
+                        }
+                    }
+                });
+            }
+        };
+
+        // ==================== EXPORTS ====================
+        var exporters = {
+            toPDF: async function() {
+                utils.showLoading(true, 'Generating PDF\u2026');
+                try {
+                    var el = document.getElementById('mainContent');
+                    var canvas = await html2canvas(el, {scale:2, backgroundColor:'#07070A', logging:false});
+                    var imgData = canvas.toDataURL('image/png');
+                    var pdf = new window.jspdf.jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+                    var w = pdf.internal.pageSize.getWidth();
+                    var h = (canvas.height * w) / canvas.width;
+                    pdf.addImage(imgData, 'PNG', 0, 0, w, h);
+                    pdf.save('NWA_Report_' + new Date().toISOString().split('T')[0] + '.pdf');
+                    utils.showToast('PDF exported', 'success');
+                } catch(e) {
+                    utils.showToast('PDF export failed', 'error');
+                } finally { utils.showLoading(false); }
+            },
+            toCSV: function(data, filename) {
+                if (!data.length) return;
+                var headers = Object.keys(data[0]);
+                var csv = [headers].concat(data.map(function(obj){return headers.map(function(h){return obj[h]||'';})})).map(function(r){return r.join(',');}).join('\n');
+                var blob = new Blob([csv], {type:'text/csv'});
+                var a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(a.href);
+                utils.showToast('CSV exported', 'success');
+            },
+            toExcel: function(data, filename) {
+                if (!data.length || !window.XLSX) return;
+                var ws = XLSX.utils.json_to_sheet(data);
+                var wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Data');
+                XLSX.writeFile(wb, filename);
+                utils.showToast('Excel exported', 'success');
+            }
+        };
+
+        // ==================== HANDLERS ====================
+        var handlers = {
+            refreshTimer: null,
+            setupNavigation: function() {
+                document.querySelectorAll('.nav-item[data-tab]').forEach(function(item) {
+                    item.addEventListener('click', async function() {
+                        var tab = item.dataset.tab;
+                        document.querySelectorAll('.nav-item[data-tab]').forEach(function(n){n.classList.remove('active'); n.removeAttribute('aria-current');});
+                        item.classList.add('active');
+                        item.setAttribute('aria-current', 'page');
+                        document.querySelectorAll('.tabcontent').forEach(function(t){t.classList.remove('active');});
+                        document.getElementById(tab).classList.add('active');
+                        if (tab === 'Heatmap' && !state.heatmap.length) await loaders.loadHeatmapData();
+                        if (tab === 'News' && !state.news.length) await loaders.loadNews();
+                        if (tab === 'Screener' && !state.screener.length) await loaders.loadScreener();
+                        if (tab === 'Protocol') await loaders.loadProtocol();
+                        if (tab === 'Dashboard' && !state.charts.dashboard) await charts.initDashboard();
+                        if (tab === 'DCF') ui.updateDCF();
+                        document.getElementById('sidebar').classList.remove('active');
+                    });
+                });
+            },
+            setupControls: function() {
+                var self = this;
+
+                document.getElementById('menuBtn').addEventListener('click', function() {
+                    var sb = document.getElementById('sidebar');
+                    var open = sb.classList.toggle('active');
+                    this.setAttribute('aria-expanded', String(open));
+                });
+
+                document.getElementById('autoRefreshBtn').addEventListener('click', function() {
+                    state.autoRefresh = !state.autoRefresh;
+                    document.getElementById('autoLabel').textContent = 'Auto-Refresh: ' + (state.autoRefresh ? 'ON' : 'OFF');
+                    this.setAttribute('aria-pressed', String(state.autoRefresh));
+                    if (state.autoRefresh) { self.startAutoRefresh(); utils.showToast('Auto-refresh enabled'); }
+                    else { self.stopAutoRefresh(); utils.showToast('Auto-refresh disabled'); }
+                });
+
+                document.getElementById('settingsBtn').addEventListener('click', function() {
+                    document.getElementById('settingsModal').classList.add('active');
+                    document.getElementById('fmpKey').value = CONFIG.apiKeys.fmp;
+                    document.getElementById('alphaKey').value = CONFIG.apiKeys.alpha;
+                    document.getElementById('refreshInterval').value = CONFIG.refreshInterval / 60000;
+                });
+
+                document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+                    CONFIG.apiKeys.fmp = document.getElementById('fmpKey').value;
+                    CONFIG.apiKeys.alpha = document.getElementById('alphaKey').value;
+                    CONFIG.refreshInterval = parseInt(document.getElementById('refreshInterval').value) * 60000;
+                    localStorage.setItem('fmp_key', CONFIG.apiKeys.fmp);
+                    localStorage.setItem('alpha_key', CONFIG.apiKeys.alpha);
+                    localStorage.setItem('refreshInterval', CONFIG.refreshInterval / 60000);
+                    document.getElementById('settingsModal').classList.remove('active');
+                    utils.showToast('Settings saved', 'success');
+                    if (state.autoRefresh) { self.stopAutoRefresh(); self.startAutoRefresh(); }
+                });
+
+                document.getElementById('cancelSettingsBtn').addEventListener('click', function() {
+                    document.getElementById('settingsModal').classList.remove('active');
+                });
+
+                document.getElementById('settingsModal').addEventListener('click', function(e) {
+                    if (e.target.id === 'settingsModal') e.target.classList.remove('active');
+                });
+
+                document.getElementById('closeDetailBtn').addEventListener('click', function() {
+                    document.getElementById('detailPanel').classList.remove('active');
+                });
+
+                // Esc to close panels
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        document.getElementById('detailPanel').classList.remove('active');
+                        document.getElementById('settingsModal').classList.remove('active');
+                        document.getElementById('sidebar').classList.remove('active');
+                    }
+                });
+
+                // DCF sliders
+                ['waccSlider','growthSlider','terminalSlider','fcfSlider'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) el.addEventListener('input', utils.debounce(function(){ui.updateDCF();}, 150));
+                });
+
+                document.getElementById('resetDCFBtn').addEventListener('click', function() {
+                    document.getElementById('waccSlider').value = 8.5;
+                    document.getElementById('growthSlider').value = 25;
+                    document.getElementById('terminalSlider').value = 2.5;
+                    document.getElementById('fcfSlider').value = 25;
+                    ui.updateDCF();
+                });
+
+                document.getElementById('resetZoomBtn').addEventListener('click', function() {
+                    if (state.charts.dashboard) state.charts.dashboard.resetZoom();
+                });
+
+                document.getElementById('refreshNewsBtn').addEventListener('click', function() { loaders.loadNews(); });
+
+                // Search
+                document.getElementById('heatmapSearch').addEventListener('input', utils.debounce(function(e) {
+                    var filter = e.target.value.toUpperCase();
+                    document.querySelectorAll('#heatmapContainer .heatmap-item').forEach(function(item) {
+                        item.style.display = item.querySelector('.heatmap-symbol').textContent.includes(filter) ? '' : 'none';
+                    });
+                }, 250));
+
+                document.getElementById('screenerSearch').addEventListener('input', utils.debounce(function(e) {
+                    var filter = e.target.value.toUpperCase();
+                    document.querySelectorAll('#screenerBody tr').forEach(function(row) {
+                        row.style.display = row.textContent.toUpperCase().includes(filter) ? '' : 'none';
+                    });
+                }, 250));
+
+                // Sort
+                document.querySelectorAll('.sort-btn[data-sort]').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.sort-btn[data-sort]').forEach(function(b){b.classList.remove('active');});
+                        btn.classList.add('active');
+                        self.sortHeatmap(btn.dataset.sort);
+                    });
+                });
+
+                // Manual flags
+                ['flagASML','flagTaiwan','flagMSFT','flagNVDA'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (!el) return;
+                    el.addEventListener('click', function() {
+                        var flag = id.replace('flag','').toLowerCase();
+                        CONFIG.manualFlags[flag] = !CONFIG.manualFlags[flag];
+                        localStorage.setItem('flag_' + flag, CONFIG.manualFlags[flag]);
+                        el.style.background = CONFIG.manualFlags[flag] ? 'rgba(197,160,89,0.1)' : '';
+                        el.style.borderColor = CONFIG.manualFlags[flag] ? 'var(--gold)' : '';
+                        el.setAttribute('aria-pressed', String(CONFIG.manualFlags[flag]));
+                        utils.showToast(id.replace('flag','') + ' flag ' + (CONFIG.manualFlags[flag] ? 'activated' : 'deactivated'));
+                    });
+                });
+
+                // Exports
+                document.getElementById('exportDashPDF').addEventListener('click', function(){exporters.toPDF();});
+                document.getElementById('exportDashCSV').addEventListener('click', function() {
+                    exporters.toCSV(Object.entries(state.market).map(function(e){return {Index:e[0].toUpperCase(), Price:e[1]&&e[1].price, Change:e[1]&&e[1].change, 'Change %':e[1]&&e[1].changePercent};}), 'nwa_dashboard.csv');
+                });
+                document.getElementById('exportHeatCSV').addEventListener('click', function() {
+                    exporters.toCSV(state.heatmap.map(function(i){return {Symbol:i.symbol,Name:i.name,Sector:i.sector,Price:i.price,'Change %':i.changePercent,'Bubble Score':i.score};}), 'nwa_heatmap.csv');
+                });
+                document.getElementById('exportHeatXLSX').addEventListener('click', function() {
+                    exporters.toExcel(state.heatmap.map(function(i){return {Symbol:i.symbol,Name:i.name,Sector:i.sector,Price:i.price,'Change %':i.changePercent,'Bubble Score':i.score};}), 'nwa_heatmap.xlsx');
+                });
+                document.getElementById('exportScreenerCSV').addEventListener('click', function() {
+                    exporters.toCSV(state.screener.map(function(i){return {Symbol:i.symbol,Name:i.name,Sector:i.sector,Price:i.price,'Change %':i.changePercent,'Bubble Score':i.score};}), 'nwa_screener.csv');
+                });
+                document.getElementById('exportScreenerXLSX').addEventListener('click', function() {
+                    exporters.toExcel(state.screener.map(function(i){return {Symbol:i.symbol,Name:i.name,Sector:i.sector,Price:i.price,'Change %':i.changePercent,'Bubble Score':i.score};}), 'nwa_screener.xlsx');
+                });
+                document.getElementById('exportDCF').addEventListener('click', function() {
+                    exporters.toExcel([{
+                        Symbol:'NVDA',
+                        'Current Price':document.getElementById('dcfPrice').textContent,
+                        'Fair Value':document.getElementById('fairValue').textContent,
+                        'Adj Fair Value':document.getElementById('adjFairValue').textContent,
+                        Upside:document.getElementById('upside').textContent,
+                        Recommendation:document.getElementById('recommendation').textContent,
+                        WACC:document.getElementById('waccDisplay').textContent,
+                        Growth:document.getElementById('growthDisplay').textContent,
+                        Terminal:document.getElementById('terminalDisplay').textContent,
+                        'FCF Margin':document.getElementById('fcfDisplay').textContent
+                    }], 'nwa_dcf_model.xlsx');
+                });
+            },
+            sortHeatmap: function(by) {
+                switch(by) {
+                    case 'score': state.heatmap.sort(function(a,b){return b.score - a.score;}); break;
+                    case 'sector': state.heatmap.sort(function(a,b){return a.sector.localeCompare(b.sector);}); break;
+                    case 'mcap': state.heatmap.sort(function(a,b){return (b.price||0) - (a.price||0);}); break;
+                    case 'change': state.heatmap.sort(function(a,b){return b.changePercent - a.changePercent;}); break;
+                }
+                ui.renderHeatmap();
+            },
+            startAutoRefresh: function() {
+                var self = this;
+                if (this.refreshTimer) clearInterval(this.refreshTimer);
+                this.refreshTimer = setInterval(async function() {
+                    await loaders.loadMarketData();
+                    await loaders.loadStockData();
+                    await loaders.loadProtocol();
+                    var activeTab = document.querySelector('.tabcontent.active');
+                    if (activeTab && activeTab.id === 'News') await loaders.loadNews();
+                    utils.showToast('Data refreshed', 'success');
+                }, CONFIG.refreshInterval);
+            },
+            stopAutoRefresh: function() {
+                if (this.refreshTimer) { clearInterval(this.refreshTimer); this.refreshTimer = null; }
+            }
+        };
+
+        // ==================== INIT ====================
+        function waitForLibraries(cb) {
+            var check = setInterval(function() {
+                if (window.lucide && window.Chart) {
+                    clearInterval(check);
+                    cb();
+                }
+            }, 100);
+            // Timeout fallback
+            setTimeout(function() { clearInterval(check); cb(); }, 8000);
+        }
+
+        async function init() {
+            console.log('NWA Institutional AI Bubble Analytics v5.0');
+            console.log('\u00A9 2025 North West Atlas B Corp');
+
+            if (window.lucide) lucide.createIcons();
+
+            handlers.setupNavigation();
+            handlers.setupControls();
+
+            // Clock
+            setInterval(function() {
+                var el = document.getElementById('currentTime');
+                if (el) el.textContent = new Date().toLocaleTimeString();
+            }, 1000);
+
+            await loaders.loadAll();
+            await charts.initDashboard();
+
+            if (state.autoRefresh) handlers.startAutoRefresh();
+
+            // Restore manual flag states
+            Object.keys(CONFIG.manualFlags).forEach(function(flag) {
+                var btn = document.getElementById('flag' + flag.charAt(0).toUpperCase() + flag.slice(1));
+                if (btn && CONFIG.manualFlags[flag]) {
+                    btn.style.background = 'rgba(197,160,89,0.1)';
+                    btn.style.borderColor = 'var(--gold)';
+                    btn.setAttribute('aria-pressed', 'true');
+                }
+            });
+
+            utils.showToast('Analytics loaded', 'success');
+        }
+
+        // Wait for deferred scripts then init
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() { waitForLibraries(init); });
+        } else {
+            waitForLibraries(init);
+        }
+
+        window.addEventListener('error', function(e) {
+            console.error('Error:', e.error);
+        });
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled rejection:', e.reason);
+        });
+
+    })();
+    </script>
+</body>
+</html>
