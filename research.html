@@ -3,328 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSTITUTIONAL CAPITAL SURVIVAL SYSTEM | Shamil Ibragimov | North West Atlas B Corp</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Operational Framework for Capital Management Under Structural Uncertainty. The Artificial Intelligence Bubble: Systemic Anatomy and Protocols for Institutional Survival 2025-2030.">
+    
+    <title>Institutional Capital Survival System | North West Atlas B Corp</title>
+    <meta name="description" content="Operational Framework for Capital Management Under Structural Uncertainty. The Artificial Intelligence Bubble: Systemic Anatomy and Protocols for Institutional Survival 2025–2030.">
     <meta name="author" content="Shamil Ibragimov, Ph.D.">
-    <meta name="keywords" content="institutional capital, AI bubble, systemic risk, capital management, North West Atlas, Shamil Ibragimov">
     <meta name="robots" content="noindex, nofollow">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="INSTITUTIONAL CAPITAL SURVIVAL SYSTEM">
+    
+    <meta property="og:title" content="Institutional Capital Survival System — North West Atlas B Corp">
     <meta property="og:description" content="Operational Framework for Capital Management Under Structural Uncertainty by Shamil Ibragimov, Ph.D.">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="North West Atlas B Corp">
-
-    <!-- Favicon -->
+    
     <link rel="icon" type="image/png" href="favicon.png">
-
-    <!-- Premium Typography -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:wght@200;300;400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* ================================================================
+           NWA RESEARCH PAGE v5.0
+           Unified design language with main site
+           ================================================================ */
+        
         :root {
-            --gold: #A77A3D;
-            --gold-light: #D4A76A;
-            --gold-dark: #8B6333;
-            --gold-accent: #C9A227;
-            --bg-dark: #0D0D14;
-            --bg-header: #12121A;
-            --bg-card: #1A1A2E;
-            --text-light: #F0F2F5;
-            --text-muted: #8A9099;
-            --border: #2D2D44;
-            --font-serif: 'Source Serif 4', 'Libre Baskerville', 'Computer Modern', Georgia, serif;
-            --font-heading: 'Libre Baskerville', 'Source Serif 4', Georgia, serif;
+            --gold: #C5A059;
+            --gold-light: #E8D5B5;
+            --gold-dark: #8B6F4C;
+            --gold-rgb: 197, 160, 89;
+            
+            --navy: #0C0C12;
+            --navy-deep: #07070A;
+            --charcoal: #1A1A24;
+            
+            --text-primary: #F0F0F0;
+            --text-secondary: #A0A8B5;
+            --text-muted: #7A7F8B;
+            
+            --font-primary: 'EB Garamond', Georgia, serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+            
+            --ease-slow: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html {
             scroll-behavior: smooth;
+            background: var(--navy-deep);
         }
 
         body {
-            font-family: var(--font-serif);
-            background: var(--bg-dark);
-            color: var(--text-light);
+            font-family: var(--font-primary);
+            background: var(--navy-deep);
+            color: var(--text-secondary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            font-size: 16px;
-            line-height: 1.7;
+            font-size: 17px;
+            line-height: 1.65;
+            font-weight: 300;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
-        /* ========== HEADER ========== */
-        header {
-            background: linear-gradient(180deg, var(--bg-header) 0%, var(--bg-dark) 100%);
-            padding: 80px 32px 64px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: relative;
+        ::selection {
+            background: rgba(197, 160, 89, 0.25);
+            color: var(--text-primary);
+        }
+
+        /* ===== FOCUS ===== */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid rgba(197,160,89,0.4);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
             overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
         }
 
-        /* Декоративная линия сверху */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
+        /* ===== WATERMARK ===== */
+        body::after {
+            content: "CONFIDENTIAL";
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 200;
+            color: rgba(197, 160, 89, 0.018);
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 0.3em;
+            white-space: nowrap;
+            user-select: none;
         }
 
-        /* Subtle grid pattern */
-        header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                linear-gradient(rgba(167, 122, 61, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(167, 122, 61, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
+        /* ===== AMBIENT BACKGROUND ===== */
+        .page-ambient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(197,160,89,0.015) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(197,160,89,0.01) 0%, transparent 50%);
+            z-index: -1;
             pointer-events: none;
         }
 
-        .header-content {
+        /* ===== NAV BAR (minimal) ===== */
+        .page-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 100;
+            background: rgba(7,7,10,0.92);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-bottom: 1px solid rgba(197,160,89,0.04);
+            padding: 0.8rem 0;
+        }
+
+        .page-nav .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-nav .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .page-nav .logo img {
+            height: 36px;
+            width: auto;
+            filter: drop-shadow(0 0 12px rgba(197,160,89,0.1));
+        }
+
+        .back-link {
+            font-family: var(--font-primary);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.4s ease;
+        }
+
+        .back-link:hover { color: var(--gold); }
+
+        .back-link svg {
+            width: 14px; height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            transition: transform 0.4s ease;
+        }
+
+        .back-link:hover svg { transform: translateX(-3px); }
+
+        /* ===== DOCUMENT HEADER ===== */
+        .doc-header {
+            padding: 10rem 3rem 5rem;
+            text-align: center;
             position: relative;
-            z-index: 2;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .org-label {
-            font-family: var(--font-serif);
+        /* Vertical gold line from top */
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: 6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        .doc-org {
+            font-family: var(--font-primary);
             color: var(--text-muted);
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-size: 0.6rem;
+            letter-spacing: 0.5em;
             text-transform: uppercase;
-            margin-bottom: 32px;
-            font-weight: 400;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards;
+            margin-bottom: 2.5rem;
+            opacity: 0.6;
         }
 
-        h1 {
-            font-family: var(--font-heading);
-            color: var(--gold);
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.1s forwards;
+        .doc-header h1 {
+            font-family: var(--font-display);
+            color: var(--text-primary);
+            font-size: clamp(1.8rem, 4.5vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
         }
 
-        .subtitle {
-            font-family: var(--font-serif);
+        .doc-subtitle {
+            font-family: var(--font-primary);
             color: var(--text-muted);
             font-size: 1.05rem;
             font-style: italic;
+            font-weight: 300;
             line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.2s forwards;
+            max-width: 550px;
+            margin: 0 auto 3rem;
         }
 
-        /* Theme Block */
-        .theme-block {
-            margin: 40px 0;
-            padding: 28px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        /* Theme divider block */
+        .doc-theme {
+            margin: 3rem auto;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(197,160,89,0.08);
+            border-bottom: 1px solid rgba(197,160,89,0.08);
             position: relative;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.3s forwards;
+            max-width: 500px;
         }
 
-        .theme-block::before,
-        .theme-block::after {
+        .doc-theme::before,
+        .doc-theme::after {
             content: '';
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
+            width: 4px; height: 4px;
             background: var(--gold);
             border-radius: 50%;
+            opacity: 0.3;
         }
-        .theme-block::before { top: -3px; }
-        .theme-block::after { bottom: -3px; }
+        .doc-theme::before { top: -2px; }
+        .doc-theme::after { bottom: -2px; }
 
-        .theme-title {
-            font-family: var(--font-heading);
-            color: var(--text-light);
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+        .doc-theme-title {
+            font-family: var(--font-display);
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
         }
 
-        .theme-sub {
-            font-family: var(--font-serif);
+        .doc-theme-sub {
+            font-family: var(--font-primary);
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 10px;
+            font-size: 0.8rem;
+            margin-top: 0.6rem;
             font-style: italic;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.03em;
+            opacity: 0.6;
         }
 
-        /* Author Section */
-        .author-section {
-            margin-top: 48px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.4s forwards;
+        /* Author block */
+        .doc-author {
+            margin-top: 3rem;
         }
 
-        .author-name {
-            font-family: var(--font-heading);
-            color: var(--gold-light);
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+        .doc-author-name {
+            font-family: var(--font-display);
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
             position: relative;
             display: inline-block;
         }
 
-        .author-name::after {
+        .doc-author-name::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.3;
         }
 
-        .author-title {
-            font-family: var(--font-serif);
+        .doc-author-role {
+            font-family: var(--font-primary);
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 20px;
+            font-size: 0.85rem;
+            margin-top: 1.2rem;
             line-height: 1.8;
+            font-weight: 300;
         }
 
-        .author-title strong {
-            color: var(--text-light);
-            font-weight: 600;
+        .doc-author-role strong {
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
-        /* Download Section */
-        .download-section {
-            margin-top: 48px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.5s forwards;
+        /* Download section */
+        .doc-download {
+            margin-top: 3rem;
         }
 
         .download-btn {
-            font-family: var(--font-serif);
+            font-family: var(--font-primary);
             display: inline-block;
-            padding: 18px 56px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: #fff;
+            padding: 1rem 3.5rem;
+            background: transparent;
+            color: var(--gold);
             text-decoration: none;
-            border-radius: 3px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow:
-                0 4px 20px rgba(167, 122, 61, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.1);
-            border: 1px solid var(--gold-light);
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.5s var(--ease-slow);
+            border: 1px solid rgba(197,160,89,0.3);
             position: relative;
             overflow: hidden;
         }
 
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 12px 40px rgba(167, 122, 61, 0.4),
-                inset 0 1px 0 rgba(255,255,255,0.15);
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-        }
-
-        /* Premium shine effect */
         .download-btn::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.06), transparent);
             transition: left 0.7s ease;
         }
 
-        .download-btn:hover::before {
-            left: 100%;
+        .download-btn:hover {
+            border-color: rgba(197,160,89,0.6);
+            color: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(197,160,89,0.1);
         }
 
-        .meta-info {
-            font-family: var(--font-serif);
-            margin-top: 24px;
-            font-size: 0.8rem;
+        .download-btn:hover::before { left: 100%; }
+
+        .doc-meta {
+            margin-top: 1.5rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
         }
 
-        .meta-info span {
+        .doc-meta span {
             color: var(--gold);
-            font-weight: 600;
+            font-weight: 500;
+            opacity: 1;
         }
 
-        /* ========== MAIN ========== */
-        main {
+        /* ===== PDF VIEWER ===== */
+        .viewer-section {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 48px 24px;
-            background: var(--bg-dark);
+            align-items: flex-start;
+            padding: 3rem 3rem 4rem;
+            position: relative;
+            z-index: 1;
         }
 
         .pdf-container {
             width: 100%;
             max-width: 1100px;
-            height: calc(100vh - 420px);
-            min-height: 550px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            height: calc(100vh - 200px);
+            min-height: 500px;
+            border: 1px solid rgba(197,160,89,0.06);
             overflow: hidden;
-            background: #080810;
+            background: #050508;
             box-shadow:
                 0 30px 80px rgba(0,0,0,0.5),
-                0 0 0 1px rgba(167, 122, 61, 0.1);
+                0 0 0 1px rgba(197,160,89,0.03);
             position: relative;
         }
 
-        .pdf-container::before {
-            content: 'Loading document...';
+        .pdf-loading {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            text-align: center;
             z-index: 0;
         }
 
-        iframe {
+        .pdf-loading-text {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            opacity: 0.4;
+        }
+
+        .pdf-loading-bar {
+            width: 60px;
+            height: 1px;
+            background: rgba(197,160,89,0.1);
+            margin: 1rem auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            animation: loadSlide 2s ease-in-out infinite;
+        }
+
+        @keyframes loadSlide {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .pdf-container iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -332,176 +439,276 @@
             z-index: 1;
         }
 
-        /* ========== FOOTER ========== */
-        footer {
+        /* Mobile: fallback for PDF */
+        .pdf-fallback {
+            display: none;
             text-align: center;
-            padding: 40px 24px;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #080810 100%);
+            padding: 4rem 2rem;
+        }
+
+        .pdf-fallback p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .pdf-container { display: none; }
+            .pdf-fallback { display: block; }
+        }
+
+        /* ===== FOOTER ===== */
+        .page-footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(197,160,89,0.03);
+            position: relative;
+            z-index: 1;
         }
 
         .footer-badge {
-            font-family: var(--font-serif);
+            font-family: var(--font-primary);
             display: inline-block;
-            padding: 12px 28px;
-            background: transparent;
-            border: 1px solid var(--gold);
-            border-radius: 2px;
+            padding: 0.6rem 1.5rem;
+            border: 1px solid rgba(197,160,89,0.15);
             color: var(--gold);
-            font-size: 0.65rem;
-            letter-spacing: 2px;
+            font-size: 0.55rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .footer-badge:hover {
-            background: rgba(167, 122, 61, 0.1);
+            font-weight: 500;
+            opacity: 0.6;
         }
 
         .footer-locations {
-            font-family: var(--font-serif);
-            margin-top: 20px;
-            font-size: 0.8rem;
+            font-family: var(--font-primary);
+            margin-top: 1.5rem;
+            font-size: 0.6rem;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.15em;
+            opacity: 0.4;
         }
 
         .footer-locations span {
+            margin: 0 0.4rem;
             color: var(--gold);
-            margin: 0 8px;
+            opacity: 0.5;
         }
 
-        .copyright {
-            font-family: var(--font-serif);
-            margin-top: 16px;
-            font-size: 0.7rem;
+        .footer-copyright {
+            margin-top: 1rem;
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            opacity: 0.3;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-disclaimer {
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: rgba(0,0,0,0.2);
+            border-left: 1px solid rgba(197,160,89,0.08);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+            font-size: 0.55rem;
+            line-height: 1.7;
             color: var(--text-muted);
             opacity: 0.5;
         }
 
-        /* ========== WATERMARK ========== */
-        body::after {
-            content: "CONFIDENTIAL — NORTH WEST ATLAS INTERNAL";
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: clamp(40px, 8vw, 80px);
-            font-weight: 900;
-            color: rgba(167, 122, 61, 0.025);
-            pointer-events: none;
-            z-index: 0;
-            letter-spacing: 10px;
-            white-space: nowrap;
-            font-family: 'Libre Baskerville', serif;
-            user-select: none;
+        .footer-disclaimer a {
+            color: var(--gold);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 0.5px;
         }
 
-        /* ========== ANIMATIONS ========== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ===== ENTRY ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeUp 0.9s var(--ease-slow) forwards;
         }
 
-        /* ========== RESPONSIVE ========== */
+        .fade-in-1 { animation-delay: 0.1s; }
+        .fade-in-2 { animation-delay: 0.25s; }
+        .fade-in-3 { animation-delay: 0.4s; }
+        .fade-in-4 { animation-delay: 0.55s; }
+        .fade-in-5 { animation-delay: 0.7s; }
+        .fade-in-6 { animation-delay: 0.85s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in { opacity: 1; transform: none; animation: none; }
+            .pdf-loading-bar::after { animation: none; }
+            body::after { display: none; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .doc-header { padding: 9rem 2rem 4rem; }
+            .viewer-section { padding: 2rem; }
+        }
+
         @media (max-width: 768px) {
-            header {
-                padding: 60px 20px 48px;
-            }
-
-            h1 {
+            .page-nav .nav-inner { padding: 0 1.5rem; }
+            .doc-header { padding: 7rem 1.5rem 3rem; }
+            
+            .doc-header h1 {
                 font-size: 1.6rem;
-                letter-spacing: 1px;
+                letter-spacing: 0.03em;
             }
-
-            .subtitle {
-                font-size: 0.95rem;
-            }
-
-            .download-btn {
-                padding: 16px 40px;
-                font-size: 0.9rem;
-            }
-
-            .pdf-container {
-                min-height: 400px;
-                height: calc(100vh - 350px);
-            }
-
+            
+            .doc-subtitle { font-size: 0.95rem; }
+            .download-btn { padding: 0.9rem 2.5rem; font-size: 0.75rem; }
+            
+            .viewer-section { padding: 1.5rem; }
+            
             .footer-locations span {
                 display: block;
-                margin: 4px 0;
+                margin: 0.3rem 0;
             }
         }
 
-        /* ========== PRINT STYLES ========== */
+        @media (max-width: 480px) {
+            .doc-header { padding: 6.5rem 1.2rem 2.5rem; }
+            .page-nav .nav-inner { padding: 0 1.2rem; }
+        }
+
+        /* ===== PRINT ===== */
         @media print {
-            body::after {
-                display: none;
-            }
-            header, footer {
-                background: white;
-                color: black;
-            }
+            body::after,
+            .page-ambient,
+            .page-nav,
+            .viewer-section { display: none; }
+            
+            body { background: #fff; color: #000; }
+            .doc-header { padding-top: 2rem; }
+            .doc-header h1 { color: #000; }
+            .doc-author-name { color: #333; }
+            .download-btn { border-color: #333; color: #333; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="org-label">North West Atlas B Corp</div>
+    <div class="page-ambient" aria-hidden="true"></div>
 
-            <h1>INSTITUTIONAL CAPITAL<br>SURVIVAL SYSTEM</h1>
+    <!-- ==================== NAV ==================== -->
+    <nav class="page-nav" aria-label="Research navigation">
+        <div class="nav-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" width="144" height="36">
+            </a>
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Main Site</span>
+            </a>
+        </div>
+    </nav>
 
-            <p class="subtitle">Operational Framework for Capital Management<br>Under Structural Uncertainty</p>
+    <!-- ==================== DOCUMENT HEADER ==================== -->
+    <header class="doc-header" role="banner">
+        <div class="doc-org fade-in fade-in-1">North West Atlas B Corp</div>
 
-            <div class="theme-block">
-                <div class="theme-title">THE ARTIFICIAL INTELLIGENCE BUBBLE</div>
-                <div class="theme-sub">Systemic Anatomy&ensp;|&ensp;Protocols for Institutional Survival&ensp;|&ensp;2025–2030</div>
+        <h1 class="fade-in fade-in-2">
+            Institutional Capital<br>Survival System
+        </h1>
+
+        <p class="doc-subtitle fade-in fade-in-3">
+            Operational Framework for Capital Management<br>
+            Under Structural Uncertainty
+        </p>
+
+        <div class="doc-theme fade-in fade-in-4">
+            <div class="doc-theme-title">The Artificial Intelligence Bubble</div>
+            <div class="doc-theme-sub">
+                Systemic Anatomy&ensp;·&ensp;Protocols for Institutional Survival&ensp;·&ensp;2025–2030
             </div>
+        </div>
 
-            <div class="author-section">
-                <div class="author-name">Shamil Ibragimov</div>
-                <div class="author-title">
-                    <strong>Founder & CEO</strong>, North West Atlas B Corp<br>
-                    Ph.D. in Strategic Planning
-                </div>
+        <div class="doc-author fade-in fade-in-5">
+            <div class="doc-author-name">Shamil Ibragimov</div>
+            <div class="doc-author-role">
+                <strong>Founder &amp; CEO</strong>, North West Atlas B Corp<br>
+                Ph.D. in Strategic Planning
             </div>
+        </div>
 
-            <div class="download-section">
-                <a href="NWA_Institutional_Capital_Survival_System.pdf" class="download-btn" download>
-                    Download Full Monograph
-                </a>
-                <div class="meta-info">
-                    <span>208</span> pages&ensp;|&ensp;<span>1.4 MB</span>&ensp;|&ensp;December 2025&ensp;|&ensp;MA4-ICS-2025-12-v6.2
-                </div>
+        <div class="doc-download fade-in fade-in-6">
+            <a href="NWA_Institutional_Capital_Survival_System.pdf" 
+               class="download-btn" 
+               download
+               aria-label="Download full monograph PDF, 208 pages, 1.4 MB">
+                Download Full Monograph
+            </a>
+            <div class="doc-meta">
+                <span>208</span> pages&ensp;·&ensp;<span>1.4 MB</span>&ensp;·&ensp;December 2025&ensp;·&ensp;MA4-ICS-2025-12-v6.2
             </div>
         </div>
     </header>
 
-    <main>
+    <!-- ==================== PDF VIEWER ==================== -->
+    <main class="viewer-section" aria-label="Document viewer">
         <div class="pdf-container">
+            <div class="pdf-loading" aria-hidden="true">
+                <div class="pdf-loading-text">Loading document</div>
+                <div class="pdf-loading-bar"></div>
+            </div>
             <iframe
                 src="NWA_Institutional_Capital_Survival_System.pdf"
-                type="application/pdf"
-                title="INSTITUTIONAL CAPITAL SURVIVAL SYSTEM - Full Monograph">
+                title="Institutional Capital Survival System — Full Monograph"
+                loading="lazy">
             </iframe>
+        </div>
+
+        <!-- Mobile fallback -->
+        <div class="pdf-fallback" role="region" aria-label="Document download">
+            <p>
+                PDF viewer is optimized for desktop browsers. 
+                Download the full monograph to read on your device.
+            </p>
+            <a href="NWA_Institutional_Capital_Survival_System.pdf" 
+               class="download-btn" 
+               download
+               aria-label="Download PDF monograph">
+                Download PDF
+            </a>
         </div>
     </main>
 
-    <footer>
-        <div class="footer-badge">Limited Circulation&ensp;|&ensp;Confidential&ensp;|&ensp;Institutional Investors Only</div>
-        <div class="footer-locations">
-            North West Atlas B Corp<span>|</span>Zurich<span>|</span>Singapore<span>|</span>Dubai<span>|</span>Saint Petersburg
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="page-footer" role="contentinfo">
+        <div class="footer-badge">
+            Limited Circulation&ensp;·&ensp;Confidential&ensp;·&ensp;Institutional Investors Only
         </div>
-        <div class="copyright">&copy; 2025 North West Atlas B Corp. All rights reserved.</div>
+        
+        <div class="footer-locations">
+            North West Atlas B Corp<span>·</span>Zurich<span>·</span>Singapore<span>·</span>Dubai<span>·</span>Saint Petersburg
+        </div>
+        
+        <div class="footer-copyright">
+            &copy; 2025 North West Atlas B Corp. All rights reserved.
+        </div>
+
+        <div class="footer-disclaimer">
+            <p>
+                This document is provided for informational purposes only and does not constitute 
+                an offer to sell or solicitation of an offer to buy any securities. The views expressed 
+                herein are those of the author and do not necessarily reflect the official position of 
+                North West Atlas B Corp. Past performance is not indicative of future results. 
+                This material is intended for <a href="disclosures.html">qualified institutional investors</a> only.
+            </p>
+        </div>
     </footer>
 </body>
 </html>
