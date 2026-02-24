@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NWA | Legal Framework & Institutional Disclosures</title>
+    <meta name="description" content="North West Atlas B Corp — Institutional disclosures, legal framework, and regulatory compliance documentation.">
+    <meta name="robots" content="noindex, follow">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400&family=JetBrains+Mono:wght@200;300;400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #C9A96E;
+            --gold-dim: #6d5831;
+            --gold-light: #E8D5B5;
+            --gold-rgb: 201, 169, 110;
+            
+            --bg-deep: #04040A;
+            --bg-sidebar: #08080F;
+            --bg-surface: #0B0B14;
+            --bg-card: rgba(255, 255, 255, 0.012);
+            
+            --border: rgba(201, 169, 110, 0.06);
+            --border-hover: rgba(201, 169, 110, 0.15);
+            --border-active: rgba(201, 169, 110, 0.35);
+            
+            --text-main: #E8E8EC;
+            --text-secondary: #A0A7B5;
+            --text-muted: #4B5563;
+            --text-clause: #8B919E;
+            
+            --font-serif: 'EB Garamond', Georgia, serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --radius: 16px;
+            --radius-sm: 8px;
+            
+            --sidebar-width: 320px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        ::selection {
+            background: rgba(var(--gold-rgb), 0.25);
+            color: var(--text-main);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(var(--gold-rgb), 0.15);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(var(--gold-rgb), 0.3);
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* === AMBIENT LAYER === */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.01;
+        }
+
+        .ambient-gradient {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(var(--gold-rgb), 0.012) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(var(--gold-rgb), 0.006) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* === READING PROGRESS BAR === */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light));
+            z-index: 200;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 15px rgba(var(--gold-rgb), 0.2);
+        }
+
+        /* === LAYOUT === */
+        .legal-layout {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === SIDEBAR === */
+        aside {
+            background: rgba(8, 8, 15, 0.85);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            border-right: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-logo img {
+            height: 32px;
+            width: auto;
+            opacity: 0.8;
+            transition: all 0.5s var(--ease-smooth);
+            filter: drop-shadow(0 0 12px rgba(var(--gold-rgb), 0.06));
+        }
+
+        .sidebar-logo img:hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 20px rgba(var(--gold-rgb), 0.12));
+        }
+
+        .doc-meta {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            line-height: 2;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .doc-meta .meta-value {
+            color: var(--text-secondary);
+        }
+
+        .doc-meta .meta-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .status-dot-sm {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #00E87B;
+            box-shadow: 0 0 6px #00E87B;
+            display: inline-block;
+        }
+
+        .toc-title {
+            font-family: var(--font-mono);
+            font-size: 0.48rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.4;
+            margin-bottom: 1.2rem;
+            font-weight: 300;
+        }
+
+        .toc-list {
+            list-style: none;
+            margin-bottom: auto;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.15rem;
+        }
+
+        .toc-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.05em;
+            transition: all 0.4s var(--ease-smooth);
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            position: relative;
+            font-weight: 300;
+        }
+
+        .toc-link::before {
+            content: '';
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--gold);
+            margin-right: 0.8rem;
+            opacity: 0;
+            transition: all 0.4s var(--ease-smooth);
+            flex-shrink: 0;
+        }
+
+        .toc-link:hover {
+            color: var(--text-secondary);
+            background: rgba(var(--gold-rgb), 0.03);
+        }
+
+        .toc-link.active {
+            color: var(--text-main);
+            background: rgba(var(--gold-rgb), 0.05);
+        }
+
+        .toc-link.active::before {
+            opacity: 1;
+            width: 4px;
+            height: 4px;
+            box-shadow: 0 0 8px rgba(var(--gold-rgb), 0.4);
+        }
+
+        .sidebar-footer {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .return-link {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            border-radius: var(--radius-sm);
+            transition: all 0.5s var(--ease-smooth);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 300;
+            justify-content: center;
+        }
+
+        .return-link:hover {
+            background: rgba(var(--gold-rgb), 0.05);
+            border-color: rgba(var(--gold-rgb), 0.2);
+            transform: translateY(-1px);
+        }
+
+        .return-link svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        /* === MAIN CONTENT === */
+        main {
+            padding: 4rem 5rem 6rem;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Subtle watermark */
+        .watermark {
+            position: fixed;
+            bottom: 5%;
+            right: -2%;
+            font-family: var(--font-display);
+            font-size: 8rem;
+            font-weight: 200;
+            color: rgba(255, 255, 255, 0.008);
+            transform: rotate(-90deg);
+            transform-origin: right bottom;
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        /* Document header */
+        .doc-header {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .doc-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 200;
+            line-height: 1.05;
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .doc-header h1 .gold-text {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .doc-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .doc-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            opacity: 0.3;
+        }
+
+        /* === ARTICLE === */
+        article {
+            max-width: 740px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === CLAUSE SECTIONS === */
+        .clause {
+            margin-bottom: 3rem;
+            padding: 2rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            transition: all 0.6s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clause::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: all 0.6s var(--ease-smooth);
+        }
+
+        .clause::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(var(--gold-rgb), 0.015) 0%, transparent 40%);
+            opacity: 0;
+            transition: opacity 0.6s var(--ease-smooth);
+            pointer-events: none;
+        }
+
+        .clause:hover {
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.018);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .clause:hover::before {
+            opacity: 0.3;
+            left: 10%;
+            right: 10%;
+        }
+
+        .clause:hover::after {
+            opacity: 1;
+        }
+
+        .clause-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .clause-badge {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            color: var(--gold);
+            background: rgba(var(--gold-rgb), 0.06);
+            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            letter-spacing: 0.1em;
+            flex-shrink: 0;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .clause h2 {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 400;
+            color: var(--text-main);
+            position: relative;
+            z-index: 1;
+        }
+
+        .clause p {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text-clause);
+            margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .clause p:last-child {
+            margin-bottom: 0;
+        }
+
+        .clause p strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .clause-notice {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--gold);
+            opacity: 0.6;
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        /* === SIGNATURE BLOCK === */
+        .signature-section {
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: end;
+        }
+
+        .signature-info {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        .signature-info .sig-name {
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .signature-seal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .seal-ring {
+            width: 56px;
+            height: 56px;
+            border: 1px solid rgba(var(--gold-rgb), 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .seal-ring::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border-radius: 50%;
+        }
+
+        .seal-ring svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 1;
+            opacity: 0.6;
+        }
+
+        .seal-text {
+            font-family: var(--font-mono);
+            font-size: 0.45rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.4;
+            font-weight: 300;
+        }
+
+        /* === BACK TO TOP === */
+        .back-to-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 4rem;
+            padding: 1rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            opacity: 0.4;
+            transition: all 0.4s var(--ease-smooth);
+            font-weight: 300;
+        }
+
+        .back-to-top:hover {
+            opacity: 0.8;
+            color: var(--gold);
+        }
+
+        .back-to-top svg {
+            width: 10px;
+            height: 10px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        /* === REVEAL ANIMATION === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-stagger .clause {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+        }
+
+        .reveal-stagger.visible .clause:nth-child(1) { transition-delay: 0s; }
+        .reveal-stagger.visible .clause:nth-child(2) { transition-delay: 0.08s; }
+        .reveal-stagger.visible .clause:nth-child(3) { transition-delay: 0.16s; }
+        .reveal-stagger.visible .clause:nth-child(4) { transition-delay: 0.24s; }
+        .reveal-stagger.visible .clause:nth-child(5) { transition-delay: 0.32s; }
+        .reveal-stagger.visible .clause:nth-child(6) { transition-delay: 0.40s; }
+        .reveal-stagger.visible .clause:nth-child(7) { transition-delay: 0.48s; }
+
+        .reveal-stagger.visible .clause {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-stagger .clause {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1100px) {
+            main { padding: 3rem 3rem 5rem; }
+        }
+
+        @media (max-width: 900px) {
+            .legal-layout {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                height: auto;
+                position: relative;
+                padding: 1.5rem 2rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .doc-meta { display: none; }
+            .toc-title { display: none; }
+
+            .toc-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.3rem;
+                margin-bottom: 0;
+            }
+
+            .toc-link {
+                font-size: 0.5rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .toc-link::before { display: none; }
+
+            .sidebar-footer { display: none; }
+
+            main {
+                padding: 2.5rem 1.5rem 4rem;
+            }
+
+            .clause {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .doc-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .watermark { display: none; }
+
+            .signature-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .signature-seal {
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            aside {
+                padding: 1rem 1.2rem;
+            }
+
+            .toc-list { display: none; }
+
+            .sidebar-logo img { height: 28px; }
+
+            main { padding: 2rem 1.2rem 3rem; }
+
+            .clause { padding: 1.2rem; }
+        }
+
+        /* === PRINT === */
+        @media print {
+            .noise-overlay, .ambient-gradient, .watermark, .reading-progress { display: none; }
+            aside { display: none; }
+            .legal-layout { grid-template-columns: 1fr; }
+            body { background: white; color: black; }
+            main { padding: 2rem; }
+            .clause {
+                border: 1px solid #ddd;
+                background: white;
+                page-break-inside: avoid;
+                box-shadow: none;
+                transform: none;
+            }
+            .clause:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .clause p { color: #333; }
+            .clause h2 { color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="ambient-gradient" aria-hidden="true"></div>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+    <div class="watermark" aria-hidden="true">LEGAL</div>
+
+    <div class="legal-layout">
+
+        <!-- SIDEBAR -->
+        <aside role="navigation" aria-label="Document navigation">
+            <div>
+                <div class="sidebar-logo">
+                    <a href="index.html">
+                        <img src="logo-nwa-centered.png" 
+                             alt="North West Atlas B Corp" 
+                             width="120" height="32"
+                             loading="eager">
+                    </a>
+                </div>
+
+                <div class="doc-meta">
+                    DOC_ID: <span class="meta-value">NWA-DISC-2025-01</span><br>
+                    STATUS: <span class="meta-status"><span class="status-dot-sm"></span> <span class="meta-value">EFFECTIVE</span></span><br>
+                    JURISDICTION: <span class="meta-value">UAE / CAYMAN ISL.</span><br>
+                    LAST AMENDED: <span class="meta-value">DEC 31, 2025</span>
+                </div>
+
+                <div class="toc-title">Contents</div>
+
+                <ul class="toc-list" id="tocList">
+                    <li><a href="#s1" class="toc-link active">§ 01 No Investment Advice</a></li>
+                    <li><a href="#s2" class="toc-link">§ 02 Risk Factors</a></li>
+                    <li><a href="#s3" class="toc-link">§ 03 Forward-Looking</a></li>
+                    <li><a href="#s4" class="toc-link">§ 04 Intellectual Property</a></li>
+                    <li><a href="#s5" class="toc-link">§ 05 Data Integrity</a></li>
+                    <li><a href="#s6" class="toc-link">§ 06 Limitation of Liability</a></li>
+                    <li><a href="#s7" class="toc-link">§ 07 Governing Law</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="index.html" class="return-link">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19 12H5m7-7l-7 7 7 7"/>
+                    </svg>
+                    Return to Main
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main id="mainContent">
+            <div class="doc-header reveal">
+                <h1>Institutional <span class="gold-text">Disclosures</span></h1>
+                <div class="doc-subtitle">Framework for Professional Counterparties & Qualified Investors</div>
+                <div class="doc-divider" aria-hidden="true"></div>
+            </div>
+
+            <article class="reveal-stagger reveal">
+
+                <div id="s1" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 01.00</span>
+                        <h2>No Investment Advice</h2>
+                    </div>
+                    <p>The content provided within the North West Atlas environment, including algorithmic stress tests and "Bubble Index" metrics, is strictly for <strong>informational and educational simulation purposes</strong>. It does not constitute an offer to sell or a solicitation of an offer to buy any security, investment product, or financial instrument.</p>
+                    <p>North West Atlas B Corp is not a registered investment advisor, broker-dealer, or financial planner. The data presented represents theoretical modeling and should not be interpreted as actionable financial guidance. Users should consult qualified financial professionals before making investment decisions.</p>
+                </div>
+
+                <div id="s2" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 02.00</span>
+                        <h2>Risk Factors & Volatility</h2>
+                    </div>
+                    <p>Deployment of capital into high-growth sectors — specifically Artificial Intelligence and related derivatives — carries a <strong>substantial risk of loss, including total loss of principal</strong>. The models provided by NWA utilize historical data which is inherently backward-looking and is not indicative of future performance.</p>
+                    <p>Users assume full responsibility for any financial decisions made utilizing our analytical framework. NWA guarantees mathematical accuracy of the published formulas within stated parameters, but makes no guarantee regarding the profitability of any outcome derived therefrom.</p>
+                    <p>Assets Under Advisory (AUA) figures represent the aggregate notional value of assets for which NWA provides advisory services and do not represent assets under management or custody.</p>
+                </div>
+
+                <div id="s3" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 03.00</span>
+                        <h2>Forward-Looking Statements</h2>
+                    </div>
+                    <p>This platform contains forward-looking statements and predictive analytics regarding market trajectories, sector performance, and risk scenarios. Such statements are based on current assumptions, models, and data sources that are subject to material change without notice.</p>
+                    <p>North West Atlas undertakes no obligation to update, revise, or correct any forward-looking statements, whether as a result of new information, future events, or otherwise.</p>
+                </div>
+
+                <div id="s4" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 04.00</span>
+                        <h2>Intellectual Property</h2>
+                    </div>
+                    <p>The entire content of this platform, including but not limited to the "NWA Bubble Index™," proprietary analytical frameworks, ML models, research methodologies, and all associated documentation, is the <strong>exclusive intellectual property</strong> of North West Atlas B Corp.</p>
+                    <p>Unauthorized reproduction, distribution, reverse engineering, or commercial use of any NWA intellectual property is strictly prohibited and will be pursued under applicable laws including the intellectual property laws of the United Arab Emirates and the Cayman Islands.</p>
+                </div>
+
+                <div id="s5" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 05.00</span>
+                        <h2>Data Integrity & Sources</h2>
+                    </div>
+                    <p>Market data and financial information displayed on this platform is sourced from third-party data providers and publicly available sources. While NWA employs rigorous verification protocols, we assume no liability for errors, omissions, delays, or interruptions in data feeds.</p>
+                    <p>The NWA AI Coverage Universe comprises a defined set of publicly traded companies tracked and analyzed by our proprietary systems. Users are advised to independently verify all critical data points before reliance.</p>
+                </div>
+
+                <div id="s6" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 06.00</span>
+                        <h2>Limitation of Liability</h2>
+                    </div>
+                    <p>To the maximum extent permitted by applicable law, North West Atlas B Corp, its directors, officers, employees, and affiliates shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from or related to:</p>
+                    <p>(a) the use or inability to use this platform or any content therein; (b) any investment decisions made in reliance on information provided; (c) any unauthorized access to or alteration of data transmissions; or (d) any errors, inaccuracies, or omissions in content — even if advised of the possibility of such damages.</p>
+                </div>
+
+                <div id="s7" class="clause">
+                    <div class="clause-header">
+                        <span class="clause-badge">§ 07.00</span>
+                        <h2>Governing Law & Jurisdiction</h2>
+                    </div>
+                    <p>These terms and all matters arising from the use of this platform shall be governed by and construed in accordance with the <strong>laws of the United Arab Emirates</strong> for matters relating to the corporate entity, and the <strong>laws of the Cayman Islands</strong> for matters relating to enforcement and recovery operations.</p>
+                    <p>By accessing this platform, you irrevocably submit to the exclusive jurisdiction of the competent courts in the applicable jurisdiction. Any disputes shall first be submitted to binding arbitration in accordance with the rules of the relevant arbitral institution.</p>
+                    <div class="clause-notice">// MANDATORY ARBITRATION CLAUSE ACTIVE — SEE SCHEDULE A</div>
+                </div>
+
+            </article>
+
+            <!-- SIGNATURE -->
+            <div class="signature-section reveal">
+                <div class="signature-grid">
+                    <div class="signature-info">
+                        <div class="sig-name">NORTH WEST ATLAS B CORP</div>
+                        Licensed Entity — UAE License #786048<br>
+                        Sharjah, United Arab Emirates<br>
+                        <br>
+                        Cayman Islands Operations Division<br>
+                        George Town, Grand Cayman
+                    </div>
+                    <div class="signature-seal">
+                        <div class="seal-ring">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <span class="seal-text">Official Record</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#mainContent" class="back-to-top">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 19V5m-7 7l7-7 7 7"/>
+                </svg>
+                Back to top
+            </a>
+        </main>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // === READING PROGRESS BAR ===
+        var progressBar = document.getElementById('readingProgress');
+        
+        function updateProgress() {
+            var scrollTop = window.scrollY;
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            progressBar.style.width = progress + '%';
+        }
+
+        // === SCROLL SPY ===
+        var clauses = document.querySelectorAll('.clause');
+        var tocLinks = document.querySelectorAll('.toc-link');
+        var ticking = false;
+
+        function updateScrollSpy() {
+            var scrollPos = window.scrollY + 120;
+            var currentId = '';
+
+            clauses.forEach(function(clause) {
+                var top = clause.offsetTop;
+                var height = clause.offsetHeight;
+                if (scrollPos >= top && scrollPos < top + height + 50) {
+                    currentId = clause.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(function(link) {
+                var href = link.getAttribute('href');
+                var isActive = currentId && href === '#' + currentId;
+                link.classList.toggle('active', !!isActive);
+            });
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    updateProgress();
+                    updateScrollSpy();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateProgress();
+        updateScrollSpy();
+
+        // === SMOOTH SCROLL FOR TOC ===
+        tocLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                var target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: prefersReduced ? 'auto' : 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // === REVEAL ANIMATION ===
+        var reveals = document.querySelectorAll('.reveal');
+
+        if (reveals.length && 'IntersectionObserver' in window && !prefersReduced) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+
+            reveals.forEach(function(el) { observer.observe(el); });
+        } else {
+            reveals.forEach(function(el) { el.classList.add('visible'); });
+        }
+
+    })();
+    </script>
+</body>
+</html>
