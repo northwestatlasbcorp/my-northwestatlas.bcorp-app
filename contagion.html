@@ -1,0 +1,3153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- NWA Contagion Engine v3.0 | Enterprise Cascade Modeling -->
+    <!-- [PATCH v3.0] Smart Cache · Fallback Chain · promisePool fix · Canvas fix · XSS guard · a11y fix -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#04040A">
+    <meta name="application-name" content="NWA Contagion Engine">
+    <meta name="generator" content="NWA Contagion Engine v3.0 | Cascade Modeling">
+    <title>NWA | Contagion Engine — Institutional Cascade Modeling</title>
+    <meta name="description" content="Institutional-grade systemic risk cascade modeling. NVIDIA shock propagation across 19 AI-sector companies with live prices, real-time contagion mathematics.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Preconnect + SRI Hashes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://api.rss2json.com">
+    <link rel="preconnect" href="https://query2.finance.yahoo.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@300;400&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <!-- External scripts with SRI hashes -->
+    <script defer crossorigin="anonymous"
+            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vQ==">
+    </script>
+    <script defer crossorigin="anonymous"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+            integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfkEjT4sb3/A==">
+    </script>
+
+    <style>
+        :root {
+            --gold: #C9A96E; --gold-dim: #6d5831; --gold-light: #E8D5B5; --gold-rgb: 201,169,110;
+            --green: #00E87B; --green-dim: rgba(0,232,123,.12); --green-border: rgba(0,232,123,.25);
+            --red: #FF4B4B; --red-soft: #FF6B6B; --red-dim: rgba(255,75,75,.10); --red-border: rgba(255,75,75,.25);
+            --amber: #FFB547; --amber-dim: rgba(255,181,71,.10); --amber-border: rgba(255,181,71,.25);
+            --crimson: #C41E3A;
+            --bg: #04040A; --bg-panel: #08080F; --bg-surface: #0C0C15; --bg-elevated: #101018;
+            --text: #E8E8EC; --text-sec: #9CA3AF; --text-muted: #4B5563; --text-dim: #374151;
+            --border: rgba(201,169,110,.08); --border-hover: rgba(201,169,110,.2); --border-active: rgba(201,169,110,.5);
+            --serif: 'EB Garamond',serif; --display: 'Playfair Display',serif; --sans: 'Inter',sans-serif; --mono: 'JetBrains Mono',monospace;
+            --ease: cubic-bezier(.25,.1,.25,1); --ease-out: cubic-bezier(.215,.61,.355,1);
+            --r: 16px; --r-sm: 8px; --r-full: 9999px;
+            --focus-outline: 2px solid var(--gold);
+            --focus-offset: 2px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        ::selection {
+            background: rgba(var(--gold-rgb),.3);
+            color: var(--text);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+            font-size: 14px;
+            padding-bottom: 28px;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .012;
+            will-change: opacity;
+        }
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(to right,rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.012) 1px,transparent 1px);
+            background-size: 6rem 6rem;
+            z-index: -1;
+            mask-image: radial-gradient(ellipse at center,black 30%,transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center,black 30%,transparent 80%);
+        }
+        .amb {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle,rgba(var(--gold-rgb),.02) 0%,transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(80px);
+            animation: drift 30s ease-in-out infinite;
+        }
+        @keyframes drift {
+            0%,100% { transform: translate(0,0); }
+            33% { transform: translate(30vw,20vh); }
+            66% { transform: translate(10vw,50vh); }
+        }
+
+        .ctn {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+        .gold-text {
+            background: linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-label {
+            font-family: var(--mono);
+            font-size: .55rem;
+            text-transform: uppercase;
+            letter-spacing: .25em;
+            color: var(--gold);
+            font-weight: 300;
+            display: inline-flex;
+            align-items: center;
+            gap: .8rem;
+            margin-bottom: 1.2rem;
+            opacity: .7;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+            opacity: .5;
+        }
+
+        /* Skip link */
+        .skip-link {
+            position: absolute;
+            inset-block-start: -100%;
+            inset-inline-start: 0;
+            padding: .5rem 1.5rem;
+            background: var(--bg);
+            color: var(--gold);
+            font-family: var(--mono);
+            font-size: .6rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--gold);
+            z-index: 99999;
+            transition: inset-block-start .2s;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            inset-block-start: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(4,4,10,.85);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            z-index: 100;
+        }
+        .brand {
+            font-family: var(--display);
+            font-size: .85rem;
+            letter-spacing: .12em;
+            color: var(--text);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            font-weight: 400;
+        }
+        .brand-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            opacity: .8;
+        }
+        .brand-tag {
+            font-family: var(--mono);
+            font-size: .45rem;
+            opacity: .3;
+            letter-spacing: .15em;
+            margin-left: .4rem;
+        }
+        .nav-r {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--mono);
+            font-size: .5rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .pulse-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: .3; }
+        }
+        .nav-back {
+            font-family: var(--mono);
+            font-size: .5rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color .4s;
+        }
+        .nav-back:hover {
+            color: var(--gold);
+        }
+
+        .hero-c {
+            padding: 5.5rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-c h1 {
+            font-family: var(--display);
+            font-size: clamp(1.8rem,4vw,2.8rem);
+            font-weight: 300;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+            margin-bottom: .5rem;
+        }
+        .hero-sub {
+            font-family: var(--serif);
+            font-size: .9rem;
+            color: var(--text-sec);
+            max-width: 520px;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .ctrl-strip {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+            background: rgba(4,4,10,.92);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .ctrl-inner {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .ctrl-group {
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
+            min-width: 0;
+        }
+        .ctrl-label {
+            font-family: var(--mono);
+            font-size: .45rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .ctrl-row {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+        .ctrl-slider {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 3px;
+            background: rgba(255,255,255,.06);
+            border-radius: 2px;
+            outline: none;
+            flex-shrink: 0;
+        }
+        .ctrl-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid var(--bg);
+            box-shadow: 0 0 12px rgba(var(--gold-rgb),.25);
+        }
+        .ctrl-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid var(--bg);
+        }
+        .ctrl-val {
+            font-family: var(--mono);
+            font-size: .85rem;
+            font-weight: 300;
+            min-width: 45px;
+            text-align: right;
+        }
+        .ctrl-select {
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: .65rem;
+            padding: .4rem .7rem;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%234B5563' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            padding-right: 1.5rem;
+            letter-spacing: .08em;
+            transition: border-color .4s;
+        }
+        .ctrl-select:focus {
+            border-color: var(--border-active);
+        }
+        .ctrl-select option {
+            background: var(--bg-panel);
+            color: var(--text);
+        }
+        .ctrl-sep {
+            width: 1px;
+            height: 28px;
+            background: var(--border);
+            flex-shrink: 0;
+        }
+        .ctrl-btn {
+            font-family: var(--mono);
+            font-size: .5rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            padding: .45rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            background: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all .4s var(--ease);
+            white-space: nowrap;
+        }
+        .ctrl-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--gold);
+            background: rgba(var(--gold-rgb),.03);
+        }
+        .ctrl-btn.primary {
+            border-color: rgba(var(--gold-rgb),.25);
+            color: var(--gold);
+            background: rgba(var(--gold-rgb),.04);
+        }
+        .ctrl-btn.primary:hover {
+            border-color: var(--gold);
+            background: rgba(var(--gold-rgb),.08);
+        }
+        .ctrl-btn.playing {
+            border-color: var(--green-border);
+            color: var(--green);
+            background: var(--green-dim);
+        }
+
+        .summary-bar {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 1px;
+            margin: 1.5rem 0;
+            background: var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+        }
+        .summary-card {
+            background: var(--bg-panel);
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            transition: background .4s;
+        }
+        .summary-card:hover {
+            background: var(--bg-surface);
+        }
+        .sum-val {
+            font-family: var(--display);
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: .3rem;
+            transition: color .6s;
+        }
+        .sum-label {
+            font-family: var(--mono);
+            font-size: .42rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .graph-container {
+            margin: 1.5rem 0;
+            background: rgba(255,255,255,.008);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            position: relative;
+        }
+        .graph-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .graph-title {
+            font-family: var(--display);
+            font-size: .9rem;
+            font-weight: 300;
+            color: var(--text);
+        }
+        .graph-canvas-wrap {
+            position: relative;
+            width: 100%;
+            height: 420px;
+        }
+        .graph-canvas-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+        .graph-tooltip {
+            position: absolute;
+            background: rgba(4,4,10,.95);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--r-sm);
+            padding: .8rem 1rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .2s;
+            z-index: 10;
+            max-width: 260px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .graph-tooltip.visible {
+            opacity: 1;
+        }
+        .gtt-ticker {
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--gold);
+            margin-bottom: .3rem;
+        }
+        .gtt-name {
+            font-size: .7rem;
+            color: var(--text-sec);
+            margin-bottom: .5rem;
+        }
+        .gtt-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: .62rem;
+            color: var(--text-muted);
+            padding: .15rem 0;
+        }
+        .gtt-val {
+            font-family: var(--mono);
+            color: var(--text);
+        }
+        .gtt-mechanism {
+            font-size: .58rem;
+            color: var(--text-muted);
+            margin-top: .5rem;
+            padding-top: .5rem;
+            border-top: 1px solid var(--border);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .tier-card {
+            background: rgba(255,255,255,.008);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            transition: border-color .4s;
+        }
+        .tier-card:hover {
+            border-color: var(--border-hover);
+        }
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,.01);
+        }
+        .tier-title {
+            font-family: var(--mono);
+            font-size: .5rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .tier-avg {
+            font-family: var(--mono);
+            font-size: .7rem;
+            font-weight: 400;
+            transition: color .6s;
+        }
+        .tier-body {
+            padding: .3rem 0;
+        }
+        .tier-row {
+            display: flex;
+            align-items: center;
+            padding: .5rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,.015);
+            transition: background .3s;
+            cursor: pointer;
+        }
+        .tier-row:last-child {
+            border-bottom: none;
+        }
+        .tier-row:hover {
+            background: rgba(255,255,255,.015);
+        }
+        .tr-ticker {
+            font-family: var(--mono);
+            font-size: .7rem;
+            color: var(--text-sec);
+            min-width: 50px;
+        }
+        .tr-bar-wrap {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,.03);
+            border-radius: 2px;
+            margin: 0 .8rem;
+            overflow: hidden;
+        }
+        .tr-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1.2s var(--ease),background .6s;
+        }
+        .tr-impact {
+            font-family: var(--mono);
+            font-size: .7rem;
+            font-weight: 400;
+            min-width: 52px;
+            text-align: right;
+            transition: color .6s;
+        }
+        .tr-beta {
+            font-family: var(--mono);
+            font-size: .55rem;
+            color: var(--text-dim);
+            min-width: 38px;
+            text-align: right;
+            margin-left: .5rem;
+        }
+        .tr-mcall {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-left: .5rem;
+            flex-shrink: 0;
+            transition: all .4s;
+        }
+        .tr-mcall.triggered {
+            background: var(--red);
+            box-shadow: 0 0 8px var(--red);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .tr-mcall.safe {
+            background: rgba(255,255,255,.06);
+        }
+
+        /* Hedge card class */
+        .hedge-card {
+            background: var(--bg-panel);
+            padding: 1.2rem 1.5rem;
+            transition: background .3s;
+        }
+        .hedge-card:hover {
+            background: var(--bg-surface);
+        }
+
+        /* News styles */
+        .news-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background .3s;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .news-item:hover {
+            background: var(--bg-surface);
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-item-title {
+            font-size: .8rem;
+            color: var(--text);
+            font-weight: 400;
+            margin-bottom: .25rem;
+            line-height: 1.4;
+        }
+        .news-item-meta {
+            display: flex;
+            gap: .8rem;
+            font-family: var(--mono);
+            font-size: .45rem;
+            color: var(--text-dim);
+            flex-wrap: wrap;
+        }
+        .news-item-summary {
+            font-size: .65rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-top: .3rem;
+        }
+        .news-sentiment-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: .35rem;
+        }
+        .news-skeleton {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .news-skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, rgba(255,255,255,.02) 0%, rgba(255,255,255,.05) 50%, rgba(255,255,255,.02) 100%);
+            background-size: 400% 100%;
+            animation: shimmer 1.8s ease-in-out infinite;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .news-skeleton-line {
+                animation: none;
+                background: rgba(255,255,255,.03);
+            }
+        }
+
+        .second-order {
+            margin-bottom: 1.5rem;
+        }
+        .so-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .so-title {
+            font-family: var(--display);
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text);
+        }
+        .so-grid {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 1rem;
+        }
+        .so-card {
+            background: rgba(255,255,255,.008);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 1.2rem 1.5rem;
+            transition: all .4s var(--ease);
+        }
+        .so-card:hover {
+            border-color: var(--border-hover);
+            background: rgba(255,255,255,.015);
+        }
+        .so-icon {
+            font-size: .9rem;
+            margin-bottom: .5rem;
+        }
+        .so-card-title {
+            font-size: .75rem;
+            color: var(--text);
+            font-weight: 400;
+            margin-bottom: .4rem;
+        }
+        .so-card-body {
+            font-size: .68rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .so-card-val {
+            font-family: var(--mono);
+            font-size: .75rem;
+            font-weight: 400;
+            margin-top: .5rem;
+            transition: color .6s;
+        }
+
+        .portfolio-section {
+            margin-bottom: 1.5rem;
+            background: rgba(var(--gold-rgb),.02);
+            border: 1px solid rgba(var(--gold-rgb),.08);
+            border-radius: var(--r);
+            padding: 1.5rem 2rem;
+        }
+        .port-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .port-title {
+            font-family: var(--display);
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text);
+        }
+        .port-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+            gap: .6rem;
+            margin-bottom: 1rem;
+        }
+        .port-field {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+        .port-field label {
+            font-family: var(--mono);
+            font-size: .42rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .port-field input {
+            padding: .35rem .5rem;
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: .7rem;
+            outline: none;
+            width: 100%;
+            transition: border-color .4s;
+        }
+        .port-field input:focus {
+            border-color: var(--border-active);
+        }
+        .port-result {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .port-metric {
+            text-align: center;
+        }
+        .port-metric-val {
+            font-family: var(--display);
+            font-size: 1.3rem;
+            font-weight: 300;
+            transition: color .6s;
+        }
+        .port-metric-label {
+            font-family: var(--mono);
+            font-size: .42rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: .2rem;
+        }
+
+        .corr-section {
+            margin-bottom: 1.5rem;
+        }
+        .corr-toggle {
+            width: 100%;
+            text-align: left;
+        }
+        .corr-matrix {
+            display: none;
+            margin-top: 1rem;
+            background: rgba(255,255,255,.008);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+        }
+        .corr-matrix.open {
+            display: block;
+        }
+        .corr-canvas-wrap {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+        .corr-canvas-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .export-bar {
+            display: flex;
+            gap: .5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .export-bar .ctrl-btn svg {
+            width: 11px;
+            height: 11px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            vertical-align: middle;
+            margin-right: .3rem;
+        }
+
+        .badge {
+            font-family: var(--mono);
+            font-size: .5rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .2rem .6rem;
+            border-radius: var(--r-full);
+            font-weight: 400;
+            display: inline-block;
+        }
+        .badge-red {
+            background: var(--red-dim);
+            border: 1px solid var(--red-border);
+            color: var(--red-soft);
+        }
+        .badge-amber {
+            background: var(--amber-dim);
+            border: 1px solid var(--amber-border);
+            color: var(--amber);
+        }
+        .badge-green {
+            background: var(--green-dim);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--mono);
+            font-size: .45rem;
+            color: var(--text-dim);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+        .footer-inner a {
+            color: var(--gold);
+            text-decoration: none;
+            opacity: .5;
+            transition: opacity .3s;
+            margin-left: 1.5rem;
+        }
+        .footer-inner a:hover {
+            opacity: 1;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            background: var(--bg-elevated);
+            border-left: 2px solid var(--gold);
+            padding: .7rem 1.2rem;
+            border-radius: var(--r-sm);
+            box-shadow: 0 12px 50px rgba(0,0,0,.5);
+            z-index: 10000;
+            font-size: .7rem;
+            color: var(--text-sec);
+            transform: translateX(120%);
+            transition: transform .4s var(--ease);
+            max-width: 300px;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.ok {
+            border-left-color: var(--green);
+        }
+
+        @media(max-width:1024px) {
+            .tiers-grid {
+                grid-template-columns: 1fr;
+            }
+            .so-grid {
+                grid-template-columns: 1fr;
+            }
+            .ctrl-inner {
+                gap: 1rem;
+            }
+            .summary-bar {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+        @media(max-width:768px) {
+            .ctn {
+                padding: 0 1.5rem;
+            }
+            nav {
+                padding: 0 1.5rem;
+            }
+            .ctrl-slider {
+                width: 90px;
+            }
+            .graph-canvas-wrap {
+                height: 320px;
+            }
+            .port-inputs {
+                grid-template-columns: repeat(4,1fr);
+            }
+            .corr-canvas-wrap {
+                height: 300px;
+            }
+        }
+        @media(max-width:480px) {
+            .summary-bar {
+                grid-template-columns: 1fr;
+            }
+            .port-inputs {
+                grid-template-columns: repeat(2,1fr);
+            }
+            .ctrl-inner {
+                gap: .8rem;
+            }
+        }
+        @media print {
+            .noise,.grid-bg,.amb,nav,.ctrl-strip,.export-bar,#liveTicker {
+                display: none !important;
+            }
+            body {
+                background: #fff;
+                color: #000;
+            }
+        }
+
+        .ctrl-btn:focus,.ctrl-select:focus,.tier-row:focus,.nav-back:focus {
+            outline: var(--focus-outline);
+            outline-offset: var(--focus-offset);
+            border-color: var(--gold);
+        }
+        .ctrl-btn:focus-visible,.tier-row:focus-visible {
+            box-shadow: 0 0 0 4px rgba(201,169,110,0.2);
+        }
+
+        @media print {
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .gold-text {
+                background: none !important;
+                color: #000 !important;
+                -webkit-text-fill-color: initial !important;
+            }
+        }
+
+        /* Live price badge */
+        .live-price-badge {
+            font-family: var(--mono);
+            font-size: .5rem;
+            padding: .1rem .4rem;
+            border-radius: var(--r-full);
+            margin-left: .4rem;
+            border: 1px solid;
+            transition: color .4s;
+            white-space: nowrap;
+        }
+
+        /* Flash animations */
+        .flash-green {
+            animation: flashGreen 0.8s ease-out;
+        }
+        .flash-red {
+            animation: flashRed 0.8s ease-out;
+        }
+
+        @keyframes flashGreen {
+            0% {
+                background: rgba(0,232,123,0.25);
+                transform: scale(1.05);
+            }
+            100% {
+                background: transparent;
+                transform: scale(1);
+            }
+        }
+        @keyframes flashRed {
+            0% {
+                background: rgba(255,75,75,0.25);
+                transform: scale(1.05);
+            }
+            100% {
+                background: transparent;
+                transform: scale(1);
+            }
+        }
+
+        /* Pulse success/error */
+        .pulse-dot.pulse-success {
+            background: #00E87B !important;
+            box-shadow: 0 0 20px #00E87B !important;
+            animation: pulseSuccess 2s ease-in-out;
+        }
+        .pulse-dot.pulse-error {
+            background: #FF4B4B !important;
+            box-shadow: 0 0 20px #FF4B4B !important;
+        }
+        @keyframes pulseSuccess {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.6); }
+        }
+
+        /* PATCH 7B: Live Ticker */
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        #liveTicker:hover #tickerTrack {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="amb" aria-hidden="true"></div>
+
+    <!-- Skip link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav>
+        <div class="brand">
+            <img src="logo-nwa-centered.png" alt="NWA" style="height:28px;width:auto;opacity:0.8;filter:drop-shadow(0 0 8px rgba(197,160,89,0.1));">
+            <span class="brand-tag">CONTAGION v.2</span>
+        </div>
+        <div class="nav-r">
+            <div class="nav-status"><span class="pulse-dot"></span><span>Engine Active</span></div>
+            <a href="Toolkit.html" class="nav-back">← Back to Terminal</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-c">
+            <div class="ctn">
+                <div class="section-label" id="main-content">Cascade Analysis Engine</div>
+                <h1>Contagion <span class="gold-text">Map</span></h1>
+                <p class="hero-sub">Model systemic risk propagation from an NVIDIA shock event across 19 AI-sector companies. Real-time cascade mathematics with VIX amplification, timeline dynamics, and second-order feedback loops.</p>
+            </div>
+        </section>
+
+        <div class="ctrl-strip">
+            <div class="ctn">
+                <div class="ctrl-inner">
+                    <div class="ctrl-group"><span class="ctrl-label">NVDA Shock</span><div class="ctrl-row"><input type="range" class="ctrl-slider" id="shockSlider" min="0" max="70" value="40" style="width:140px" aria-label="NVDA shock percentage" aria-valuetext="40 percent shock"><span class="ctrl-val" id="shockVal" style="color:var(--red-soft)">-40%</span></div></div>
+                    <div class="ctrl-group"><span class="ctrl-label">VIX Level</span><div class="ctrl-row"><input type="range" class="ctrl-slider" id="vixSlider" min="10" max="80" value="22" style="width:100px" aria-label="VIX volatility level" aria-valuetext="22"><span class="ctrl-val" id="vixVal">22</span></div></div>
+                    <div class="ctrl-sep"></div>
+                    <div class="ctrl-group"><span class="ctrl-label">Regime</span><select class="ctrl-select" id="regimeSelect" aria-label="Market regime"><option value="expansion">Expansion</option><option value="caution" selected>Caution</option><option value="correction">Correction</option><option value="crisis">Crisis</option></select></div>
+                    <div class="ctrl-group"><span class="ctrl-label">Timeline</span><select class="ctrl-select" id="timelineSelect" aria-label="Cascade timeline"><option value="t1">T+1 day</option><option value="t3">T+3 days</option><option value="t5" selected>T+5 days</option><option value="t10">T+10 days</option><option value="t30">T+30 days</option></select></div>
+                    <div class="ctrl-group"><span class="ctrl-label">Scenario</span><select class="ctrl-select" id="scenarioSelect" aria-label="Pre-built scenario"><option value="custom">Custom</option><option value="soft">Soft Landing</option><option value="hard">Hard Correction</option><option value="lehman">Lehman-Style</option><option value="dotcom">Dot-com Replay</option><option value="taiwan">Taiwan Conflict</option><option value="antitrust">AI Antitrust</option><option value="blackswan">Black Swan</option></select></div>
+                    <div class="ctrl-sep"></div>
+                    <button class="ctrl-btn primary" id="playBtn">▶ Play Cascade</button>
+                    <button class="ctrl-btn" id="resetBtn">↻ Reset</button>
+                    <button class="ctrl-btn" id="liveBtn" title="Fetch live prices from Yahoo Finance">⚡ Live Prices</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctn">
+            <div class="summary-bar" id="summaryBar" role="region" aria-label="Contagion summary metrics" aria-live="polite">
+                <div class="summary-card"><div class="sum-val" id="sumDestroyed">$0T</div><div class="sum-label">Market Cap Destroyed</div></div>
+                <div class="summary-card"><div class="sum-val" id="sumAvg">0%</div><div class="sum-label">Avg Impact</div></div>
+                <div class="summary-card"><div class="sum-val" id="sumMax">—</div><div class="sum-label">Max Risk Ticker</div></div>
+                <div class="summary-card"><div class="sum-val" id="sumMCalls">0</div><div class="sum-label">Margin Calls Triggered</div></div>
+            </div>
+
+            <div id="institutionalMetrics" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;">
+                <div style="background:var(--bg-panel);padding:1.5rem;position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.3;"></div>
+                    <div style="font-family:var(--mono);font-size:.45rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.8rem;">Systemic Risk Score™</div>
+                    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;"><div style="font-family:var(--display);font-size:2.4rem;font-weight:300;line-height:1;" id="srsScore">0</div><div style="flex:1;"><div style="height:6px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden;margin-bottom:.3rem;"><div id="srsBar" style="height:100%;width:0%;border-radius:3px;transition:width 1.2s cubic-bezier(.25,.1,.25,1),background .8s;"></div></div><div style="font-family:var(--mono);font-size:.42rem;letter-spacing:.15em;text-transform:uppercase;" id="srsLabel">—</div></div></div>
+                    <div id="srsComponents" style="border-top:1px solid var(--border);padding-top:.8rem;display:grid;grid-template-columns:1fr 1fr;gap:.4rem;"></div>
+                </div>
+                <div style="background:var(--bg-panel);padding:1.5rem;">
+                    <div style="font-family:var(--mono);font-size:.45rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.8rem;">Value at Risk (VaR)</div>
+                    <div id="varPanel"><div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.03);"><span style="font-size:.65rem;color:var(--text-muted);">VaR 95% <span style="font-family:var(--mono);font-size:.42rem;color:var(--text-dim);" id="varHorizon">(5d)</span></span><span style="font-family:var(--mono);font-size:.75rem;" id="var95">—</span></div><div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.03);"><span style="font-size:.65rem;color:var(--text-muted);">VaR 99%</span><span style="font-family:var(--mono);font-size:.75rem;color:var(--amber);" id="var99">—</span></div><div style="display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.03);"><span style="font-size:.65rem;color:var(--text-muted);">CVaR (ES) 99%</span><span style="font-family:var(--mono);font-size:.75rem;color:var(--red-soft);" id="cvar99">—</span></div><div style="display:flex;justify-content:space-between;padding:.4rem 0;"><span style="font-size:.65rem;color:var(--text-muted);">Daily Sigma</span><span style="font-family:var(--mono);font-size:.75rem;" id="varSigma">—</span></div></div>
+                    <div style="background:rgba(255,181,71,.04);border:1px solid rgba(255,181,71,.1);border-radius:6px;padding:.6rem;margin-top:.8rem;font-size:.6rem;color:var(--text-muted);line-height:1.6;">Based on parametric VaR using implied vol from shock magnitude.</div>
+                </div>
+                <div style="background:var(--bg-panel);padding:1.5rem;">
+                    <div style="font-family:var(--mono);font-size:.45rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.8rem;">Recovery Estimate & Speed</div>
+                    <div style="font-family:var(--display);font-size:1.8rem;font-weight:300;line-height:1;margin-bottom:.3rem;" id="rteMonths">—</div><div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;">months to full recovery (est.)</div>
+                    <div style="font-family:var(--serif);font-size:.72rem;font-style:italic;color:var(--text-muted);padding:.6rem .8rem;background:rgba(201,169,110,.03);border-left:2px solid rgba(201,169,110,.2);border-radius:0 4px 4px 0;margin-bottom:1rem;line-height:1.6;" id="rteAnalog">—</div>
+                    <div style="font-family:var(--mono);font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.5rem;">Cascade Speed</div>
+                    <div id="contagionSpeedPanel"><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem;"><span style="font-family:var(--mono);font-size:.5rem;color:var(--text-dim);min-width:36px;">T1</span><div style="flex:1;height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;"><div id="speedBarT1" style="height:100%;width:80%;background:var(--red-soft);border-radius:2px;"></div></div><span style="font-family:var(--mono);font-size:.6rem;min-width:40px;text-align:right;color:var(--red-soft);" id="speedT1">—h</span></div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.3rem;"><span style="font-family:var(--mono);font-size:.5rem;color:var(--text-dim);min-width:36px;">T2</span><div style="flex:1;height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;"><div id="speedBarT2" style="height:100%;width:50%;background:var(--amber);border-radius:2px;"></div></div><span style="font-family:var(--mono);font-size:.6rem;min-width:40px;text-align:right;color:var(--amber);" id="speedT2">—h</span></div><div style="display:flex;align-items:center;gap:.6rem;"><span style="font-family:var(--mono);font-size:.5rem;color:var(--text-dim);min-width:36px;">T3</span><div style="flex:1;height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden;"><div id="speedBarT3" style="height:100%;width:25%;background:var(--green);border-radius:2px;"></div></div><span style="font-family:var(--mono);font-size:.6rem;min-width:40px;text-align:right;color:var(--green);" id="speedT3">—h</span></div></div>
+                </div>
+            </div>
+
+            <div class="graph-container">
+                <div class="graph-header"><span class="graph-title" id="networkGraphTitle">Contagion Network — Force Map</span><span class="badge badge-amber" id="graphBadge">CAUTION</span></div>
+                <div class="graph-canvas-wrap"><canvas id="networkCanvas" role="img" aria-label="Interactive contagion network visualization"></canvas><div class="graph-tooltip" id="graphTooltip" role="tooltip" aria-live="polite"><div class="gtt-ticker" id="gttTicker"></div><div class="gtt-name" id="gttName"></div><div class="gtt-row"><span>Impact</span><span class="gtt-val" id="gttImpact"></span></div><div class="gtt-row"><span>Beta (NVDA)</span><span class="gtt-val" id="gttBeta"></span></div><div class="gtt-row"><span>Revenue Exp.</span><span class="gtt-val" id="gttRevExp"></span></div><div class="gtt-row"><span>Margin Call</span><span class="gtt-val" id="gttMCall"></span></div><div class="gtt-mechanism" id="gttMech"></div></div></div>
+            </div>
+
+            <div id="scenarioDesc" style="background:rgba(201,169,110,.025);border:1px solid rgba(201,169,110,.08);border-radius:var(--r-sm);padding:1rem 1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:1.5rem;">
+                <div style="font-family:var(--display);font-size:1.1rem;font-weight:300;color:var(--text);white-space:nowrap;" id="scenTitleEl">Custom</div><div style="width:1px;height:32px;background:var(--border);flex-shrink:0;"></div>
+                <p style="font-family:var(--serif);font-size:.72rem;font-style:italic;color:var(--text-muted);line-height:1.7;flex:1;" id="scenDescEl">Manually configured scenario.</p>
+                <div style="text-align:right;flex-shrink:0;min-width:80px;"><div style="font-family:var(--mono);font-size:1rem;font-weight:300;color:var(--red-soft);" id="scenShockEl">-40%</div><div style="font-family:var(--mono);font-size:.45rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);">NVDA shock</div></div>
+            </div>
+
+            <div class="tiers-grid" id="tiersGrid">
+                <div class="tier-card" id="tierCard1"><div class="tier-header"><span class="tier-title">Tier 1 — Direct Exposure</span><span class="tier-avg" id="tierAvg1">—</span></div><div class="tier-body" id="tierBody1"></div></div>
+                <div class="tier-card" id="tierCard2"><div class="tier-header"><span class="tier-title">Tier 2 — Indirect Impact</span><span class="tier-avg" id="tierAvg2">—</span></div><div class="tier-body" id="tierBody2"></div></div>
+                <div class="tier-card" id="tierCard3"><div class="tier-header"><span class="tier-title">Tier 3 — Peripheral</span><span class="tier-avg" id="tierAvg3">—</span></div><div class="tier-body" id="tierBody3"></div></div>
+            </div>
+
+            <div class="second-order" id="secondOrder"><div class="so-header"><span class="so-title">Second-Order <span class="gold-text">Cascades</span></span><span class="badge" id="soBadge">—</span></div><div class="so-grid" id="soGrid"></div></div>
+
+            <div id="hedgingSection" style="margin-bottom:1.5rem;background:rgba(201,169,110,.015);border:1px solid rgba(201,169,110,.08);border-radius:var(--r);overflow:hidden;">
+                <div style="padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><span style="font-family:var(--display);font-size:1rem;font-weight:300;color:var(--text);">Hedging <span style="background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Recommendations</span></span><span class="badge" id="hedgeBadge">—</span></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);" id="hedgeGrid"></div>
+            </div>
+
+            <div class="portfolio-section" id="portfolioSection"><div class="port-header"><span class="port-title">Portfolio <span class="gold-text">Impact</span></span><button class="ctrl-btn" id="calcPortBtn">Calculate ▸</button></div><div class="port-inputs" id="portInputs"></div><div class="port-result" id="portResult" style="display:none"></div></div>
+
+            <div class="corr-section"><button class="ctrl-btn corr-toggle" id="corrToggle">◇ Show Correlation Matrix</button><div class="corr-matrix" id="corrMatrix"><div class="corr-canvas-wrap"><canvas id="corrCanvas" role="img" aria-label="Correlation matrix heatmap"></canvas></div></div></div>
+
+            <!-- News Section -->
+            <section id="newsSection" style="margin-bottom:1.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                    <span class="section-label">Market Intelligence</span>
+                    <div style="display:flex;gap:.5rem;align-items:center;">
+                        <span id="newsStats" style="font-family:var(--mono);font-size:.45rem;color:var(--text-muted);letter-spacing:.1em;"></span>
+                        <button class="ctrl-btn" id="refreshNewsBtn" aria-label="Refresh news feed">↻ Refresh</button>
+                    </div>
+                </div>
+                <div id="newsContainer"
+                     style="background:rgba(255,255,255,.008);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;"
+                     aria-live="polite"
+                     aria-label="AI sector news">
+                </div>
+            </section>
+
+            <div class="export-bar">
+                <button class="ctrl-btn" id="exCSV"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+                <button class="ctrl-btn" id="exPDF"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>Export PDF</button>
+                <button class="ctrl-btn" id="exCopy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy Summary</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="ctn">
+            <div class="footer-inner">
+                <span>&copy; 2025 North West Atlas B Corp. Institutional use only.</span>
+                <div>
+                    <a href="Toolkit.html">Terminal</a>
+                    <a href="disclosures.html">Disclosures</a>
+                    <a href="privacy.html" style="margin-left:1.5rem">Privacy</a>
+                    <a href="terms.html" style="margin-left:1.5rem">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PATCH 7B: Live Ticker -->
+    <div id="liveTicker" style="position:fixed;bottom:0;left:0;right:0;height:28px;background:rgba(4,4,10,.96);border-top:1px solid var(--border);overflow:hidden;z-index:100;display:flex;align-items:center;">
+        <div id="tickerTrack" style="display:flex;white-space:nowrap;animation:tickerScroll 45s linear infinite;"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+    // NWA Contagion Engine v3.0 | Patched: 2025-07-15
+    // Improvements: Smart Cache, Fallback Chain, promisePool fix, Canvas fix, XSS guard, a11y fix
+
+    // AbortSignal.timeout polyfill
+    if (!('timeout' in AbortSignal)) {
+        AbortSignal.timeout = (ms) => {
+            const ctrl = new AbortController();
+            setTimeout(() => ctrl.abort(), ms);
+            return ctrl.signal;
+        };
+    }
+
+    console.debug('[NWA Contagion v3.0] Engine ready @', new Date().toISOString());
+    console.debug('[NWA] Canvas support:', !!document.createElement('canvas').getContext);
+
+    // ─────────────────────────────────────────────
+    // DATA MODELS
+    // ─────────────────────────────────────────────
+    const DATA = {
+        tier1: [
+            { ticker:'AVGO', name:'Broadcom', beta:0.68, revExp:0.45, supply:0.55, corr:0.78, mcap:820, leverage:1.2, liq:0.85, mcallThreshold:-35, mechanism:'GPU demand collapse → networking chip demand ↓ → AI ASIC repricing' },
+            { ticker:'AMD',  name:'AMD', beta:0.82, revExp:0.38, supply:0.60, corr:0.85, mcap:220, leverage:0.5, liq:0.90, mcallThreshold:-40, mechanism:'If NVDA AI story fails → all GPU/AI chips repriced → AMD MI300 destroyed' },
+            { ticker:'SMCI', name:'Super Micro', beta:1.30, revExp:0.90, supply:0.95, corr:0.72, mcap:25, leverage:2.8, liq:0.35, mcallThreshold:-25, mechanism:'NVDA GPU shipment ↓ → SMCI revenue cliff → high leverage = existential' },
+            { ticker:'MRVL', name:'Marvell', beta:0.62, revExp:0.35, supply:0.50, corr:0.71, mcap:65, leverage:1.5, liq:0.70, mcallThreshold:-35, mechanism:'Data center buildout freeze → custom chip orders cancelled' },
+            { ticker:'ARM',  name:'Arm Holdings', beta:0.88, revExp:0.42, supply:0.30, corr:0.68, mcap:150, leverage:0.3, liq:0.60, mcallThreshold:-30, mechanism:'AI capex freeze → lower chip volumes → royalty revenue ↓ → premium compression' },
+            { ticker:'MU',   name:'Micron', beta:0.55, revExp:0.30, supply:0.65, corr:0.63, mcap:130, leverage:1.0, liq:0.80, mcallThreshold:-30, mechanism:'GPU demand ↓ → HBM orders cancelled → inventory buildup → margin collapse' },
+            { ticker:'ASML', name:'ASML', beta:0.48, revExp:0.25, supply:0.40, corr:0.55, mcap:350, leverage:0.5, liq:0.75, mcallThreshold:-25, mechanism:'AI capex freeze → TSMC/Samsung delay orders → backlog erosion (delayed)' },
+            { ticker:'TSM',  name:'TSMC', beta:0.72, revExp:0.50, supply:0.85, corr:0.75, mcap:900, leverage:0.3, liq:0.90, mcallThreshold:-20, mechanism:'NVDA orders ↓ → utilization ↓ → margin pressure → capex cuts → equipment cascade' }
+        ],
+        tier2: [
+            { ticker:'MSFT',  name:'Microsoft', beta:0.30, revExp:0.15, supply:0.10, corr:0.45, mcap:3200, leverage:0.8, liq:0.95, mcallThreshold:-15, mechanism:'AI narrative repricing → Copilot revenue questioned → PE compression' },
+            { ticker:'GOOGL', name:'Alphabet', beta:0.35, revExp:0.18, supply:0.12, corr:0.48, mcap:2100, leverage:0.2, liq:0.95, mcallThreshold:-15, mechanism:'AI hype collapse → ad revenue AI premium erased → TPU partially insulates' },
+            { ticker:'AMZN',  name:'Amazon', beta:0.27, revExp:0.12, supply:0.08, corr:0.42, mcap:2000, leverage:0.6, liq:0.95, mcallThreshold:-15, mechanism:'AI cloud demand questioned → AWS growth repricing → Trainium capex writedown' },
+            { ticker:'META',  name:'Meta', beta:0.45, revExp:0.22, supply:0.05, corr:0.52, mcap:1300, leverage:0.3, liq:0.90, mcallThreshold:-20, mechanism:'AI ROI questioned → $40B capex becomes liability → "metaverse 2.0" narrative' },
+            { ticker:'ORCL',  name:'Oracle', beta:0.38, revExp:0.20, supply:0.15, corr:0.50, mcap:450, leverage:3.5, liq:0.80, mcallThreshold:-20, mechanism:'AI cloud spending freeze → OCI growth stalls → high debt becomes problem' }
+        ],
+        tier3: [
+            { ticker:'EQIX', name:'Equinix', beta:0.20, revExp:0.15, supply:0.05, corr:0.30, mcap:85, leverage:2.0, liq:0.70, mcallThreshold:-20, mechanism:'AI buildout pause → DC expansion delayed → revenue growth repricing' },
+            { ticker:'VST',  name:'Vistra Energy', beta:0.55, revExp:0.25, supply:0.02, corr:0.35, mcap:45, leverage:2.5, liq:0.55, mcallThreshold:-25, mechanism:'AI DC power demand repriced → nuclear premium collapses → back to utility' },
+            { ticker:'CEG',  name:'Constellation Energy', beta:0.47, revExp:0.20, supply:0.02, corr:0.32, mcap:70, leverage:1.8, liq:0.60, mcallThreshold:-20, mechanism:'AI power contracts questioned → PPA repricing → utility derating' },
+            { ticker:'DELL', name:'Dell Technologies', beta:0.40, revExp:0.18, supply:0.30, corr:0.45, mcap:95, leverage:2.0, liq:0.75, mcallThreshold:-25, mechanism:'GPU server demand ↓ → AI server backlog cancelled → channel inventory buildup' },
+            { ticker:'ANET', name:'Arista Networks', beta:0.42, revExp:0.22, supply:0.15, corr:0.50, mcap:115, leverage:0.2, liq:0.80, mcallThreshold:-20, mechanism:'GPU cluster deployments freeze → 400G/800G switch orders cancelled' },
+            { ticker:'PLTR', name:'Palantir', beta:0.50, revExp:0.35, supply:0.05, corr:0.40, mcap:140, leverage:0.1, liq:0.65, mcallThreshold:-30, mechanism:'AI sentiment collapse → narrative stock destroyed → PE from 200x to reality' }
+        ]
+    };
+
+    const NVDA = { ticker:'NVDA', name:'NVIDIA', mcap:3100, corr:1.0 };
+
+    const EDGES = [
+        ['NVDA','AMD',0.85],['NVDA','AVGO',0.78],['NVDA','TSM',0.75],['NVDA','SMCI',0.72],
+        ['NVDA','ARM',0.68],['NVDA','MU',0.63],['NVDA','MRVL',0.71],['NVDA','ASML',0.55],
+        ['NVDA','MSFT',0.45],['NVDA','GOOGL',0.48],['NVDA','META',0.52],['NVDA','AMZN',0.42],
+        ['NVDA','ORCL',0.40],['NVDA','DELL',0.45],['NVDA','ANET',0.50],['NVDA','PLTR',0.40],
+        ['AMD','AVGO',0.65],['AMD','TSM',0.70],['AMD','SMCI',0.60],['AMD','MU',0.50],
+        ['MSFT','GOOGL',0.72],['MSFT','AMZN',0.68],['MSFT','META',0.55],['MSFT','ORCL',0.40],
+        ['GOOGL','AMZN',0.65],['GOOGL','META',0.58],['TSM','ASML',0.70],['TSM','MU',0.55],
+        ['AVGO','MRVL',0.60],['DELL','SMCI',0.50],['DELL','ANET',0.45],['ANET','SMCI',0.42],
+        ['VST','CEG',0.65],['ORCL','AMZN',0.45],['EQIX','ANET',0.38],['PLTR','META',0.35]
+    ];
+
+    const SCENARIOS = {
+        custom:    { shock:40, vix:22, label:'Custom' },
+        soft:      { shock:15, vix:18, label:'Soft Landing' },
+        hard:      { shock:35, vix:30, label:'Hard Correction' },
+        lehman:    { shock:55, vix:45, label:'Lehman-Style Crisis' },
+        dotcom:    { shock:70, vix:50, label:'Dot-com Replay' },
+        taiwan:    { shock:60, vix:55, label:'Taiwan Conflict' },
+        antitrust: { shock:25, vix:25, label:'AI Antitrust Action' },
+        blackswan: { shock:50, vix:40, label:'Black Swan (GPU Defect)' }
+    };
+
+    const TIMELINE = {
+        t1:  { tier1:0.60, tier2:0.20, tier3:0.05 },
+        t3:  { tier1:0.85, tier2:0.50, tier3:0.20 },
+        t5:  { tier1:1.00, tier2:0.75, tier3:0.45 },
+        t10: { tier1:1.00, tier2:1.00, tier3:0.75 },
+        t30: { tier1:1.00, tier2:1.00, tier3:1.00 }
+    };
+
+    const PORT_FIELDS = [
+        { id:'pNVDA', label:'NVDA %', aiBeta:1.0 },
+        { id:'pAMD',  label:'AMD %',  aiBeta:0.85 },
+        { id:'pMSFT', label:'MSFT %', aiBeta:0.55 },
+        { id:'pGOOG', label:'GOOG %', aiBeta:0.50 },
+        { id:'pAMZN', label:'AMZN %', aiBeta:0.40 },
+        { id:'pMETA', label:'META %', aiBeta:0.45 },
+        { id:'pAVGO', label:'AVGO %', aiBeta:0.70 },
+        { id:'pOTHER',label:'Other %',aiBeta:0.10 }
+    ];
+
+    // ─────────────────────────────────────────────
+    // CONSTANTS
+    // ─────────────────────────────────────────────
+    const CONSTANTS = Object.freeze({
+        IMPACT: Object.freeze({ LOW: 10, MEDIUM: 25, HIGH: 40 }),
+        VIX: Object.freeze({ LOW: 15, NORMAL: 25, ELEVATED: 35, MAX_AMP: 2.0 }),
+        SRS_WEIGHTS: Object.freeze({ impact: 0.40, mcall: 0.15, feedback: 0.15, destroyed: 0.20, vix: 0.10 }),
+        RECOVERY: Object.freeze({
+            SOFT:    { maxShock: 20, months: 6 },
+            MILD:    { maxShock: 35, months: 14 },
+            HARD:    { maxShock: 50, months: 30 },
+            SEVERE:  { maxShock: 65, months: 72 },
+            EXTREME: { maxShock: 100, months: 120 }
+        }),
+        GRAPH: Object.freeze({
+            RING_RADII_FACTORS: Object.freeze([0.22, 0.36, 0.47]),
+            NODE_SIZE: Object.freeze({ TIER0: 24, TIER1: 18, TIER2: 16, TIER3: 14, MIN: 8 }),
+            NODE_SCALE: Object.freeze({ TIER0: 0.6, TIER1: 0.6, TIER2: 0.35, TIER3: 0.5 }),
+            ANIMATION_SPEED: 0.04,
+            EDGE_DASH: Object.freeze([6, 4])
+        }),
+        CASCADE: Object.freeze({
+            TIER1_START_MS:  400, TIER1_STEP_MS:   120,
+            TIER2_START_MS: 1400, TIER2_STEP_MS:   100,
+            TIER3_START_MS: 2200, TIER3_STEP_MS:    90,
+            SECOND_ORDER_MS: 2800, METRICS_MS: 2900, HEDGING_MS: 3000, TOTAL_MS: 3500,
+            GRAPH_STEPS: 20, GRAPH_INTERVAL_MS: 100
+        })
+    });
+
+    // ─────────────────────────────────────────────
+    // STATE
+    // ─────────────────────────────────────────────
+    const state = {
+        shock: 40,
+        vix: 22,
+        timeline: 't5',
+        scenario: 'custom',
+        results: null,
+        nodePositions: [],
+        animating: false,
+        cascadeProgress: 1,
+        _cascadeInterval: null,
+        _previousResults: null,
+        liveQuotes: {},
+        liveRefreshTimer: null,
+        networkResizeObserver: null,
+        corrResizeObserver: null,
+        liveLoadAbort: null
+    };
+
+    // ─────────────────────────────────────────────
+    // LIVE DATA MODULE (Yahoo Finance + Smart Cache)
+    // ─────────────────────────────────────────────
+    const LIVE_DATA_CONFIG = Object.freeze({
+        PROXIES: Object.freeze([
+            'https://nwa-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/?url='
+        ]),
+        FRESH_TTL_MS:          45 * 1000,
+        STALE_THRESHOLD_MS:     5 * 60 * 1000,
+        DELAYED_THRESHOLD_MS:  30 * 60 * 1000,
+        MAX_CACHE_AGE_MS:      24 * 60 * 60 * 1000,
+        TIMEOUT_MS:             8_000,
+        YAHOO_CHART_HOST:      'https://query1.finance.yahoo.com/v8/finance/chart/',
+        RETRY_DELAYS:          Object.freeze([600, 1800, 4000]),
+        JITTER_MS:             250,
+    });
+
+    const liveCache = new Map();
+
+    const CACHE_KEYS = Object.freeze({
+        quote:         (sym) => `nwa.q.${sym}`,
+        quoteFallback: (sym) => `nwa.qfb.${sym}`,
+    });
+
+    function setCachedQuote(symbol, quote) {
+        const entry = { data: quote, ts: Date.now() };
+        liveCache.set(symbol, entry);
+        try {
+            localStorage.setItem(CACHE_KEYS.quote(symbol), JSON.stringify(entry));
+            localStorage.setItem(CACHE_KEYS.quoteFallback(symbol), JSON.stringify(entry));
+        } catch { /* QuotaExceededError — игнорируем */ }
+    }
+
+    function getCachedQuote(symbol) {
+        const now = Date.now();
+
+        function decorate(entry) {
+            if (!entry?.data || !entry?.ts) return null;
+            const age = now - entry.ts;
+            const freshness =
+                age > LIVE_DATA_CONFIG.DELAYED_THRESHOLD_MS ? 'stale'   :
+                age > LIVE_DATA_CONFIG.STALE_THRESHOLD_MS   ? 'delayed' :
+                age > LIVE_DATA_CONFIG.FRESH_TTL_MS         ? 'aging'   :
+                'fresh';
+            return { ...entry.data, freshness, cachedAt: entry.ts };
+        }
+
+        const mem = liveCache.get(symbol);
+        const memVal = decorate(mem);
+        if (memVal) return memVal;
+
+        try {
+            const raw = localStorage.getItem(CACHE_KEYS.quote(symbol));
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            const v = decorate(parsed);
+            if (!v) return null;
+            liveCache.set(symbol, { data: parsed.data, ts: parsed.ts });
+            return v;
+        } catch { return null; }
+    }
+
+    function getFallbackQuote(symbol) {
+        try {
+            const raw = localStorage.getItem(CACHE_KEYS.quoteFallback(symbol));
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (!parsed?.data) return null;
+            return { ...parsed.data, freshness: 'stale', cachedAt: parsed.ts || null };
+        } catch { return null; }
+    }
+
+    function clearOldCache() {
+        const now = Date.now();
+
+        // Шаг 1: собрать все ключи СНАЧАЛА, потом удалять
+        // (removeItem сдвигает индексы localStorage — нельзя удалять в том же цикле)
+        const allKeys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k) allKeys.push(k);
+        }
+
+        allKeys.forEach(key => {
+            // Безусловно удалить устаревшие ключи старого формата
+            if (key.startsWith('contagion_')) {
+                localStorage.removeItem(key);
+                return;
+            }
+
+            // Для новых ключей nwa.* — удалять только если истёк MAX_CACHE_AGE
+            if (key.startsWith('nwa.')) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) return;
+                    const parsed = JSON.parse(raw);
+                    if (parsed?.ts && (now - parsed.ts) > LIVE_DATA_CONFIG.MAX_CACHE_AGE_MS) {
+                        localStorage.removeItem(key);
+                    }
+                } catch {
+                    localStorage.removeItem(key);
+                }
+            }
+        });
+    }
+
+    async function cascadeFetchJson(url, timeoutMs = LIVE_DATA_CONFIG.TIMEOUT_MS, externalSignal = null) {
+        const attempts = [
+            {
+                label: 'direct',
+                buildUrl: () => url,
+                extraTimeout: 0,
+            },
+            ...LIVE_DATA_CONFIG.PROXIES.map((proxy, i) => ({
+                label: `proxy[${i}]`,
+                buildUrl: () => proxy + encodeURIComponent(url),
+                extraTimeout: 2000,
+            })),
+        ];
+
+        const errors = [];
+
+        for (const attempt of attempts) {
+            for (let retry = 0; retry <= LIVE_DATA_CONFIG.RETRY_DELAYS.length; retry++) {
+                if (externalSignal?.aborted) throw new Error('Aborted by caller');
+
+                const ctrl = new AbortController();
+                const t = setTimeout(() => ctrl.abort(), timeoutMs + attempt.extraTimeout);
+
+                const onExtAbort = () => ctrl.abort();
+                externalSignal?.addEventListener('abort', onExtAbort, { once: true });
+
+                try {
+                    const res = await fetch(attempt.buildUrl(), {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' },
+                        signal: ctrl.signal,
+                    });
+
+                    if (res.status === 429 || res.status === 503 || res.status >= 500) {
+                        errors.push(`${attempt.label}[r${retry}]: HTTP ${res.status}`);
+                        throw new Error(`retryable:${res.status}`);
+                    }
+                    if (!res.ok) {
+                        errors.push(`${attempt.label}[r${retry}]: HTTP ${res.status}`);
+                        throw new Error(`fatal:${res.status}`);
+                    }
+
+                    const json = await res.json();
+                    return json;
+
+                } catch (err) {
+                    if (err.message.startsWith('fatal:')) break;
+                    if (retry < LIVE_DATA_CONFIG.RETRY_DELAYS.length) {
+                        const jitter = (Math.random() * 2 - 1) * LIVE_DATA_CONFIG.JITTER_MS;
+                        await new Promise(r => setTimeout(r, LIVE_DATA_CONFIG.RETRY_DELAYS[retry] + jitter));
+                    }
+                } finally {
+                    clearTimeout(t);
+                    externalSignal?.removeEventListener('abort', onExtAbort);
+                }
+            }
+        }
+
+        const symMatch = url.match(/chart\/([^?/]+)/);
+        const sym = symMatch ? decodeURIComponent(symMatch[1]).replace(/^\^/, '') : null;
+        if (sym) {
+            const fb = getFallbackQuote(sym);
+            if (fb) {
+                console.warn(`[NWA] cascadeFetchJson: all failed for ${sym}, returning stale fallback`);
+                return { __fallback: true, data: fb };
+            }
+        }
+
+        throw new Error(`[NWA] cascadeFetchJson exhausted. ${errors.join(' | ')}`);
+    }
+
+    function lastNonNull(arr) {
+        if (!Array.isArray(arr)) return null;
+        for (let i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] != null) return arr[i];
+        }
+        return null;
+    }
+
+    function validateYahooChart(raw, symbol) {
+        const result = raw?.chart?.result?.[0];
+        if (!result) throw new Error(`No chart result for ${symbol}`);
+
+        const yahoErr = raw?.chart?.error;
+        if (yahoErr) {
+            throw new Error(
+                typeof yahoErr === 'object'
+                    ? (yahoErr.description ?? yahoErr.code ?? 'Yahoo API error')
+                    : String(yahoErr)
+            );
+        }
+
+        const meta   = result.meta || {};
+        const closes = result?.indicators?.quote?.[0]?.close ?? [];
+        const lastClose = lastNonNull(closes);
+
+        const rawPrice = meta.regularMarketPrice ?? lastClose;
+        const price    = Number(rawPrice);
+
+        if (!Number.isFinite(price) || price <= 0) {
+            throw new Error(`Invalid price for ${symbol}: ${rawPrice}`);
+        }
+
+        const rawPrev = meta.chartPreviousClose ?? meta.previousClose ?? meta.regularMarketPreviousClose ?? price;
+        const prev    = Number(rawPrev) || price;
+        const change  = price - prev;
+
+        return {
+            price,
+            change,
+            changePercent: prev > 0 ? (change / prev) * 100 : 0,
+            currency:    meta.currency    ?? 'USD',
+            marketState: meta.marketState ?? 'UNKNOWN',
+            marketTime:  meta.regularMarketTime ? meta.regularMarketTime * 1000 : null,
+            fetchedAt:   Date.now(),
+        };
+    }
+
+    const YAHOO_TICKER_MAP = Object.freeze({
+        NDX: '^NDX', GSPC: '^GSPC', VIX: '^VIX', SPX: '^GSPC', DJI: '^DJI',
+    });
+
+    async function fetchLiveQuote(symbol, signal = null) {
+        const cached = getCachedQuote(symbol);
+        if (cached?.freshness === 'fresh') return cached;
+
+        if (cached?.freshness === 'aging') {
+            _revalidateInBackground(symbol, signal);
+            return cached;
+        }
+
+        return _doFetchQuote(symbol, signal);
+    }
+
+    async function _doFetchQuote(symbol, signal = null) {
+        const ySymbol = YAHOO_TICKER_MAP[symbol] ?? symbol;
+        const url = LIVE_DATA_CONFIG.YAHOO_CHART_HOST +
+            encodeURIComponent(ySymbol) +
+            '?interval=1m&range=1d&includePrePost=false';
+
+        try {
+            const json = await cascadeFetchJson(url, LIVE_DATA_CONFIG.TIMEOUT_MS, signal);
+
+            if (json?.__fallback) return json.data;
+
+            const quote = validateYahooChart(json, symbol);
+            setCachedQuote(symbol, quote);
+            return quote;
+
+        } catch (err) {
+            if (err.message === 'Aborted by caller') return null;
+            console.warn(`[NWA] fetchLiveQuote failed for ${symbol}:`, err.message);
+            return getFallbackQuote(symbol);
+        }
+    }
+
+    function _revalidateInBackground(symbol, signal = null) {
+        _doFetchQuote(symbol, signal).then(quote => {
+            if (quote && state.liveQuotes?.[symbol]) {
+                state.liveQuotes[symbol] = quote;
+                renderLiveQuoteOverlay();
+                updateTickerTrack();
+            }
+        }).catch(() => {});
+    }
+
+    async function promisePool(items, limit, worker) {
+        const results = new Array(items.length);
+        const executing = new Set();
+
+        for (let i = 0; i < items.length; i++) {
+            const idx = i;
+            const p = Promise.resolve()
+                .then(() => worker(items[idx]))
+                .then(
+                    v => { results[idx] = { status: 'fulfilled', value: v }; },
+                    e => { results[idx] = { status: 'rejected',  reason: e }; }
+                )
+                .finally(() => executing.delete(p));
+
+            executing.add(p);
+            if (executing.size >= limit) await Promise.race(executing);
+        }
+
+        // дождаться хвост (последние < limit задач)
+        await Promise.all(executing);
+        return results;
+    }
+
+    async function loadAllLiveQuotes() {
+        if (state.liveLoadAbort) state.liveLoadAbort.abort();
+        state.liveLoadAbort = new AbortController();
+        const { signal } = state.liveLoadAbort;
+
+        const ALL_TICKERS = [
+            'NVDA',
+            ...DATA.tier1.map(c => c.ticker),
+            ...DATA.tier2.map(c => c.ticker),
+            ...DATA.tier3.map(c => c.ticker),
+        ];
+
+        showToast('Loading live prices…', false);
+
+        const settled = await promisePool(
+            ALL_TICKERS,
+            6,
+            (ticker) => fetchLiveQuote(ticker, signal)
+        );
+
+        if (signal.aborted) return;
+
+        const newQuotes = {};
+        settled.forEach((r, i) => {
+            const ticker = ALL_TICKERS[i];
+            const quote  = r.status === 'fulfilled' ? r.value : null;
+            if (quote) newQuotes[ticker] = quote;
+        });
+
+        const changed = [];
+        for (const [ticker, quote] of Object.entries(newQuotes)) {
+            const prev = state.liveQuotes?.[ticker];
+            if (!prev || prev.price !== quote.price || prev.changePercent !== quote.changePercent) {
+                changed.push(ticker);
+            }
+        }
+
+        state.liveQuotes = { ...state.liveQuotes, ...newQuotes };
+
+        const count       = Object.keys(newQuotes).length;
+        const staleCount  = Object.values(newQuotes).filter(q => q.freshness === 'stale').length;
+        const delayedCount = Object.values(newQuotes).filter(q => q.freshness === 'delayed').length;
+
+        const pulseDot = document.querySelector('.pulse-dot');
+        if (count > 0 && staleCount < count) {
+            pulseDot?.classList.add('pulse-success');
+            setTimeout(() => pulseDot?.classList.remove('pulse-success'), 2000);
+            let msg = `${count} prices loaded`;
+            if (delayedCount > 0) msg += ` (${delayedCount} delayed)`;
+            if (staleCount  > 0) msg += ` (${staleCount} stale)`;
+            showToast(msg, true);
+        } else if (count === 0) {
+            pulseDot?.classList.add('pulse-error');
+            setTimeout(() => pulseDot?.classList.remove('pulse-error'), 3000);
+            showToast('Failed to load live prices — using cache', false);
+        } else {
+            pulseDot?.classList.add('pulse-error');
+            setTimeout(() => pulseDot?.classList.remove('pulse-error'), 3000);
+            showToast(`${count} prices (${staleCount} stale)`, false);
+        }
+
+        const nvda = newQuotes['NVDA'];
+        if (nvda && nvda.freshness !== 'stale' && nvda.changePercent < -5) {
+            const suggested = Math.min(70, Math.max(5, Math.round(Math.abs(nvda.changePercent) * 2)));
+            showToast(`NVDA live: ${nvda.changePercent.toFixed(1)}%. Suggested shock: -${suggested}%`, false, 6000);
+        }
+
+        if (changed.length > 0) {
+            renderNetworkGraph();
+            renderLiveQuoteOverlay();
+            updateTickerTrack();
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // NEWS MODULE (rss2json + Yahoo RSS)
+    // ─────────────────────────────────────────────
+    const NEWS_CONFIG = Object.freeze({
+        YAHOO_RSS_TICKERS: Object.freeze(['NVDA', 'AMD', 'AVGO', 'TSM', 'ASML', 'MSFT', 'META']),
+        YAHOO_RSS_BASE:    'https://feeds.finance.yahoo.com/rss/2.0/headline?region=US&lang=en-US&s=',
+        TECH_FEEDS: Object.freeze([
+            'https://techcrunch.com/tag/artificial-intelligence/feed/',
+            'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
+            'https://feeds.feedburner.com/venturebeat/SZYF',
+        ]),
+        RSS2JSON_BASE:      'https://api.rss2json.com/v1/api.json?count=8&rss_url=',
+        CACHE_TTL_SECONDS:  300,
+        MAX_ITEMS:          24,
+        POS_WORDS: Object.freeze([
+            'bullish','gain','surge','rally','beat','strong','growth',
+            'launch','breakthrough','profit','record','upgrade','buy',
+        ]),
+        NEG_WORDS: Object.freeze([
+            'bearish','loss','decline','drop','miss','weak','risk',
+            'crash','bubble','overvalued','lawsuit','recall','ban',
+            'downgrade','sell','warning','default','debt',
+        ]),
+    });
+
+    const newsCache = { data: null, ts: 0 };
+
+    function sanitizeText(str) {
+        if (typeof str !== 'string') return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /**
+     * Конвертирует HTML-escaped строку обратно в plain text.
+     * Используется для aria-label атрибутов — скринридеры читают
+     * "&amp;" буквально если оно попадёт в атрибут.
+     * @param {string} escapedHtml
+     * @returns {string}
+     */
+    function toPlainText(escapedHtml) {
+        if (typeof escapedHtml !== 'string') return '';
+        const d = document.createElement('div');
+        d.innerHTML = escapedHtml;
+        return d.textContent || '';
+    }
+
+    function analyzeSentiment(title, desc) {
+        const content = (title + ' ' + desc).toLowerCase();
+        const posCount = NEWS_CONFIG.POS_WORDS.filter(w => content.includes(w)).length;
+        const negCount = NEWS_CONFIG.NEG_WORDS.filter(w => content.includes(w)).length;
+        return posCount > negCount ? 'positive' : negCount > posCount ? 'negative' : 'neutral';
+    }
+
+    async function fetchFeed(feedUrl, sourceName = '') {
+        const source = sourceName || (() => {
+            try { return new URL(feedUrl).hostname.replace('www.',''); }
+            catch { return 'unknown'; }
+        })();
+
+        const tryRss2json = async () => {
+            const url = NEWS_CONFIG.RSS2JSON_BASE + encodeURIComponent(feedUrl);
+            const res = await fetch(url, { signal: AbortSignal.timeout(9_000) });
+            if (!res.ok) throw new Error(`rss2json HTTP ${res.status}`);
+            const json = await res.json();
+            if (json.status !== 'ok') throw new Error(`rss2json: ${json.status}`);
+            if (!Array.isArray(json.items) || !json.items.length) throw new Error('empty feed');
+            return json.items;
+        };
+
+        const strategies = [
+            async () => {
+                const proxy = LIVE_DATA_CONFIG.PROXIES[0];
+                const proxiedUrl = proxy + encodeURIComponent(feedUrl);
+                const res = await fetch(proxiedUrl, { signal: AbortSignal.timeout(8_000) });
+                if (!res.ok) throw new Error(`proxy HTTP ${res.status}`);
+                const text = await res.text();
+                return parseRssXml(text, source);
+            },
+            tryRss2json,
+        ];
+
+        for (const strategy of strategies) {
+            try {
+                const items = await strategy();
+                return normalizeItems(items, source);
+            } catch (err) {
+                console.debug(`[NWA] fetchFeed strategy failed (${source}):`, err.message);
+            }
+        }
+
+        return [];
+    }
+
+    function parseRssXml(xml, source) {
+        const parser  = new DOMParser();
+        const doc     = parser.parseFromString(xml, 'text/xml');
+        const parseErr = doc.querySelector('parsererror');
+        if (parseErr) throw new Error('XML parse error');
+
+        const items = Array.from(doc.querySelectorAll('channel > item'));
+        if (items.length) {
+            return items.map(el => ({
+                title:       el.querySelector('title')?.textContent ?? '',
+                link:        el.querySelector('link')?.textContent ?? '',
+                description: el.querySelector('description')?.textContent ?? '',
+                pubDate:     el.querySelector('pubDate')?.textContent ?? '',
+            }));
+        }
+
+        const entries = Array.from(doc.querySelectorAll('entry'));
+        return entries.map(el => ({
+            title:       el.querySelector('title')?.textContent ?? '',
+            link:        el.querySelector('link')?.getAttribute('href') ?? '',
+            description: el.querySelector('summary, content')?.textContent ?? '',
+            pubDate:     el.querySelector('published, updated')?.textContent ?? '',
+        }));
+    }
+
+    function normalizeItems(items, source) {
+        return items
+            .map(item => {
+                const title = (item.title ?? '').trim();
+                if (!title) return null;
+
+                const link    = (item.link ?? '').trim();
+                const rawDesc = (item.description ?? item.content ?? '').replace(/<[^>]*>/g, '').trim();
+                const desc    = rawDesc.slice(0, 220) + (rawDesc.length > 220 ? '…' : '');
+                const pubStr  = item.pubDate ?? '';
+
+                let date = new Date(pubStr);
+                if (isNaN(date)) date = new Date();
+
+                return {
+                    title:     sanitizeText(title),
+                    link,
+                    summary:   sanitizeText(desc),
+                    source:    sanitizeText(source),
+                    date,
+                    sentiment: analyzeSentiment(title, rawDesc),
+                    isFallback: false,
+                };
+            })
+            .filter(Boolean);
+    }
+
+    async function fetchNews() {
+        if (newsCache.data && (Date.now() - newsCache.ts) / 1000 < NEWS_CONFIG.CACHE_TTL_SECONDS) {
+            return newsCache.data;
+        }
+
+        const FALLBACK_ITEM = [{
+            title:     'Market Intelligence — temporarily unavailable',
+            link:      '',
+            summary:   'Could not fetch live feeds. Check connection and try refreshing.',
+            source:    'NWA System',
+            date:      new Date(),
+            sentiment: 'neutral',
+            isFallback: true,
+        }];
+
+        const allItems = [];
+        const seen     = new Set();
+
+        const yahooFeeds = NEWS_CONFIG.YAHOO_RSS_TICKERS.map(sym => ({
+            url:    NEWS_CONFIG.YAHOO_RSS_BASE + encodeURIComponent(sym),
+            source: `Yahoo Finance / ${sym}`,
+        }));
+        const techFeeds = NEWS_CONFIG.TECH_FEEDS.map(url => ({ url, source: '' }));
+        const feedQueue = [...yahooFeeds, ...techFeeds];
+
+        const settled = await Promise.allSettled(
+            feedQueue.map(({ url, source }) => fetchFeed(url, source))
+        );
+
+        settled.forEach(r => {
+            if (r.status !== 'fulfilled') return;
+            for (const item of r.value) {
+                const key = item.link || item.title;
+                if (seen.has(key)) continue;
+                seen.add(key);
+                allItems.push(item);
+            }
+        });
+
+        const result = allItems.length > 0
+            ? allItems.sort((a, b) => b.date - a.date).slice(0, NEWS_CONFIG.MAX_ITEMS)
+            : FALLBACK_ITEM;
+
+        if (allItems.length > 0) {
+            newsCache.data = result;
+            newsCache.ts   = Date.now();
+        }
+
+        return result;
+    }
+
+    function renderNewsSkeletons() {
+        const container = $('newsContainer');
+        if (!container) return;
+        container.innerHTML = Array.from({ length: 4 }, () => `
+            <div class="news-skeleton" aria-hidden="true">
+                <div class="news-skeleton-line" style="width:80%"></div>
+                <div class="news-skeleton-line" style="width:40%;height:8px"></div>
+                <div class="news-skeleton-line" style="width:95%;height:8px"></div>
+            </div>
+        `).join('');
+    }
+
+    async function loadNews() {
+        renderNewsSkeletons();
+        try {
+            const articles = await fetchNews();
+            renderNews(articles);
+        } catch (err) {
+            console.error('[NWA Contagion] loadNews failed:', err);
+            const container = $('newsContainer');
+            if (container) {
+                container.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text-muted);">News unavailable — try refreshing</div>';
+            }
+        }
+    }
+
+    function renderNews(articles) {
+        const container = $('newsContainer');
+        if (!container) return;
+        const SENTIMENT_COLORS = {
+            positive: { dot: '#00E87B', bg: 'rgba(0,232,123,.08)', border: 'rgba(0,232,123,.2)' },
+            negative: { dot: '#FF4B4B', bg: 'rgba(255,75,75,.08)', border: 'rgba(255,75,75,.2)' },
+            neutral:  { dot: '#FFB547', bg: 'rgba(255,181,71,.08)', border: 'rgba(255,181,71,.2)' }
+        };
+        container.innerHTML = articles.map((item, idx) => {
+            const sc = SENTIMENT_COLORS[item.sentiment] ?? SENTIMENT_COLORS.neutral;
+            const dateStr = item.date instanceof Date && !isNaN(item.date) ? item.date.toLocaleDateString('en-US', { month:'short', day:'numeric' }) : '';
+            return `
+                <article class="news-item" data-news-index="${idx}" tabindex="0" role="link" aria-label="Read: ${toPlainText(item.title)}">
+                    <div class="news-sentiment-dot" style="background:${sc.dot}" aria-hidden="true"></div>
+                    <div style="flex:1;min-width:0;">
+                        <div class="news-item-title">${item.title}</div>
+                        <div class="news-item-meta">
+                            <span>${item.source}</span>
+                            ${dateStr ? `<time datetime="${item.date.toISOString?.() ?? ''}">${dateStr}</time>` : ''}
+                            <span style="padding:.1rem .4rem;border-radius:var(--r-full);background:${sc.bg};border:1px solid ${sc.border};color:${sc.dot};">${item.sentiment}</span>
+                        </div>
+                        ${item.summary ? `<div class="news-item-summary">${item.summary}</div>` : ''}
+                    </div>
+                </article>
+            `;
+        }).join('');
+        const counts = { positive:0, negative:0, neutral:0 };
+        articles.forEach(a => counts[a.sentiment]++);
+        const statsEl = $('newsStats');
+        if (statsEl) statsEl.textContent = `▲ ${counts.positive}  ▼ ${counts.negative}  — ${counts.neutral}`;
+    }
+
+    // ─────────────────────────────────────────────
+    // UTILITY FUNCTIONS
+    // ─────────────────────────────────────────────
+    function getWeightedBeta(c) { return 0.40 * c.beta + 0.35 * c.revExp + 0.25 * c.supply; }
+
+    function getAmplifier(vix) {
+        if (vix < CONSTANTS.VIX.LOW) return 0.7;
+        if (vix <= CONSTANTS.VIX.NORMAL) return 1.0;
+        if (vix <= CONSTANTS.VIX.ELEVATED) return 1.0 + (vix - CONSTANTS.VIX.NORMAL) / CONSTANTS.VIX.NORMAL;
+        return Math.min(CONSTANTS.VIX.MAX_AMP, 1.4 + (vix - CONSTANTS.VIX.ELEVATED) / 30);
+    }
+
+    function impactColor(pct) {
+        if (pct < CONSTANTS.IMPACT.LOW) return '#34D399';
+        if (pct < CONSTANTS.IMPACT.MEDIUM) return '#F0A030';
+        if (pct < CONSTANTS.IMPACT.HIGH) return '#FF6B6B';
+        return '#C41E3A';
+    }
+
+    function impactColorRGB(pct) {
+        if (pct < CONSTANTS.IMPACT.LOW) return [52, 211, 153];
+        if (pct < CONSTANTS.IMPACT.MEDIUM) return [240, 160, 48];
+        if (pct < CONSTANTS.IMPACT.HIGH) return [255, 107, 107];
+        return [196, 30, 58];
+    }
+
+    // Data validation and crash protection
+    function calculateContagion() {
+        if (typeof state.shock !== 'number' || isNaN(state.shock) || state.shock < 0 || state.shock > 70) {
+            console.warn('[NWA Contagion] Invalid shock value:', state.shock, '- resetting to 40');
+            state.shock = 40;
+            showToast('Invalid shock value. Reset to 40%.', false);
+        }
+        if (typeof state.vix !== 'number' || isNaN(state.vix) || state.vix < 10 || state.vix > 80) {
+            console.warn('[NWA Contagion] Invalid VIX value:', state.vix, '- resetting to 22');
+            state.vix = 22;
+            showToast('Invalid VIX value. Reset to 22.', false);
+        }
+        const REQUIRED_FIELDS = ['ticker', 'beta', 'mcap'];
+        for (const tier of ['tier1', 'tier2', 'tier3']) {
+            if (!Array.isArray(DATA[tier]) || DATA[tier].length === 0) {
+                console.error(`[NWA Contagion] DATA.${tier} is empty or invalid`);
+                showToast('Data model corrupted. Reset to defaults.', false);
+                return state._previousResults || null;
+            }
+            for (const c of DATA[tier]) {
+                for (const field of REQUIRED_FIELDS) {
+                    if (!(field in c)) {
+                        console.error(`[NWA Contagion] Missing required field "${field}" in ${tier} company`, c);
+                        showToast('Data model corrupted. Reset to defaults.', false);
+                        return state._previousResults || null;
+                    }
+                }
+            }
+        }
+
+        const { shock, vix, timeline } = state;
+        const amp = getAmplifier(vix);
+        const tm = TIMELINE[timeline];
+
+        try {
+            const calcTier = (companies, tierKey) => companies.map(c => {
+                const wb = getWeightedBeta(c);
+                const rawImpact = shock * wb * amp * tm[tierKey];
+                return { ...c, rawImpact, finalImpact: rawImpact, mcallTriggered: false };
+            });
+
+            let t1 = calcTier(DATA.tier1, 'tier1');
+            let t2 = calcTier(DATA.tier2, 'tier2');
+            let t3 = calcTier(DATA.tier3, 'tier3');
+
+            const totalAIMcap = [...DATA.tier1, ...DATA.tier2, ...DATA.tier3].reduce((s, c) => s + c.mcap, 0) + NVDA.mcap;
+            const tier1Loss = t1.reduce((s, c) => s + (c.mcap * c.rawImpact / 100), 0);
+            const nvdaLoss = NVDA.mcap * shock / 100;
+            const feedback = (tier1Loss + nvdaLoss) / totalAIMcap * 0.15;
+
+            const applyFeedback = arr => arr.map(c => {
+                const fi = c.rawImpact * (1 + feedback);
+                const capped = Math.min(fi, 95);
+                const mcallTriggered = capped > Math.abs(c.mcallThreshold);
+                return { ...c, finalImpact: +capped.toFixed(2), mcallTriggered };
+            });
+
+            t1 = applyFeedback(t1);
+            t2 = applyFeedback(t2);
+            t3 = applyFeedback(t3);
+
+            for (const tier of [t1, t2, t3]) {
+                for (const c of tier) {
+                    if (!isFinite(c.finalImpact) || isNaN(c.finalImpact)) {
+                        console.error(`[NWA Contagion] Invalid finalImpact for ${c.ticker}:`, c.finalImpact);
+                        c.finalImpact = 0;
+                        c.mcallTriggered = false;
+                    }
+                }
+            }
+
+            const all = [...t1, ...t2, ...t3];
+            if (!all.length) throw new Error('Empty company list');
+            const maxCompany = all.reduce(
+                (max, c) => c.finalImpact > max.finalImpact ? c : max,
+                all[0]
+            );
+            const totalDestroyed = (nvdaLoss + all.reduce((s, c) => s + c.mcap * c.finalImpact / 100, 0));
+            const avgImpact = all.reduce((s, c) => s + c.finalImpact, 0) / all.length;
+            const marginCalls = all.filter(c => c.mcallTriggered).length;
+            const etfOutflow = totalDestroyed * 0.008;
+
+            state._previousResults = state.results;
+            state.results = {
+                tier1: t1, tier2: t2, tier3: t3,
+                meta: {
+                    totalDestroyed: +totalDestroyed.toFixed(1),
+                    avgImpact: +avgImpact.toFixed(1),
+                    maxTicker: maxCompany.ticker,
+                    maxImpact: +maxCompany.finalImpact.toFixed(1),
+                    marginCalls,
+                    feedback: +(feedback * 100).toFixed(2),
+                    etfOutflow: +etfOutflow.toFixed(1),
+                    amplifier: +amp.toFixed(2)
+                }
+            };
+            return state.results;
+        } catch (err) {
+            console.error('[NWA Contagion] calculateContagion failed:', err);
+            showToast('Calculation failed. Reset to defaults.', false);
+            return state._previousResults || null;
+        }
+    }
+
+    function calculateVaR(portfolioValue = 100) {
+        if (!state.results) return null;
+        const m = state.results.meta;
+        const sigma = (m.avgImpact / 100) * 0.35;
+        const z95 = 1.645, z99 = 2.326;
+        const horizonDays = { t1:1, t3:3, t5:5, t10:10, t30:30 }[state.timeline] || 5;
+        const sqrtT = Math.sqrt(horizonDays);
+        const var95 = portfolioValue * sigma * z95 * sqrtT;
+        const var99 = portfolioValue * sigma * z99 * sqrtT;
+        const cvar99 = var99 * 1.28;
+        return { var95: +var95.toFixed(2), var99: +var99.toFixed(2), cvar99: +cvar99.toFixed(2), horizon: horizonDays, sigma: +(sigma * 100).toFixed(2) };
+    }
+
+    function calculateRecoveryTime() {
+        if (!state.results) return null;
+        const { shock, vix } = state;
+        let baseMonths = CONSTANTS.RECOVERY.EXTREME.months;
+        if (shock < CONSTANTS.RECOVERY.SOFT.maxShock) baseMonths = CONSTANTS.RECOVERY.SOFT.months;
+        else if (shock < CONSTANTS.RECOVERY.MILD.maxShock) baseMonths = CONSTANTS.RECOVERY.MILD.months;
+        else if (shock < CONSTANTS.RECOVERY.HARD.maxShock) baseMonths = CONSTANTS.RECOVERY.HARD.months;
+        else if (shock < CONSTANTS.RECOVERY.SEVERE.maxShock) baseMonths = CONSTANTS.RECOVERY.SEVERE.months;
+        const vixMod = vix > 40 ? 1.6 : vix > 30 ? 1.25 : vix > 20 ? 1.05 : 0.85;
+        const months = Math.round(baseMonths * vixMod);
+        let analog = '';
+        if (shock < 20) analog = 'COVID-19 AI dip (2022 → Q4 recovery)';
+        else if (shock < 35) analog = 'Post-GFC tech recovery (2009–2011)';
+        else if (shock < 55) analog = 'Dot-com Phase 1 correction (2000–2002)';
+        else if (shock < 70) analog = 'Dot-com full collapse (2000–2003)';
+        else analog = 'Great Depression tech parallel';
+        return { months, analog };
+    }
+
+    function calculateSystemicRiskScore() {
+        if (!state.results) return 0;
+        const m = state.results.meta;
+        const impactScore = Math.min(100, m.avgImpact * 2.5);
+        const mcallScore = Math.min(100, m.marginCalls * 16.67);
+        const feedbackScore = Math.min(100, m.feedback * 10);
+        const destroyedScore = Math.min(100, m.totalDestroyed / 50);
+        const vixScore = Math.min(100, (state.vix - 10) * 2.22);
+        return Math.round(
+            impactScore * CONSTANTS.SRS_WEIGHTS.impact +
+            mcallScore * CONSTANTS.SRS_WEIGHTS.mcall +
+            feedbackScore * CONSTANTS.SRS_WEIGHTS.feedback +
+            destroyedScore * CONSTANTS.SRS_WEIGHTS.destroyed +
+            vixScore * CONSTANTS.SRS_WEIGHTS.vix
+        );
+    }
+
+    function calculateFlashCrashProb() {
+        const base = Math.min(95, state.shock * 0.8 + (state.vix - 15) * 0.6);
+        const mcBoost = (state.results?.meta.marginCalls || 0) * 4;
+        return Math.min(95, Math.round(base + mcBoost));
+    }
+
+    function calculateContagionSpeed() {
+        const baseSpeed = state.vix > 35 ? 0.5 : state.vix > 25 ? 1.0 : state.vix > 18 ? 2.0 : 3.0;
+        return { tier1Hours: Math.round(baseSpeed * 2), tier2Hours: Math.round(baseSpeed * 12), tier3Hours: Math.round(baseSpeed * 48) };
+    }
+
+    const $ = id => document.getElementById(id);
+
+    let _updatePending = false;
+    function scheduleUpdate() {
+        if (_updatePending) return;
+        if (state.animating) return; // не обновлять пока идёт cascade-анимация
+        _updatePending = true;
+        requestAnimationFrame(() => {
+            fullUpdate();
+            _updatePending = false;
+        });
+    }
+
+    function renderSummary() {
+        const m = state.results?.meta;
+        if (!m) return;
+        $('sumDestroyed').textContent = '$' + (m.totalDestroyed / 1000).toFixed(2) + 'T';
+        $('sumDestroyed').style.color = m.totalDestroyed > 1000 ? 'var(--red-soft)' : 'var(--amber)';
+        $('sumAvg').textContent = '-' + m.avgImpact.toFixed(1) + '%';
+        $('sumAvg').style.color = impactColor(m.avgImpact);
+        $('sumMax').textContent = m.maxTicker + ' (-' + m.maxImpact + '%)';
+        $('sumMax').style.color = impactColor(m.maxImpact);
+        $('sumMCalls').textContent = m.marginCalls;
+        $('sumMCalls').style.color = m.marginCalls > 0 ? 'var(--red-soft)' : 'var(--green)';
+        const gb = $('graphBadge');
+        if (m.avgImpact > 30) { gb.textContent = 'CRITICAL'; gb.className = 'badge badge-red'; }
+        else if (m.avgImpact > 15) { gb.textContent = 'ELEVATED'; gb.className = 'badge badge-amber'; }
+        else { gb.textContent = 'MODERATE'; gb.className = 'badge badge-green'; }
+    }
+
+    function renderTier(tierData, bodyId, avgId) {
+        const body = $(bodyId), avgEl = $(avgId);
+        if (!body || !tierData) return;
+        const avg = tierData.reduce((s, c) => s + c.finalImpact, 0) / tierData.length;
+        avgEl.textContent = '-' + avg.toFixed(1) + '%';
+        avgEl.style.color = impactColor(avg);
+        body.innerHTML = tierData.map(c => {
+            const col = impactColor(c.finalImpact);
+            const barW = Math.min(100, (c.finalImpact / 60) * 100);
+            const wb = getWeightedBeta(c).toFixed(2);
+            const mcallAttr = c.mcallTriggered ? 'margin call triggered' : 'stable';
+            return `<div class="tier-row" data-ticker="${c.ticker}" tabindex="0" role="button" aria-label="${c.ticker}: impact -${c.finalImpact.toFixed(1)}%, ${mcallAttr}">
+                <span class="tr-ticker">${c.ticker}</span>
+                <div class="tr-bar-wrap"><div class="tr-bar" style="width:${barW}%;background:${col}"></div></div>
+                <span class="tr-impact" style="color:${col}">-${c.finalImpact.toFixed(1)}%</span>
+                <span class="tr-beta">β${wb}</span>
+                <span class="tr-mcall ${c.mcallTriggered ? 'triggered' : 'safe'}" title="${c.mcallTriggered ? 'MARGIN CALL TRIGGERED' : 'Safe'}"></span>
+            </div>`;
+        }).join('');
+    }
+
+    let tierRowByTicker = new Map();
+    function indexTierRows() {
+        tierRowByTicker.clear();
+        document.querySelectorAll('.tier-row').forEach(row => {
+            const t = row.dataset.ticker;
+            if (t) tierRowByTicker.set(t, row);
+        });
+    }
+
+    function renderTiers() {
+        if (!state.results) return;
+        renderTier(state.results.tier1, 'tierBody1', 'tierAvg1');
+        renderTier(state.results.tier2, 'tierBody2', 'tierAvg2');
+        renderTier(state.results.tier3, 'tierBody3', 'tierAvg3');
+        indexTierRows();
+        renderLiveQuoteOverlay();
+    }
+
+    function renderLiveQuoteOverlay() {
+        if (!state.liveQuotes || tierRowByTicker.size === 0) return;
+        const NOW = Date.now();
+
+        for (const [ticker, quote] of Object.entries(state.liveQuotes)) {
+            const row = tierRowByTicker.get(ticker);
+            if (!row || !quote) continue;
+
+            let badge = row.querySelector('.live-price-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'live-price-badge';
+                const tickerSpan = row.querySelector('.tr-ticker');
+                if (tickerSpan) tickerSpan.after(badge);
+                else row.prepend(badge);
+            }
+
+            const prevPrice = parseFloat(badge.dataset.prevPrice) || 0;
+            const newPrice  = quote.price;
+            if (prevPrice > 0 && newPrice !== prevPrice) {
+                const cls = newPrice > prevPrice ? 'flash-green' : 'flash-red';
+                badge.classList.add(cls);
+                setTimeout(() => badge.classList.remove(cls), 800);
+            }
+            badge.dataset.prevPrice = newPrice;
+
+            const isPos   = quote.changePercent >= 0;
+            const col     = isPos ? 'var(--green)' : 'var(--red-soft)';
+            const sign    = isPos ? '+' : '';
+
+            let freshIcon = '';
+            if (quote.freshness === 'stale') {
+                freshIcon = ' 🔴';
+            } else if (quote.freshness === 'delayed') {
+                freshIcon = ' 🟡';
+            } else if (quote.marketTime) {
+                const ageSec = (NOW - quote.marketTime) / 1000;
+                freshIcon = ageSec < 90 ? ' 🟢' : ageSec < 360 ? ' 🟡' : ' 🔴';
+            } else {
+                freshIcon = ' 🟢';
+            }
+
+            badge.textContent = `$${newPrice.toFixed(2)} (${sign}${quote.changePercent.toFixed(2)}%)${freshIcon}`;
+            badge.style.color        = col;
+            badge.style.borderColor  = isPos ? 'var(--green-border)' : 'var(--red-border)';
+            badge.style.background   = isPos ? 'var(--green-dim)'    : 'var(--red-dim)';
+            badge.style.opacity      = quote.freshness === 'stale' ? '0.6' : '1';
+            badge.title = quote.freshness === 'stale'   ? 'Stale data (>30 min)' :
+                          quote.freshness === 'delayed'  ? 'Delayed data (>5 min)' :
+                          'Live data';
+        }
+    }
+
+    function renderSecondOrder() {
+        const m = state.results?.meta;
+        if (!m) return;
+        const all = [...state.results.tier1, ...state.results.tier2, ...state.results.tier3];
+        const mcallCompanies = all.filter(c => c.mcallTriggered);
+        const highLeverage = all.filter(c => c.leverage > 2.0 && c.finalImpact > 20);
+        const flashCrashProb = calculateFlashCrashProb();
+
+        const soBadge = $('soBadge');
+        if (m.marginCalls >= 3) { soBadge.textContent = 'CRITICAL'; soBadge.className = 'badge badge-red'; }
+        else if (m.marginCalls >= 1) { soBadge.textContent = 'WARNING'; soBadge.className = 'badge badge-amber'; }
+        else { soBadge.textContent = 'LOW RISK'; soBadge.className = 'badge badge-green'; }
+
+        $('soGrid').innerHTML = `
+            <div class="so-card"><div class="so-icon">⚠️</div><div class="so-card-title">Margin Call Risk</div><div class="so-card-body">${mcallCompanies.length > 0 ? mcallCompanies.map(c => `<strong>${c.ticker}</strong> (${Math.min(95, Math.round(c.finalImpact * 1.5))}% probability)`).join(', ') : 'No margin calls triggered at current shock level.'}</div><div class="so-card-val" style="color:${m.marginCalls > 0 ? 'var(--red-soft)' : 'var(--green)'}">${m.marginCalls} triggered</div></div>
+            <div class="so-card"><div class="so-icon">📉</div><div class="so-card-title">ETF / Fund Outflows</div><div class="so-card-body">AI-focused ETFs (BOTZ, AIQ, SMH) estimated outflows from forced selling and redemption pressure.</div><div class="so-card-val" style="color:${m.etfOutflow > 10 ? 'var(--red-soft)' : 'var(--amber)'}">~$${m.etfOutflow.toFixed(0)}B estimated</div></div>
+            <div class="so-card"><div class="so-icon">🏦</div><div class="so-card-title">Credit Event Risk</div><div class="so-card-body">${highLeverage.length > 0 ? 'High-leverage companies under stress: ' + highLeverage.map(c => `<strong>${c.ticker}</strong> (${c.leverage}x D/EBITDA)`).join(', ') : 'No immediate credit concerns at current stress level.'}</div><div class="so-card-val" style="color:${highLeverage.length > 0 ? 'var(--amber)' : 'var(--green)'}">${highLeverage.length > 0 ? 'ELEVATED' : 'STABLE'}</div></div>
+            <div class="so-card"><div class="so-icon">🏛️</div><div class="so-card-title">Pension Fund Exposure</div><div class="so-card-body">US public pension funds hold est. ${(m.totalDestroyed * 0.003).toFixed(1)}% of AI sector. CalPERS, NYCERS, CDPQ forced rebalancing triggers at -${Math.round(state.shock * 0.4)}% drawdown. ${m.totalDestroyed > 500 ? '<strong>⚠ Rebalancing threshold likely breached.</strong>' : 'Below rebalancing threshold.'}</div><div class="so-card-val" style="color:${m.totalDestroyed > 500 ? 'var(--amber)' : 'var(--green)'}">$${(m.totalDestroyed * 0.003).toFixed(0)}B pension exposure</div></div>
+            <div class="so-card"><div class="so-icon">🔗</div><div class="so-card-title">Feedback + Flash Crash Prob.</div><div class="so-card-body">Second-order feedback adds +${m.feedback.toFixed(1)}% to cascade via cross-holdings. VIX amplifier: ${m.amplifier}x. Flash crash probability within 48h: <strong style="color:${flashCrashProb > 50 ? 'var(--red-soft)' : 'var(--amber)'}">${flashCrashProb}%</strong></div><div class="so-card-val" style="color:${m.feedback > 3 ? 'var(--red-soft)' : 'var(--amber)'}">+${m.feedback.toFixed(1)}% feedback · ${flashCrashProb}% crash risk</div></div>
+        `;
+    }
+
+    function renderHedging() {
+        if (!state.results) return;
+        const m = state.results.meta;
+        const srs = calculateSystemicRiskScore();
+        const { shock, vix } = state;
+        const badge = $('hedgeBadge');
+        if (srs >= 70) { badge.textContent = 'DEFENSIVE MODE'; badge.className = 'badge badge-red'; }
+        else if (srs >= 45) { badge.textContent = 'REDUCE EXPOSURE'; badge.className = 'badge badge-amber'; }
+        else { badge.textContent = 'MONITOR'; badge.className = 'badge badge-green'; }
+
+        const hedges = [
+            { icon:'📉', title:'Put Options on NVDA', action: shock >= 35 ? `Buy ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Buy ${Math.round(100 - shock*0.6 + 5)}% OTM puts as cheap tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1% of position)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--red-soft)' : 'var(--amber)' },
+            { icon:'🔻', title:'SOXS / SMH Puts', action: `Allocate ${Math.min(20, Math.round(srs/5))}% to SOXS (3x inverse semiconductor) or buy SMH puts.`, cost: Math.min(20, Math.round(srs/5)) + '% portfolio allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--red-soft)' : 'var(--amber)' },
+            { icon:'🥇', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — increase GLD to 10–15% and TLT to 8–12%.` : `Build pre-positioned Gold (5%) + 20yr Treasuries (TLT 5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--amber)' : 'var(--green)' },
+            { icon:'💵', title:'Cash + Sector Rotation', action: `Raise cash to ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotate: AI/semis → Energy (XLE), Healthcare (XLV), Utilities (XLU).` + (m.marginCalls>0?` ⚠ ${m.marginCalls} margin call(s) detected — forced selling incoming.`:''), cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash target', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--red-soft)' : 'var(--text-sec)' }
+        ];
+        $('hedgeGrid').innerHTML = hedges.map(h => `
+            <div class="hedge-card">
+                <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+                    <span style="font-size:.9rem;" aria-hidden="true">${h.icon}</span>
+                    <span style="font-size:.75rem;color:var(--text);font-weight:400;">${sanitizeText(h.title)}</span>
+                    <span style="margin-left:auto;font-family:var(--mono);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .5rem;border-radius:var(--r-full);background:rgba(255,255,255,.04);color:${h.color};">${sanitizeText(h.urgency)}</span>
+                </div>
+                <p style="font-size:.68rem;color:var(--text-muted);line-height:1.7;margin-bottom:.5rem;">${sanitizeText(h.action)}</p>
+                <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-dim);padding-top:.4rem;border-top:1px solid var(--border);">Cost: <span style="color:var(--text-sec);">${sanitizeText(h.cost)}</span></div>
+            </div>
+        `).join('');
+    }
+
+    function renderInstitutionalMetrics() {
+        if (!state.results) return;
+        const srs = calculateSystemicRiskScore();
+        $('srsScore').textContent = srs;
+        $('srsScore').style.color = srs >= 70 ? 'var(--red-soft)' : srs >= 45 ? 'var(--amber)' : 'var(--green)';
+        $('srsBar').style.width = srs + '%';
+        $('srsBar').style.background = srs >= 70 ? 'var(--red-soft)' : srs >= 45 ? 'var(--amber)' : 'var(--green)';
+        $('srsLabel').textContent = srs >= 70 ? '⚠ CRITICAL' : srs >= 45 ? '◎ ELEVATED' : '✓ MODERATE';
+        $('srsLabel').style.color = srs >= 70 ? 'var(--red-soft)' : srs >= 45 ? 'var(--amber)' : 'var(--green)';
+        const m = state.results.meta;
+        $('srsComponents').innerHTML = [
+            { label:'Avg Impact', val:m.avgImpact.toFixed(1)+'%' },
+            { label:'Margin Calls', val:m.marginCalls+' fired' },
+            { label:'Feedback', val:'+'+m.feedback.toFixed(1)+'%' },
+            { label:'VIX Amp', val:m.amplifier+'x' }
+        ].map(c => `<div style="text-align:center;padding:.3rem .4rem;background:rgba(255,255,255,.02);border-radius:4px;"><div style="font-family:var(--mono);font-size:.62rem;color:var(--text);">${c.val}</div><div style="font-family:var(--mono);font-size:.38rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:.15rem;">${c.label}</div></div>`).join('');
+
+        const vars = calculateVaR(100);
+        if (vars) {
+            $('var95').textContent = '-' + vars.var95 + '%';
+            $('var99').textContent = '-' + vars.var99 + '%';
+            $('cvar99').textContent = '-' + vars.cvar99 + '%';
+            $('varSigma').textContent = vars.sigma + '%/day';
+            $('varHorizon').textContent = '(' + vars.horizon + 'd)';
+        }
+
+        const rte = calculateRecoveryTime();
+        if (rte) {
+            $('rteMonths').textContent = rte.months;
+            $('rteAnalog').textContent = rte.analog;
+        }
+
+        const spd = calculateContagionSpeed();
+        if (spd) {
+            const maxH = spd.tier3Hours || 1; // защита от деления на ноль
+            $('speedT1').textContent = spd.tier1Hours + 'h';
+            $('speedT2').textContent = spd.tier2Hours + 'h';
+            $('speedT3').textContent = spd.tier3Hours + 'h';
+            $('speedBarT1').style.width = Math.min(100, (spd.tier1Hours / maxH * 100)) + '%';
+            $('speedBarT2').style.width = Math.min(100, (spd.tier2Hours / maxH * 100)) + '%';
+            $('speedBarT3').style.width = '100%';
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    // NETWORK GRAPH + CANVAS (PATCH 7A: Bloom Effect)
+    // ─────────────────────────────────────────────
+    let _networkAnimFrame = null;
+    let _pulsePhase = 0;
+
+    const networkCanvasEl = document.getElementById('networkCanvas');
+
+    function startNetworkAnimation() {
+        if (_networkAnimFrame) return;
+        function frame() {
+            if (document.hidden) {
+                _networkAnimFrame = requestAnimationFrame(frame);
+                return;
+            }
+            _pulsePhase += CONSTANTS.GRAPH.ANIMATION_SPEED;
+            renderNetworkGraphAnimated(_pulsePhase);
+            _networkAnimFrame = requestAnimationFrame(frame);
+        }
+        _networkAnimFrame = requestAnimationFrame(frame);
+    }
+
+    function stopNetworkAnimation() {
+        if (_networkAnimFrame) { cancelAnimationFrame(_networkAnimFrame); _networkAnimFrame = null; }
+        renderNetworkGraph();
+    }
+
+    function renderNetworkGraph() { renderNetworkGraphAnimated(_pulsePhase); }
+
+    function renderNetworkGraphAnimated(phase) {
+        if (document.hidden) return;
+
+        const canvas = networkCanvasEl;
+        if (!canvas) return;
+        if (!canvas.getAttribute('role')) { canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Interactive contagion network visualization'); }
+
+        const wrap = canvas.parentElement;
+        const rect = wrap.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        const W = rect.width, H = rect.height;
+
+        if (canvas.width !== W * dpr) {
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            canvas.style.width = W + 'px';
+            canvas.style.height = H + 'px';
+        }
+
+        const ctx = canvas.getContext('2d');
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        const cx = W / 2, cy = H / 2;
+        // Явная заливка фоном (нужна вместо clearRect для непрозрачного canvas)
+        ctx.fillStyle = '#04040A';
+        ctx.fillRect(0, 0, W, H);
+
+        // Pulsing rings with phase
+        const R1 = Math.min(W, H) * CONSTANTS.GRAPH.RING_RADII_FACTORS[0];
+        const R2 = Math.min(W, H) * CONSTANTS.GRAPH.RING_RADII_FACTORS[1];
+        const R3 = Math.min(W, H) * CONSTANTS.GRAPH.RING_RADII_FACTORS[2];
+
+        [R1, R2, R3].forEach((r, i) => {
+            const alpha = 0.015 + Math.sin(phase + i * 1.2) * 0.005;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(201,169,110,${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        });
+
+        const nodes = [];
+        const nvdaImpact = state.shock || 0;
+        nodes.push({ ticker:'NVDA', name:'NVIDIA', x:cx, y:cy, r:CONSTANTS.GRAPH.NODE_SIZE.TIER0, impact:nvdaImpact, tier:0, data:{ ...NVDA, finalImpact:nvdaImpact, mechanism:'Source of shock event', mcallTriggered:false, beta:1, revExp:1, supply:1 } });
+
+        const tierDef = [
+            { key:'tier1', data:state.results?state.results.tier1:DATA.tier1.map(c=>({...c,finalImpact:0,mcallTriggered:false})), radius:R1, angleOffset:-Math.PI/2, maxNodeR:CONSTANTS.GRAPH.NODE_SIZE.TIER1, scaleFactor:CONSTANTS.GRAPH.NODE_SCALE.TIER1 },
+            { key:'tier2', data:state.results?state.results.tier2:DATA.tier2.map(c=>({...c,finalImpact:0,mcallTriggered:false})), radius:R2, angleOffset:-Math.PI/3, maxNodeR:CONSTANTS.GRAPH.NODE_SIZE.TIER2, scaleFactor:CONSTANTS.GRAPH.NODE_SCALE.TIER2 },
+            { key:'tier3', data:state.results?state.results.tier3:DATA.tier3.map(c=>({...c,finalImpact:0,mcallTriggered:false})), radius:R3, angleOffset:Math.PI/6, maxNodeR:CONSTANTS.GRAPH.NODE_SIZE.TIER3, scaleFactor:CONSTANTS.GRAPH.NODE_SCALE.TIER3 }
+        ];
+
+        tierDef.forEach((t, tier) => {
+            t.data.forEach((c, i) => {
+                const angle = (i / t.data.length) * Math.PI * 2 + t.angleOffset;
+                const nr = Math.max(CONSTANTS.GRAPH.NODE_SIZE.MIN, Math.min(t.maxNodeR, Math.sqrt(c.mcap) * t.scaleFactor));
+                nodes.push({ ticker:c.ticker, name:c.name, x:cx + Math.cos(angle) * t.radius, y:cy + Math.sin(angle) * t.radius, r:nr, impact:c.finalImpact || 0, tier:tier + 1, data:c });
+            });
+        });
+
+        state.nodePositions = nodes;
+
+        const nodeByTicker = new Map(nodes.map(n => [n.ticker, n]));
+        EDGES.forEach(([t1, t2, corr]) => {
+            const n1 = nodeByTicker.get(t1);
+            const n2 = nodeByTicker.get(t2);
+            if (!n1 || !n2) return;
+            const avgImpact = (n1.impact + n2.impact) / 2;
+            const rgb = impactColorRGB(avgImpact);
+            const alpha = state.results ? Math.min(0.6, corr * 0.4 + avgImpact * 0.004) : corr * 0.08;
+            if (state.results && avgImpact > 25) { ctx.save(); ctx.setLineDash(CONSTANTS.GRAPH.EDGE_DASH); ctx.lineDashOffset = -phase * 8; }
+            ctx.beginPath();
+            ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y);
+            ctx.strokeStyle = state.results ? `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})` : `rgba(201,169,110,${alpha})`;
+            ctx.lineWidth = Math.max(0.5, corr * 2);
+            ctx.stroke();
+            if (state.results && avgImpact > 25) ctx.restore();
+        });
+
+        nodes.forEach(n => {
+            const col = state.results ? impactColor(n.impact) : '#C9A96E';
+            const rgb = state.results ? impactColorRGB(n.impact) : [201,169,110];
+            const isMCall = n.data?.mcallTriggered;
+
+            if (isMCall) {
+                const pulseR = n.r + 6 + Math.sin(phase * 3) * 4;
+                const pulseA = 0.3 + Math.sin(phase * 3) * 0.2;
+                ctx.beginPath(); ctx.arc(n.x, n.y, pulseR, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255,75,75,${pulseA})`; ctx.lineWidth = 1.5; ctx.stroke();
+            }
+
+            if (n.ticker === 'NVDA' && state.results) {
+                const pr = n.r + 8 + Math.sin(phase * 2) * 3;
+                ctx.beginPath(); ctx.arc(n.x, n.y, pr, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${0.15 + Math.sin(phase) * 0.08})`; ctx.lineWidth = 1; ctx.stroke();
+            }
+
+            if (n.impact > 20) {
+                ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 10, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.06)`; ctx.fill();
+            }
+
+            // PATCH 7A: Bloom effect for high-impact nodes
+            if (state.results && n.impact > 25) {
+                ctx.shadowColor = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.7)`;
+                ctx.shadowBlur = 15 + Math.sin(phase * 2.5) * 8;
+            }
+
+            ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            const grad = ctx.createRadialGradient(n.x - n.r * 0.3, n.y - n.r * 0.3, 0, n.x, n.y, n.r);
+            grad.addColorStop(0, col); grad.addColorStop(1, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.55)`);
+            ctx.fillStyle = grad; ctx.fill();
+            ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.3)`; ctx.lineWidth = n.ticker === 'NVDA' ? 2 : 1; ctx.stroke();
+
+            // Reset shadow
+            if (state.results && n.impact > 25) {
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+            }
+
+            ctx.fillStyle = n.ticker === 'NVDA' ? '#fff' : 'rgba(255,255,255,0.75)';
+            ctx.font = n.ticker === 'NVDA' ? '500 10px "JetBrains Mono"' : '300 9px "JetBrains Mono"';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            if (n.r > 12) ctx.fillText(n.ticker, n.x, n.y);
+            else ctx.fillText(n.ticker, n.x, n.y + n.r + 11);
+
+            if (state.results && n.impact > 0) {
+                ctx.fillStyle = col; ctx.font = '400 8px "JetBrains Mono"';
+                ctx.fillText('-' + n.impact.toFixed(1) + '%', n.x, n.y + (n.r > 12 ? n.r + 12 : n.r + 22));
+            }
+
+            if (isMCall) {
+                ctx.fillStyle = '#FF4B4B'; ctx.font = 'bold 9px sans-serif';
+                ctx.fillText('⚠', n.x + n.r * 0.5, n.y - n.r * 0.5);
+            }
+        });
+
+        ctx.restore();
+    }
+
+    function setupCanvasTooltip() {
+        const canvas = $('networkCanvas'), tooltip = $('graphTooltip');
+        if (!canvas || !tooltip) return;
+        tooltip.setAttribute('role', 'tooltip');
+        tooltip.setAttribute('aria-live', 'polite');
+
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top;
+            let hoveredNode = null;
+            for (const n of state.nodePositions) {
+                const dx = mx - n.x, dy = my - n.y;
+                if (Math.sqrt(dx * dx + dy * dy) < n.r + 5) { hoveredNode = n; break; }
+            }
+            if (hoveredNode) {
+                canvas.style.cursor = 'pointer';
+                const d = hoveredNode.data;
+                $('gttTicker').textContent = hoveredNode.ticker;
+                $('gttName').textContent = hoveredNode.name;
+                $('gttImpact').textContent = '-' + hoveredNode.impact.toFixed(1) + '%';
+                $('gttImpact').style.color = impactColor(hoveredNode.impact);
+                $('gttBeta').textContent = (d.beta || 0).toFixed(2);
+                $('gttRevExp').textContent = Math.round((d.revExp || 0) * 100) + '%';
+                $('gttMCall').textContent = d.mcallTriggered ? '⚠ TRIGGERED' : 'Safe';
+                $('gttMCall').style.color = d.mcallTriggered ? '#FF4B4B' : '#34D399';
+                $('gttMech').textContent = d.mechanism || '';
+                let tx = hoveredNode.x + 20, ty = hoveredNode.y - 20;
+                if (tx + 260 > rect.width) tx = hoveredNode.x - 270;
+                if (ty < 0) ty = 10;
+                if (ty + 200 > rect.height) ty = rect.height - 210;
+                tooltip.style.left = tx + 'px'; tooltip.style.top = ty + 'px';
+                tooltip.classList.add('visible');
+            } else {
+                canvas.style.cursor = 'default'; tooltip.classList.remove('visible');
+            }
+        });
+        canvas.addEventListener('mouseleave', () => { tooltip.classList.remove('visible'); canvas.style.cursor = 'default'; });
+    }
+
+    function renderCorrMatrix() {
+        const canvas = $('corrCanvas');
+        if (!canvas) return;
+        if (!canvas.getAttribute('role')) { canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Correlation matrix heatmap'); }
+
+        const wrap = canvas.parentElement;
+        const rect = wrap.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + 'px'; canvas.style.height = rect.height + 'px';
+        const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+
+        const W = rect.width, H = rect.height;
+        const tickers = ['NVDA', ...DATA.tier1.map(c => c.ticker), ...DATA.tier2.map(c => c.ticker), ...DATA.tier3.map(c => c.ticker)];
+        const n = tickers.length, margin = 55, cellW = (W - margin) / n, cellH = (H - margin) / n;
+        const corrMap = {};
+        EDGES.forEach(([a, b, v]) => { corrMap[a + '_' + b] = v; corrMap[b + '_' + a] = v; });
+
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++) {
+                const key = tickers[i] + '_' + tickers[j];
+                let v = i === j ? 1.0 : (corrMap[key] || 0);
+                const x = margin + j * cellW, y = margin + i * cellH;
+                const intensity = v;
+                const r = Math.round(201 * intensity), g = Math.round(169 * intensity), b2 = Math.round(110 * intensity);
+                ctx.fillStyle = v > 0 ? `rgba(${r},${g},${b2},${0.15 + intensity * 0.6})` : 'rgba(255,255,255,0.01)';
+                ctx.fillRect(x, y, cellW - 1, cellH - 1);
+                if (cellW > 28 && v > 0) {
+                    ctx.fillStyle = v > 0.6 ? '#fff' : 'rgba(255,255,255,0.4)';
+                    ctx.font = '300 7px "JetBrains Mono"';
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(v.toFixed(1), x + cellW / 2, y + cellH / 2);
+                }
+            }
+        }
+        ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.font = '300 8px "JetBrains Mono"';
+        for (let i = 0; i < n; i++) {
+            ctx.save();
+            ctx.translate(margin + i * cellW + cellW / 2, margin - 5);
+            ctx.rotate(-Math.PI / 4);
+            ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+            ctx.fillText(tickers[i], 0, 0);
+            ctx.restore();
+            ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+            ctx.fillText(tickers[i], margin - 5, margin + i * cellH + cellH / 2);
+        }
+    }
+
+    function playCascade() {
+        if (state.animating) return;
+        state.animating = true;
+        const btn = $('playBtn');
+        btn.classList.add('playing'); btn.textContent = '◼ Playing...';
+        document.querySelectorAll('.tr-bar').forEach(b => b.style.width = '0%');
+        document.querySelectorAll('.tr-impact').forEach(i => i.textContent = '-0.0%');
+
+        calculateContagion();
+        const res = state.results;
+
+        setTimeout(() => renderSummary(), 200);
+
+        res.tier1.forEach((c, i) => {
+            setTimeout(() => {
+                const row = document.querySelector(`#tierBody1 .tier-row:nth-child(${i + 1})`);
+                if (!row) return;
+                const bar = row.querySelector('.tr-bar'), imp = row.querySelector('.tr-impact');
+                const col = impactColor(c.finalImpact);
+                bar.style.width = Math.min(100, (c.finalImpact / 60) * 100) + '%'; bar.style.background = col;
+                animateNumber(imp, 0, c.finalImpact, 800, v => `-${v.toFixed(1)}%`, col);
+            }, CONSTANTS.CASCADE.TIER1_START_MS + i * CONSTANTS.CASCADE.TIER1_STEP_MS);
+        });
+
+        res.tier2.forEach((c, i) => {
+            setTimeout(() => {
+                const row = document.querySelector(`#tierBody2 .tier-row:nth-child(${i + 1})`);
+                if (!row) return;
+                const bar = row.querySelector('.tr-bar'), imp = row.querySelector('.tr-impact');
+                const col = impactColor(c.finalImpact);
+                bar.style.width = Math.min(100, (c.finalImpact / 60) * 100) + '%'; bar.style.background = col;
+                animateNumber(imp, 0, c.finalImpact, 600, v => `-${v.toFixed(1)}%`, col);
+            }, CONSTANTS.CASCADE.TIER2_START_MS + i * CONSTANTS.CASCADE.TIER2_STEP_MS);
+        });
+
+        res.tier3.forEach((c, i) => {
+            setTimeout(() => {
+                const row = document.querySelector(`#tierBody3 .tier-row:nth-child(${i + 1})`);
+                if (!row) return;
+                const bar = row.querySelector('.tr-bar'), imp = row.querySelector('.tr-impact');
+                const col = impactColor(c.finalImpact);
+                bar.style.width = Math.min(100, (c.finalImpact / 60) * 100) + '%'; bar.style.background = col;
+                animateNumber(imp, 0, c.finalImpact, 500, v => `-${v.toFixed(1)}%`, col);
+            }, CONSTANTS.CASCADE.TIER3_START_MS + i * CONSTANTS.CASCADE.TIER3_STEP_MS);
+        });
+
+        setTimeout(() => renderSecondOrder(), CONSTANTS.CASCADE.SECOND_ORDER_MS);
+        setTimeout(() => renderInstitutionalMetrics(), CONSTANTS.CASCADE.METRICS_MS);
+        setTimeout(() => renderHedging(), CONSTANTS.CASCADE.HEDGING_MS);
+
+        let graphSteps = 0;
+        if (state._cascadeInterval) { clearInterval(state._cascadeInterval); state._cascadeInterval = null; }
+        state._cascadeInterval = setInterval(() => {
+            graphSteps++;
+            const progress = Math.min(1, graphSteps / CONSTANTS.CASCADE.GRAPH_STEPS);
+
+            const saved1 = state.results.tier1.map(c => c.finalImpact);
+            const saved2 = state.results.tier2.map(c => c.finalImpact);
+            const saved3 = state.results.tier3.map(c => c.finalImpact);
+
+            state.results.tier1.forEach(c => { c.finalImpact *= progress; });
+            state.results.tier2.forEach(c => { c.finalImpact *= Math.max(0, (progress - 0.3) / 0.7); });
+            state.results.tier3.forEach(c => { c.finalImpact *= Math.max(0, (progress - 0.5) / 0.5); });
+
+            renderNetworkGraph();
+
+            state.results.tier1.forEach((c, i) => { c.finalImpact = saved1[i]; });
+            state.results.tier2.forEach((c, i) => { c.finalImpact = saved2[i]; });
+            state.results.tier3.forEach((c, i) => { c.finalImpact = saved3[i]; });
+
+            if (progress >= 1) {
+                clearInterval(state._cascadeInterval);
+                state._cascadeInterval = null;
+                renderNetworkGraph();
+            }
+        }, CONSTANTS.CASCADE.GRAPH_INTERVAL_MS);
+
+        setTimeout(() => {
+            state.animating = false;
+            btn.classList.remove('playing'); btn.textContent = '▶ Play Cascade';
+            ['tierAvg1', 'tierAvg2', 'tierAvg3'].forEach((id, i) => {
+                const tier = [res.tier1, res.tier2, res.tier3][i];
+                const avg = tier.reduce((s, c) => s + c.finalImpact, 0) / tier.length;
+                $(id).textContent = '-' + avg.toFixed(1) + '%';
+                $(id).style.color = impactColor(avg);
+            });
+            document.querySelectorAll('.tr-mcall').forEach(dot => {
+                const row = dot.closest('.tier-row');
+                const ticker = row?.dataset.ticker;
+                const all = [...res.tier1, ...res.tier2, ...res.tier3];
+                const company = all.find(c => c.ticker === ticker);
+                if (company?.mcallTriggered) { dot.classList.add('triggered'); dot.classList.remove('safe'); }
+            });
+            updateTickerTrack();
+        }, CONSTANTS.CASCADE.TOTAL_MS);
+    }
+
+    function animateNumber(el, from, to, duration, formatter, color) {
+        const start = performance.now();
+        if (color) el.style.color = color;
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = from + (to - from) * ease;
+            el.textContent = formatter(current);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    function setupPortfolio() {
+        const container = $('portInputs');
+        if (!container) return;
+        container.innerHTML = PORT_FIELDS.map(f => {
+            const saved = localStorage.getItem(f.id) || '';
+            return `<div class="port-field"><label title="AI Beta: ${f.aiBeta}">${f.label}</label><input type="number" id="${f.id}" value="${saved}" min="0" max="100" placeholder="0" aria-label="${f.label}"></div>`;
+        }).join('');
+        container.querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => localStorage.setItem(inp.id, inp.value)));
+        $('calcPortBtn').addEventListener('click', calculatePortfolioImpact);
+    }
+
+    function calculatePortfolioImpact() {
+        if (!state.results) { showToast('Run the contagion model first.', false); return; }
+        let totalWeight = 0, aiExposure = 0;
+        PORT_FIELDS.forEach(f => {
+            const w = parseFloat(document.getElementById(f.id)?.value) || 0;
+            totalWeight += w; aiExposure += w * f.aiBeta;
+        });
+        if (totalWeight === 0) { showToast('Enter at least one portfolio position.', false); return; }
+        const avgImpact = state.results.meta.avgImpact;
+        const portfolioLoss = (aiExposure / 100) * (avgImpact / 100) * 100;
+        const result = $('portResult');
+        result.style.display = 'grid';
+        result.innerHTML = `
+            <div class="port-metric"><div class="port-metric-val" style="color:${aiExposure > 50 ? 'var(--red-soft)' : aiExposure > 30 ? 'var(--amber)' : 'var(--green)'}">${aiExposure.toFixed(1)}%</div><div class="port-metric-label">AI Exposure</div></div>
+            <div class="port-metric"><div class="port-metric-val" style="color:var(--red-soft)">-${portfolioLoss.toFixed(1)}%</div><div class="port-metric-label">Est. Portfolio Loss</div></div>
+            <div class="port-metric"><div class="port-metric-val" style="color:var(--amber)">${aiExposure > 50 ? 'High' : 'Medium'}</div><div class="port-metric-label">Risk Level</div></div>`;
+    }
+
+    function exportCSV() {
+        if (!state.results) { showToast('Calculate contagion first.', false); return; }
+        const m = state.results.meta;
+        const all = [...state.results.tier1, ...state.results.tier2, ...state.results.tier3];
+        const lines = [
+            `NWA Contagion Analysis Report`,
+            `Generated: ${new Date().toISOString()}`,
+            `Shock: -${state.shock}% | VIX: ${state.vix} | Timeline: ${state.timeline} | Amplifier: ${m.amplifier}x`,
+            `Total MCap Destroyed: $${m.totalDestroyed.toFixed(0)}B | Avg Impact: -${m.avgImpact}% | Max: ${m.maxTicker} (-${m.maxImpact}%) | Margin Calls: ${m.marginCalls}`,
+            ``,
+            `Ticker,Name,Tier,Beta(NVDA),Revenue Exp,Impact(%),MCap($B),Margin Call,Mechanism`,
+            ...all.map(c => {
+                const tier = state.results.tier1.includes(c) ? 1 : state.results.tier2.includes(c) ? 2 : 3;
+                return `${c.ticker},"${c.name}",${tier},${c.beta},${Math.round(c.revExp * 100)}%,-${c.finalImpact}%,${c.mcap},${c.mcallTriggered ? 'YES' : 'no'},"${c.mechanism}"`;
+            })
+        ];
+        const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a');
+        const blobUrl = URL.createObjectURL(blob);
+        a.href = blobUrl;
+        a.download = `NWA_Contagion_${state.shock}pct_${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        // Освобождаем память: без revokeObjectURL браузер держит blob до закрытия вкладки
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 10_000);
+        showToast('CSV exported successfully', true);
+    }
+
+    async function exportPDF() {
+        if (typeof html2canvas === 'undefined') { showToast('html2canvas not loaded — try refreshing', false); return; }
+        if (typeof jspdf === 'undefined') { showToast('jsPDF not loaded — try refreshing', false); return; }
+        showToast('Generating PDF...', false);
+        try {
+            const target = document.querySelector('.ctn');
+            const cv = await html2canvas(target, { scale: 1.5, backgroundColor: '#04040A', useCORS: true });
+            const { jsPDF } = window.jspdf;
+            if (!jsPDF) throw new Error('jsPDF constructor not available');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const w = pdf.internal.pageSize.getWidth();
+            const ratio = cv.height / cv.width;
+            pdf.addImage(cv.toDataURL('image/png'), 'PNG', 0, 0, w, w * ratio);
+            pdf.save(`NWA_Contagion_Report_${new Date().toISOString().slice(0, 10)}.pdf`);
+            showToast('PDF exported successfully', true);
+        } catch (e) {
+            console.error('[NWA] PDF export failed:', e);
+            showToast('PDF export failed: ' + e.message, false);
+        }
+    }
+
+    async function copySummary() {
+        if (!state.results) { showToast('Calculate contagion first.', false); return; }
+        const m = state.results.meta;
+        const text = `NWA Contagion | NVDA -${state.shock}% | VIX ${state.vix} | ${state.timeline.toUpperCase()}\n` +
+            `MCap Destroyed: $${(m.totalDestroyed / 1000).toFixed(2)}T | Avg: -${m.avgImpact}% | Max: ${m.maxTicker} -${m.maxImpact}% | Margin Calls: ${m.marginCalls}`;
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(text);
+                showToast('Summary copied', true);
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                showToast('Summary copied (fallback)', true);
+            }
+        } catch (err) {
+            console.error('[NWA] Copy failed:', err);
+            showToast('Copy failed — check permissions', false);
+        }
+    }
+
+    function showToast(msg, isOk, durationMs = 3500) {
+        const t = $('toast');
+        t.textContent = msg;
+        t.className = 'toast' + (isOk ? ' ok' : '');
+        void t.offsetWidth;
+        t.classList.add('show');
+        if (t._timer) clearTimeout(t._timer);
+        t._timer = setTimeout(() => t.classList.remove('show'), durationMs);
+    }
+
+    const SCENARIO_DESCRIPTIONS = {
+        custom: 'Manually configured scenario. Adjust sliders to model custom shock parameters.',
+        soft: 'Soft landing: AI hype moderates, NVDA misses earnings by 8%. No credit events. Sector reprices 10–20%.',
+        hard: 'Hard correction: AI capex ROI questioned. Major hyperscaler cuts 2026 guidance. Institutional de-risking begins.',
+        lehman: 'Lehman-style crisis: AI credit bubble unwinds. Margin calls cascade across over-leveraged AI companies. SMCI/ORCL at existential risk.',
+        dotcom: 'Dot-com replay: AI narrative collapses as 2026 revenue fails to materialize. 70%+ drawdowns over 18–36 months.',
+        taiwan: 'Taiwan conflict: TSMC supply disruption destroys 90% of advanced chip capacity. Immediate T1 cascade, global tech recession.',
+        antitrust: 'AI antitrust action: DoJ/EU break up NVDA AI monopoly. Forced licensing erodes moat. Structural headwind for 3–5 years.',
+        blackswan: 'Black Swan GPU defect: Recall of H100/H200/B100 series. Revenue cliff. Class action. Trust destruction.'
+    };
+
+    function updateScenarioDesc() {
+        const desc = SCENARIO_DESCRIPTIONS[state.scenario] || SCENARIO_DESCRIPTIONS.custom;
+        $('scenDescEl').textContent = desc;
+        $('scenTitleEl').textContent = SCENARIOS[state.scenario]?.label || 'Custom';
+        $('scenShockEl').textContent = '-' + state.shock + '%';
+    }
+
+    function fullUpdate() {
+        calculateContagion();
+        renderSummary();
+        renderTiers();
+        renderSecondOrder();
+        renderNetworkGraph();
+        renderInstitutionalMetrics();
+        renderHedging();
+        updateScenarioDesc();
+    }
+
+    function updateTickerTrack() {
+        const track = document.getElementById('tickerTrack');
+        if (!track) return;
+
+        const tickers = [];
+        if (state.liveQuotes && Object.keys(state.liveQuotes).length > 0) {
+            Object.entries(state.liveQuotes).forEach(([ticker, quote]) => {
+                // Guard: защита от NaN/Infinity которые могут прийти при парсинге ответа
+                if (!quote || !Number.isFinite(quote.price) || !Number.isFinite(quote.changePercent)) return;
+
+                const color  = quote.changePercent >= 0 ? '#00E87B' : '#FF4B4B';
+                const sign   = quote.changePercent >= 0 ? '+' : '';
+                const price  = quote.price.toFixed(2);
+                const change = quote.changePercent.toFixed(2);
+
+                tickers.push(
+                    `<span style="font-family:var(--mono);font-size:.62rem;margin:0 2.5rem;` +
+                    `color:${color};letter-spacing:.05em;">` +
+                    `${ticker} ` +
+                    `<span style="color:var(--text);">$${price}</span> ` +
+                    `${sign}${change}%` +
+                    `</span>`
+                );
+            });
+        } else if (state.results) {
+            const all = [...state.results.tier1, ...state.results.tier2, ...state.results.tier3];
+            all.forEach(c => {
+                const color = impactColor(c.finalImpact);
+                tickers.push(`<span style="font-family:var(--mono);font-size:.62rem;margin:0 2.5rem;color:${color};letter-spacing:.05em;">${c.ticker} <span style="color:var(--text);">-${c.finalImpact.toFixed(1)}%</span></span>`);
+            });
+        }
+
+        const html = tickers.join('');
+        track.innerHTML = html + html;
+    }
+
+    // PATCH 2: Event Delegation for tiers + news controls
+    function setupControls() {
+        const shock = $('shockSlider'), vix = $('vixSlider'), timeline = $('timelineSelect'),
+              regime = $('regimeSelect'), scenario = $('scenarioSelect');
+
+        shock.addEventListener('input', () => {
+            state.shock = +shock.value;
+            $('shockVal').textContent = '-' + shock.value + '%';
+            shock.setAttribute('aria-valuetext', shock.value + ' percent shock');
+            scenario.value = 'custom'; state.scenario = 'custom';
+            scheduleUpdate();
+        });
+        vix.addEventListener('input', () => {
+            state.vix = +vix.value;
+            $('vixVal').textContent = vix.value;
+            vix.setAttribute('aria-valuetext', 'VIX ' + vix.value);
+            scenario.value = 'custom'; state.scenario = 'custom';
+            scheduleUpdate();
+        });
+        timeline.addEventListener('change', () => { state.timeline = timeline.value; fullUpdate(); });
+        regime.addEventListener('change', () => {
+            const regimeVix = { expansion: 15, caution: 22, correction: 32, crisis: 48 };
+            state.vix = regimeVix[regime.value] || 22;
+            vix.value = state.vix;
+            $('vixVal').textContent = state.vix;
+            vix.setAttribute('aria-valuetext', 'VIX ' + state.vix);
+            fullUpdate();
+        });
+        scenario.addEventListener('change', () => {
+            const s = SCENARIOS[scenario.value];
+            if (!s) return;
+            state.scenario = scenario.value; state.shock = s.shock; state.vix = s.vix;
+            shock.value = s.shock; vix.value = s.vix;
+            $('shockVal').textContent = '-' + s.shock + '%';
+            $('vixVal').textContent = s.vix;
+            shock.setAttribute('aria-valuetext', s.shock + ' percent shock');
+            vix.setAttribute('aria-valuetext', 'VIX ' + s.vix);
+            fullUpdate();
+        });
+
+        $('playBtn').addEventListener('click', () => { renderTiers(); playCascade(); });
+        $('resetBtn').addEventListener('click', () => {
+            state.shock = 40; state.vix = 22; state.timeline = 't5'; state.scenario = 'custom';
+            shock.value = 40; vix.value = 22; timeline.value = 't5'; scenario.value = 'custom'; regime.value = 'caution';
+            $('shockVal').textContent = '-40%'; $('vixVal').textContent = '22';
+            shock.setAttribute('aria-valuetext', '40 percent shock');
+            vix.setAttribute('aria-valuetext', 'VIX 22');
+            fullUpdate();
+            showToast('Reset to defaults', true);
+        });
+
+        $('liveBtn')?.addEventListener('click', () => loadAllLiveQuotes());
+
+        $('corrToggle').addEventListener('click', () => {
+            const m = $('corrMatrix'); m.classList.toggle('open');
+            $('corrToggle').textContent = m.classList.contains('open') ? '◆ Hide Correlation Matrix' : '◇ Show Correlation Matrix';
+            if (m.classList.contains('open')) setTimeout(renderCorrMatrix, 100);
+        });
+
+        $('exCSV').addEventListener('click', exportCSV);
+        $('exPDF').addEventListener('click', exportPDF);
+        $('exCopy').addEventListener('click', copySummary);
+
+        $('refreshNewsBtn')?.addEventListener('click', () => {
+            newsCache.ts = 0;
+            loadNews();
+        });
+
+        // PATCH 2: Event Delegation — Tiers
+        $('tiersGrid').addEventListener('click', (e) => {
+            const row = e.target.closest('.tier-row');
+            if (!row || !state.results) return;
+            const c = [...state.results.tier1, ...state.results.tier2, ...state.results.tier3].find(x => x.ticker === row.dataset.ticker);
+            if (c) showToast(`${c.ticker}: -${c.finalImpact.toFixed(1)}% | ${c.mechanism}`, false, 5000);
+        });
+
+        // PATCH 2: Event Delegation — News
+        $('newsContainer').addEventListener('click', (e) => {
+            const item = e.target.closest('.news-item');
+            if (!item) return;
+            const idx = parseInt(item.dataset.newsIndex, 10);
+            const articles = newsCache.data;
+            if (articles?.[idx]?.link) window.open(articles[idx].link, '_blank', 'noopener,noreferrer');
+        });
+
+        $('newsContainer').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const item = e.target.closest('.news-item');
+                if (!item) return;
+                e.preventDefault();
+                const idx = parseInt(item.dataset.newsIndex, 10);
+                const articles = newsCache.data;
+                if (articles?.[idx]?.link) window.open(articles[idx].link, '_blank', 'noopener,noreferrer');
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.key === 'p' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); renderTiers(); playCascade(); }
+            if (e.key === 'r' && e.shiftKey) $('resetBtn').click();
+            if (e.key === 'ArrowRight' && e.shiftKey) { e.preventDefault(); shock.value = Math.min(70, +shock.value + 5); shock.dispatchEvent(new Event('input')); }
+            if (e.key === 'ArrowLeft' && e.shiftKey) { e.preventDefault(); shock.value = Math.max(0, +shock.value - 5); shock.dispatchEvent(new Event('input')); }
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                renderNetworkGraph();
+                if ($('corrMatrix').classList.contains('open')) renderCorrMatrix();
+            }, 200);
+        });
+
+        if (typeof ResizeObserver !== 'undefined') {
+            const netCanvas = $('networkCanvas');
+            if (netCanvas && netCanvas.parentElement) {
+                const ro = new ResizeObserver(() => { renderNetworkGraph(); });
+                ro.observe(netCanvas.parentElement);
+                state.networkResizeObserver = ro;
+            }
+            const corrCanvas = $('corrCanvas');
+            if (corrCanvas && corrCanvas.parentElement && $('corrMatrix').classList.contains('open')) {
+                const ro = new ResizeObserver(() => { if ($('corrMatrix').classList.contains('open')) renderCorrMatrix(); });
+                ro.observe(corrCanvas.parentElement);
+                state.corrResizeObserver = ro;
+            }
+        }
+    }
+
+    function waitForLibraries(timeoutMs = 10_000) {
+        return new Promise(resolve => {
+            const deadline = Date.now() + timeoutMs;
+            function check() {
+                if (typeof html2canvas !== 'undefined' && typeof jspdf !== 'undefined') { resolve(); return; }
+                if (Date.now() > deadline) {
+                    console.warn('[NWA Contagion] Library timeout — proceeding with degraded features');
+                    resolve(); return;
+                }
+                if (document.visibilityState === 'visible') requestAnimationFrame(check);
+                else setTimeout(check, 250);
+            }
+            check();
+        });
+    }
+
+    async function init() {
+        clearOldCache();
+        setupControls();
+        setupPortfolio();
+        setupCanvasTooltip();
+        fullUpdate();
+        startNetworkAnimation();
+        updateTickerTrack();
+
+        setTimeout(() => loadAllLiveQuotes(), 800);
+        state.liveRefreshTimer = setInterval(() => {
+            if (!document.hidden) loadAllLiveQuotes();
+        }, 90000);
+
+        setTimeout(() => loadNews(), 1200);
+
+        const reveals = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+            }, { threshold: 0.05 });
+            reveals.forEach(el => io.observe(el));
+        }
+        console.debug('[NWA Contagion] Initialization complete');
+    }
+
+    window.addEventListener('beforeunload', () => {
+        if (state.liveRefreshTimer) clearInterval(state.liveRefreshTimer);
+        if (state.networkResizeObserver) state.networkResizeObserver.disconnect();
+        if (state.corrResizeObserver) state.corrResizeObserver.disconnect();
+        if (state._cascadeInterval) clearInterval(state._cascadeInterval);
+        stopNetworkAnimation();
+        if (state.liveLoadAbort) state.liveLoadAbort.abort();
+    });
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', async () => {
+            await waitForLibraries();
+            init();
+        });
+    } else {
+        waitForLibraries().then(init);
+    }
+
+})();
+</script>
+</body>
+</html>
