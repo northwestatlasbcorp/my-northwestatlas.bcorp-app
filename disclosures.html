@@ -9,38 +9,38 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400&family=JetBrains+Mono:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --gold: #C9A96E;
-            --gold-dim: #6d5831;
-            --gold-light: #E8D5B5;
-            --gold-rgb: 201, 169, 110;
+            --gold: #C5A059;
+            --gold-dim: #8B6F4C;
+            --gold-light: #E2CFA0;
+            --gold-rgb: 197, 160, 89;
             
-            --bg-deep: #04040A;
-            --bg-sidebar: #08080F;
-            --bg-surface: #0B0B14;
+            --bg-deep: #080809;
+            --bg-sidebar: #101012;
+            --bg-surface: #101012;
             --bg-card: rgba(255, 255, 255, 0.012);
             
-            --border: rgba(201, 169, 110, 0.06);
-            --border-hover: rgba(201, 169, 110, 0.15);
-            --border-active: rgba(201, 169, 110, 0.35);
+            --border: rgba(197, 160, 89, 0.06);
+            --border-hover: rgba(197, 160, 89, 0.15);
+            --border-active: rgba(197, 160, 89, 0.35);
             
-            --text-main: #E8E8EC;
-            --text-secondary: #A0A7B5;
-            --text-muted: #4B5563;
-            --text-clause: #8B919E;
+            --text-main: #EDE9E3;
+            --text-secondary: #9AA2B0;
+            --text-muted: #3E3E46;
+            --text-clause: #6A6A72;
             
             --font-serif: 'EB Garamond', Georgia, serif;
             --font-display: 'Playfair Display', Georgia, serif;
-            --font-sans: 'Inter', -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-sans: 'EB Garamond', Georgia, serif;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
             
             --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
             --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
-            --radius: 16px;
-            --radius-sm: 8px;
+            --radius: 4px;
+            --radius-sm: 2px;
             
             --sidebar-width: 320px;
         }
@@ -58,7 +58,7 @@
         }
 
         /* === SCROLLBAR === */
-        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar { width: 2px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb {
             background: rgba(var(--gold-rgb), 0.15);
@@ -109,11 +109,11 @@
             top: 0;
             left: 0;
             width: 0%;
-            height: 2px;
+            height: 1px;
             background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light));
             z-index: 200;
             transition: width 0.1s linear;
-            box-shadow: 0 0 15px rgba(var(--gold-rgb), 0.2);
+            box-shadow: 0 0 6px rgba(var(--gold-rgb), 0.2);
         }
 
         /* === LAYOUT === */
@@ -133,7 +133,7 @@
             height: 100vh;
             position: sticky;
             top: 0;
-            border-right: 1px solid var(--border);
+            border-right: 0.5px solid var(--border);
             padding: 2.5rem 2rem;
             display: flex;
             flex-direction: column;
@@ -166,7 +166,7 @@
             line-height: 2;
             margin-bottom: 2.5rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 0.5px solid var(--border);
         }
 
         .doc-meta .meta-value {
@@ -180,7 +180,7 @@
         }
 
         .status-dot-sm {
-            width: 4px;
+            width: 2px;
             height: 4px;
             border-radius: 50%;
             background: #00E87B;
@@ -247,7 +247,7 @@
 
         .toc-link.active::before {
             opacity: 1;
-            width: 4px;
+            width: 2px;
             height: 4px;
             box-shadow: 0 0 8px rgba(var(--gold-rgb), 0.4);
         }
@@ -255,7 +255,7 @@
         .sidebar-footer {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid var(--border);
+            border-top: 0.5px solid var(--border);
         }
 
         .return-link {
@@ -267,7 +267,7 @@
             align-items: center;
             gap: 0.6rem;
             padding: 0.8rem 1rem;
-            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            border: 0.5px solid rgba(var(--gold-rgb), 0.1);
             border-radius: var(--radius-sm);
             transition: all 0.5s var(--ease-smooth);
             letter-spacing: 0.15em;
@@ -365,7 +365,7 @@
         .clause {
             margin-bottom: 3rem;
             padding: 2rem 2.5rem;
-            border: 1px solid var(--border);
+            border: 0.5px solid var(--border);
             border-radius: var(--radius);
             background: var(--bg-card);
             transition: all 0.6s var(--ease-smooth);
@@ -424,7 +424,7 @@
             font-size: 0.5rem;
             color: var(--gold);
             background: rgba(var(--gold-rgb), 0.06);
-            border: 1px solid rgba(var(--gold-rgb), 0.1);
+            border: 0.5px solid rgba(var(--gold-rgb), 0.1);
             padding: 0.3rem 0.7rem;
             border-radius: 20px;
             letter-spacing: 0.1em;
@@ -471,7 +471,7 @@
             opacity: 0.6;
             margin-top: 1rem;
             padding-top: 0.8rem;
-            border-top: 1px solid var(--border);
+            border-top: 0.5px solid var(--border);
             letter-spacing: 0.1em;
             position: relative;
             z-index: 1;
@@ -482,7 +482,7 @@
         .signature-section {
             margin-top: 5rem;
             padding-top: 3rem;
-            border-top: 1px solid var(--border);
+            border-top: 0.5px solid var(--border);
         }
 
         .signature-grid {
@@ -517,7 +517,7 @@
         .seal-ring {
             width: 56px;
             height: 56px;
-            border: 1px solid rgba(var(--gold-rgb), 0.2);
+            border: 0.5px solid rgba(var(--gold-rgb), 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -529,7 +529,7 @@
             content: '';
             position: absolute;
             inset: 3px;
-            border: 1px solid rgba(var(--gold-rgb), 0.08);
+            border: 0.5px solid rgba(var(--gold-rgb), 0.08);
             border-radius: 50%;
         }
 
@@ -638,7 +638,7 @@
                 position: relative;
                 padding: 1.5rem 2rem;
                 border-right: none;
-                border-bottom: 1px solid var(--border);
+                border-bottom: 0.5px solid var(--border);
                 flex-direction: row;
                 align-items: center;
                 justify-content: space-between;
@@ -711,7 +711,7 @@
             body { background: white; color: black; }
             main { padding: 2rem; }
             .clause {
-                border: 1px solid #ddd;
+                border: 0.5px solid #ddd;
                 background: white;
                 page-break-inside: avoid;
                 box-shadow: none;
@@ -724,9 +724,13 @@
             .clause p { color: #333; }
             .clause h2 { color: #000; }
         }
+        .nwa-grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:9998;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:256px;mix-blend-mode:overlay;}
+        .nwa-page-border{position:fixed;inset:12px;border:0.5px solid rgba(197,160,89,.055);pointer-events:none;z-index:9997;border-radius:2px;}
     </style>
 </head>
 <body>
+    <div class="nwa-page-border"></div>
+    <div class="nwa-grain"></div>
 
     <div class="noise-overlay" aria-hidden="true"></div>
     <div class="ambient-gradient" aria-hidden="true"></div>
@@ -739,7 +743,7 @@
         <aside role="navigation" aria-label="Document navigation">
             <div>
                 <div class="sidebar-logo">
-                    <a href="index.html">
+                    <a href="/">
                         <img src="logo-nwa-centered.png" 
                              alt="North West Atlas B Corp" 
                              width="120" height="32"
@@ -768,7 +772,7 @@
             </div>
 
             <div class="sidebar-footer">
-                <a href="index.html" class="return-link">
+                <a href="/" class="return-link">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M19 12H5m7-7l-7 7 7 7"/>
                     </svg>
