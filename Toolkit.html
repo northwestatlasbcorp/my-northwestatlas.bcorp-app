@@ -52,31 +52,14 @@
               rel="stylesheet">
     </noscript>
     
-    <!-- External scripts with SRI hashes -->
-    <script defer crossorigin="anonymous"
-            src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            integrity="sha256-oVuCFqsQXFuPKSBrJraNcFZCJ8B/lx4V0MblHKqREbo="></script>
-    <script defer crossorigin="anonymous"
-            src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            integrity="sha256-sN6bKKGNToJwsXJtGkm21pOO2gB5TLIReMtHwD+qAzM="></script>
-    <script defer crossorigin="anonymous"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
-    <script defer crossorigin="anonymous"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-    <script defer crossorigin="anonymous"
-            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vQ=="></script>
-    <script defer crossorigin="anonymous"
-            src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-            integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfkEjT4sb3/A=="></script>
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
-    <script defer src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- External scripts -->
+    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
+    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer crossorigin="anonymous" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 
     <style>
         /* ═══════════════════════════════════════════
@@ -1038,7 +1021,7 @@
                 <p>&copy; <span id="year">2025</span> North West Atlas B Corp. All rights reserved. For informational purposes only.</p>
                 <nav aria-label="Footer links">
                     <a href="/">Main Site</a> &nbsp;&middot;&nbsp;
-                    <!--email_off--><a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a><!--/email_off--> &nbsp;&middot;&nbsp;
+                    <a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a> &nbsp;&middot;&nbsp;
                     <a href="disclosures.html">Disclosures</a> &nbsp;&middot;&nbsp;
                     <a href="privacy.html">Privacy</a> &nbsp;&middot;&nbsp;
                     <a href="terms.html">Terms</a>
@@ -1491,15 +1474,19 @@
                         }; 
                     });
                     const activeFilter = document.querySelector('.filter-btn[data-filter][aria-pressed="true"]')?.dataset.filter ?? 'all';
+                    const searchQuery = (document.getElementById('companySearch')?.value || '').toUpperCase().trim();
                     let filtered = allCompanies;
                     if (activeFilter === 'tier-1') filtered = allCompanies.filter(c => c.tier === 1);
                     else if (activeFilter === 'tier-2') filtered = allCompanies.filter(c => c.tier === 2);
                     else if (activeFilter === 'tier-3') filtered = allCompanies.filter(c => c.tier === 3);
                     else if (activeFilter === 'high-risk') filtered = allCompanies.filter(c => c.scoreRaw >= 7);
-                    const totalPages = Math.ceil(filtered.length / CONFIG.PAGE_SIZE);
+                    if (searchQuery) filtered = filtered.filter(c => (`${c.ticker} ${c.name} ${c.sector}`).toUpperCase().includes(searchQuery));
+                    const totalPages = Math.max(1, Math.ceil(filtered.length / CONFIG.PAGE_SIZE));
                     if (state.companyPage >= totalPages) state.companyPage = 0;
                     const paginated = filtered.slice(state.companyPage * CONFIG.PAGE_SIZE, (state.companyPage + 1) * CONFIG.PAGE_SIZE);
-                    grid.innerHTML = paginated.map(c => { 
+                    if (!filtered.length) {
+                        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">No companies match the current filter.</div>';
+                    } else grid.innerHTML = paginated.map(c => { 
                         const scoreCol = utils.scoreColor(c.score);
                         const chgCls = c.change >= 0 ? 'color-green' : 'color-red'; 
                         const signal = c.scoreRaw >= 7.5 ? '⚠ REDUCE' : c.scoreRaw >= 5 ? '◎ HOLD' : '✓ BUY';
@@ -1508,7 +1495,9 @@
                     }).join('');
                     let paginationEl = document.getElementById('companiesPagination');
                     if (!paginationEl) { paginationEl = document.createElement('nav'); paginationEl.id = 'companiesPagination'; paginationEl.setAttribute('aria-label', 'Companies pagination'); grid.after(paginationEl); }
-                    paginationEl.innerHTML = `<span class="pagination-info">Showing ${state.companyPage * CONFIG.PAGE_SIZE + 1}–${Math.min((state.companyPage + 1) * CONFIG.PAGE_SIZE, filtered.length)} of ${filtered.length} companies</span><div class="pagination-btns"><button class="btn-ghost" id="prevPageBtn" type="button" ${state.companyPage === 0 ? 'disabled' : ''} aria-label="Previous page">← Prev</button><span class="pagination-current">${state.companyPage + 1} / ${totalPages || 1}</span><button class="btn-ghost" id="nextPageBtn" type="button" ${state.companyPage >= totalPages - 1 ? 'disabled' : ''} aria-label="Next page">Next →</button></div>`;
+                    const from = filtered.length ? state.companyPage * CONFIG.PAGE_SIZE + 1 : 0;
+                    const to = Math.min((state.companyPage + 1) * CONFIG.PAGE_SIZE, filtered.length);
+                    paginationEl.innerHTML = `<span class="pagination-info">Showing ${from}–${to} of ${filtered.length} companies</span><div class="pagination-btns"><button class="btn-ghost" id="prevPageBtn" type="button" ${state.companyPage === 0 || !filtered.length ? 'disabled' : ''} aria-label="Previous page">← Prev</button><span class="pagination-current">${state.companyPage + 1} / ${totalPages}</span><button class="btn-ghost" id="nextPageBtn" type="button" ${state.companyPage >= totalPages - 1 || !filtered.length ? 'disabled' : ''} aria-label="Next page">Next →</button></div>`;
                     document.getElementById('prevPageBtn')?.addEventListener('click', () => { if (state.companyPage > 0) { state.companyPage--; this.renderCompanies(); } });
                     document.getElementById('nextPageBtn')?.addEventListener('click', () => { if (state.companyPage < totalPages - 1) { state.companyPage++; this.renderCompanies(); } });
                     this.el('companiesTracked').textContent = state.heatmap.length;
@@ -1618,12 +1607,12 @@
                     document.getElementById('settingsLink')?.addEventListener('click', () => { const modal = document.getElementById('settingsModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.getElementById('fmpKey').value = settings.apiKeys.fmp; document.getElementById('alphaKey').value = settings.apiKeys.alpha; document.getElementById('refreshInterval').value = settings.refreshInterval / 60000; document.getElementById('fmpKey').focus(); });
                     document.getElementById('saveSettingsBtn')?.addEventListener('click', () => { settings.apiKeys.fmp = document.getElementById('fmpKey').value.trim(); settings.apiKeys.alpha = document.getElementById('alphaKey').value.trim(); settings.refreshInterval = parseInt(document.getElementById('refreshInterval').value, 10) * 60000; localStorage.setItem('fmp_key', settings.apiKeys.fmp); localStorage.setItem('alpha_key', settings.apiKeys.alpha); localStorage.setItem('refreshInterval', String(settings.refreshInterval / 60000)); this._closeModal('settingsModal'); utils.showToast('Settings saved', 'success'); if (settings.autoRefresh) { this.stopAutoRefresh(); this.startAutoRefresh(); } });
                     document.getElementById('cancelSettingsBtn')?.addEventListener('click', () => this._closeModal('settingsModal'));
-                    ['flagASML','flagTaiwan','flagMSFT','flagNVDA'].forEach(id => { const el = document.getElementById(id); if (!el) return; const flag = id.replace('flag','').toLowerCase(); if (settings.manualFlags[flag]) { el.classList.add('active'); el.setAttribute('aria-pressed', 'true'); } el.addEventListener('click', () => { settings.manualFlags[flag] = !settings.manualFlags[flag]; localStorage.setItem(`flag_${flag}`, String(settings.manualFlags[flag])); el.classList.toggle('active', settings.manualFlags[flag]); el.setAttribute('aria-pressed', String(settings.manualFlags[flag])); }); });
+                    ['flagASML','flagTaiwan','flagMSFT','flagNVDA'].forEach(id => { const el = document.getElementById(id); if (!el) return; const flag = id.replace('flag','').toLowerCase(); if (settings.manualFlags[flag]) { el.classList.add('active'); el.setAttribute('aria-pressed', 'true'); } el.addEventListener('click', () => { settings.manualFlags[flag] = !settings.manualFlags[flag]; localStorage.setItem(`flag_${flag}`, String(settings.manualFlags[flag])); el.classList.toggle('active', settings.manualFlags[flag]); el.setAttribute('aria-pressed', String(settings.manualFlags[flag])); ui.updateBubbleIndex(); ui.updateDashboard(); }); });
                     ['waccSlider','growthSlider','terminalSlider','fcfSlider'].forEach(id => { document.getElementById(id)?.addEventListener('input', utils.debounce(() => ui.updateDCF(), 150)); });
                     document.getElementById('resetDCFBtn')?.addEventListener('click', () => { document.getElementById('waccSlider').value = '8.5'; document.getElementById('growthSlider').value = '25'; document.getElementById('terminalSlider').value = '2.5'; document.getElementById('fcfSlider').value = '36'; ui.updateDCF(); });
                     document.getElementById('resetZoomBtn')?.addEventListener('click', () => state.charts.dashboard?.resetZoom());
                     document.getElementById('refreshNewsBtn')?.addEventListener('click', () => loaders.loadNews());
-                    document.getElementById('companySearch')?.addEventListener('input', utils.debounce(e => { const filter = e.target.value.toUpperCase().trim(); document.querySelectorAll('#companiesGrid .company-card').forEach(card => { card.hidden = filter !== '' && !card.textContent.toUpperCase().includes(filter); }); }, 250));
+                    document.getElementById('companySearch')?.addEventListener('input', utils.debounce(() => { state.companyPage = 0; ui.renderCompanies(); }, 250));
                     document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn[data-filter]').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }); btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); state.companyPage = 0; ui.renderCompanies(); }); });
                     document.getElementById('runStressTest')?.addEventListener('click', () => { const inputs = document.querySelectorAll('.portfolio-input'); let total = 0, aiExposure = 0; inputs.forEach(input => { const w = parseFloat(input.value) || 0, b = parseFloat(input.dataset.aiBeta) || 0; total += w; aiExposure += w * b; }); if (total === 0) { utils.showToast('Enter at least one position'); return; } const exposure = aiExposure / 100; document.getElementById('stressResults').classList.add('visible'); document.getElementById('exposureValue').textContent = aiExposure.toFixed(1) + '%'; const signal = document.getElementById('exposureSignal'); if (aiExposure > 50) { signal.textContent = 'Critical'; signal.className = 'bic-signal signal-high'; } else if (aiExposure > 30) { signal.textContent = 'Elevated'; signal.className = 'bic-signal signal-elevated'; } else { signal.textContent = 'Moderate'; signal.className = 'bic-signal signal-low'; } document.getElementById('scenarioSoft').textContent = '-' + (exposure * 20).toFixed(1) + '%'; document.getElementById('scenarioHard').textContent = '-' + (exposure * 40).toFixed(1) + '%'; document.getElementById('scenarioDotcom').textContent = '-' + (exposure * 70).toFixed(1) + '%'; });
                     document.getElementById('closeDetailBtn')?.addEventListener('click', () => { const panel = document.getElementById('detailPanel'); panel.classList.remove('active'); panel.setAttribute('aria-hidden', 'true'); });
@@ -1843,5 +1832,5 @@
         })();
             window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a06113b11e65d203',t:'MTc4MDUxNDY1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
