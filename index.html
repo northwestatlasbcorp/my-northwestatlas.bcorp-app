@@ -27,7 +27,7 @@
   <link rel="preload" href="logo-nwa-centered.png" as="image" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -71,6 +71,7 @@
       --serif:   'EB Garamond', Georgia, serif;
       --display: 'Playfair Display', Georgia, serif;
       --mono:    'IBM Plex Mono', 'Courier New', monospace;
+      --sans:    'Inter', -apple-system, sans-serif;
       --spring:  cubic-bezier(.16, 1, .3, 1);
       --ease:    cubic-bezier(.4, 0, .2, 1);
       --border:     rgba(197, 160, 89, .055);
@@ -161,7 +162,7 @@
       position: fixed; inset: -50%;
       width: 200%; height: 200%;
       z-index: 9998; pointer-events: none;
-      opacity: .022; /* #9 — reduced from .032 */
+      opacity: .03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
       background-size: 256px 256px;
       mix-blend-mode: overlay;
@@ -419,7 +420,8 @@
       .nav-menu.open { opacity: 1; pointer-events: auto; }
       .nav-sep { display: none; }
       .menu-toggle { display: block; }
-      .nav-link { font-size: .78rem; letter-spacing: .28em; }
+      .nav-link {
+      font-family: var(--sans); font-size: .78rem; letter-spacing: .28em; }
       .license-indicator { display: none; }
     }
 
@@ -446,7 +448,7 @@
 
     .hero-number-wrapper { position: relative; display: inline-block; margin: var(--space-lg) 0 var(--space-sm); }
     .hero-number {
-      font-family: var(--display); font-size: clamp(5rem, 12vw, 10.5rem);
+      font-family: var(--display); font-size: clamp(6rem, 15vw, 14rem);
       font-weight: 200; line-height: .88; letter-spacing: -.05em;
       background-size: 200% auto;
       background-image: linear-gradient(105deg,
@@ -472,9 +474,9 @@
       pointer-events: none;
       transform: translate(-50%, -50%) rotate(-90deg);
     }
-    .hero-svg-arc .track { fill: none; stroke: rgba(var(--champagne-rgb), .06); stroke-width: 2; }
+    .hero-svg-arc .track { fill: none; stroke: rgba(var(--champagne-rgb), .025); stroke-width: 0.5; }
     .hero-svg-arc .fill-arc {
-      fill: none; stroke: rgba(var(--champagne-rgb), .2); stroke-width: 2;
+      fill: none; stroke: rgba(var(--champagne-rgb), .08); stroke-width: 0.5;
       stroke-linecap: round; stroke-dasharray: 553; stroke-dashoffset: 553;
       transition: stroke-dashoffset 2.4s cubic-bezier(.2, 1, .4, 1);
     }
@@ -570,7 +572,7 @@
     }
     .about-watermark-text {
       font-family: var(--display);
-      font-size: clamp(16rem, 26vw, 30rem);
+      font-size: clamp(6rem, 26vw, 30rem);
       font-weight: 200;
       letter-spacing: .12em;
       color: var(--champagne);
@@ -681,7 +683,7 @@
       background: linear-gradient(90deg, transparent, var(--champagne), transparent);
       opacity: 0; transition: opacity .6s var(--spring);
     }
-    .golden-cell:hover { background: rgba(20, 20, 22, .99); transform: translateY(-1px); border-color: rgba(var(--champagne-rgb), .07); box-shadow: 0 8px 40px rgba(0,0,0,.15); }
+    .golden-cell:hover { background: rgba(6, 6, 8, .99); border-color: rgba(var(--champagne-rgb), .08); box-shadow: inset 0 1px 0 rgba(var(--champagne-rgb), .04); }
     .golden-cell:hover::before { opacity: .2; }
     .cell-number { font-family: var(--mono); font-size: .52rem; color: var(--champagne); opacity: .12; letter-spacing: .2em; margin-bottom: 2rem; }
 
@@ -691,6 +693,8 @@
     .expertise-section { padding: 9rem 0; }
     .expertise-grid { grid-template-columns: repeat(3, 1fr); margin-top: 5rem; }
     .expertise-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+    .expertise-grid .golden-cell:first-child { border-left: 1.5px solid rgba(var(--champagne-rgb), .12); background: rgba(var(--champagne-rgb), .006); }
+    .expertise-grid .golden-cell:first-child h3 { font-size: 1.35rem; color: var(--champagne-light); }
     .expertise-card p { font-size: .85rem; color: var(--ink-secondary); line-height: 1.85; }
 
     /* ═══════════════════════════════════════════
@@ -797,8 +801,10 @@
       border-radius: var(--r2); overflow: hidden;
     }
     .enf-metric { background: var(--surface); padding: 2.8rem 2rem; text-align: center; }
+    /* Result metrics (1st, 2nd) larger than process metrics (3rd, 4th) */
+    .enf-metric:nth-child(-n+2) .enf-metric-value { font-size: 2.2rem; }
     .enf-metric-value {
-      font-family: var(--mono); font-size: 1.75rem; color: var(--champagne);
+      font-family: var(--mono); font-size: 1.4rem; color: var(--champagne);
       line-height: 1; margin-bottom: .4rem; letter-spacing: -.02em;
       font-feature-settings: 'tnum' 1;
     }
@@ -829,9 +835,9 @@
     .meta-item svg { stroke: currentColor; fill: none; stroke-width: 1.5; opacity: .35; }
     .analytics-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem; }
     .tag {
-      padding: .16rem .6rem; font-family: var(--mono); font-size: .42rem;
-      background: rgba(var(--champagne-rgb), .025); border: 0.5px solid rgba(var(--champagne-rgb), .055);
-      color: var(--ink-secondary); border-radius: 20px;
+      padding: .16rem .6rem; font-family: var(--mono); font-size: .4rem;
+      background: rgba(var(--champagne-rgb), .018); border: 0.5px solid rgba(var(--champagne-rgb), .035);
+      color: var(--ink-tertiary); border-radius: 20px; opacity: .6;
     }
     .toolkit-card { border-left: 0.5px solid rgba(var(--champagne-rgb), .22); background: rgba(var(--champagne-rgb), .006); }
     .toolkit-badge { background: rgba(var(--champagne-rgb), .07); border-color: rgba(var(--champagne-rgb), .15); }
@@ -877,18 +883,18 @@
       .footer-wordmark { animation: goldShimmer 10s ease-in-out infinite; }
     }
     .footer-gold-rule { width: 48px; height: 0.5px; background: linear-gradient(90deg, transparent, var(--champagne), transparent); margin: 0 auto var(--space-lg); opacity: .35; }
-    .footer-nav-links { display: flex; justify-content: center; gap: 2.8rem; flex-wrap: wrap; margin-bottom: var(--space-xl); font-family: var(--mono); font-size: .44rem; letter-spacing: .2em; text-transform: uppercase; }
+    .footer-nav-links { display: flex; justify-content: center; gap: 2.8rem; flex-wrap: wrap; margin-bottom: var(--space-xl); font-family: var(--sans); font-size: .44rem; letter-spacing: .2em; text-transform: uppercase; }
     .footer-nav-links a { color: var(--ink-secondary); text-decoration: none; opacity: .22; transition: opacity .4s, color .4s; }
     .footer-nav-links a:hover { opacity: .65; color: var(--champagne); }
     .legal-disclaimer { margin: var(--space-lg) 0; padding: 2rem 2.8rem; background: rgba(0,0,0,.14); font-family: var(--mono); font-size: .48rem; line-height: 1.9; color: var(--ink-secondary); border-left: 1.5px solid rgba(var(--champagne-rgb), .055); opacity: .55; border-radius: 0 var(--r1) var(--r1) 0; text-align: left; }
     .legal-disclaimer a { color: var(--champagne); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: .5px; }
-    .footer-bottom { padding-top: 3rem; border-top: 0.5px solid var(--border-dim); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; font-family: var(--mono); font-size: .44rem; color: var(--ink-secondary); opacity: .22; }
+    .footer-bottom { padding-top: 3rem; border-top: 0.5px solid var(--border-dim); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; font-family: var(--sans); font-size: .44rem; color: var(--ink-secondary); opacity: .22; }
     .footer-legal { display: flex; gap: 2.8rem; }
-    .footer-legal a { color: var(--ink-secondary); text-decoration: none; font-size: .44rem; letter-spacing: .1em; transition: color .3s; }
+    .footer-legal a { color: var(--ink-secondary); text-decoration: none; font-family: var(--sans); font-size: .44rem; letter-spacing: .08em; transition: color .3s; }
     .footer-legal a:hover { color: var(--champagne); }
-    .footer-meta-row { display: flex; justify-content: center; gap: 4rem; margin-top: var(--space-lg); font-family: var(--mono); font-size: .4rem; color: var(--ink-secondary); opacity: .2; letter-spacing: .18em; }
-    .footer-signature { text-align: center; font-family: var(--mono); font-size: .36rem; color: var(--ink-secondary); opacity: .1; margin-top: var(--space-md); }
-    .footer-seal { text-align: center; padding: 4rem 0 1rem; opacity: .05; font-size: 1.1rem; color: var(--champagne); user-select: none; }
+    .footer-meta-row { display: flex; justify-content: center; gap: 3rem; margin-top: var(--space-md); font-family: var(--mono); font-size: .4rem; color: var(--ink-secondary); opacity: .2; letter-spacing: .18em; }
+    .footer-signature { text-align: center; font-family: var(--mono); font-size: .36rem; color: var(--ink-secondary); opacity: .1; margin-top: var(--space-sm); }
+    .footer-seal { text-align: center; padding: 2rem 0 .5rem; opacity: .05; font-size: 1.1rem; color: var(--champagne); user-select: none; }
 
     /* ═══════════════════════════════════════════
        SCROLL REVEAL
@@ -1097,6 +1103,10 @@
         <h2 id="proof-h" class="sr-only">Key Metrics</h2>
         <div class="proof-grid reveal-stagger reveal">
           <div class="proof-item reveal-child">
+            <div class="proof-number" data-count="500" data-prefix="$" data-suffix="M+">$500M+</div>
+            <div class="proof-label">Assets Under Advisory*</div>
+          </div>
+          <div class="proof-item reveal-child">
             <div class="proof-number" data-count="0" data-suffix="%">0%</div>
             <div class="proof-label">Realized credit losses*</div>
           </div>
@@ -1107,10 +1117,6 @@
           <div class="proof-item reveal-child">
             <div class="proof-number" data-count="14">14</div>
             <div class="proof-label">Cross-border jurisdictions</div>
-          </div>
-          <div class="proof-item reveal-child">
-            <div class="proof-number" data-count="12">12</div>
-            <div class="proof-label">Risk factors monitored</div>
           </div>
         </div>
         <p class="disclaimer">
@@ -1408,7 +1414,7 @@
             <p class="contact-qualified">For qualified counterparties only</p>
           </div>
           <div class="contact-right">
-            <!--email_off-->
+            
             <div class="contact-line">
               <span class="contact-label">General</span><br>
               <a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a>
@@ -1421,7 +1427,7 @@
               <span class="contact-label">Meeting</span><br>
               <a href="mailto:info@northwestatlas.com?subject=Meeting%20Request" class="contact-value">Request a meeting</a>
             </div>
-            <!--/email_off-->
+            
             <div class="contact-license">
               <span class="license-jurisdiction">Sharjah, United Arab Emirates</span>
             </div>
@@ -1439,12 +1445,9 @@
       <nav class="footer-nav-links" aria-label="Footer navigation">
         <a href="#about">About</a>
         <a href="#expertise">Expertise</a>
-        <a href="#investments">Investments</a>
         <a href="enforcement.html">Enforcement</a>
         <a href="research.html">Research</a>
-        <a href="Toolkit.html">Toolkit</a>
-        <a href="disclosures.html">Disclosures</a>
-        <!--email_off--><a href="mailto:info@northwestatlas.com">Contact</a><!--/email_off-->
+        <a href="mailto:info@northwestatlas.com">Contact</a>
       </nav>
       <div class="legal-disclaimer">
         <p>
