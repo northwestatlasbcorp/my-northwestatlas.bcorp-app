@@ -29,19 +29,20 @@
         :root {
             --gold: #C5A059;
             --gold-light: #E8D5B5;
-            --gold-dark: #8B6F4C;
+            --gold-dim: #8B6F4C;
             --gold-rgb: 197, 160, 89;
             
-            --navy: #0C0C12;
-            --navy-deep: #07070A;
-            --charcoal: #1A1A24;
+            --navy: #080809;
+            --navy-deep: #080809;
+            --charcoal: #141416;
             
-            --text-primary: #F0F0F0;
-            --text-secondary: #A0A8B5;
-            --text-muted: #7A7F8B;
+            --text-primary: #EDE9E3;
+            --text-secondary: #9AA2B0;
+            --text-muted: #6A6A72;
             
             --font-primary: 'EB Garamond', Georgia, serif;
             --font-display: 'Playfair Display', Georgia, serif;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
             
             --ease-slow: cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -126,7 +127,7 @@
             background: rgba(7,7,10,0.92);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
-            border-bottom: 1px solid rgba(197,160,89,0.04);
+            border-bottom: 0.5px solid rgba(197,160,89,0.04);
             padding: 0.8rem 0;
         }
 
@@ -233,8 +234,8 @@
         .doc-theme {
             margin: 3rem auto;
             padding: 2rem 0;
-            border-top: 1px solid rgba(197,160,89,0.08);
-            border-bottom: 1px solid rgba(197,160,89,0.08);
+            border-top: 0.5px solid rgba(197,160,89,0.08);
+            border-bottom: 0.5px solid rgba(197,160,89,0.08);
             position: relative;
             max-width: 500px;
         }
@@ -329,7 +330,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             transition: all 0.5s var(--ease-slow);
-            border: 1px solid rgba(197,160,89,0.3);
+            border: 0.5px solid rgba(197,160,89,0.3);
             position: relative;
             overflow: hidden;
         }
@@ -382,7 +383,7 @@
             max-width: 1100px;
             height: calc(100vh - 200px);
             min-height: 500px;
-            border: 1px solid rgba(197,160,89,0.06);
+            border: 0.5px solid rgba(197,160,89,0.06);
             overflow: hidden;
             background: #050508;
             box-shadow:
@@ -465,7 +466,7 @@
         .page-footer {
             text-align: center;
             padding: 3rem 2rem;
-            border-top: 1px solid rgba(197,160,89,0.03);
+            border-top: 0.5px solid rgba(197,160,89,0.03);
             position: relative;
             z-index: 1;
         }
@@ -474,7 +475,7 @@
             font-family: var(--font-primary);
             display: inline-block;
             padding: 0.6rem 1.5rem;
-            border: 1px solid rgba(197,160,89,0.15);
+            border: 0.5px solid rgba(197,160,89,0.15);
             color: var(--gold);
             font-size: 0.55rem;
             letter-spacing: 0.3em;
@@ -596,18 +597,26 @@
             .doc-author-name { color: #333; }
             .download-btn { border-color: #333; color: #333; }
         }
+        .nwa-grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:9998;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:256px;mix-blend-mode:overlay;}
+        .nwa-page-border{position:fixed;inset:12px;border:0.5px solid rgba(197,160,89,.055);pointer-events:none;z-index:9997;border-radius:2px;}
+        .nwa-status-bar{position:fixed;bottom:0;left:0;right:0;height:28px;background:rgba(8,8,9,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:0.5px solid rgba(197,160,89,.04);z-index:150;display:flex;align-items:center;justify-content:space-between;padding:0 2.4rem;font-family:var(--font-mono);font-size:.38rem;letter-spacing:.18em;color:#6A6A72;opacity:.28;}
+        .nwa-status-bar .s-dot{width:5px;height:5px;border-radius:50%;background:rgba(52,211,153,.45);display:inline-block;margin-right:6px;}
+        @media(max-width:768px){.nwa-status-bar{display:none;}}
     </style>
 </head>
 <body>
+    <div class="nwa-page-border"></div>
+    <div class="nwa-grain"></div>
+    <div class="nwa-status-bar"><div style="display:flex;align-items:center;"><span class="s-dot"></span> NWA RESEARCH — OPERATIONAL</div><div>INSTITUTIONAL INTELLIGENCE</div></div>
     <div class="page-ambient" aria-hidden="true"></div>
 
     <!-- ==================== NAV ==================== -->
     <nav class="page-nav" aria-label="Research navigation">
         <div class="nav-inner">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" width="144" height="36">
             </a>
-            <a href="index.html" class="back-link">
+            <a href="/" class="back-link">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M19 12H5m7-7l-7 7 7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -693,7 +702,8 @@
         </div>
         
         <div class="footer-locations">
-            North West Atlas B Corp<span>·</span>Zurich<span>·</span>Singapore<span>·</span>Dubai<span>·</span>Saint Petersburg
+            North West Atlas B Corp<span>·</span>Sharjah, UAE
+            <span>·</span><!--email_off--><a href="mailto:info@northwestatlas.com" style="color:inherit;text-decoration:none;opacity:.6;">info@northwestatlas.com</a><!--/email_off-->
         </div>
         
         <div class="footer-copyright">
