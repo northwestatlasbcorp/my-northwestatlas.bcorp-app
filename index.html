@@ -339,14 +339,15 @@
     .gold-rule.in-view {
       transform: scaleX(1);
     }
+    /* Diamond counter-scale to prevent deformation */
     .gold-rule::after {
       content: '◆'; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%) rotate(0deg);
-      font-size: .28rem; color: var(--champagne); opacity: .08;
+      transform: translate(-50%,-50%) rotate(0deg) scaleX(3.33);
+      font-size: .28rem; color: var(--champagne); opacity: 0;
       background: var(--obsidian); padding: 0 .9rem; line-height: 1;
-      transition: transform 1.2s var(--spring);
+      transition: transform 1.2s var(--spring), opacity .8s var(--ease) .6s;
     }
-    .gold-rule.in-view::after { transform: translate(-50%,-50%) rotate(90deg); }
+    .gold-rule.in-view::after { transform: translate(-50%,-50%) rotate(90deg) scaleX(1); opacity: .08; }
 
     /* ═══════════════════════════════════════════
        HEADER
@@ -420,8 +421,7 @@
       .nav-menu.open { opacity: 1; pointer-events: auto; }
       .nav-sep { display: none; }
       .menu-toggle { display: block; }
-      .nav-link {
-      font-family: var(--sans); font-size: .78rem; letter-spacing: .28em; }
+      .nav-link { font-size: .72rem; letter-spacing: .24em; }
       .license-indicator { display: none; }
     }
 
@@ -675,13 +675,15 @@
     .golden-cell {
       background: var(--surface); padding: 4.5rem 2.8rem;
       position: relative; overflow: hidden;
-      transition: background .6s var(--spring), transform .4s var(--spring);
-      border: 0.5px solid transparent; will-change: transform;
+      transition: background .6s var(--spring);
+      border: 0.5px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.015), 0 0 0 0.5px rgba(0,0,0,.08);
     }
     .golden-cell::before {
       content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 0.5px;
       background: linear-gradient(90deg, transparent, var(--champagne), transparent);
       opacity: 0; transition: opacity .6s var(--spring);
+      border-radius: var(--r2) var(--r2) 0 0;
     }
     .golden-cell:hover { background: rgba(6, 6, 8, .99); border-color: rgba(var(--champagne-rgb), .08); box-shadow: inset 0 1px 0 rgba(var(--champagne-rgb), .04); }
     .golden-cell:hover::before { opacity: .2; }
@@ -693,8 +695,6 @@
     .expertise-section { padding: 9rem 0; }
     .expertise-grid { grid-template-columns: repeat(3, 1fr); margin-top: 5rem; }
     .expertise-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
-    .expertise-grid .golden-cell:first-child { border-left: 1.5px solid rgba(var(--champagne-rgb), .12); background: rgba(var(--champagne-rgb), .006); }
-    .expertise-grid .golden-cell:first-child h3 { font-size: 1.35rem; color: var(--champagne-light); }
     .expertise-card p { font-size: .85rem; color: var(--ink-secondary); line-height: 1.85; }
 
     /* ═══════════════════════════════════════════
@@ -871,13 +871,13 @@
     ═══════════════════════════════════════════ */
     footer { background: var(--obsidian); border-top: 0.5px solid var(--border-dim); padding: 5rem 0 4rem; text-align: center; }
     .footer-wordmark {
-      font-family: var(--display); font-weight: 200; font-size: .78rem;
+      font-family: var(--display); font-weight: 200; font-size: .92rem;
       letter-spacing: .35em; text-transform: uppercase;
       margin-bottom: var(--space-md);
       background: linear-gradient(105deg, var(--champagne-dim) 0%, var(--bone) 50%, var(--champagne-dim) 100%);
       background-size: 200% auto;
       -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; opacity: .25;
+      -webkit-text-fill-color: transparent; opacity: .32;
     }
     @media (prefers-reduced-motion: no-preference) {
       .footer-wordmark { animation: goldShimmer 10s ease-in-out infinite; }
@@ -927,7 +927,8 @@
       #hero { min-height: auto; padding: 2rem 0; }
       .proof-grid { grid-template-columns: repeat(4,1fr); }
       .enforcement-inner { grid-template-columns: 1fr 1fr; }
-      .golden-cell { border: 1px solid #e0d5c5; background: #fff !important; }
+      .golden-cell {
+ border: 1px solid #e0d5c5; background: #fff !important; }
       @page { margin: 2cm; size: A4; }
     }
 
@@ -1036,7 +1037,7 @@
     <section id="hero" aria-label="Overview">
       <div class="container hero-content">
         <div class="hf hf-1">
-          <span class="hero-since">Institutional Advisory &amp; Structured Capital</span>
+          <span class="hero-since">&nbsp;</span>
           <div class="hero-number-wrapper" id="heroNumberWrapper">
             <div class="hero-number"
                  aria-label="Assets Under Advisory exceeding 500 million US dollars">$500M+</div>
@@ -1063,8 +1064,8 @@
           </div>
           <div class="trust-sep" aria-hidden="true"></div>
           <div class="trust-item">
-            <span class="t-label">Mandate</span>
-            <span class="t-value">Technology &amp; Real Assets</span>
+            <span class="t-label">Regulated</span>
+            <span class="t-value">UAE</span>
           </div>
         </div>
       </div>
@@ -1609,6 +1610,7 @@
       const phrases = [
         'Institutional advisory \u0026 structured capital',
         'for technology and real assets',
+        'Technology \u00b7 Real Assets \u00b7 Cross-Border',
         'Precision over volume. Conviction over consensus.'
       ];
       const twEl  = document.getElementById('twText');
