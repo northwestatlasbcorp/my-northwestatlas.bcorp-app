@@ -27,7 +27,8 @@
   <link rel="preload" href="logo-nwa-centered.png" as="image" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+  <!-- PATCH 04: Variable fonts — replaced static weights with variable ranges -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=IBM+Plex+Mono:wght@300;400&amp;family=Inter:wght@200..400&amp;display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -156,20 +157,20 @@
     }
 
     /* ═══════════════════════════════════════════
-       GRAIN
+       GRAIN — PATCH 01: SVG grain, higher opacity, Retina‑sharp
     ═══════════════════════════════════════════ */
     .nwa-grain {
-      position: fixed; inset: -50%;
-      width: 200%; height: 200%;
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
       z-index: 9998; pointer-events: none;
-      opacity: .03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      background-size: 256px 256px;
+      opacity: .045;
       mix-blend-mode: overlay;
       will-change: transform;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
     }
     @media (prefers-reduced-motion: no-preference) {
-      .nwa-grain { animation: grainShift .6s steps(1) infinite; }
+      .nwa-grain { animation: grainShift .5s steps(1) infinite; }
     }
     @keyframes grainShift {
       0%   { transform: translate(0,0); }   10%  { transform: translate(-3%,-4%); }
@@ -182,17 +183,26 @@
     @media (prefers-reduced-motion: reduce) { .nwa-grain { display: none; } }
 
     /* ═══════════════════════════════════════════
-       SCROLL PROGRESS
+       SCROLL PROGRESS (CSS‑only animation‑timeline)
     ═══════════════════════════════════════════ */
     .scroll-progress {
       position: fixed; top: 0; left: 0;
-      width: 0%; height: 1px;
+      width: 100% !important;
+      height: 1px;
       background: linear-gradient(90deg, var(--champagne-dim), var(--champagne));
-      z-index: 200; opacity: .22; transform-origin: left;
+      z-index: 200; opacity: .22;
+      transform-origin: left;
+      animation: scrollTrack linear;
+      animation-timeline: scroll(root block);
+      animation-fill-mode: both;
+    }
+    @keyframes scrollTrack {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
     }
 
     /* ═══════════════════════════════════════════
-       SYSTEM STATUS BAR — #8 live terminal feel
+       SYSTEM STATUS BAR — live terminal feel
     ═══════════════════════════════════════════ */
     .status-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
@@ -212,7 +222,6 @@
       display: inline-block; margin-right: 6px;
       animation: pulse 2.5s ease-in-out infinite;
     }
-    /* blinking log cursor after OPERATIONAL */
     .status-bar .s-cursor {
       display: inline-block;
       width: 6px; height: 1px;
@@ -222,7 +231,6 @@
       animation: blink 1.2s step-end infinite;
     }
     .status-left, .status-right { display: flex; align-items: center; }
-    /* live data stream in center */
     #statusStream {
       font-size: .36rem;
       letter-spacing: .14em;
@@ -332,14 +340,12 @@
         transparent 2%, rgba(var(--champagne-rgb), .07) 28%,
         rgba(var(--champagne-rgb), .07) 72%, transparent 98%);
       position: relative; margin: 0 auto; width: 68%;
-      /* Expand from center on scroll */
       transform: scaleX(0.3);
       transition: transform 1.8s var(--spring);
     }
     .gold-rule.in-view {
       transform: scaleX(1);
     }
-    /* Diamond counter-scale to prevent deformation */
     .gold-rule::after {
       content: '◆'; position: absolute; top: 50%; left: 50%;
       transform: translate(-50%,-50%) rotate(0deg) scaleX(3.33);
@@ -467,7 +473,6 @@
       50%       { background-position: 100% center; }
     }
 
-    /* SVG arc */
     .hero-svg-arc {
       position: absolute; top: 50%; left: 50%;
       width: 200px; height: 200px; z-index: 1;
@@ -493,7 +498,6 @@
       color: var(--champagne); opacity: .1; margin-top: .6rem;
     }
 
-    /* #1 — Only typewriter, no static duplicate */
     .typewriter-wrap {
       min-height: 4rem; font-family: var(--serif); font-size: 1.2rem;
       font-style: italic; max-width: 480px;
@@ -611,7 +615,7 @@
     .author-title { display: block; font-family: var(--mono); font-size: .5rem; color: var(--ink-secondary); letter-spacing: .22em; text-transform: uppercase; margin-top: .3rem; opacity: .5; }
 
     /* ═══════════════════════════════════════════
-       PROOF METRICS — #4 improved copy
+       PROOF METRICS
     ═══════════════════════════════════════════ */
     .proof-section { padding: 8rem 0; position: relative; }
     .proof-section::before {
@@ -638,16 +642,14 @@
       font-weight: 300; line-height: 1;
       margin-bottom: .5rem; letter-spacing: -.03em;
       font-feature-settings: 'tnum' 1, 'lnum' 1;
-      /* Gold foil shimmer — numbers catch light like embossed metal */
       background: linear-gradient(105deg,
         var(--champagne-dim) 0%, var(--champagne) 35%, var(--champagne-light) 50%,
         var(--champagne) 65%, var(--champagne-dim) 100%);
       background-size: 200% auto;
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-    @media (prefers-reduced-motion: no-preference) {
-      .proof-number { animation: proofShimmer 6s ease-in-out infinite 4s; }
+      will-change: font-variation-settings;  /* FIX 2: prevent flicker */
+      animation: proofShimmer 6s ease-in-out infinite 4s;
     }
     @keyframes proofShimmer {
       0%, 100% { background-position: 0% center; }
@@ -665,7 +667,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       1PX GRID CARDS
+       1PX GRID CARDS — PATCH 02: glassmorphism on .golden-cell
     ═══════════════════════════════════════════ */
     .grid-1px {
       display: grid; gap: 0.5px;
@@ -673,11 +675,18 @@
       border-radius: var(--r2); overflow: hidden;
     }
     .golden-cell {
-      background: var(--surface); padding: 4.5rem 2.8rem;
-      position: relative; overflow: hidden;
-      transition: background .6s var(--spring);
-      border: 0.5px solid transparent;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.015), 0 0 0 0.5px rgba(0,0,0,.08);
+      background: rgba(10, 10, 12, .52);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      padding: 4.5rem 2.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .6s var(--spring),
+                  backdrop-filter .6s var(--spring),
+                  border-color .6s var(--spring);
+      border: 0.5px solid rgba(197, 160, 89, .055);
+      box-shadow: inset 0 1px 0 rgba(255,255,255, .025),
+                  0 4px 24px rgba(0,0,0, .22);
     }
     .golden-cell::before {
       content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 0.5px;
@@ -685,12 +694,21 @@
       opacity: 0; transition: opacity .6s var(--spring);
       border-radius: var(--r2) var(--r2) 0 0;
     }
-    .golden-cell:hover { background: rgba(6, 6, 8, .99); border-color: rgba(var(--champagne-rgb), .08); box-shadow: inset 0 1px 0 rgba(var(--champagne-rgb), .04); }
+    .golden-cell:hover {
+      background: rgba(8, 8, 10, .72);
+      border-color: rgba(197, 160, 89, .12);
+      box-shadow: inset 0 1px 0 rgba(197, 160, 89, .06),
+                  0 8px 40px rgba(0,0,0, .3);
+    }
     .golden-cell:hover::before { opacity: .2; }
+    /* Fallback for browsers without backdrop-filter */
+    @supports not (backdrop-filter: blur(1px)) {
+      .golden-cell { background: rgba(10, 10, 12, .95); }
+    }
     .cell-number { font-family: var(--mono); font-size: .52rem; color: var(--champagne); opacity: .12; letter-spacing: .2em; margin-bottom: 2rem; }
 
     /* ═══════════════════════════════════════════
-       EXPERTISE — #3 alignment consistent
+       EXPERTISE
     ═══════════════════════════════════════════ */
     .expertise-section { padding: 9rem 0; }
     .expertise-grid { grid-template-columns: repeat(3, 1fr); margin-top: 5rem; }
@@ -698,7 +716,7 @@
     .expertise-card p { font-size: .85rem; color: var(--ink-secondary); line-height: 1.85; }
 
     /* ═══════════════════════════════════════════
-       PARTNERS — #6 static, no translate hover
+       PARTNERS — static hover
     ═══════════════════════════════════════════ */
     .partners-section { padding: 8rem 0; position: relative; }
     .partners-section::before {
@@ -713,7 +731,6 @@
       border: 0.5px solid rgba(var(--champagne-rgb), .04);
       display: flex; align-items: center; justify-content: center;
       padding: 0 2rem;
-      /* #6 — no transform, only opacity change */
       transition: opacity .6s var(--spring);
       border-radius: var(--r1);
     }
@@ -722,7 +739,7 @@
       filter: grayscale(100%) brightness(.55) invert(1);
       opacity: .22; transition: opacity .8s var(--spring);
     }
-    .partner-card:hover img { opacity: .38; } /* subtle, no translate */
+    .partner-card:hover img { opacity: .38; }
     .partner-placeholder {
       font-family: var(--mono); font-size: .44rem; letter-spacing: .22em;
       text-transform: uppercase; color: var(--ink-secondary); opacity: .28;
@@ -747,7 +764,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       ENFORCEMENT — #2 canvas at 60fps (no frame-skip)
+       ENFORCEMENT — #2 canvas 60fps
     ═══════════════════════════════════════════ */
     .enforcement-section {
       padding: 9rem 0;
@@ -773,7 +790,6 @@
       opacity: .6; margin-bottom: 3rem;
       font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
     }
-    /* #7 — unified action link style */
     .action-link {
       display: inline-flex; align-items: center; gap: .6rem;
       font-family: var(--mono); font-size: .54rem;
@@ -801,7 +817,6 @@
       border-radius: var(--r2); overflow: hidden;
     }
     .enf-metric { background: var(--surface); padding: 2.8rem 2rem; text-align: center; }
-    /* Result metrics (1st, 2nd) larger than process metrics (3rd, 4th) */
     .enf-metric:nth-child(-n+2) .enf-metric-value { font-size: 2.2rem; }
     .enf-metric-value {
       font-family: var(--mono); font-size: 1.4rem; color: var(--champagne);
@@ -816,7 +831,7 @@
     .enf-jurisdiction span { font-family: var(--mono); font-size: .42rem; letter-spacing: .4em; text-transform: uppercase; color: var(--ink-secondary); opacity: .3; }
 
     /* ═══════════════════════════════════════════
-       ANALYTICS / RESEARCH — #5 #7 improved copy + unified CTA
+       ANALYTICS / RESEARCH
     ═══════════════════════════════════════════ */
     .analytics-section { padding: 9rem 0; }
     .analytics-grid { grid-template-columns: repeat(3, 1fr); margin-top: 5rem; }
@@ -913,6 +928,79 @@
       .page-veil { display: none; } .scroll-progress { display: none; }
     }
 
+    /* ═══════════════════════════════════════════════════════════════════
+       PATCH 03: CSS-native scroll-driven animations (enhanced)
+    ═══════════════════════════════════════════════════════════════════ */
+    @supports (animation-timeline: scroll()) {
+      .section-label {
+        animation: labelReveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+      }
+      .section-label::before {
+        animation: labelLine linear both;
+        animation-timeline: view();
+        animation-range: entry 5% entry 45%;
+        width: 22px;
+      }
+      @keyframes labelReveal {
+        from { opacity: 0; transform: translateX(-6px); }
+        to   { opacity: .75; transform: translateX(0); }
+      }
+      @keyframes labelLine {
+        from { width: 0; opacity: 0; }
+        to   { width: 22px; opacity: .4; }
+      }
+      /* FIX 1: combine scroll animation + shimmer gradient animation */
+      .proof-number {
+        animation: proofCount linear both, proofShimmer 6s ease-in-out infinite 4s;
+        animation-timeline: view(), auto;
+        animation-range: entry 0% cover 30%, normal;
+      }
+      @keyframes proofCount {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
+    @supports not (animation-timeline: scroll()) {
+      .section-label { opacity: .75; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       PATCH 04: Variable fonts — fluid weight transitions (fixed ital)
+    ═══════════════════════════════════════════════════════════════════ */
+    .nav-link {
+      font-variation-settings: 'wght' 300;
+      transition: color .5s var(--spring),
+                  font-variation-settings .35s var(--spring);
+    }
+    .nav-link:hover, .nav-link.active {
+      font-variation-settings: 'wght' 420;
+    }
+    .quote-text {
+      font-variation-settings: 'wght' 300;   /* FIX 3: removed 'ital' axis */
+      transition: font-variation-settings .6s var(--spring);
+    }
+    .proof-number {
+      font-variation-settings: 'wght' 200;
+      transition: font-variation-settings 1s var(--spring);
+    }
+    .proof-item:hover .proof-number {
+      font-variation-settings: 'wght' 400;
+    }
+    .reveal.visible h2 {
+      font-variation-settings: 'wght' 350;
+      transition: font-variation-settings 1.4s var(--spring) .3s;
+    }
+    .reveal h2 {
+      font-variation-settings: 'wght' 200;
+    }
+    @supports not (font-variation-settings: 'wght' 400) {
+      .nav-link, .proof-number, .quote-text, .reveal h2 {
+        font-weight: 300;
+      }
+    }
+
     /* ═══════════════════════════════════════════
        PRINT
     ═══════════════════════════════════════════ */
@@ -927,28 +1015,18 @@
       #hero { min-height: auto; padding: 2rem 0; }
       .proof-grid { grid-template-columns: repeat(4,1fr); }
       .enforcement-inner { grid-template-columns: 1fr 1fr; }
-      .golden-cell {
- border: 1px solid #e0d5c5; background: #fff !important; }
+      .golden-cell { border: 1px solid #e0d5c5; background: #fff !important; }
       @page { margin: 2cm; size: A4; }
     }
 
     /* ═══════════════════════════════════════════
-       PERFORMANCE
+       PERFORMANCE & RESPONSIVE
     ═══════════════════════════════════════════ */
-    /* content-visibility for off-screen sections */
-    .expertise-section,
-    .partners-section,
-    .investments-section,
-    .enforcement-section,
-    .analytics-section,
-    .contact-section {
+    .expertise-section, .partners-section, .investments-section,
+    .enforcement-section, .analytics-section, .contact-section {
       content-visibility: auto;
       contain-intrinsic-size: auto 600px;
     }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
     @media (max-width: 1200px) {
       .investments-grid { grid-template-columns: repeat(3,1fr); }
       .analytics-grid   { grid-template-columns: repeat(2,1fr); }
@@ -1002,12 +1080,11 @@
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
   <div class="cursor-dot"  id="cursorDot"  aria-hidden="true"></div>
 
-  <!-- ═══ HEADER ═══ -->
+  <!-- HEADER / MAIN / FOOTER — разметка полностью сохранена из исходного файла -->
   <header id="header" role="banner">
     <nav class="container" aria-label="Primary navigation">
       <a href="#hero" class="logo" aria-label="North West Atlas — Home">
-        <img src="logo-nwa-centered.png" alt="North West Atlas B Corp"
-             width="136" height="34" loading="eager" decoding="async">
+        <img src="logo-nwa-centered.png" alt="North West Atlas B Corp" width="136" height="34" loading="eager" decoding="async">
       </a>
       <div class="license-indicator" aria-label="Licensed entity">Regulated Entity</div>
       <ul class="nav-menu" id="navMenu" role="list">
@@ -1020,481 +1097,35 @@
         <li aria-hidden="true"><span class="nav-sep"></span></li>
         <li><a href="Toolkit.html" class="nav-link">Toolkit</a></li>
       </ul>
-      <button class="menu-toggle" id="menuToggle"
-              aria-controls="navMenu" aria-expanded="false"
-              aria-label="Open navigation menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
-        </svg>
+      <button class="menu-toggle" id="menuToggle" aria-controls="navMenu" aria-expanded="false" aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
       </button>
     </nav>
   </header>
 
-  <!-- ═══ MAIN ═══ -->
   <main id="main-content">
-
-    <!-- HERO -->
-    <section id="hero" aria-label="Overview">
-      <div class="container hero-content">
-        <div class="hf hf-1">
-          <span class="hero-since">&nbsp;</span>
-          <div class="hero-number-wrapper" id="heroNumberWrapper">
-            <div class="hero-number"
-                 aria-label="Assets Under Advisory exceeding 500 million US dollars">$500M+</div>
-            <svg class="hero-svg-arc" viewBox="0 0 200 200" aria-hidden="true">
-              <circle class="track"    cx="100" cy="100" r="88"/>
-              <circle class="fill-arc" cx="100" cy="100" r="88"/>
-            </svg>
-          </div>
-          <div class="hero-aum-label">Assets Under Advisory*</div>
-          <span class="hero-coord" aria-hidden="true">
-            25.3462°&thinsp;N &ensp; 55.4209°&thinsp;E
-          </span>
-        </div>
-
-        <!-- #1 — Only typewriter, no static duplicate below -->
-        <div class="typewriter-wrap hf hf-3" aria-live="polite" aria-atomic="true">
-          <span class="tw-text"   id="twText"></span><span class="tw-cursor" id="twCursor" aria-hidden="true"></span>
-        </div>
-
-        <div class="hero-trust hf hf-5" aria-label="Institutional credentials">
-          <div class="trust-item">
-            <span class="t-label">Est.</span>
-            <span class="t-value">2019</span>
-          </div>
-          <div class="trust-sep" aria-hidden="true"></div>
-          <div class="trust-item">
-            <span class="t-label">Regulated</span>
-            <span class="t-value">UAE</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-scroll" aria-hidden="true">Scroll</div>
-    </section>
-
-    <!-- ABOUT / QUOTE -->
-    <section id="about" class="about-section" aria-labelledby="about-h">
-      <div class="about-watermark" id="aboutWatermark" aria-hidden="true">
-        <span class="about-watermark-text">NWA</span>
-      </div>
-      <div class="container">
-        <h2 id="about-h" class="sr-only">About the Firm</h2>
-        <div class="about-inner reveal">
-          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
-          <figure>
-            <blockquote>
-              <p class="quote-text">
-                We invest not only capital, but time, expertise, and reputation
-                into ventures that will reshape the world
-              </p>
-            </blockquote>
-            <figcaption>
-              <div class="quote-rule" aria-hidden="true"></div>
-              <span class="author-name">Shamil Ibragimov, Ph.D.</span>
-              <span class="author-title">Founder &amp; Chief Executive Officer</span>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROOF METRICS — #4 last metric updated -->
-    <section class="proof-section" aria-labelledby="proof-h">
-      <div class="container">
-        <h2 id="proof-h" class="sr-only">Key Metrics</h2>
-        <div class="proof-grid reveal-stagger reveal">
-          <div class="proof-item reveal-child">
-            <div class="proof-number" data-count="500" data-prefix="$" data-suffix="M+">$500M+</div>
-            <div class="proof-label">Assets Under Advisory*</div>
-          </div>
-          <div class="proof-item reveal-child">
-            <div class="proof-number" data-count="0" data-suffix="%">0%</div>
-            <div class="proof-label">Realized credit losses*</div>
-          </div>
-          <div class="proof-item reveal-child">
-            <div class="proof-number" data-count="68">68</div>
-            <div class="proof-label">AI Coverage Universe*</div>
-          </div>
-          <div class="proof-item reveal-child">
-            <div class="proof-number" data-count="14">14</div>
-            <div class="proof-label">Cross-border jurisdictions</div>
-          </div>
-        </div>
-        <p class="disclaimer">
-          * AUA as of December&nbsp;31, 2025. &ldquo;0% realized credit losses&rdquo; refers to no
-          realized permanent capital impairments within proprietary investment mandates since inception
-          (2019). The NWA AI Coverage Universe comprises 68 publicly traded companies tracked as of
-          Q4&nbsp;2025. Past performance is not indicative of future results.
-        </p>
-      </div>
-    </section>
-
+    <section id="hero" aria-label="Overview"><div class="container hero-content"><div class="hf hf-1"><span class="hero-since">&nbsp;</span><div class="hero-number-wrapper" id="heroNumberWrapper"><div class="hero-number" aria-label="Assets Under Advisory exceeding 500 million US dollars">$500M+</div><svg class="hero-svg-arc" viewBox="0 0 200 200" aria-hidden="true"><circle class="track" cx="100" cy="100" r="88"/><circle class="fill-arc" cx="100" cy="100" r="88"/></svg></div><div class="hero-aum-label">Assets Under Advisory*</div><span class="hero-coord" aria-hidden="true">25.3462°&thinsp;N &ensp; 55.4209°&thinsp;E</span></div><div class="typewriter-wrap hf hf-3" aria-live="polite" aria-atomic="true"><span class="tw-text" id="twText"></span><span class="tw-cursor" id="twCursor" aria-hidden="true"></span></div><div class="hero-trust hf hf-5" aria-label="Institutional credentials"><div class="trust-item"><span class="t-label">Est.</span><span class="t-value">2019</span></div><div class="trust-sep" aria-hidden="true"></div><div class="trust-item"><span class="t-label">Regulated</span><span class="t-value">UAE</span></div></div></div><div class="hero-scroll" aria-hidden="true">Scroll</div></section>
+    <section id="about" class="about-section" aria-labelledby="about-h"><div class="about-watermark" id="aboutWatermark" aria-hidden="true"><span class="about-watermark-text">NWA</span></div><div class="container"><h2 id="about-h" class="sr-only">About the Firm</h2><div class="about-inner reveal"><span class="quote-mark" aria-hidden="true">&ldquo;</span><figure><blockquote><p class="quote-text">We invest not only capital, but time, expertise, and reputation into ventures that will reshape the world</p></blockquote><figcaption><div class="quote-rule" aria-hidden="true"></div><span class="author-name">Shamil Ibragimov, Ph.D.</span><span class="author-title">Founder &amp; Chief Executive Officer</span></figcaption></figure></div></div></section>
+    <section class="proof-section" aria-labelledby="proof-h"><div class="container"><h2 id="proof-h" class="sr-only">Key Metrics</h2><div class="proof-grid reveal-stagger reveal"><div class="proof-item reveal-child"><div class="proof-number" data-count="500" data-prefix="$" data-suffix="M+">$500M+</div><div class="proof-label">Assets Under Advisory*</div></div><div class="proof-item reveal-child"><div class="proof-number" data-count="0" data-suffix="%">0%</div><div class="proof-label">Realized credit losses*</div></div><div class="proof-item reveal-child"><div class="proof-number" data-count="68">68</div><div class="proof-label">AI Coverage Universe*</div></div><div class="proof-item reveal-child"><div class="proof-number" data-count="14">14</div><div class="proof-label">Cross-border jurisdictions</div></div></div><p class="disclaimer">* AUA as of December&nbsp;31, 2025. &ldquo;0% realized credit losses&rdquo; refers to no realized permanent capital impairments within proprietary investment mandates since inception (2019). The NWA AI Coverage Universe comprises 68 publicly traded companies tracked as of Q4&nbsp;2025. Past performance is not indicative of future results.</p></div></section>
     <hr class="gold-rule gold-rule-1" aria-hidden="true">
-
-    <!-- EXPERTISE -->
-    <section id="expertise" class="expertise-section" aria-labelledby="expertise-h">
-      <div class="container">
-        <span class="section-label">Expertise</span>
-        <h2 id="expertise-h">
-          <span class="split-line"><span class="split-line-inner">Core <span class="gold-text">Capabilities</span></span></span>
-        </h2>
-        <div class="grid-1px expertise-grid reveal-stagger reveal">
-          <article class="golden-cell expertise-card reveal-child">
-            <div class="cell-number" aria-hidden="true">01</div>
-            <h3>Artificial Intelligence</h3>
-            <p>Proprietary ML models for institutional-grade analysis and risk assessment across 50+ parameters.</p>
-          </article>
-          <article class="golden-cell expertise-card reveal-child">
-            <div class="cell-number" aria-hidden="true">02</div>
-            <h3>ESG Integration</h3>
-            <p>Multi-factor ESG scoring system for sustainable capital allocation and impact measurement.</p>
-          </article>
-          <article class="golden-cell expertise-card reveal-child">
-            <div class="cell-number" aria-hidden="true">03</div>
-            <h3>Legal &amp; IP Strategy</h3>
-            <p>Full-cycle patent protection and deal structuring with institutional-grade IP litigation support.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- PARTNERS — #6 static seals -->
-    <section class="partners-section" aria-labelledby="partners-h">
-      <div class="container">
-        <span class="section-label">Ecosystem</span>
-        <h2 id="partners-h">
-          <span class="split-line"><span class="split-line-inner">Institutional <span class="gold-text">Partners</span></span></span>
-        </h2>
-        <div class="partners-grid reveal-stagger reveal">
-          <div class="partner-card reveal-child">
-            <img src="veb-rf-logo.png"       alt="VEB.RF"                        width="160" height="40" loading="lazy" decoding="async">
-          </div>
-          <div class="partner-card reveal-child">
-            <img src="ros-eximbank-logo.png" alt="EXIAR"                         width="160" height="40" loading="lazy" decoding="async">
-          </div>
-          <div class="partner-card reveal-child">
-            <img src="minpromtorg-logo.png"  alt="Ministry of Industry and Trade" width="160" height="40" loading="lazy" decoding="async">
-          </div>
-          <div class="partner-card reveal-child">
-            <img src="rshb-inteh-logo.png"   alt="RSHB-Intech"                   width="160" height="40" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INVESTMENTS -->
-    <section id="investments" class="investments-section" aria-labelledby="investments-h">
-      <div class="container">
-        <span class="section-label">Investment Focus</span>
-        <h2 id="investments-h">
-          <span class="split-line"><span class="split-line-inner">Capital <span class="gold-text">Allocation</span></span></span>
-        </h2>
-        <div class="grid-1px investments-grid reveal-stagger reveal">
-          <div class="golden-cell investment-item reveal-child">
-            <svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-            </svg>
-            <span>Ecotech</span>
-          </div>
-          <div class="golden-cell investment-item reveal-child">
-            <svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <span>Agrotech</span>
-          </div>
-          <div class="golden-cell investment-item reveal-child">
-            <svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 10l8-6 8 6v8l-8 6-8-6v-8z"/>
-            </svg>
-            <span>Eco REE Mining</span>
-          </div>
-          <div class="golden-cell investment-item reveal-child">
-            <svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M13 2 3 7l10 5 10-5-10-5zM3 12l10 5 10-5M3 17l10 5 10-5"/>
-            </svg>
-            <span>IIoT &amp; Blockchain</span>
-          </div>
-          <div class="golden-cell investment-item reveal-child">
-            <svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-            </svg>
-            <span>Smartcharity</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ENFORCEMENT -->
-    <section id="enforcement" class="enforcement-section" aria-labelledby="enforcement-h">
-      <div class="container">
-        <div class="enforcement-inner reveal">
-          <div class="enforcement-left">
-            <span class="section-label">Enforcement</span>
-            <h2 id="enforcement-h">
-              <span class="split-line"><span class="split-line-inner">Asset Recovery &amp;</span></span>
-              <span class="split-line"><span class="split-line-inner"><span class="gold-text">Cross-Border Enforcement</span></span></span>
-            </h2>
-            <div class="enforcement-vectors">
-              Norwich Pharmacal &middot; Mareva Injunctions &middot; Forensic Reconstruction
-            </div>
-            <p class="enforcement-desc">
-              Institutional framework for tracing, freezing, and recovering misappropriated
-              assets across offshore jurisdictions through Cayman Islands Grand Court.
-            </p>
-            <!-- #7 — unified action-link style -->
-            <a href="enforcement.html" class="action-link">
-              <span>View Framework</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-            </a>
-          </div>
-          <div class="enforcement-visual">
-            <canvas id="generativeCanvas" class="generative-canvas" aria-hidden="true"></canvas>
-            <div class="enforcement-metrics" role="list" aria-label="Enforcement metrics">
-              <div class="enf-metric" role="listitem">
-                <div class="enf-metric-value">$127M</div>
-                <div class="enf-metric-label">Assets frozen*</div>
-              </div>
-              <div class="enf-metric" role="listitem">
-                <div class="enf-metric-value">94%</div>
-                <div class="enf-metric-label">Recovery rate*</div>
-              </div>
-              <div class="enf-metric" role="listitem">
-                <div class="enf-metric-value">&lt;72h</div>
-                <div class="enf-metric-label">Freeze execution</div>
-              </div>
-              <div class="enf-metric" role="listitem">
-                <div class="enf-metric-value">14</div>
-                <div class="enf-metric-label">Jurisdictions</div>
-              </div>
-              <div class="enf-jurisdiction">
-                <span>Cayman Islands &middot; Grand Court Jurisdiction</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <section id="expertise" class="expertise-section" aria-labelledby="expertise-h"><div class="container"><span class="section-label">Expertise</span><h2 id="expertise-h"><span class="split-line"><span class="split-line-inner">Core <span class="gold-text">Capabilities</span></span></span></h2><div class="grid-1px expertise-grid reveal-stagger reveal"><article class="golden-cell expertise-card reveal-child"><div class="cell-number" aria-hidden="true">01</div><h3>Artificial Intelligence</h3><p>Proprietary ML models for institutional-grade analysis and risk assessment across 50+ parameters.</p></article><article class="golden-cell expertise-card reveal-child"><div class="cell-number" aria-hidden="true">02</div><h3>ESG Integration</h3><p>Multi-factor ESG scoring system for sustainable capital allocation and impact measurement.</p></article><article class="golden-cell expertise-card reveal-child"><div class="cell-number" aria-hidden="true">03</div><h3>Legal &amp; IP Strategy</h3><p>Full-cycle patent protection and deal structuring with institutional-grade IP litigation support.</p></article></div></div></section>
+    <section class="partners-section" aria-labelledby="partners-h"><div class="container"><span class="section-label">Ecosystem</span><h2 id="partners-h"><span class="split-line"><span class="split-line-inner">Institutional <span class="gold-text">Partners</span></span></span></h2><div class="partners-grid reveal-stagger reveal"><div class="partner-card reveal-child"><img src="veb-rf-logo.png" alt="VEB.RF" width="160" height="40" loading="lazy" decoding="async"></div><div class="partner-card reveal-child"><img src="ros-eximbank-logo.png" alt="EXIAR" width="160" height="40" loading="lazy" decoding="async"></div><div class="partner-card reveal-child"><img src="minpromtorg-logo.png" alt="Ministry of Industry and Trade" width="160" height="40" loading="lazy" decoding="async"></div><div class="partner-card reveal-child"><img src="rshb-inteh-logo.png" alt="RSHB-Intech" width="160" height="40" loading="lazy" decoding="async"></div></div></div></section>
+    <section id="investments" class="investments-section" aria-labelledby="investments-h"><div class="container"><span class="section-label">Investment Focus</span><h2 id="investments-h"><span class="split-line"><span class="split-line-inner">Capital <span class="gold-text">Allocation</span></span></span></h2><div class="grid-1px investments-grid reveal-stagger reveal"><div class="golden-cell investment-item reveal-child"><svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg><span>Ecotech</span></div><div class="golden-cell investment-item reveal-child"><svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Agrotech</span></div><div class="golden-cell investment-item reveal-child"><svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l8-6 8 6v8l-8 6-8-6v-8z"/></svg><span>Eco REE Mining</span></div><div class="golden-cell investment-item reveal-child"><svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 3 7l10 5 10-5-10-5zM3 12l10 5 10-5M3 17l10 5 10-5"/></svg><span>IIoT &amp; Blockchain</span></div><div class="golden-cell investment-item reveal-child"><svg class="investment-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg><span>Smartcharity</span></div></div></div></section>
+    <section id="enforcement" class="enforcement-section" aria-labelledby="enforcement-h"><div class="container"><div class="enforcement-inner reveal"><div class="enforcement-left"><span class="section-label">Enforcement</span><h2 id="enforcement-h"><span class="split-line"><span class="split-line-inner">Asset Recovery &amp;</span></span><span class="split-line"><span class="split-line-inner"><span class="gold-text">Cross-Border Enforcement</span></span></span></h2><div class="enforcement-vectors">Norwich Pharmacal &middot; Mareva Injunctions &middot; Forensic Reconstruction</div><p class="enforcement-desc">Institutional framework for tracing, freezing, and recovering misappropriated assets across offshore jurisdictions through Cayman Islands Grand Court.</p><a href="enforcement.html" class="action-link"><span>View Framework</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a></div><div class="enforcement-visual"><canvas id="generativeCanvas" class="generative-canvas" aria-hidden="true"></canvas><div class="enforcement-metrics" role="list" aria-label="Enforcement metrics"><div class="enf-metric" role="listitem"><div class="enf-metric-value">$127M</div><div class="enf-metric-label">Assets frozen*</div></div><div class="enf-metric" role="listitem"><div class="enf-metric-value">94%</div><div class="enf-metric-label">Recovery rate*</div></div><div class="enf-metric" role="listitem"><div class="enf-metric-value">&lt;72h</div><div class="enf-metric-label">Freeze execution</div></div><div class="enf-metric" role="listitem"><div class="enf-metric-value">14</div><div class="enf-metric-label">Jurisdictions</div></div><div class="enf-jurisdiction"><span>Cayman Islands &middot; Grand Court Jurisdiction</span></div></div></div></div></div></section>
     <hr class="gold-rule gold-rule-2" aria-hidden="true">
-
-    <!-- ANALYTICS / RESEARCH — #5 #7 improved micro-copy + unified CTA -->
-    <section id="analytics" class="analytics-section" aria-labelledby="analytics-h">
-      <div class="container">
-        <span class="section-label">Research</span>
-        <h2 id="analytics-h">
-          <span class="split-line"><span class="split-line-inner">Analytics &amp; <span class="gold-text">Insights</span></span></span>
-        </h2>
-        <div class="grid-1px analytics-grid reveal-stagger reveal">
-          <!-- Card 1 -->
-          <article class="golden-cell analytics-card reveal-child">
-            <div class="analytics-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1">
-                <circle cx="12" cy="12" r="10"/><path d="M12 7v6l4 2"/>
-              </svg>
-            </div>
-            <div class="analytics-badge">Medium</div>
-            <h3>Hidden Risks in Early-Stage Ventures</h3>
-            <p>A deep analysis of non-obvious investment risks in startup ecosystems and systematic mitigation strategies.</p>
-            <div class="analytics-meta">
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-                </svg>
-                <span>Shamil Ibragimov</span>
-              </div>
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                </svg>
-                <span>15 min read</span>
-              </div>
-            </div>
-            <div class="analytics-tags">
-              <span class="tag">#Investments</span>
-              <span class="tag">#Startups</span>
-              <span class="tag">#Risk</span>
-            </div>
-            <a href="https://medium.com/@northwestatlas" class="action-link" target="_blank" rel="noopener noreferrer">
-              <span>Read on Medium</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-            </a>
-          </article>
-          <!-- Card 2 -->
-          <article class="golden-cell analytics-card reveal-child">
-            <div class="analytics-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/>
-                <path d="M8 7h8M8 11h6M8 15h4"/>
-              </svg>
-            </div>
-            <div class="analytics-badge">Monograph</div>
-            <h3>Institutional Capital Survival System</h3>
-            <p>An operational framework for capital management under conditions of structural uncertainty.</p>
-            <div class="analytics-meta">
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-                </svg>
-                <span>Shamil Ibragimov, Ph.D.</span>
-              </div>
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-                </svg>
-                <span>208 pages</span>
-              </div>
-            </div>
-            <div class="analytics-tags">
-              <span class="tag">#AI_Bubble</span>
-              <span class="tag">#Systemic_Risk</span>
-              <span class="tag">#Capital_Management</span>
-            </div>
-            <a href="research.html" class="action-link">
-              <span>Research Portal</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-            </a>
-          </article>
-          <!-- Card 3 — Toolkit -->
-          <article class="golden-cell analytics-card toolkit-card reveal-child">
-            <div class="analytics-icon toolkit-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-              </svg>
-            </div>
-            <div class="analytics-badge toolkit-badge">Analytical Platform &middot; Institutional&#8209;only Signals</div>
-            <h3>NWA AI Bubble Analysis Toolkit</h3>
-            <!-- #5 — authority-first copy -->
-            <p>Proprietary systemic risk overlay for AI sector verification. Algorithmic asset protection protocols. Source-of-record data for qualified counterparties.</p>
-            <div class="analytics-meta">
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                </svg>
-                <!-- #5 — replaced "Live market data" -->
-                <span>Institutional-only signals</span>
-              </div>
-              <div class="meta-item">
-                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                </svg>
-                <!-- #5 — replaced "Interactive analytics" -->
-                <span>Systemic risk overlay</span>
-              </div>
-            </div>
-            <div class="analytics-tags">
-              <span class="tag">#AI_Bubble</span>
-              <span class="tag">#Risk_Protocols</span>
-              <span class="tag">#Algorithmic</span>
-            </div>
-            <!-- #7 — unified action-link, no pill button -->
-            <a href="Toolkit.html" class="action-link">
-              <span>Open Toolkit</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <path d="M15 3h6v6"/><path d="M10 14 21 3"/>
-              </svg>
-            </a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="contact-section" aria-labelledby="contact-h">
-      <div class="container">
-        <div class="contact-layout reveal">
-          <div class="contact-left">
-            <span class="section-label">Contact</span>
-            <h2 id="contact-h">
-              <span class="split-line"><span class="split-line-inner">Institutional <span class="gold-text">Inquiries</span></span></span>
-            </h2>
-            <p class="contact-invitation">
-              We engage with principals, allocators, and institutional counterparties
-              who share our commitment to long-term value creation.
-            </p>
-            <p class="contact-qualified">For qualified counterparties only</p>
-          </div>
-          <div class="contact-right">
-            
-            <div class="contact-line">
-              <span class="contact-label">General</span><br>
-              <a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a>
-            </div>
-            <div class="contact-line">
-              <span class="contact-label">Investor Relations</span><br>
-              <a href="mailto:ir@northwestatlas.com" class="contact-value">ir@northwestatlas.com</a>
-            </div>
-            <div class="contact-line">
-              <span class="contact-label">Meeting</span><br>
-              <a href="mailto:info@northwestatlas.com?subject=Meeting%20Request" class="contact-value">Request a meeting</a>
-            </div>
-            
-            <div class="contact-license">
-              <span class="license-jurisdiction">Sharjah, United Arab Emirates</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section id="analytics" class="analytics-section" aria-labelledby="analytics-h"><div class="container"><span class="section-label">Research</span><h2 id="analytics-h"><span class="split-line"><span class="split-line-inner">Analytics &amp; <span class="gold-text">Insights</span></span></span></h2><div class="grid-1px analytics-grid reveal-stagger reveal"><article class="golden-cell analytics-card reveal-child"><div class="analytics-icon"><svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 7v6l4 2"/></svg></div><div class="analytics-badge">Medium</div><h3>Hidden Risks in Early-Stage Ventures</h3><p>A deep analysis of non-obvious investment risks in startup ecosystems and systematic mitigation strategies.</p><div class="analytics-meta"><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg><span>Shamil Ibragimov</span></div><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>15 min read</span></div></div><div class="analytics-tags"><span class="tag">#Investments</span><span class="tag">#Startups</span><span class="tag">#Risk</span></div><a href="https://medium.com/@northwestatlas" class="action-link" target="_blank" rel="noopener noreferrer"><span>Read on Medium</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a></article><article class="golden-cell analytics-card reveal-child"><div class="analytics-icon"><svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6M8 15h4"/></svg></div><div class="analytics-badge">Monograph</div><h3>Institutional Capital Survival System</h3><p>An operational framework for capital management under conditions of structural uncertainty.</p><div class="analytics-meta"><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg><span>Shamil Ibragimov, Ph.D.</span></div><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>208 pages</span></div></div><div class="analytics-tags"><span class="tag">#AI_Bubble</span><span class="tag">#Systemic_Risk</span><span class="tag">#Capital_Management</span></div><a href="research.html" class="action-link"><span>Research Portal</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a></article><article class="golden-cell analytics-card toolkit-card reveal-child"><div class="analytics-icon toolkit-icon"><svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="1"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div class="analytics-badge toolkit-badge">Analytical Platform &middot; Institutional‑only Signals</div><h3>NWA AI Bubble Analysis Toolkit</h3><p>Proprietary systemic risk overlay for AI sector verification. Algorithmic asset protection protocols. Source-of-record data for qualified counterparties.</p><div class="analytics-meta"><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Institutional-only signals</span></div><div class="meta-item"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>Systemic risk overlay</span></div></div><div class="analytics-tags"><span class="tag">#AI_Bubble</span><span class="tag">#Risk_Protocols</span><span class="tag">#Algorithmic</span></div><a href="Toolkit.html" class="action-link"><span>Open Toolkit</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></article></div></div></section>
+    <section id="contact" class="contact-section" aria-labelledby="contact-h"><div class="container"><div class="contact-layout reveal"><div class="contact-left"><span class="section-label">Contact</span><h2 id="contact-h"><span class="split-line"><span class="split-line-inner">Institutional <span class="gold-text">Inquiries</span></span></span></h2><p class="contact-invitation">We engage with principals, allocators, and institutional counterparties who share our commitment to long-term value creation.</p><p class="contact-qualified">For qualified counterparties only</p></div><div class="contact-right"><div class="contact-line"><span class="contact-label">General</span><br><a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a></div><div class="contact-line"><span class="contact-label">Investor Relations</span><br><a href="mailto:ir@northwestatlas.com" class="contact-value">ir@northwestatlas.com</a></div><div class="contact-line"><span class="contact-label">Meeting</span><br><a href="mailto:info@northwestatlas.com?subject=Meeting%20Request" class="contact-value">Request a meeting</a></div><div class="contact-license"><span class="license-jurisdiction">Sharjah, United Arab Emirates</span></div></div></div></div></section>
   </main>
 
-  <!-- ═══ FOOTER ═══ -->
-  <footer role="contentinfo">
-    <div class="container">
-      <div class="footer-wordmark">North West Atlas B Corp</div>
-      <div class="footer-gold-rule"></div>
-      <nav class="footer-nav-links" aria-label="Footer navigation">
-        <a href="#about">About</a>
-        <a href="#expertise">Expertise</a>
-        <a href="enforcement.html">Enforcement</a>
-        <a href="research.html">Research</a>
-        <a href="mailto:info@northwestatlas.com">Contact</a>
-      </nav>
-      <div class="legal-disclaimer">
-        <p>
-          <strong>IMPORTANT INFORMATION:</strong> This website is for informational purposes only
-          and does not constitute an offer to sell or a solicitation of an offer to buy any securities
-          or investment products. Assets Under Advisory (AUA) figures are as of December&nbsp;31, 2025.
-          &ldquo;0% realized credit losses&rdquo; refers to no realized permanent capital impairments
-          within proprietary investment mandates since inception (2019). Past performance is not
-          indicative of future results. The NWA AI Coverage Universe comprises 68 publicly traded
-          companies tracked as of Q4&nbsp;2025. North West Atlas B Corp is a licensed professional
-          company in the UAE (License #786048). For complete disclosures, please refer to our
-          <a href="disclosures.html">Disclosures</a> page.
-        </p>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="year"></span> North West Atlas B Corp. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Use</a>
-        </div>
-      </div>
-      <div class="footer-meta-row">
-        <span>B Corp Certified</span>
-        <span>UTC <span id="utcClock">&mdash;</span></span>
-      </div>
-      <div class="footer-signature">Document Hash: <span id="sessionHash">&mdash;</span></div>
-      <div class="footer-seal" aria-hidden="true">✦</div>
-    </div>
-  </footer>
+  <footer role="contentinfo"><div class="container"><div class="footer-wordmark">North West Atlas B Corp</div><div class="footer-gold-rule"></div><nav class="footer-nav-links" aria-label="Footer navigation"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="enforcement.html">Enforcement</a><a href="research.html">Research</a><a href="mailto:info@northwestatlas.com">Contact</a></nav><div class="legal-disclaimer"><p><strong>IMPORTANT INFORMATION:</strong> This website is for informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any securities or investment products. Assets Under Advisory (AUA) figures are as of December&nbsp;31, 2025. &ldquo;0% realized credit losses&rdquo; refers to no realized permanent capital impairments within proprietary investment mandates since inception (2019). Past performance is not indicative of future results. The NWA AI Coverage Universe comprises 68 publicly traded companies tracked as of Q4&nbsp;2025. North West Atlas B Corp is a licensed professional company in the UAE (License #786048). For complete disclosures, please refer to our <a href="disclosures.html">Disclosures</a> page.</p></div><div class="footer-bottom"><p>&copy; <span id="year"></span> North West Atlas B Corp. All rights reserved.</p><div class="footer-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></div></div><div class="footer-meta-row"><span>B Corp Certified</span><span>UTC <span id="utcClock">&mdash;</span></span></div><div class="footer-signature">Document Hash: <span id="sessionHash">&mdash;</span></div><div class="footer-seal" aria-hidden="true">✦</div></div></footer>
 
-  <!-- ═══ SCRIPT ═══ -->
   <script>
   (function () {
     'use strict';
-
-    const PRM     = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouch = 'ontouchstart' in window;
-    const isFine  = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+    const isFine = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
 
-    /* ── GRAIN ── */
-    const grain = document.createElement('div');
-    grain.className = 'nwa-grain';
-    grain.setAttribute('aria-hidden', 'true');
-    document.body.insertAdjacentElement('afterbegin', grain);
-
-    /* ── PAGE VEIL ── */
     const veil = document.getElementById('pageVeil');
     if (veil) {
       window.addEventListener('load', () => {
@@ -1504,12 +1135,9 @@
         }, PRM ? 0 : 100);
       });
     }
-
-    /* ── YEAR ── */
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    /* ── SESSION HASH — deterministic document fingerprint ── */
     const hashEl = document.getElementById('sessionHash');
     if (hashEl) {
       const seed = Date.now() ^ (Math.random() * 0xFFFFFFFF | 0);
@@ -1524,427 +1152,148 @@
       hashEl.textContent = h;
     }
 
-    /* ── UTC CLOCKS ── */
-    function fmtUtc() {
-      const d = new Date();
-      return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')} `
-           + `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
-    }
-    function fmtStatusTime() {
-      const d = new Date();
-      return `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')} UTC`;
-    }
+    function fmtUtc() { const d = new Date(); return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')} ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`; }
+    function fmtStatusTime() { const d = new Date(); return `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')} UTC`; }
     const utcEl = document.getElementById('utcClock');
-    function tickClocks() {
-      if (utcEl) utcEl.textContent = fmtUtc();
-    }
-    tickClocks();
-    setInterval(tickClocks, 1000);
+    function tickClocks() { if (utcEl) utcEl.textContent = fmtUtc(); }
+    tickClocks(); setInterval(tickClocks, 1000);
 
-    /* ── #8 STATUS BAR — live data stream ── */
     const streamEl = document.getElementById('statusStream');
-    const streamSegments = [
-      () => fmtStatusTime(),
-      () => `SIG ${(Math.random()*9+1).toFixed(3)}`,
-      () => `VOL ${(Math.random()*2+0.5).toFixed(2)}σ`,
-      () => `NWA-IDX ${(500 + (Math.random()*20-10)).toFixed(1)}`,
-      () => fmtStatusTime(),
-    ];
+    const streamSegments = [() => fmtStatusTime(), () => `SIG ${(Math.random()*9+1).toFixed(3)}`, () => `VOL ${(Math.random()*2+0.5).toFixed(2)}σ`, () => `NWA-IDX ${(500 + (Math.random()*20-10)).toFixed(1)}`, () => fmtStatusTime()];
     let streamIdx = 0;
-    function tickStream() {
-      if (streamEl) streamEl.textContent = streamSegments[streamIdx % streamSegments.length]();
-      streamIdx++;
-    }
-    tickStream();
-    setInterval(tickStream, 2200);
+    function tickStream() { if (streamEl) streamEl.textContent = streamSegments[streamIdx % streamSegments.length](); streamIdx++; }
+    tickStream(); setInterval(tickStream, 2200);
 
-    /* ── HERO SVG ARC ── */
     const heroWrap = document.getElementById('heroNumberWrapper');
     if (heroWrap && !PRM) setTimeout(() => heroWrap.classList.add('arc-animated'), 1300);
 
-    /* ── CUSTOM CURSOR ── */
     if (isFine && !PRM && !isTouch) {
       const ring = document.getElementById('cursorRing');
-      const dot  = document.getElementById('cursorDot');
+      const dot = document.getElementById('cursorDot');
       let mx = -200, my = -200, rx = -200, ry = -200;
-
-      document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.transform = `translate(${mx - 2}px, ${my - 2}px)`;
-      });
-      (function animRing() {
-        rx += (mx - rx) * .08; ry += (my - ry) * .08;
-        ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
-        requestAnimationFrame(animRing);
-      })();
-
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx - 2}px, ${my - 2}px)`; });
+      (function animRing() { rx += (mx - rx) * .08; ry += (my - ry) * .08; ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`; requestAnimationFrame(animRing); })();
       const HT = 'a, button, .golden-cell';
       document.addEventListener('mouseover', e => { if (e.target.closest(HT)) document.body.classList.add('cursor-hover'); });
-      document.addEventListener('mouseout',  e => { if (e.target.closest(HT)) document.body.classList.remove('cursor-hover'); });
+      document.addEventListener('mouseout', e => { if (e.target.closest(HT)) document.body.classList.remove('cursor-hover'); });
       document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
-      document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
-    } else {
-      ['cursorRing','cursorDot'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      });
-    }
+      document.addEventListener('mouseup', () => document.body.classList.remove('cursor-click'));
+    } else { ['cursorRing','cursorDot'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; }); }
 
-    /* ── MAGNETIC NAV LINKS ── */
     if (isFine && !PRM) {
       document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('mousemove', e => {
-          const r = link.getBoundingClientRect();
-          const x = e.clientX - r.left - r.width / 2;
-          const y = e.clientY - r.top  - r.height / 2;
-          const d = Math.min(Math.sqrt(x*x + y*y), 60);
-          const s = (60 - d) / 60;
-          link.style.transform = `translate(${x * .08 * s}px, ${y * .08 * s}px)`;
-        });
+        link.addEventListener('mousemove', e => { const r = link.getBoundingClientRect(); const x = e.clientX - r.left - r.width/2; const y = e.clientY - r.top - r.height/2; const d = Math.min(Math.sqrt(x*x+y*y), 60); const s = (60 - d)/60; link.style.transform = `translate(${x * .08 * s}px, ${y * .08 * s}px)`; });
         link.addEventListener('mouseleave', () => { link.style.transform = ''; });
       });
     }
 
-    /* ── #1 TYPEWRITER — only source of the positioning text ── */
     if (!PRM) {
-      const phrases = [
-        'Institutional advisory \u0026 structured capital',
-        'for technology and real assets',
-        'Technology \u00b7 Real Assets \u00b7 Cross-Border',
-        'Precision over volume. Conviction over consensus.'
-      ];
-      const twEl  = document.getElementById('twText');
+      const phrases = ['Institutional advisory \u0026 structured capital', 'for technology and real assets', 'Technology \u00b7 Real Assets \u00b7 Cross-Border', 'Precision over volume. Conviction over consensus.'];
+      const twEl = document.getElementById('twText');
       const twCur = document.getElementById('twCursor');
       let pi = 0, ci = 0, deleting = false;
       const TSPD = 42, DSPD = 18, PAUSE = 2800;
-
       function type() {
         const ph = phrases[pi];
         if (deleting) {
           twEl.textContent = ph.substring(0, ci - 1); ci--;
-          if (ci === 0) {
-            deleting = false;
-            pi = (pi + 1) % phrases.length;
-            if (pi === 0) { twEl.textContent = phrases[0]; if (twCur) twCur.style.display = 'none'; return; }
-            setTimeout(type, 220);
-          } else { setTimeout(type, DSPD); }
+          if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; if (pi === 0) { twEl.textContent = phrases[0]; if (twCur) twCur.style.display = 'none'; return; } setTimeout(type, 220); } else setTimeout(type, DSPD);
         } else {
           twEl.textContent = ph.substring(0, ci + 1); ci++;
-          if (ci === ph.length) {
-            if (pi === phrases.length - 1) { if (twCur) twCur.style.display = 'none'; return; }
-            deleting = true; setTimeout(type, PAUSE);
-          } else { setTimeout(type, TSPD); }
+          if (ci === ph.length) { if (pi === phrases.length - 1) { if (twCur) twCur.style.display = 'none'; return; } deleting = true; setTimeout(type, PAUSE); } else setTimeout(type, TSPD);
         }
       }
       setTimeout(type, 1800);
-    } else {
-      const twEl = document.getElementById('twText');
-      if (twEl) twEl.textContent = 'Institutional advisory & structured capital for technology and real assets';
-      const twCur = document.getElementById('twCursor');
-      if (twCur) twCur.style.display = 'none';
-    }
+    } else { const twEl = document.getElementById('twText'); if (twEl) twEl.textContent = 'Institutional advisory & structured capital for technology and real assets'; const twCur = document.getElementById('twCursor'); if (twCur) twCur.style.display = 'none'; }
 
-    /* ── 3D PARALLAX WATERMARK ── */
     const watermark = document.getElementById('aboutWatermark');
     if (watermark && !PRM) {
       const wmText = watermark.querySelector('.about-watermark-text');
       function updateWatermark() {
         const rect = watermark.parentElement.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const center = rect.top + rect.height / 2 - vh / 2;
-        const t = Math.max(-1, Math.min(1, center / vh));
-
-        /* Parallax — tangible depth, letters clearly lag behind content */
-        const driftY = center * .15;
-
-        /* Scale — breathes as viewport passes through */
-        const scale = 1.05 + (1 - Math.abs(t)) * .06;
-
-        /* Opacity — reveals fully at dead center, fades at edges */
-        const opac = .022 + (1 - Math.abs(t)) * .025;
-
+        const vh = window.innerHeight; const center = rect.top + rect.height/2 - vh/2;
+        const driftY = center * .15; const scale = 1.05 + (1 - Math.abs(Math.max(-1, Math.min(1, center/vh)))) * .06;
+        const opac = .022 + (1 - Math.abs(Math.max(-1, Math.min(1, center/vh)))) * .025;
         watermark.style.transform = `translateY(${driftY}px)`;
-        if (wmText) {
-          wmText.style.transform = `translateZ(-60px) scale(${scale})`;
-          wmText.style.opacity = opac;
-        }
+        if (wmText) { wmText.style.transform = `translateZ(-60px) scale(${scale})`; wmText.style.opacity = opac; }
       }
-      window.addEventListener('scroll', updateWatermark, { passive: true });
-      updateWatermark();
+      window.addEventListener('scroll', updateWatermark, { passive: true }); updateWatermark();
     }
 
-    /* ── #2 AMBIENT CANVAS — full 60fps, reduced particles ── */
     const ambCanvas = document.getElementById('ambient-canvas');
     if (ambCanvas && !PRM && window.innerWidth > 768) {
-      const ctx = ambCanvas.getContext('2d');
-      const N = 24; /* #2 — reduced from 48 for 60fps budget */
-      const CDIST = 100, CSQ = CDIST * CDIST;
-      let W, H, particles = [], aId, canvasOn = true;
-
-      function resizeAmb() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        W = window.innerWidth; H = window.innerHeight;
-        ambCanvas.width  = W * dpr; ambCanvas.height = H * dpr;
-        ambCanvas.style.width = W + 'px'; ambCanvas.style.height = H + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      function mkAmb() {
-        particles = [];
-        for (let i = 0; i < N; i++) particles.push({
-          x: Math.random() * W, y: Math.random() * H,
-          vx: (Math.random()-.5)*.1, vy: (Math.random()-.5)*.1,
-          s: Math.random()*.9+.3, ph: Math.random()*Math.PI*2
-        });
-      }
-      /* #2 — no frame-skip: every rAF frame */
-      function drawAmb(ts) {
-        if (!canvasOn) return;
-        ctx.clearRect(0, 0, W, H);
-        for (const p of particles) {
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0 || p.x > W) p.vx *= -1;
-          if (p.y < 0 || p.y > H) p.vy *= -1;
-          const a = .08 + Math.sin(ts * .0013 + p.ph) * .025;
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(197,160,89,${a.toFixed(3)})`;
-          ctx.fill();
-        }
-        ctx.lineWidth = .4;
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i+1; j < particles.length; j++) {
-            const a = particles[i], b = particles[j];
-            const dx = a.x-b.x, dy = a.y-b.y, sq = dx*dx+dy*dy;
-            if (sq < CSQ) {
-              const al = .022 * (1 - Math.sqrt(sq) / CDIST);
-              ctx.strokeStyle = `rgba(197,160,89,${al.toFixed(4)})`;
-              ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-            }
-          }
-        }
-        aId = requestAnimationFrame(drawAmb);
-      }
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) { canvasOn = false; cancelAnimationFrame(aId); }
-        else { canvasOn = true; aId = requestAnimationFrame(drawAmb); }
-      });
-      window.addEventListener('resize', () => {
-        cancelAnimationFrame(aId); resizeAmb(); mkAmb(); aId = requestAnimationFrame(drawAmb);
-      }, { passive: true });
-      resizeAmb(); mkAmb(); aId = requestAnimationFrame(drawAmb);
+      const ctx = ambCanvas.getContext('2d'); const N = 24; const CDIST = 100; const CSQ = CDIST * CDIST; let W, H, particles = [], aId, canvasOn = true;
+      function resizeAmb() { const dpr = Math.min(window.devicePixelRatio||1,2); W = window.innerWidth; H = window.innerHeight; ambCanvas.width = W*dpr; ambCanvas.height = H*dpr; ambCanvas.style.width = W+'px'; ambCanvas.style.height = H+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); }
+      function mkAmb() { particles = []; for (let i=0;i<N;i++) particles.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-.5)*.1, vy: (Math.random()-.5)*.1, s: Math.random()*.9+.3, ph: Math.random()*Math.PI*2 }); }
+      function drawAmb(ts) { if (!canvasOn) return; ctx.clearRect(0,0,W,H); for (const p of particles) { p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1; const a = .08+Math.sin(ts*.0013+p.ph)*.025; ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2); ctx.fillStyle = `rgba(197,160,89,${a.toFixed(3)})`; ctx.fill(); } ctx.lineWidth=.4; for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++) { const a=particles[i],b=particles[j],dx=a.x-b.x,dy=a.y-b.y,sq=dx*dx+dy*dy; if(sq<CSQ){ const al=.022*(1-Math.sqrt(sq)/CDIST); ctx.strokeStyle=`rgba(197,160,89,${al.toFixed(4)})`; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } aId = requestAnimationFrame(drawAmb); }
+      document.addEventListener('visibilitychange', () => { if(document.hidden){ canvasOn=false; cancelAnimationFrame(aId); } else { canvasOn=true; aId=requestAnimationFrame(drawAmb); } });
+      window.addEventListener('resize', () => { cancelAnimationFrame(aId); resizeAmb(); mkAmb(); aId=requestAnimationFrame(drawAmb); }, { passive: true });
+      resizeAmb(); mkAmb(); aId=requestAnimationFrame(drawAmb);
     }
 
-    /* ── #2 GENERATIVE NETWORK — full 60fps ── */
     const gCanvas = document.getElementById('generativeCanvas');
     if (gCanvas && !PRM) {
-      const gctx = gCanvas.getContext('2d');
-      const GN = 16; /* #2 — reduced from 22 */
-      let gW, gH, gnodes = [], gOn = true;
-
-      function resizeG() {
-        const c = gCanvas.parentElement;
-        gW = c.clientWidth; gH = c.clientHeight;
-        gCanvas.width = gW; gCanvas.height = gH;
-      }
-      function initG() {
-        gnodes = [];
-        for (let i = 0; i < GN; i++) gnodes.push({
-          x: Math.random()*gW, y: Math.random()*gH,
-          vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25
-        });
-      }
-      /* #2 — no frame-skip */
-      function drawG() {
-        if (!gOn || !gW || !gH) return;
-        gctx.clearRect(0, 0, gW, gH);
-        for (const n of gnodes) {
-          n.x += n.vx; n.y += n.vy;
-          if (n.x<0||n.x>gW) n.vx*=-1;
-          if (n.y<0||n.y>gH) n.vy*=-1;
-          gctx.fillStyle = 'rgba(197,160,89,.18)';
-          gctx.beginPath(); gctx.arc(n.x,n.y,2,0,Math.PI*2); gctx.fill();
-        }
-        gctx.strokeStyle = 'rgba(197,160,89,.06)'; gctx.lineWidth = .5;
-        for (let i=0;i<gnodes.length;i++) for (let j=i+1;j<gnodes.length;j++) {
-          const dx = gnodes[i].x-gnodes[j].x, dy = gnodes[i].y-gnodes[j].y;
-          if (dx*dx+dy*dy<22500) {
-            gctx.beginPath(); gctx.moveTo(gnodes[i].x,gnodes[i].y);
-            gctx.lineTo(gnodes[j].x,gnodes[j].y); gctx.stroke();
-          }
-        }
-        requestAnimationFrame(drawG);
-      }
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) gOn = false;
-        else { gOn = true; drawG(); }
-      });
+      const gctx = gCanvas.getContext('2d'); const GN = 16; let gW, gH, gnodes = [], gOn = true;
+      function resizeG() { const c = gCanvas.parentElement; gW = c.clientWidth; gH = c.clientHeight; gCanvas.width = gW; gCanvas.height = gH; }
+      function initG() { gnodes = []; for(let i=0;i<GN;i++) gnodes.push({ x: Math.random()*gW, y: Math.random()*gH, vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25 }); }
+      function drawG() { if(!gOn||!gW||!gH) return; gctx.clearRect(0,0,gW,gH); for(const n of gnodes){ n.x+=n.vx; n.y+=n.vy; if(n.x<0||n.x>gW) n.vx*=-1; if(n.y<0||n.y>gH) n.vy*=-1; gctx.fillStyle='rgba(197,160,89,.18)'; gctx.beginPath(); gctx.arc(n.x,n.y,2,0,Math.PI*2); gctx.fill(); } gctx.strokeStyle='rgba(197,160,89,.06)'; gctx.lineWidth=.5; for(let i=0;i<gnodes.length;i++) for(let j=i+1;j<gnodes.length;j++) { const dx=gnodes[i].x-gnodes[j].x, dy=gnodes[i].y-gnodes[j].y; if(dx*dx+dy*dy<22500) { gctx.beginPath(); gctx.moveTo(gnodes[i].x,gnodes[i].y); gctx.lineTo(gnodes[j].x,gnodes[j].y); gctx.stroke(); } } requestAnimationFrame(drawG); }
+      document.addEventListener('visibilitychange', () => { if(document.hidden) gOn=false; else { gOn=true; drawG(); } });
       window.addEventListener('resize', () => { resizeG(); initG(); }, { passive: true });
       resizeG(); initG(); drawG();
     }
 
-    /* ── SCROLL: header, progress, gold rules, active nav ── */
-    const header   = document.getElementById('header');
-    const progress = document.getElementById('scrollProgress');
-    const rules    = document.querySelectorAll('.gold-rule');
-    let ticking    = false;
-
+    const header = document.getElementById('header');
+    const rules = document.querySelectorAll('.gold-rule');
+    let ticking = false;
     function onScroll() {
       const y = window.scrollY;
       if (header) header.classList.toggle('scrolled', y > 50);
-      if (progress && !PRM) {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        progress.style.width = max > 0 ? ((y/max)*100).toFixed(2)+'%' : '0%';
-      }
-      rules.forEach(hr => {
-        const r = hr.getBoundingClientRect();
-        hr.classList.toggle('in-view', r.top < window.innerHeight && r.bottom > 0);
-      });
+      // PATCH 03: JS progress width management removed – CSS animation-timeline handles it
+      rules.forEach(hr => { const r = hr.getBoundingClientRect(); hr.classList.toggle('in-view', r.top < window.innerHeight && r.bottom > 0); });
       const threshold = y + 140;
-      document.querySelectorAll('section[id]').forEach(sec => {
-        const top = sec.getBoundingClientRect().top + window.scrollY;
-        const lnk = document.querySelector(`.nav-link[href="#${sec.id}"]`);
-        if (lnk) lnk.classList.toggle('active',
-          threshold >= top && threshold < top + sec.offsetHeight);
-      });
+      document.querySelectorAll('section[id]').forEach(sec => { const top = sec.getBoundingClientRect().top + window.scrollY; const lnk = document.querySelector(`.nav-link[href="#${sec.id}"]`); if (lnk) lnk.classList.toggle('active', threshold >= top && threshold < top + sec.offsetHeight); });
       ticking = false;
     }
-    window.addEventListener('scroll', () => {
-      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
-    }, { passive: true });
+    window.addEventListener('scroll', () => { if(!ticking){ requestAnimationFrame(onScroll); ticking=true; } }, { passive: true });
     onScroll();
 
-    /* ── SPLIT-LINE HEADING REVEAL ── */
     if ('IntersectionObserver' in window && !PRM) {
-      const sio = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            const h2 = e.target.closest('h2') || e.target;
-            h2.querySelectorAll('.split-line').forEach(sl => sl.classList.add('split-revealed'));
-            sio.unobserve(e.target);
-          }
-        });
-      }, { threshold: .15 });
-      document.querySelectorAll('h2').forEach(h => sio.observe(h));
-    } else {
-      document.querySelectorAll('.split-line').forEach(sl => sl.classList.add('split-revealed'));
-    }
+      const sio = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting){ const h2 = e.target.closest('h2')||e.target; h2.querySelectorAll('.split-line').forEach(sl=>sl.classList.add('split-revealed')); sio.unobserve(e.target); } }); }, { threshold:.15 });
+      document.querySelectorAll('h2').forEach(h=>sio.observe(h));
+    } else { document.querySelectorAll('.split-line').forEach(sl=>sl.classList.add('split-revealed')); }
 
-    /* ── SCROLL REVEAL ── */
     if ('IntersectionObserver' in window && !PRM) {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-      }, { threshold: .06, rootMargin: '0px 0px -28px 0px' });
-      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    } else {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-    }
+      const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold:.06, rootMargin:'0px 0px -28px 0px' });
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    } else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')); }
 
-    /* ── COUNTUP ── */
     function countUp(el) {
-      const target = parseInt(el.dataset.count, 10);
-      if (isNaN(target)) return;
-      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
-      if (target === 0) { el.textContent = pre + '0' + suf; return; }
-      const start = performance.now(), dur = 1700;
-      function tick(now) {
-        const t = Math.min((now - start) / dur, 1);
-        const v = 1 - Math.pow(1 - t, 3);
-        el.textContent = pre + Math.round(target * v) + suf;
-        if (t < 1) requestAnimationFrame(tick);
-        else el.textContent = pre + target + suf;
-      }
+      const target = parseInt(el.dataset.count,10); if(isNaN(target)) return;
+      const pre = el.dataset.prefix||'', suf = el.dataset.suffix||'';
+      if(target===0){ el.textContent=pre+'0'+suf; return; }
+      const start=performance.now(), dur=1700;
+      function tick(now){ const t=Math.min((now-start)/dur,1); const v=1-Math.pow(1-t,3); el.textContent=pre+Math.round(target*v)+suf; if(t<1) requestAnimationFrame(tick); else el.textContent=pre+target+suf; }
       requestAnimationFrame(tick);
     }
     if ('IntersectionObserver' in window && !PRM) {
-      const cio = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
-      }, { threshold: .3 });
-      document.querySelectorAll('.proof-number[data-count]').forEach(el => cio.observe(el));
-    } else {
-      document.querySelectorAll('.proof-number[data-count]').forEach(countUp);
+      const cio = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ countUp(e.target); cio.unobserve(e.target); } }); }, { threshold:.3 });
+      document.querySelectorAll('.proof-number[data-count]').forEach(el=>cio.observe(el));
+    } else { document.querySelectorAll('.proof-number[data-count]').forEach(countUp); }
+
+    document.querySelectorAll('.partner-card img').forEach(img=>{ img.addEventListener('error',()=>{ const card=img.closest('.partner-card'); if(!card) return; img.style.display='none'; const ph=document.createElement('span'); ph.className='partner-placeholder'; ph.textContent=img.alt||'Partner'; card.appendChild(ph); }); });
+
+    const toggle = document.getElementById('menuToggle'); const menu = document.getElementById('navMenu');
+    if(toggle && menu){ const close=()=>{ menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }; toggle.addEventListener('click',()=>{ const open=menu.classList.toggle('open'); toggle.setAttribute('aria-expanded',String(open)); document.body.style.overflow=open?'hidden':''; }); menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close)); document.addEventListener('keydown',e=>{ if(e.key==='Escape' && menu.classList.contains('open')) close(); }); }
+
+    if(isFine && !PRM && !isTouch){
+      let physY=window.scrollY, targY=window.scrollY, physId=null;
+      const maxY=()=>document.documentElement.scrollHeight-window.innerHeight;
+      window.addEventListener('wheel',e=>{ e.preventDefault(); targY=Math.max(0,Math.min(targY+e.deltaY*0.88,maxY())); if(!physId) physId=requestAnimationFrame(function physicsStep(){ const d=targY-physY; if(Math.abs(d)<0.12){ physY=targY; window.scrollTo(0,physY); physId=null; return; } physY+=d*0.072; window.scrollTo(0,physY); physId=requestAnimationFrame(physicsStep); }); }, { passive:false });
     }
-
-    /* ── PARTNER LOGO FALLBACK ── */
-    document.querySelectorAll('.partner-card img').forEach(img => {
-      img.addEventListener('error', () => {
-        const card = img.closest('.partner-card');
-        if (!card) return;
-        img.style.display = 'none';
-        const ph = document.createElement('span');
-        ph.className = 'partner-placeholder';
-        ph.textContent = img.alt || 'Partner';
-        card.appendChild(ph);
-      });
-    });
-
-    /* ── MOBILE MENU ── */
-    const toggle = document.getElementById('menuToggle');
-    const menu   = document.getElementById('navMenu');
-    if (toggle && menu) {
-      const close = () => {
-        menu.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      };
-      toggle.addEventListener('click', () => {
-        const open = menu.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-        document.body.style.overflow = open ? 'hidden' : '';
-      });
-      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && menu.classList.contains('open')) close();
-      });
-    }
-
-    /* ── SOVEREIGN SCROLL PHYSICS — inertial mass (desktop only) ── */
-    if (isFine && !PRM && !isTouch) {
-      let physY  = window.scrollY;
-      let targY  = window.scrollY;
-      let physId = null;
-      const MASS = 0.072;
-      const maxY = () => document.documentElement.scrollHeight - window.innerHeight;
-
-      window.addEventListener('wheel', e => {
-        e.preventDefault();
-        targY = Math.max(0, Math.min(targY + e.deltaY * 0.88, maxY()));
-        if (!physId) physId = requestAnimationFrame(physicsStep);
-      }, { passive: false });
-
-      function physicsStep() {
-        const d = targY - physY;
-        if (Math.abs(d) < 0.12) {
-          physY = targY;
-          window.scrollTo(0, physY);
-          physId = null;
-          return;
-        }
-        physY += d * MASS;
-        window.scrollTo(0, physY);
-        physId = requestAnimationFrame(physicsStep);
-      }
-    }
-
-    /* ── SMOOTH ANCHOR SCROLL ── */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (!href || href === '#') return;
-        const tgt = document.querySelector(href);
-        if (tgt) {
-          e.preventDefault();
-          tgt.scrollIntoView({ behavior: PRM ? 'auto' : 'smooth' });
-        }
-      });
-    });
-
-    /* ── iOS VIEWPORT HEIGHT FIX ── */
-    function setVh() {
-      document.documentElement.style.setProperty('--vh', (window.innerHeight * .01) + 'px');
-    }
-    setVh();
-    window.addEventListener('resize', setVh, { passive: true });
-
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const href=this.getAttribute('href'); if(!href||href==='#') return; const tgt=document.querySelector(href); if(tgt){ e.preventDefault(); tgt.scrollIntoView({ behavior:PRM?'auto':'smooth' }); } }); });
+    function setVh(){ document.documentElement.style.setProperty('--vh',(window.innerHeight*.01)+'px'); }
+    setVh(); window.addEventListener('resize',setVh,{passive:true});
   })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a05a38809f5f69e7',t:'MTc4MDQ0Mjc2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0661afb8d9bdc4b',t:'MTc4MDU2NzM4Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
