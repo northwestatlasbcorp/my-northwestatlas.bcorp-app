@@ -6,15 +6,15 @@
     <meta name="theme-color" content="#080809">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="NWA Contagion Engine">
-    <title>NWA | Contagion Engine — Institutional Cascade Modeling</title>
-    <meta name="description" content="Institutional-grade systemic risk cascade modeling. NVIDIA shock propagation across 19 AI-sector companies with live prices, real-time contagion mathematics.">
+    <title>NWA | Contagion Engine — Scenario Cascade Modeling</title>
+    <meta name="description" content="NWA systemic-risk scenario modeling. NVIDIA shock propagation across 19 AI-sector companies with NWA market data and proprietary cascade formulas.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
     /* ═══════════════════════════════════════════
        TOKENS — northwestatlas.html consistency
@@ -845,8 +845,8 @@
                 <span class="brand-tag">Contagion v3</span>
             </a>
             <div class="nav-r">
-                <div class="nav-status"><span class="pulse-dot"></span><span>Engine Active</span></div>
-                <a href="Toolkit.html" class="nav-back">← Terminal</a>
+                <div class="nav-status"><span class="pulse-dot"></span><span>NWA Engine Active</span></div>
+                <a href="toolkit.html" class="nav-back">← Terminal</a>
             </div>
         </nav>
     </header>
@@ -856,7 +856,7 @@
             <div class="container">
                 <div class="section-label" id="main-content">Cascade Analysis Engine</div>
                 <h1>Contagion <span class="gold-text">Map</span></h1>
-                <p class="hero-sub">Model systemic risk propagation from an NVIDIA shock event across 19 AI-sector companies. Real-time cascade mathematics with VIX amplification, timeline dynamics, and second-order feedback loops.</p>
+                <p class="hero-sub">Model systemic risk propagation from an NVIDIA shock event across 19 AI-sector companies. NWA cascade mathematics with VIX amplification, timeline dynamics, and second-order feedback loops.</p>
             </div>
         </section>
 
@@ -872,7 +872,7 @@
                     <div class="ctrl-sep"></div>
                     <button class="ctrl-btn primary" id="playBtn">▶ Play Cascade</button>
                     <button class="ctrl-btn" id="resetBtn">↻ Reset</button>
-                    <button class="ctrl-btn" id="liveBtn" title="Fetch live prices from Yahoo Finance">⚡ Live Prices</button>
+                    <button class="ctrl-btn" id="liveBtn" title="Fetch prices from NWA data layer">⚡ NWA Prices</button>
                 </div>
             </div>
         </div>
@@ -902,14 +902,14 @@
                     <div id="srsComponents" style="border-top:0.5px solid var(--border);padding-top:.6rem;display:grid;grid-template-columns:1fr 1fr;gap:.3rem;"></div>
                 </div>
                 <div class="inst-panel">
-                    <div class="inst-label">Value at Risk (VaR)</div>
+                    <div class="inst-label">Scenario Loss Proxy</div>
                     <div id="varPanel">
-                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">VaR 95% <span style="font-family:var(--mono);font-size:.38rem;color:var(--ink-tertiary);" id="varHorizon">(5d)</span></span><span style="font-family:var(--mono);font-size:.65rem;color:var(--bone-dim);" id="var95">—</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">VaR 99%</span><span style="font-family:var(--mono);font-size:.65rem;" id="var99">—</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">CVaR (ES) 99%</span><span style="font-family:var(--mono);font-size:.65rem;" id="cvar99">—</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">95% Proxy Loss <span style="font-family:var(--mono);font-size:.38rem;color:var(--ink-tertiary);" id="varHorizon">(5d)</span></span><span style="font-family:var(--mono);font-size:.65rem;color:var(--bone-dim);" id="var95">—</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">99% Proxy Loss</span><span style="font-family:var(--mono);font-size:.65rem;" id="var99">—</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:0.5px solid rgba(var(--champagne-rgb),.03);"><span style="font-size:.58rem;color:var(--ink-secondary);">Tail Loss Proxy</span><span style="font-family:var(--mono);font-size:.65rem;" id="cvar99">—</span></div>
                         <div style="display:flex;justify-content:space-between;padding:.3rem 0;"><span style="font-size:.58rem;color:var(--ink-secondary);">Daily Sigma</span><span style="font-family:var(--mono);font-size:.65rem;color:var(--bone-dim);" id="varSigma">—</span></div>
                     </div>
-                    <div style="background:rgba(var(--champagne-rgb),.02);border:0.5px solid rgba(var(--champagne-rgb),.06);border-radius:var(--r2);padding:.5rem;margin-top:.6rem;font-size:.5rem;font-family:var(--mono);color:var(--ink-tertiary);line-height:1.6;letter-spacing:.02em;">Based on parametric VaR using implied vol from shock magnitude.</div>
+                    <div style="background:rgba(var(--champagne-rgb),.02);border:0.5px solid rgba(var(--champagne-rgb),.06);border-radius:var(--r2);padding:.5rem;margin-top:.6rem;font-size:.5rem;font-family:var(--mono);color:var(--ink-tertiary);line-height:1.6;letter-spacing:.02em;">Based on NWA scenario-loss proxy using shock magnitude and volatility assumptions.</div>
                 </div>
                 <div class="inst-panel">
                     <div class="inst-label">Recovery Estimate & Speed</div>
@@ -956,7 +956,7 @@
 
             <div id="hedgingSection" style="margin-bottom:1.5rem;background:rgba(var(--champagne-rgb),.01);border:0.5px solid rgba(var(--champagne-rgb),.06);border-radius:var(--r2);overflow:hidden;">
                 <div style="padding:.8rem 1.2rem;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-family:var(--display);font-size:.9rem;font-weight:300;color:var(--bone);">Hedging <span class="gold-text">Recommendations</span></span>
+                    <span style="font-family:var(--display);font-size:.9rem;font-weight:300;color:var(--bone);">Risk Mitigation <span class="gold-text">Examples</span></span>
                     <span class="badge" id="hedgeBadge">—</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5px;background:rgba(var(--champagne-rgb),.035);" id="hedgeGrid"></div>
@@ -972,15 +972,15 @@
             </div>
 
             <div class="corr-section">
-                <button class="ctrl-btn corr-toggle" id="corrToggle">◇ Show Correlation Matrix</button>
+                <button class="ctrl-btn corr-toggle" id="corrToggle">◇ Show Assumption Matrix</button>
                 <div class="corr-matrix" id="corrMatrix">
-                    <div class="corr-canvas-wrap"><canvas id="corrCanvas" role="img" aria-label="Correlation matrix heatmap"></canvas></div>
+                    <div class="corr-canvas-wrap"><canvas id="corrCanvas" role="img" aria-label="Assumption matrix heatmap"></canvas></div>
                 </div>
             </div>
 
             <section id="newsSection" style="margin-bottom:1.5rem;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;">
-                    <span class="section-label">Market Intelligence</span>
+                    <span class="section-label">NWA Intelligence</span>
                     <div style="display:flex;gap:.4rem;align-items:center;">
                         <span id="newsStats" style="font-family:var(--mono);font-size:.4rem;color:var(--ink-tertiary);letter-spacing:.1em;"></span>
                         <button class="ctrl-btn" id="refreshNewsBtn">↻ Refresh</button>
@@ -1005,8 +1005,8 @@
                 <span>© <span id="year">2026</span> North West Atlas B Corp</span>
                 <div>
                     <a href="/">Home</a>
-                    <a href="Toolkit.html">Toolkit</a>
-                    <a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a>
+                    <a href="toolkit.html">Toolkit</a>
+                    <a href="/cdn-cgi/l/email-protection#a8c1c6cec7e8c6c7dadcc0dfcddbdcc9dcc4c9db86cbc7c5"><span class="__cf_email__" data-cfemail="640d0a020b240a0b16100c1301171005100805174a070b09">[email&#160;protected]</span></a>
                 </div>
             </div>
         </div>
@@ -1014,7 +1014,7 @@
 
     <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function(){
 'use strict';
 
@@ -1144,14 +1144,14 @@
     };
 
     // ─────────────────────────────────────────────
-    // LIVE DATA MODULE (Yahoo Finance + Smart Cache)
+    // LIVE DATA MODULE (NWA Data Layer + Smart Cache)
     // ─────────────────────────────────────────────
     const LIVE_DATA_CONFIG = Object.freeze({
        PROXIES: Object.freeze(['https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/?url=']),
         FRESH_TTL_MS: 45000, STALE_THRESHOLD_MS: 300000,
         DELAYED_THRESHOLD_MS: 1800000, MAX_CACHE_AGE_MS: 86400000,
         TIMEOUT_MS: 8000,
-        YAHOO_CHART_HOST: 'https://query1.finance.yahoo.com/v8/finance/chart/',
+        NWA_DATA_BASE: 'https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/',
         RETRY_DELAYS: Object.freeze([600, 1800, 4000]),
         JITTER_MS: 250,
     });
@@ -1228,11 +1228,11 @@
 
     function lastNonNull(arr) { if (!Array.isArray(arr)) return null; for (let i = arr.length - 1; i >= 0; i--) { if (arr[i] != null) return arr[i]; } return null; }
 
-    function validateYahooChart(raw, symbol) {
+    function validateNWAChart(raw, symbol) {
         const result = raw?.chart?.result?.[0];
         if (!result) throw new Error(`No chart result for ${symbol}`);
         const yahoErr = raw?.chart?.error;
-        if (yahoErr) throw new Error(typeof yahoErr === 'object' ? (yahoErr.description ?? yahoErr.code ?? 'Yahoo API error') : String(yahoErr));
+        if (yahoErr) throw new Error(typeof yahoErr === 'object' ? (yahoErr.description ?? yahoErr.code ?? 'NWA data error') : String(yahoErr));
         const meta = result.meta || {};
         const closes = result?.indicators?.quote?.[0]?.close ?? [];
         const lastClose = lastNonNull(closes);
@@ -1245,7 +1245,7 @@
         return { price, change, changePercent: prev > 0 ? (change / prev) * 100 : 0, currency: meta.currency ?? 'USD', marketState: meta.marketState ?? 'UNKNOWN', marketTime: meta.regularMarketTime ? meta.regularMarketTime * 1000 : null, fetchedAt: Date.now() };
     }
 
-    const YAHOO_TICKER_MAP = Object.freeze({ NDX: '^NDX', GSPC: '^GSPC', VIX: '^VIX', SPX: '^GSPC', DJI: '^DJI' });
+    const NWA_TICKER_MAP = Object.freeze({ NDX: '^NDX', GSPC: '^GSPC', VIX: '^VIX', SPX: '^GSPC', DJI: '^DJI' });
 
     async function fetchLiveQuote(symbol, signal = null) {
         const cached = getCachedQuote(symbol);
@@ -1254,9 +1254,8 @@
         return _doFetchQuote(symbol, signal);
     }
     async function _doFetchQuote(symbol, signal = null) {
-        const ySymbol = YAHOO_TICKER_MAP[symbol] ?? symbol;
-        const url = LIVE_DATA_CONFIG.YAHOO_CHART_HOST + encodeURIComponent(ySymbol) + '?interval=1m&range=1d&includePrePost=false';
-        try { const json = await cascadeFetchJson(url, LIVE_DATA_CONFIG.TIMEOUT_MS, signal); if (json?.__fallback) return json.data; const quote = validateYahooChart(json, symbol); setCachedQuote(symbol, quote); return quote; } catch (err) { if (err.message === 'Aborted by caller') return null; return getFallbackQuote(symbol); }
+        const url = `${LIVE_DATA_CONFIG.NWA_DATA_BASE}?quote=${encodeURIComponent(symbol)}&interval=1m&range=1d`;
+        try { const json = await cascadeFetchJson(url, LIVE_DATA_CONFIG.TIMEOUT_MS, signal); if (json?.__fallback) return json.data; const quote = validateNWAChart(json, symbol); setCachedQuote(symbol, quote); return quote; } catch (err) { if (err.message === 'Aborted by caller') return null; return getFallbackQuote(symbol); }
     }
     function _revalidateInBackground(symbol, signal = null) {
         _doFetchQuote(symbol, signal).then(quote => { if (quote && state.liveQuotes?.[symbol]) { state.liveQuotes[symbol] = quote; renderLiveQuoteOverlay(); updateTickerTrack(); } }).catch(() => {});
@@ -1280,7 +1279,7 @@
         state.liveLoadAbort = new AbortController();
         const { signal } = state.liveLoadAbort;
         const ALL_TICKERS = ['NVDA', ...DATA.tier1.map(c => c.ticker), ...DATA.tier2.map(c => c.ticker), ...DATA.tier3.map(c => c.ticker)];
-        showToast('Loading live prices…', false);
+        showToast('Loading NWA prices…', false);
         const settled = await promisePool(ALL_TICKERS, 6, (ticker) => fetchLiveQuote(ticker, signal));
         if (signal.aborted) return;
         const newQuotes = {};
@@ -1295,7 +1294,7 @@
         if (count > 0 && staleCount < count) {
             let msg = `${count} prices loaded`; if (delayedCount > 0) msg += ` (${delayedCount} delayed)`; if (staleCount > 0) msg += ` (${staleCount} stale)`;
             showToast(msg, true);
-        } else { showToast('Failed to load live prices — using cache', false); }
+        } else { showToast('Failed to load NWA prices — using cache', false); }
         const nvda = newQuotes['NVDA'];
         if (nvda && nvda.freshness !== 'stale' && nvda.changePercent < -5) {
             const suggested = Math.min(70, Math.max(5, Math.round(Math.abs(nvda.changePercent) * 2)));
@@ -1308,10 +1307,8 @@
     // NEWS MODULE
     // ─────────────────────────────────────────────
     const NEWS_CONFIG = Object.freeze({
-        YAHOO_RSS_TICKERS: Object.freeze(['NVDA','AMD','AVGO','TSM','ASML','MSFT','META']),
-        YAHOO_RSS_BASE: 'https://feeds.finance.yahoo.com/rss/2.0/headline?region=US&lang=en-US&s=',
-        TECH_FEEDS: Object.freeze(['https://techcrunch.com/tag/artificial-intelligence/feed/','https://www.theverge.com/rss/ai-artificial-intelligence/index.xml','https://feeds.feedburner.com/venturebeat/SZYF']),
-        RSS2JSON_BASE: 'https://api.rss2json.com/v1/api.json?count=8&rss_url=',
+        NWA_FEED_TICKERS: Object.freeze(['NVDA','AMD','AVGO','TSM','ASML','MSFT','META']),
+        TECH_FEEDS: Object.freeze(['techcrunch','verge-ai','venturebeat-ai']),
         CACHE_TTL_SECONDS: 300, MAX_ITEMS: 24,
         POS_WORDS: Object.freeze(['bullish','gain','surge','rally','beat','strong','growth','launch','breakthrough','profit','record','upgrade','buy']),
         NEG_WORDS: Object.freeze(['bearish','loss','decline','drop','miss','weak','risk','crash','bubble','overvalued','lawsuit','recall','ban','downgrade','sell','warning','default','debt']),
@@ -1319,20 +1316,26 @@
     const newsCache = { data: null, ts: 0 };
 
     function sanitizeText(str) { if (typeof str !== 'string') return ''; const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+    function safeUrl(raw) { try { const u = new URL(raw); if (!['http:', 'https:'].includes(u.protocol)) return null; return u.href; } catch { return null; } }
     function toPlainText(escapedHtml) { if (typeof escapedHtml !== 'string') return ''; const d = document.createElement('div'); d.innerHTML = escapedHtml; return d.textContent || ''; }
     function analyzeSentiment(title, desc) { const content = (title + ' ' + desc).toLowerCase(); const posCount = NEWS_CONFIG.POS_WORDS.filter(w => content.includes(w)).length; const negCount = NEWS_CONFIG.NEG_WORDS.filter(w => content.includes(w)).length; return posCount > negCount ? 'positive' : negCount > posCount ? 'negative' : 'neutral'; }
 
-    async function fetchFeed(feedUrl, sourceName = '') {
-        const source = sourceName || (() => { try { return new URL(feedUrl).hostname.replace('www.',''); } catch { return 'unknown'; } })();
-        const tryRss2json = async () => {
-            const url = NEWS_CONFIG.RSS2JSON_BASE + encodeURIComponent(feedUrl);
-            const res = await fetch(url, { signal: AbortSignal.timeout(9000) });
-            if (!res.ok) throw new Error(`rss2json HTTP ${res.status}`);
-            const json = await res.json();
-            if (json.status !== 'ok') throw new Error(`rss2json: ${json.status}`);
-            return (json.items || []).map(it => ({ title: it.title || '', link: it.link || '', pubDate: it.pubDate || '', source, summary: (it.description || '').replace(/<[^>]+>/g,'').slice(0,200), sentiment: analyzeSentiment(it.title || '', it.description || '') }));
-        };
-        try { return await tryRss2json(); } catch { return []; }
+    async function fetchFeed(feedKey, sourceName = 'NWA Intelligence') {
+        const source = sourceName || 'NWA Intelligence';
+        try {
+            const url = `${LIVE_DATA_CONFIG.NWA_DATA_BASE}?feed=${encodeURIComponent(feedKey)}`;
+            const res = await fetch(url, { signal: AbortSignal.timeout(9000), credentials: 'omit' });
+            if (!res.ok) throw new Error(`NWA feed HTTP ${res.status}`);
+            const text = await res.text();
+            const xml = new DOMParser().parseFromString(text, 'text/xml');
+            return [...xml.querySelectorAll('item')].map(it => {
+                const title = it.querySelector('title')?.textContent || '';
+                const link = safeUrl(it.querySelector('link')?.textContent || '') || '';
+                const description = it.querySelector('description')?.textContent || '';
+                const pubDate = it.querySelector('pubDate')?.textContent || '';
+                return { title, link, pubDate, source, summary: description.replace(/<[^>]+>/g,'').slice(0,200), sentiment: analyzeSentiment(title, description) };
+            });
+        } catch { return []; }
     }
 
     function renderNewsSkeletons() {
@@ -1364,8 +1367,8 @@
         const now = Date.now();
         if (newsCache.data && (now - newsCache.ts) < NEWS_CONFIG.CACHE_TTL_SECONDS * 1000) { renderNews(newsCache.data); return; }
         renderNewsSkeletons();
-        const feeds = [...NEWS_CONFIG.YAHOO_RSS_TICKERS.map(t => ({ url: NEWS_CONFIG.YAHOO_RSS_BASE + t, name: 'Yahoo Finance' })), ...NEWS_CONFIG.TECH_FEEDS.map(u => ({ url: u, name: '' }))];
-        const results = await Promise.allSettled(feeds.map(f => fetchFeed(f.url, f.name)));
+        const feeds = [...NEWS_CONFIG.NWA_FEED_TICKERS.map(t => ({ key: 'market-' + t, name: 'NWA Market Feed' })), ...NEWS_CONFIG.TECH_FEEDS.map(key => ({ key, name: 'NWA Intelligence' }))];
+        const results = await Promise.allSettled(feeds.map(f => fetchFeed(f.key, f.name)));
         let articles = [];
         results.forEach(r => { if (r.status === 'fulfilled' && Array.isArray(r.value)) articles.push(...r.value); });
         const seen = new Set();
@@ -1558,10 +1561,10 @@
         else if (srs >= 45) { badge.textContent = 'REDUCE'; badge.className = 'badge badge-amber'; }
         else { badge.textContent = 'MONITOR'; badge.className = 'badge badge-green'; }
         const hedges = [
-            { icon:'📉', title:'Put Options on NVDA', action: shock >= 35 ? `Buy ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Buy OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🔻', title:'SOXS / SMH Puts', action: `Allocate ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🥇', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — increase GLD to 10–15%, TLT to 8–12%.` : `Build Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
-            { icon:'💵', title:'Cash + Rotation', action: `Raise cash to ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotate to Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
+            { icon:'📉', title:'Put Options on NVDA', action: shock >= 35 ? `Evaluate ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Evaluate OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'🔻', title:'SOXS / SMH Puts', action: `Scenario allocation example: ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'🥇', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — evaluate GLD at 10–15%, TLT to 8–12%.` : `Evaluate Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
+            { icon:'💵', title:'Cash + Rotation', action: `Scenario cash range: ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotation examples: Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
         ];
         $('hedgeGrid').innerHTML = hedges.map(h => `<div class="hedge-card"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;"><span style="font-size:.8rem;">${h.icon}</span><span style="font-family:var(--serif);font-size:.68rem;color:var(--bone);font-weight:400;">${sanitizeText(h.title)}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;background:rgba(var(--champagne-rgb),.03);color:${h.color};">${sanitizeText(h.urgency)}</span></div><p style="font-size:.58rem;color:var(--ink-secondary);line-height:1.7;margin-bottom:.4rem;">${sanitizeText(h.action)}</p><div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-tertiary);padding-top:.3rem;border-top:0.5px solid var(--border);">Cost: <span style="color:var(--bone-dim);">${sanitizeText(h.cost)}</span></div></div>`).join('');
     }
@@ -1881,7 +1884,7 @@
     const SCENARIO_DESCRIPTIONS = {
         custom: 'Manually configured scenario. Adjust sliders to model custom shock parameters.',
         soft: 'Soft landing: AI hype moderates, NVDA misses earnings by 8%. Sector reprices 10–20%.',
-        hard: 'Hard correction: AI capex ROI questioned. Institutional de-risking begins.',
+        hard: 'Hard correction: AI capex ROI questioned. NWA de-risking scenario begins.',
         lehman: 'Lehman-style crisis: AI credit bubble unwinds. Margin calls cascade across over-leveraged companies.',
         dotcom: 'Dot-com replay: AI narrative collapses as 2026 revenue fails to materialize. 70%+ drawdowns.',
         taiwan: 'Taiwan conflict: TSMC supply disruption. Immediate T1 cascade, global tech recession.',
@@ -1924,13 +1927,13 @@
         $('playBtn').addEventListener('click', () => { renderTiers(); playCascade(); });
         $('resetBtn').addEventListener('click', () => { state.shock = 40; state.vix = 22; state.timeline = 't5'; state.scenario = 'custom'; shock.value = 40; vix.value = 22; timeline.value = 't5'; scenario.value = 'custom'; regime.value = 'caution'; $('shockVal').textContent = '-40%'; $('vixVal').textContent = '22'; fullUpdate(); showToast('Reset to defaults', true); });
         $('liveBtn')?.addEventListener('click', () => loadAllLiveQuotes());
-        $('corrToggle').addEventListener('click', () => { const m = $('corrMatrix'); m.classList.toggle('open'); $('corrToggle').textContent = m.classList.contains('open') ? '◆ Hide Correlation Matrix' : '◇ Show Correlation Matrix'; if (m.classList.contains('open')) setTimeout(renderCorrMatrix, 100); });
+        $('corrToggle').addEventListener('click', () => { const m = $('corrMatrix'); m.classList.toggle('open'); $('corrToggle').textContent = m.classList.contains('open') ? '◆ Hide Assumption Matrix' : '◇ Show Assumption Matrix'; if (m.classList.contains('open')) setTimeout(renderCorrMatrix, 100); });
         $('exCSV').addEventListener('click', exportCSV);
         $('exPDF').addEventListener('click', exportPDF);
         $('exCopy').addEventListener('click', copySummary);
         $('refreshNewsBtn')?.addEventListener('click', () => { newsCache.ts = 0; loadNews(); });
         $('tiersGrid').addEventListener('click', (e) => { const row = e.target.closest('.tier-row'); if (!row || !state.results) return; const c = [...state.results.tier1,...state.results.tier2,...state.results.tier3].find(x => x.ticker === row.dataset.ticker); if (c) showToast(`${c.ticker}: -${c.finalImpact.toFixed(1)}% | ${c.mechanism}`, false, 5000); });
-        $('newsContainer').addEventListener('click', (e) => { const item = e.target.closest('.news-item'); if (!item) return; const idx = parseInt(item.dataset.newsIndex, 10); const articles = newsCache.data; if (articles?.[idx]?.link) window.open(articles[idx].link, '_blank', 'noopener,noreferrer'); });
+        $('newsContainer').addEventListener('click', (e) => { const item = e.target.closest('.news-item'); if (!item) return; const idx = parseInt(item.dataset.newsIndex, 10); const articles = newsCache.data; const safe = safeUrl(articles?.[idx]?.link || ''); if (safe) window.open(safe, '_blank', 'noopener,noreferrer'); });
         document.addEventListener('keydown', e => {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
             if (e.key === 'p' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); renderTiers(); playCascade(); }
@@ -1952,7 +1955,7 @@
         const bar = $('scrollProgress'); if (bar) bar.style.width = progress + '%';
     }, { passive: true });
 
-    function waitForLibraries(timeoutMs = 10000) {
+    function waitForLibraries(timeoutMs = 2500) {
         return new Promise(resolve => {
             const deadline = Date.now() + timeoutMs;
             function check() { if (typeof html2canvas !== 'undefined' && typeof jspdf !== 'undefined') { resolve(); return; } if (Date.now() > deadline) { resolve(); return; } if (document.visibilityState === 'visible') requestAnimationFrame(check); else setTimeout(check, 250); }
@@ -1962,7 +1965,7 @@
 
     async function init() {
         clearOldCache(); setupControls(); setupPortfolio(); setupCanvasTooltip();
-        fullUpdate(); startNetworkAnimation(); updateTickerTrack();
+        fullUpdate(); if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) renderNetworkGraph(); else startNetworkAnimation(); updateTickerTrack();
         setTimeout(() => loadAllLiveQuotes(), 800);
         state.liveRefreshTimer = setInterval(() => { if (!document.hidden) loadAllLiveQuotes(); }, 90000);
         setTimeout(() => loadNews(), 1200);
@@ -1976,10 +1979,10 @@
         if (state.liveLoadAbort) state.liveLoadAbort.abort();
     });
 
-    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', async () => { await waitForLibraries(); init(); }); }
-    else { waitForLibraries().then(init); }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init, { once: true }); }
+    else { init(); }
 
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a06113736872d203',t:'MTc4MDUxNDY0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0b495a0d867a018',t:'MTc4MTM5MDI5NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
