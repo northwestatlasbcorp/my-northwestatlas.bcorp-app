@@ -1,11 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nwabcorp-cors-proxy",
-  "main": "nwa-yahoo-rss-proxy-worker.js",
+  "main": "nwa-data-proxy-worker.js",
   "compatibility_date": "2026-06-13",
-  "observability": {
-    "enabled": true
-  },
+  "observability": { "enabled": true },
   "workers_dev": true,
   "preview_urls": false
 }
