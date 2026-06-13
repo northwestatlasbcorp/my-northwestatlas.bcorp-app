@@ -98,6 +98,7 @@
       scrollbar-color: rgba(var(--champagne-rgb), .12) transparent;
       overflow-x: hidden;
       width: 100%;
+      touch-action: pan-y;
     }
     body {
       font-family: var(--serif);
@@ -395,7 +396,7 @@
     }
     .proof-group-label {
       grid-column: 6 / 13; font-family: var(--mono); font-size: var(--text-2xs);
-      letter-spacing: .42em; text-transform: uppercase; color: var(--champagne); opacity: .38;
+      letter-spacing: .42em; text-transform: uppercase; color: var(--champagne); opacity: .55;
       margin-bottom: 2.5rem; padding-bottom: 0; border-bottom: none;
       position: relative;
     }
@@ -421,7 +422,7 @@
       font-family: var(--mono); font-size: var(--text-4xl); font-weight: 300; line-height: 1;
       margin-bottom: .75rem; letter-spacing: -.03em; font-feature-settings: 'tnum' 1, 'lnum' 1; color: var(--champagne);
     }
-    .proof-label { font-family: var(--mono); font-size: var(--text-2xs); letter-spacing: .44em; text-transform: uppercase; color: var(--ink-secondary); font-weight: 300; opacity: .38; }
+    .proof-label { font-family: var(--mono); font-size: var(--text-2xs); letter-spacing: .44em; text-transform: uppercase; color: var(--ink-secondary); font-weight: 300; opacity: .55; }
     .disclaimer {
       grid-column: 6 / 13; font-family: var(--mono); font-size: var(--text-2xs); color: var(--ink-secondary);
       margin-top: 4rem; border-top: 0.5px solid var(--border-dim); padding-top: 1.6rem; text-align: left; line-height: 1.9; opacity: var(--text-muted);
@@ -687,7 +688,7 @@
     }
     .contact-offer {
       font-family: var(--serif); font-size: var(--text-base); color: var(--bone-dim);
-      line-height: 1.85; margin-top: 2rem; max-width: 380px; opacity: .7;
+      line-height: 1.85; margin-top: 2.5rem; max-width: 380px; opacity: .8;
       border-left: 1px solid rgba(var(--champagne-rgb), .12); padding-left: 1.5rem;
     }
     .contact-qualified {
@@ -867,7 +868,7 @@
       body { overflow-wrap: break-word; }
     }
     @media (max-width: 480px) {
-      :root { --text-hero: clamp(2rem, 11vw, 3.5rem); }
+      :root { --text-hero: clamp(1.75rem, 10vw, 2.5rem); }
       .grid-container { padding: 0 1.5rem; }
       .hero-badge { letter-spacing: .3em; margin-bottom: 2rem; }
       .hero-statement { font-size: var(--text-sm); padding-left: 1.2rem; }
@@ -875,7 +876,8 @@
       .investments-grid { grid-template-columns: 1fr; }
       .golden-cell { padding: 2rem 1.2rem; }
       .proof-number { font-size: clamp(2rem, 10vw, 3rem); }
-      .enforcement-ledger .ledger-row { font-size: var(--text-xs); gap: .5rem; }
+      .enforcement-ledger .ledger-row { grid-template-columns: 1fr 1fr 1fr; font-size: .55rem; gap: .5rem; }
+      .ledger-cell { overflow-wrap: break-word; }
       .system-divider { width: 85%; }
     }
     .grid-guide.mid-a, .grid-guide.mid-b { display: block; }
@@ -989,7 +991,7 @@
     </section>
     <section class="proof-section" aria-labelledby="proof-h">
       <div class="grid-container">
-        <div class="section-index">01</div>
+        <div class="section-index" aria-hidden="true">01</div>
         <h2 id="proof-h" class="sr-only">System Metrics</h2>
         <div class="proof-group-label">Advisory Operations</div>
         <div class="proof-grid reveal-stagger reveal">
@@ -1008,7 +1010,7 @@
     <section id="about" class="about-section" aria-labelledby="about-h">
       <div class="about-watermark" id="aboutWatermark" aria-hidden="true"><span class="about-watermark-text">NWA</span></div>
       <div class="grid-container">
-        <div class="section-index">02</div>
+        <div class="section-index" aria-hidden="true">02</div>
         <h2 id="about-h" class="sr-only">System Mission</h2>
         <div class="about-inner reveal">
           <span class="quote-mark" aria-hidden="true">&ldquo;</span>
@@ -1026,7 +1028,7 @@
     <div class="system-divider" aria-hidden="true"><span class="line"></span><span class="line"></span></div>
     <section id="framework" class="framework-section" aria-labelledby="framework-h">
       <div class="grid-container">
-        <div class="section-index">03</div>
+        <div class="section-index" aria-hidden="true">03</div>
         <span class="section-label">Framework</span>
         <h2 id="framework-h"><span class="split-line"><span class="split-line-inner">Investment <span class="gold-text">Process</span></span></span></h2>
         <div class="framework-grid reveal-stagger reveal">
@@ -1061,7 +1063,7 @@
     <div class="system-divider" aria-hidden="true"><span class="line"></span><span class="line"></span></div>
     <section class="manifesto-section" aria-labelledby="manifesto-h">
       <div class="grid-container reveal">
-        <div class="section-index">04</div>
+        <div class="section-index" aria-hidden="true">04</div>
         <div class="manifesto-grid">
           <h2 id="manifesto-h" class="sr-only">Institutional Doctrine</h2>
           <h3>On Capital as Craft</h3>
@@ -1075,7 +1077,7 @@
     </section>
     <section class="doctrine-section" aria-labelledby="doctrine-h">
       <div class="grid-container">
-        <div class="section-index">05</div>
+        <div class="section-index" aria-hidden="true">05</div>
         <div class="reveal">
           <div class="doctrine-head">
             <span class="section-label">Doctrine</span>
@@ -1102,7 +1104,7 @@
     <div class="system-divider" aria-hidden="true"><span class="line"></span><span class="line"></span></div>
     <section id="expertise" class="expertise-section" aria-labelledby="expertise-h">
       <div class="grid-container">
-        <div class="section-index">06</div>
+        <div class="section-index" aria-hidden="true">06</div>
         <span class="section-label">Advisory</span>
         <h2 id="expertise-h"><span class="split-line"><span class="split-line-inner">Core <span class="gold-text">Capabilities</span></span></span></h2>
         <div class="grid-1px expertise-grid reveal-stagger reveal">
@@ -1123,7 +1125,7 @@
     </section>
     <section id="investments" class="investments-section" aria-labelledby="investments-h">
       <div class="grid-container">
-        <div class="section-index">07</div>
+        <div class="section-index" aria-hidden="true">07</div>
         <span class="section-label">Allocation</span>
         <h2 id="investments-h"><span class="split-line"><span class="split-line-inner">Capital <span class="gold-text">Allocation</span></span></span></h2>
         <div class="grid-1px investments-grid reveal-stagger reveal">
@@ -1157,7 +1159,7 @@
     </section>
     <section id="enforcement" class="enforcement-section" aria-labelledby="enforcement-h">
       <div class="grid-container">
-        <div class="section-index">08</div>
+        <div class="section-index" aria-hidden="true">08</div>
         <div class="enforcement-inner reveal">
           <div class="enforcement-left">
             <span class="section-label">Disputes</span>
@@ -1182,7 +1184,7 @@
     <div class="system-divider" aria-hidden="true"><span class="line"></span><span class="line"></span></div>
     <section id="analytics" class="analytics-section" aria-labelledby="analytics-h">
       <div class="grid-container">
-        <div class="section-index">09</div>
+        <div class="section-index" aria-hidden="true">09</div>
         <span class="section-label">Research</span>
         <h2 id="analytics-h"><span class="split-line"><span class="split-line-inner">Analytics &amp; <span class="gold-text">Insights</span></span></span></h2>
         <div class="grid-1px analytics-grid reveal-stagger reveal">
@@ -1224,7 +1226,7 @@
     </section>
     <section id="contact" class="contact-section" aria-labelledby="contact-h">
       <div class="grid-container">
-        <div class="section-index">10</div>
+        <div class="section-index" aria-hidden="true">10</div>
         <div class="contact-layout reveal">
           <div class="contact-left">
             <span class="section-label">Contact</span>
@@ -1652,5 +1654,5 @@
       })();
     })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ada0000c8406c2',t:'MTc4MTMxNzMxOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
