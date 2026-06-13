@@ -784,6 +784,8 @@
       .nav-sep { display: none; }
       .menu-toggle { display: block; }
       .nav-link { font-size: var(--text-sm); letter-spacing: .28em; }
+      .header-system nav { display: flex; }
+      .header-system { padding: 1rem 0; }
       .hero-content { grid-template-columns: 1fr; }
       .hero-left, .hero-right { grid-column: 1 / -1; }
       .hero-right { padding-bottom: 0; margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--border-dim); }
@@ -823,6 +825,13 @@
       .manifesto-section, .doctrine-section, .about-section, .proof-section { padding: 4rem 0; }
       #hero { padding: 8rem 0 4rem; }
       .hero-trust { gap: 1rem; }
+      .page-border { inset: 6px; }
+      #hero { padding: 6rem 0 3rem; }
+      .contact-section { padding: 4rem 0 5rem; }
+      .contact-section::before { margin: 0 auto 4rem; }
+      .about-section { padding: 4rem 0; }
+      .contact-layout { gap: 3rem; }
+      .closing-statement { margin-top: 4rem; }
       .hero-trust .trust-item { border-right: none; }
       h2 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
       .hero-thesis { line-height: 1; }
@@ -842,13 +851,27 @@
       .footer-actions { gap: 1.5rem; }
       .footer-meta-row { flex-direction: column; gap: 1rem; }
       .footer-legal { gap: 1.5rem; justify-content: center; width: 100%; }
+      .hero-trust .trust-item { flex: 1 1 calc(50% - 0.5rem); min-width: auto; }
+      .hero-badge { letter-spacing: .3em; }
+      .trust-item .t-label { letter-spacing: .3em; }
+      .proof-group-label { letter-spacing: .28em; }
+      .proof-group-label::before { width: 8px; margin-right: .5rem; }
+      .proof-label { letter-spacing: .28em; }
+      .contact-qualified { letter-spacing: .25em; }
+      .license-jurisdiction { letter-spacing: .2em; }
+      .closing-statement { letter-spacing: .2em; }
+      .footer-wordmark { letter-spacing: .2em; }
+      .footer-coords { letter-spacing: .2em; }
+      .footer-actions { letter-spacing: .2em; }
+      .footer-meta-row { letter-spacing: .15em; }
+      body { overflow-wrap: break-word; }
     }
     @media (max-width: 480px) {
-      :root { --text-hero: clamp(2.5rem, 12vw, 4rem); }
+      :root { --text-hero: clamp(2rem, 11vw, 3.5rem); }
       .grid-container { padding: 0 1.5rem; }
-      .hero-badge { letter-spacing: .4em; margin-bottom: 2rem; }
+      .hero-badge { letter-spacing: .3em; margin-bottom: 2rem; }
       .hero-statement { font-size: var(--text-sm); padding-left: 1.2rem; }
-      .hero-trust .trust-item { padding: 1rem .8rem 0; min-width: 100px; }
+      .hero-trust .trust-item { flex: 1 1 100%; min-width: auto; padding: 1rem .8rem 0; }
       .investments-grid { grid-template-columns: 1fr; }
       .golden-cell { padding: 2rem 1.2rem; }
       .proof-number { font-size: clamp(2rem, 10vw, 3rem); }
@@ -1497,14 +1520,17 @@
           tgt.scrollIntoView({ behavior: PRM ? 'auto' : 'smooth' });
         });
       });
-      (function smoothWheelScroll() {
-        if (!isFine || PRM) return;
+      (function smoothInertialScroll() {
+        if (PRM) return;
+        var isTouch = !isFine;
         var target = window.scrollY;
         var current = window.scrollY;
         var running = false;
         var rafId = null;
         var EASE = 0.085;
         var WHEEL_MULT = 0.75;
+        var TOUCH_MULT = 0.85;
+        var THROW_TIME = 120;
         function maxScroll() {
           return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         }
@@ -1536,20 +1562,68 @@
             rafId = requestAnimationFrame(loop);
           }
         }
-        window.addEventListener('wheel', function(e) {
-          if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-          var el = e.target;
-          while (el && el !== document.body) {
-            var st = getComputedStyle(el);
-            if ((st.overflowY === 'auto' || st.overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
-              return;
+        if (!isTouch) {
+          window.addEventListener('wheel', function(e) {
+            if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+            var el = e.target;
+            while (el && el !== document.body) {
+              var st = getComputedStyle(el);
+              if ((st.overflowY === 'auto' || st.overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
+                return;
+              }
+              el = el.parentElement;
             }
-            el = el.parentElement;
-          }
-          e.preventDefault();
-          target = clamp(target + e.deltaY * WHEEL_MULT);
-          start();
-        }, { passive: false });
+            e.preventDefault();
+            target = clamp(target + e.deltaY * WHEEL_MULT);
+            start();
+          }, { passive: false });
+        }
+        if (isTouch) {
+          var touchStartY = 0;
+          var lastTouchY = 0;
+          var lastTouchTime = 0;
+          var touchVelocity = 0;
+          var isTouching = false;
+          window.addEventListener('touchstart', function(e) {
+            if (e.touches.length !== 1) return;
+            isTouching = true;
+            touchStartY = e.touches[0].clientY;
+            lastTouchY = touchStartY;
+            lastTouchTime = performance.now();
+            touchVelocity = 0;
+            target = current = window.scrollY;
+            if (running && rafId) {
+              cancelAnimationFrame(rafId);
+              running = false;
+              rafId = null;
+            }
+          }, { passive: true });
+          window.addEventListener('touchmove', function(e) {
+            if (!isTouching || e.touches.length !== 1) return;
+            var y = e.touches[0].clientY;
+            var now = performance.now();
+            var dt = now - lastTouchTime;
+            var dy = lastTouchY - y;
+            if (dt > 0) {
+              touchVelocity = dy / dt;
+            }
+            lastTouchY = y;
+            lastTouchTime = now;
+            e.preventDefault();
+            target = clamp(target + dy * TOUCH_MULT);
+            start();
+          }, { passive: false });
+          window.addEventListener('touchend', function(e) {
+            if (!isTouching) return;
+            isTouching = false;
+            if (Math.abs(touchVelocity) > 0.3) {
+              var throwDist = touchVelocity * THROW_TIME;
+              target = clamp(target + throwDist);
+              start();
+            }
+            touchVelocity = 0;
+          }, { passive: true });
+        }
         window.addEventListener('scroll', function() {
           if (!running) {
             current = target = window.scrollY;
@@ -1578,5 +1652,5 @@
       })();
     })();
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ada0000c8406c2',t:'MTc4MTMxNzMxOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
