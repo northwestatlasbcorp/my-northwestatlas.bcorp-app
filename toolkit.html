@@ -14,23 +14,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <!-- SEO -->
-    <title>NWA AI Bubble Analysis Toolkit | Institutional Intelligence</title>
-    <meta name="description" content="Institutional-grade AI sector bubble analysis. Real-time Bubble Index, Contagion Map, Company Intelligence Cards, Portfolio Stress Test. 68 companies tracked.">
+    <title>NWA AI Market Risk Toolkit | Yahoo/RSS Intelligence</title>
+    <meta name="description" content="Yahoo/RSS-powered AI sector market-risk proxy. Bubble Index proxy, Contagion Map, Company Cards, Portfolio Stress Test. 68 companies tracked.">
     <meta name="robots" content="index, follow">
     <meta name="generator" content="NWA Terminal v5.3">
     <link rel="canonical" href="https://northwestatlas.com/toolkit.html">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="NWA AI Bubble Analysis Toolkit">
-    <meta property="og:description" content="Institutional terminal for AI sector systemic risk. Bubble Index™, Contagion Map, 68 Company Cards, Portfolio Stress Test.">
+    <meta property="og:title" content="NWA AI Market Risk Toolkit">
+    <meta property="og:description" content="Yahoo/RSS-powered dashboard for AI sector risk proxies. Bubble Index proxy, Contagion Map, 68 Company Cards, Portfolio Stress Test.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://northwestatlas.com/toolkit.html">
+    <meta property="og:url" content="https://northwestatlas.com/Toolkit.html">
     <meta property="og:image" content="https://northwestatlas.com/og-toolkit.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NWA AI Bubble Analysis Toolkit">
-    <meta name="twitter:description" content="Institutional terminal for AI sector systemic risk.">
+    <meta name="twitter:title" content="NWA AI Market Risk Toolkit">
+    <meta name="twitter:description" content="Yahoo/RSS-powered dashboard for AI sector market-risk proxies.">
     <meta name="twitter:image" content="https://northwestatlas.com/og-toolkit.png">
     
     <!-- Favicon -->
@@ -53,14 +53,13 @@
     </noscript>
     
     <!-- External scripts -->
-    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
-    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script defer crossorigin="anonymous" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-
+    <script defer crossorigin="anonymous" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-DwavIJUME7NNaTw+CuxB85mS1L5A6XkHXHWnd1hmNIzSnX48mIjZ0Nc/tPQONPwe" src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-7cWzHabR6ZyfMWzZgVssYaOQRTccHUWZ0F09AanlF3RAJ/JNyFnIma2JTYIVKEUP" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer crossorigin="anonymous" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <style>
         /* ═══════════════════════════════════════════
            NWA TOOLKIT 5.3 — FINAL PRODUCTION CSS
@@ -694,8 +693,16 @@
         .page-border { position:fixed;inset:12px;border:0.5px solid rgba(197,160,89,.055);pointer-events:none;z-index:9997;border-radius:2px; }
         .scroll-progress { position:fixed;top:0;left:0;width:0%;height:1px;background:linear-gradient(90deg,#8B6F4C,#C5A059);z-index:200;opacity:.22;transform-origin:left; }
         .nwa-status-bar { position:fixed;bottom:0;left:0;right:0;height:28px;background:rgba(8,8,9,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:0.5px solid rgba(197,160,89,.04);z-index:150;display:flex;align-items:center;justify-content:space-between;padding:0 2.4rem;font-family:var(--font-mono);font-size:.38rem;letter-spacing:.18em;color:#6A6A72;opacity:.28; }
-        .nwa-status-bar .s-dot { width:5px;height:5px;border-radius:50%;background:rgba(52,211,153,.45);display:inline-block;margin-right:6px;animation:pulse 2.5s ease-in-out infinite; }
+        .nwa-status-bar .s-dot { width:5px;height:5px;border-radius:50%;background:rgba(52,211,153,.45);display:inline-block;margin-right:6px;animation:livePulse 2.5s ease-in-out infinite; }
         @media(max-width:768px){ .nwa-status-bar{display:none;} }
+
+        .live-indicator.status-live { color: var(--green); }
+        .live-indicator.status-partial, .live-indicator.status-stale, .live-indicator.status-checking { color: var(--orange); }
+        .live-indicator.status-offline { color: var(--red-soft); }
+        .live-indicator.status-live .live-dot { background: var(--green); }
+        .live-indicator.status-partial .live-dot, .live-indicator.status-stale .live-dot, .live-indicator.status-checking .live-dot { background: var(--orange); }
+        .live-indicator.status-offline .live-dot { background: var(--red); }
+        .data-note { font-size:.6rem; color:var(--text-dim); margin-top:.6rem; line-height:1.5; }
     </style>
 </head>
 <body>
@@ -733,12 +740,12 @@
                         <img src="logo-nwa-centered.png" alt="NWA" class="header-logo" width="120" height="32" loading="eager">
                     </a>
                     <div class="header-divider" aria-hidden="true"></div>
-                    <span class="header-title">AI Bubble Analysis Toolkit</span>
+                    <span class="header-title">AI Market Risk Toolkit</span>
                 </div>
                 <div class="header-right">
-                    <div class="live-indicator" role="status" aria-label="Live data active">
+                    <div class="live-indicator status-checking" id="dataStatusIndicator" role="status" aria-label="Checking data status">
                         <span class="live-dot" aria-hidden="true"></span>
-                        <span>Live Data</span>
+                        <span id="dataStatusText">Checking Data</span>
                     </div>
                     <button class="header-back" id="settingsLink" aria-label="Open settings" type="button">
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -762,10 +769,10 @@
                     <div class="hero-info">
                         <div class="hero-badge" role="status">
                             <span class="hero-badge-dot" aria-hidden="true"></span>
-                            <span>Systemic Risk Monitor</span>
+                            <span>Yahoo/RSS Risk Proxy</span>
                         </div>
-                        <h1 id="hero-heading">AI Bubble Analysis<br><span class="gold-text">Toolkit</span></h1>
-                        <p class="hero-subtitle">Institutional-grade terminal for AI sector systemic risk verification, contagion analysis, and algorithmic asset protection protocols</p>
+                        <h1 id="hero-heading">AI Market Risk<br><span class="gold-text">Toolkit</span></h1>
+                        <p class="hero-subtitle">Yahoo/RSS-powered market-risk dashboard for AI sector monitoring, contagion proxy analysis, and portfolio scenario planning</p>
                         <div class="hero-meta" aria-live="polite">
                             <div class="hero-meta-item"><span class="hero-meta-value" id="companiesTracked" aria-label="68 companies tracked">68</span><span class="hero-meta-label" aria-hidden="true">Companies tracked</span></div>
                             <div class="hero-meta-item"><span class="hero-meta-value" aria-label="12 risk factors">12</span><span class="hero-meta-label" aria-hidden="true">Risk factors</span></div>
@@ -775,14 +782,14 @@
                     <div class="bubble-index-card card--top-line" id="bubbleIndexCard" role="region" aria-label="NWA AI Bubble Index">
                         <div class="bic-label">NWA AI Bubble Index™</div>
                         <div class="bic-score-container">
-                            <div class="bic-score" id="bicScore" aria-live="polite" aria-atomic="true">73</div>
+                            <div class="bic-score" id="bicScore" aria-live="polite" aria-atomic="true">—</div>
                             <div class="bic-score-meta">
-                                <span class="bic-signal signal-elevated" id="bicSignal" role="status">Elevated</span>
-                                <span class="bic-trend" id="bicTrend">Trend: <span class="up">↑ Rising</span></span>
+                                <span class="bic-signal signal-moderate" id="bicSignal" role="status">Calculating</span>
+                                <span class="bic-trend" id="bicTrend">Yahoo/RSS proxy</span>
                             </div>
                         </div>
-                        <div class="bic-gauge" role="meter" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100" aria-label="Bubble Index gauge: 73 out of 100" id="bicGaugeTrack">
-                            <div class="bic-gauge-fill" id="bicGauge" style="width:73%; background:linear-gradient(90deg, var(--green), var(--orange), var(--red));"></div>
+                        <div class="bic-gauge" role="meter" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Bubble Index gauge: calculating" id="bicGaugeTrack">
+                            <div class="bic-gauge-fill" id="bicGauge" style="width:0%; background:linear-gradient(90deg, var(--green), var(--orange), var(--red));"></div>
                         </div>
                         <div class="bic-gauge-labels" aria-hidden="true"><span>0 Safe</span><span>25</span><span>50</span><span>75</span><span>100 Extreme</span></div>
                         <div class="bic-components" id="bicComponents"></div>
@@ -821,7 +828,7 @@
                 </div>
                 <div class="bubble-index-card card--top-line exec-card" id="executiveCard">
                     <div class="exec-card-header">
-                        <span class="bic-label">Capital Protection Status</span>
+                        <span class="bic-label">Market Risk Status</span>
                         <div class="exec-card-badges">
                             <span class="bic-signal signal-elevated" id="regimeBadge" role="status">LOADING</span>
                             <span class="bic-signal signal-moderate" id="confidenceBadge">—</span>
@@ -834,7 +841,7 @@
                                 <span class="skeleton skeleton-line" style="width:70%" aria-hidden="true"></span>
                             </p>
                             <div class="exec-actions-box">
-                                <h4 class="exec-actions-title">Recommended Actions</h4>
+                                <h4 class="exec-actions-title">Risk Playbook <span style="color:var(--text-dim); font-weight:300;">(not advice)</span></h4>
                                 <p id="executiveActions"><span class="skeleton skeleton-line" style="width:90%" aria-hidden="true"></span></p>
                             </div>
                         </div>
@@ -855,7 +862,7 @@
                     <div class="ew-card"><div class="ew-card-header"><span class="ew-card-name">Protocol Status</span></div><div id="protocolStatus" aria-live="polite"><div class="skeleton skeleton-line" aria-hidden="true"></div><div class="skeleton skeleton-line" style="width:60%" aria-hidden="true"></div></div></div>
                 </div>
                 <div class="macro-strip mb-lg" id="macroStrip">
-                    <div class="ew-card macro-cell"><div class="macro-label">2Y/10Y Spread</div><div class="macro-value" id="yieldSpread">Loading…</div><div class="macro-sublabel" id="yieldSpreadLabel">Yield Curve</div></div>
+                    <div class="ew-card macro-cell"><div class="macro-label">Macro Stress Proxy</div><div class="macro-value" id="yieldSpread">Loading…</div><div class="macro-sublabel" id="yieldSpreadLabel">VIX-derived, not yield curve</div></div>
                     <div class="ew-card macro-cell"><div class="macro-label">DXY Index</div><div class="macro-value" id="macroDXY">—</div><div class="macro-sublabel" id="macroDXYChg">USD Strength</div></div>
                     <div class="ew-card macro-cell"><div class="macro-label">Fear &amp; Greed Proxy</div><div class="macro-value macro-value--display" id="fearGreed">—</div><div class="macro-sublabel" id="fearGreedLabel">VIX-derived</div></div>
                     <div class="ew-card macro-cell"><div class="macro-label">S&amp;P 500</div><div class="macro-value" id="macroSPX">—</div><div class="macro-sublabel" id="macroSPXChg">—</div></div>
@@ -880,7 +887,7 @@
                 <div class="section-header">
                     <span class="section-label">Real-time monitoring</span>
                     <h2 class="section-title">Early Warning <span class="gold-text">Signals</span></h2>
-                    <p class="section-desc">Eight institutional-grade signals + Protocol triggers (T1–T5) monitored continuously.</p>
+                    <p class="section-desc">Eight Yahoo/RSS-compatible proxy signals + Protocol triggers (T1–T5). Data may be delayed, stale, or partially unavailable.</p>
                 </div>
                 <div class="protocol-container" id="protocolContainer" aria-live="polite">
                     <div class="skeleton skeleton-card" aria-hidden="true"></div>
@@ -951,7 +958,7 @@
                         <div class="metric-row"><span class="metric-label">Bear Case Fair Value</span><span class="metric-value color-red" id="dcfBear">—</span></div>
                         <div class="metric-row"><span class="metric-label">Bubble-Adjusted FV</span><span class="metric-value" id="adjFairValue">—</span></div>
                         <div class="metric-row"><span class="metric-label">Premium / Discount</span><span class="metric-value" id="upside">—</span></div>
-                        <div class="metric-row"><span class="metric-label">Recommendation</span><span class="metric-value" id="recommendation">—</span></div>
+                        <div class="metric-row"><span class="metric-label">Model Signal</span><span class="metric-value" id="recommendation">—</span></div>
                         <div class="dcf-range-section"><div class="dcf-range-label">Fair Value Range</div><div class="dcf-range-track" role="presentation"><div id="dcfRangeBar" class="dcf-range-bar"></div><div id="dcfPriceMarker" class="dcf-price-marker" aria-hidden="true"></div></div><div class="dcf-range-endpoints" aria-hidden="true"><span id="dcfBearLabel">—</span><span class="color-gold">◆ Price</span><span id="dcfBullLabel">—</span></div></div>
                         <div class="exec-actions-box mt-md"><h4 class="exec-actions-title">Analysis</h4><p id="dcfAnalysis" class="dcf-analysis-text">Calculating…</p></div>
                     </div>
@@ -1018,10 +1025,10 @@
     <footer class="toolkit-footer" role="contentinfo">
         <div class="container">
             <div class="toolkit-footer-inner">
-                <p>&copy; <span id="year">2025</span> North West Atlas B Corp. All rights reserved. For informational purposes only.</p>
+                <p>&copy; <span id="year">2025</span> North West Atlas B Corp. All rights reserved. Informational only — not investment advice. Yahoo Finance/RSS proxy data may be delayed, stale, incomplete, or unavailable.</p>
                 <nav aria-label="Footer links">
                     <a href="/">Main Site</a> &nbsp;&middot;&nbsp;
-                    <a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a> &nbsp;&middot;&nbsp;
+                    <a href="/cdn-cgi/l/email-protection#83eaede5ecc3edecf1f7ebf4e6f0f7e2f7efe2f0ade0ecee"><span class="__cf_email__" data-cfemail="b0d9ded6dff0dedfc2c4d8c7d5c3c4d1c4dcd1c39ed3dfdd">[email&#160;protected]</span></a> &nbsp;&middot;&nbsp;
                     <a href="disclosures.html">Disclosures</a> &nbsp;&middot;&nbsp;
                     <a href="privacy.html">Privacy</a> &nbsp;&middot;&nbsp;
                     <a href="terms.html">Terms</a>
@@ -1034,8 +1041,7 @@
     <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header"><h3 id="settingsModalTitle">Settings</h3></div>
-            <div class="form-group"><label for="fmpKey">FMP API Key</label><input type="text" id="fmpKey" placeholder="demo" autocomplete="off" spellcheck="false"><small>Get a free key at <a href="https://financialmodelingprep.com" target="_blank" rel="noopener noreferrer">financialmodelingprep.com</a></small></div>
-            <div class="form-group"><label for="alphaKey">Alpha Vantage API Key <span class="form-optional">(optional fallback)</span></label><input type="text" id="alphaKey" placeholder="optional" autocomplete="off" spellcheck="false"></div>
+            <div class="form-group"><label>Data Sources</label><small>Yahoo Finance chart endpoints + public RSS feeds. No paid API keys required. The app labels stale/partial data and falls back gracefully when sources are blocked.</small></div>
             <div class="form-group"><label for="refreshInterval">Auto-Refresh Interval (minutes)</label><input type="number" id="refreshInterval" min="1" max="60" value="5"></div>
             <div class="form-group"><label id="autoRefreshLabel">Auto-Refresh</label><button class="btn-ghost" id="autoRefreshToggle" type="button" aria-labelledby="autoRefreshLabel" aria-pressed="true" style="width:100%;">ON</button></div>
             <div class="modal-actions"><button class="modal-btn" id="cancelSettingsBtn" type="button">Cancel</button><button class="modal-btn primary" id="saveSettingsBtn" type="button">Save</button></div>
@@ -1054,7 +1060,7 @@
     <!-- ═══════════════════════════════════════════
          MAIN APPLICATION SCRIPT (PATCHED v5.3)
          ═══════════════════════════════════════════ -->
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         (function() {
             'use strict';
             
@@ -1118,6 +1124,20 @@
                 debounce(fn, wait) {
                     let timer;
                     return function(...args) { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), wait); };
+                },
+
+                safeUrl(raw, allowedHosts = []) {
+                    try {
+                        const url = new URL(raw);
+                        if (!['http:', 'https:'].includes(url.protocol)) return null;
+                        if (allowedHosts.length && !allowedHosts.includes(url.hostname.replace(/^www\./, ''))) return null;
+                        return url.href;
+                    } catch { return null; }
+                },
+
+                formatMarketValue(symbol, value) {
+                    const s = String(symbol || '').toLowerCase();
+                    return ['ndx', 'gspc', 'vix', 'dxy'].includes(s) ? this.formatNumber(value, s === 'vix' ? 2 : 1) : this.formatCurrency(value);
                 }
             };
             
@@ -1135,7 +1155,6 @@
             
             const settings = {
                 refreshInterval: parseInt(localStorage.getItem('refreshInterval') || '5', 10) * 60000,
-                apiKeys: { fmp: localStorage.getItem('fmp_key') || 'demo', alpha: localStorage.getItem('alpha_key') || '' },
                 autoRefresh: localStorage.getItem('autoRefresh') !== 'false',
                 manualFlags: {
                     asml: localStorage.getItem('flag_asml') === 'true',
@@ -1211,35 +1230,52 @@
                     
                     const TICKER_MAP = { NDX: '^NDX', GSPC: '^GSPC', VIX: '^VIX', DXY: 'DX-Y.NYB' };
                     const ySymbol = TICKER_MAP[symbol] ?? symbol;
-                    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ySymbol)}?interval=1m&range=1d&includePrePost=false&events=div%2Csplit`;
+                    const encoded = encodeURIComponent(ySymbol);
+                    const urls = [
+                        `https://query1.finance.yahoo.com/v8/finance/chart/${encoded}?interval=1m&range=1d&includePrePost=false&events=div%2Csplit`,
+                        `https://query2.finance.yahoo.com/v8/finance/chart/${encoded}?interval=1m&range=1d&includePrePost=false&events=div%2Csplit`
+                    ];
                     
                     return requestQueue.add(async () => {
-                        try {
-                            const res = await this._fetch(url);
-                            const json = await res.json();
-                            const result = json?.chart?.result?.[0];
-                            if (!result) throw new Error(`No result for ${symbol}`);
-                            
-                            const meta = result.meta;
-                            const price = parseFloat(meta.regularMarketPrice);
-                            const prevClose = parseFloat(meta.chartPreviousClose ?? meta.previousClose ?? price);
-                            if (!isFinite(price)) throw new Error(`Non-finite price for ${symbol}`);
-                            
-                            const change = price - prevClose;
-                            const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
-                            const quote = { price, change, changePercent, currency: meta.currency ?? 'USD', marketState: meta.marketState ?? 'REGULAR', timestamp: Date.now() };
-                            
-                            cache.set(CACHE_KEY, quote);
-                            try { localStorage.setItem(`fallback_${symbol}`, JSON.stringify(quote)); } catch {}
-                            return quote;
-                        } catch (err) {
-                            console.warn(`[NWA] Quote fetch failed for ${symbol}:`, err.message);
+                        let lastErr;
+                        for (const url of urls) {
                             try {
-                                const raw = localStorage.getItem(`fallback_${symbol}`);
-                                if (raw) { const fb = JSON.parse(raw); fb.stale = true; return fb; }
-                            } catch {}
-                            return null;
+                                const res = await this._fetch(url);
+                                const json = await res.json();
+                                const result = json?.chart?.result?.[0];
+                                if (!result) throw new Error(`No result for ${symbol}`);
+                                
+                                const meta = result.meta || {};
+                                const price = parseFloat(meta.regularMarketPrice);
+                                const prevClose = parseFloat(meta.chartPreviousClose ?? meta.previousClose ?? price);
+                                if (!isFinite(price)) throw new Error(`Non-finite price for ${symbol}`);
+                                
+                                const change = price - prevClose;
+                                const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
+                                const quote = {
+                                    price, change, changePercent,
+                                    currency: meta.currency ?? 'USD',
+                                    marketState: meta.marketState ?? 'REGULAR',
+                                    high52: parseFloat(meta.fiftyTwoWeekHigh),
+                                    low52: parseFloat(meta.fiftyTwoWeekLow),
+                                    dayHigh: parseFloat(meta.regularMarketDayHigh),
+                                    dayLow: parseFloat(meta.regularMarketDayLow),
+                                    volume: parseFloat(meta.regularMarketVolume),
+                                    source: 'Yahoo Finance',
+                                    timestamp: Date.now()
+                                };
+                                
+                                cache.set(CACHE_KEY, quote);
+                                try { localStorage.setItem(`fallback_${symbol}`, JSON.stringify(quote)); } catch {}
+                                return quote;
+                            } catch (err) { lastErr = err; }
                         }
+                        console.warn(`[NWA] Quote fetch failed for ${symbol}:`, lastErr?.message);
+                        try {
+                            const raw = localStorage.getItem(`fallback_${symbol}`);
+                            if (raw) { const fb = JSON.parse(raw); fb.stale = true; fb.source = fb.source || 'Yahoo Finance cache'; return fb; }
+                        } catch {}
+                        return null;
                     }, symbol === 'NDX' ? 5 : 1);
                 },
                 
@@ -1288,7 +1324,9 @@
                                 const posCount = POS_WORDS.filter(w => content.includes(w)).length;
                                 const negCount = NEG_WORDS.filter(w => content.includes(w)).length;
                                 const sentiment = posCount > negCount ? 'positive' : negCount > posCount ? 'negative' : 'neutral';
-                                items.push({ title: sanitize(title.trim()), link: link.trim(), summary: sanitize(desc.replace(/<[^>]*>/g, '').trim().slice(0, 200) + '…'), source, date: pubDate ? new Date(pubDate) : new Date(), sentiment });
+                                const safeLink = utils.safeUrl(link.trim(), ['techcrunch.com','wired.com','theverge.com']);
+                                if (!safeLink) return;
+                                items.push({ title: sanitize(title.trim()), link: safeLink, summary: sanitize(desc.replace(/<[^>]*>/g, '').trim().slice(0, 200) + '…'), source, date: pubDate ? new Date(pubDate) : new Date(), sentiment });
                             });
                         } catch (err) {
                             console.warn(`[NWA] RSS fetch failed for ${feed}:`, err);
@@ -1302,25 +1340,37 @@
             const state = {
                 market: {}, stocks: {}, heatmap: [], news: [],
                 protocol: { t1: false, t2: false, t3: false, t4: false, t5: false },
-                charts: {}, companyPage: 0
+                charts: {}, companyPage: 0,
+                dataStatus: { source: 'Yahoo Finance + public RSS', heatmapComplete: false }
             };
             
             // ═══════ CALCULATIONS ═══════
             const calc = {
                 bubbleScore(price, changePercent, vol = 0.3, extra = {}) {
-                    if (!price) return 5.0;
-                    const momentum = Math.min(2.5, Math.abs(changePercent) / 4);
-                    const volScore = Math.min(2.0, vol * 6.67);
-                    const valScore = extra.aboveHigh ? Math.min(2.0, extra.aboveHigh / 25) : 0.8;
-                    const volumeScore = extra.volumeRatio ? Math.min(2.0, (extra.volumeRatio - 1) * 2) : 0.5;
-                    const corrScore = extra.sectorCorr ? Math.min(1.5, extra.sectorCorr * 1.5) : 0.5;
-                    const raw = momentum + volScore + valScore + volumeScore + corrScore;
+                    if (!price || !isFinite(price)) return null;
+                    // Yahoo-only market-implied proxy: 52W range position + short-term momentum + intraday volatility.
+                    // This is intentionally a proxy, not a fundamental valuation model.
+                    const high52 = isFinite(extra.high52) ? extra.high52 : null;
+                    const low52 = isFinite(extra.low52) ? extra.low52 : null;
+                    let rangePosition = 0.5;
+                    if (high52 && low52 && high52 > low52) rangePosition = Math.max(0, Math.min(1, (price - low52) / (high52 - low52)));
+                    const rangeScore = 0.8 + rangePosition * 2.4;
+                    const upsideMomentum = Math.min(1.8, Math.max(0, changePercent) / 3);
+                    const stressMove = Math.min(1.0, Math.abs(changePercent) / 6);
+                    const dayRange = (isFinite(extra.dayHigh) && isFinite(extra.dayLow) && price > 0) ? ((extra.dayHigh - extra.dayLow) / price) * 100 : 0;
+                    const dayVolScore = Math.min(1.2, dayRange / 2);
+                    const stalePenalty = extra.stale ? -0.5 : 0;
+                    const raw = 1.8 + rangeScore + upsideMomentum + stressMove + dayVolScore + stalePenalty;
                     return Math.min(10, Math.max(1, parseFloat(raw.toFixed(2))));
                 },
                 bubbleIndex() {
-                    if (!state.heatmap.length) return 73;
+                    const universe = state.heatmap.length
+                        ? state.heatmap
+                        : Object.entries(state.stocks).filter(([, q]) => q).map(([symbol, q]) => ({ symbol, ...q, score: q.score ?? calc.bubbleScore(q.price, q.changePercent, 0.3, q) }));
+                    const scored = universe.filter(c => typeof c.score === 'number' && isFinite(c.score));
+                    if (!scored.length) return null;
                     let weightedSum = 0, totalWeight = 0;
-                    for (const c of state.heatmap) { const w = CONFIG.TIER1.includes(c.symbol) ? 3 : 1; weightedSum += c.score * w; totalWeight += w; }
+                    for (const c of scored) { const w = CONFIG.TIER1.includes(c.symbol) ? 3 : CONFIG.TIER2.includes(c.symbol) ? 1.5 : 1; weightedSum += c.score * w; totalWeight += w; }
                     const weightedAvg = weightedSum / totalWeight;
                     const vix = state.market.vix?.price ?? 20;
                     const vixAmp = vix > 30 ? 1.15 : vix > 25 ? 1.08 : vix > 20 ? 1.03 : 1.0;
@@ -1334,10 +1384,16 @@
                     const ndxCloses = await api.fetchDailyCloses('NDX', '1mo');
                     const vix = state.market.vix?.price ?? 20;
                     if (ndxCloses.length < 5) return state.protocol;
-                    const checkDrawdown = (days, threshold) => { const recent = ndxCloses.slice(-days); const peak = Math.max(...recent); const current = recent.at(-1); return ((current - peak) / peak) * 100 <= threshold; };
+                    const checkDrawdown = (days, threshold) => {
+                        if (ndxCloses.length <= days) return false;
+                        const current = ndxCloses.at(-1), previous = ndxCloses.at(-(days + 1));
+                        if (!previous || previous <= 0) return false;
+                        return ((current - previous) / previous) * 100 <= threshold;
+                    };
                     return { t1: checkDrawdown(3, -20) || vix > 25, t2: checkDrawdown(2, -30) || vix > 30, t3: checkDrawdown(1, -40) || vix > 35, t4: checkDrawdown(1, -50) || vix > 40, t5: checkDrawdown(5, -60) && vix > 50 };
                 },
                 dcf(params) {
+                    if (params.wacc <= params.terminal + 0.5) return null;
                     let fcf = params.revenue * (params.fcfMargin / 100), npv = 0;
                     for (let y = 1; y <= 5; y++) { fcf *= 1 + params.growth / 100; npv += fcf / (1 + params.wacc / 100) ** y; }
                     const termFCF = fcf * (1 + params.terminal / 100), tv = termFCF / ((params.wacc - params.terminal) / 100);
@@ -1352,37 +1408,62 @@
                     const INDICES = ['NDX', 'GSPC', 'VIX', 'DXY'];
                     const results = await Promise.allSettled(INDICES.map(s => api.fetchYahooQuote(s)));
                     results.forEach((r, i) => { if (r.status === 'fulfilled' && r.value) state.market[INDICES[i].toLowerCase()] = r.value; });
-                    ui.updateDashboard();
+                    ui.updateDashboard(); ui.updateBubbleIndex(); ui.updateDataStatus();
                 },
                 async loadStockData() {
                     const STOCKS = ['NVDA', 'AMD', 'MSFT', 'GOOGL', 'META', 'AMZN', 'AVGO', 'SMCI', 'PLTR'];
                     const results = await Promise.allSettled(STOCKS.map(s => api.fetchYahooQuote(s)));
-                    results.forEach((r, i) => { if (r.status === 'fulfilled' && r.value) state.stocks[STOCKS[i]] = r.value; });
-                    ui.updateDashboard(); ui.updateDCF();
+                    results.forEach((r, i) => { if (r.status === 'fulfilled' && r.value) { const q = r.value; state.stocks[STOCKS[i]] = { ...q, symbol: STOCKS[i], score: calc.bubbleScore(q.price, q.changePercent, 0.3, q) }; } });
+                    ui.updateDashboard(); ui.updateDCF(); ui.updateBubbleIndex(); ui.updateDataStatus();
                 },
                 async loadHeatmapData() {
                     utils.showLoading(true, 'Loading 68 AI companies…');
                     state.heatmap = [];
-                    for (let i = 0; i < AI_COMPANIES.length; i += 10) {
-                        const batch = AI_COMPANIES.slice(i, i + 10);
-                        const results = await Promise.allSettled(batch.map(c => api.fetchYahooQuote(c.symbol)));
-                        results.forEach((r, j) => { if (r.status === 'fulfilled' && r.value) { const c = batch[j], q = r.value; state.heatmap.push({ ...c, ...q, score: calc.bubbleScore(q.price, q.changePercent) }); } });
-                        ui.renderCompanies();
-                        await new Promise(r => setTimeout(r, 200));
+                    state.dataStatus.heatmapComplete = false;
+                    try {
+                        for (let i = 0; i < AI_COMPANIES.length; i += 10) {
+                            const batch = AI_COMPANIES.slice(i, i + 10);
+                            const results = await Promise.allSettled(batch.map(c => api.fetchYahooQuote(c.symbol)));
+                            results.forEach((r, j) => { if (r.status === 'fulfilled' && r.value) { const c = batch[j], q = r.value; state.heatmap.push({ ...c, ...q, score: calc.bubbleScore(q.price, q.changePercent, 0.3, q) }); } });
+                            ui.renderCompanies(); ui.updateBubbleIndex(); ui.updateDataStatus();
+                            await new Promise(r => setTimeout(r, 200));
+                        }
+                        state.dataStatus.heatmapComplete = true;
+                        utils.showToast(`Loaded ${state.heatmap.length} companies`, state.heatmap.length ? 'success' : 'error');
+                    } finally {
+                        utils.showLoading(false);
+                        ui.updateBubbleIndex(); ui.updateDataStatus();
                     }
-                    utils.showLoading(false);
-                    ui.updateBubbleIndex();
-                    utils.showToast(`Loaded ${state.heatmap.length} companies`, 'success');
                 },
-                async loadNews() { utils.showLoading(true, 'Fetching news…'); state.news = await api.fetchRSS(); ui.renderNews(); utils.showLoading(false); },
+                async loadNews() { utils.showLoading(true, 'Fetching news…'); try { state.news = await api.fetchRSS(); ui.renderNews(); } finally { utils.showLoading(false); ui.updateDataStatus(); } },
                 async loadProtocol() { state.protocol = await calc.evaluateProtocol(); ui.renderProtocol(); },
-                async loadAll() { utils.showLoading(true, 'Initializing…'); await this.loadMarketData(); await this.loadStockData(); await this.loadProtocol(); ui.updateHeader(); utils.showLoading(false); }
+                async loadAll() { utils.showLoading(true, 'Initializing…'); try { await this.loadMarketData(); await this.loadStockData(); await this.loadProtocol(); ui.updateHeader(); } finally { utils.showLoading(false); ui.updateDataStatus(); } }
             };
             
             // ═══════ UI RENDERER ═══════
             const ui = {
                 _el: {},
                 el(id) { if (!this._el[id]) this._el[id] = document.getElementById(id); return this._el[id]; },
+
+                updateDataStatus() {
+                    const indicator = document.getElementById('dataStatusIndicator');
+                    const text = document.getElementById('dataStatusText');
+                    if (!indicator || !text) return;
+                    const quotes = [...Object.values(state.market), ...Object.values(state.stocks), ...state.heatmap].filter(Boolean);
+                    const live = quotes.filter(q => !q.stale).length;
+                    const stale = quotes.filter(q => q.stale).length;
+                    const lastTs = Math.max(0, ...quotes.map(q => Number(q.timestamp) || 0));
+                    const lastLabel = lastTs ? new Date(lastTs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+                    let cls = 'status-offline', label = 'Data Offline';
+                    if (live && stale) { cls = 'status-partial'; label = 'Partial Yahoo Data'; }
+                    else if (live) { cls = state.dataStatus.heatmapComplete ? 'status-live' : 'status-partial'; label = state.dataStatus.heatmapComplete ? 'Yahoo Data' : 'Yahoo Proxy'; }
+                    else if (stale) { cls = 'status-stale'; label = 'Stale Cache'; }
+                    indicator.className = `live-indicator ${cls}`;
+                    text.textContent = label;
+                    indicator.setAttribute('aria-label', `${label}. Last update: ${lastLabel}. Live quotes: ${live}. Stale quotes: ${stale}.`);
+                    const statusBar = document.querySelector('.nwa-status-bar div:last-child');
+                    if (statusBar) statusBar.textContent = `DATA: ${label.toUpperCase()} · ${lastLabel}`;
+                },
                 
                 updateMacroStrip() {
                     const dxy = state.market.dxy;
@@ -1398,7 +1479,7 @@
                     const spreadEl = this.el('yieldSpread');
                     spreadEl.textContent = (spread >= 0 ? '+' : '') + spread.toFixed(2) + '%';
                     spreadEl.style.color = spread < 0 ? 'var(--red-soft)' : 'var(--green)';
-                    this.el('yieldSpreadLabel').textContent = spread < 0 ? '⚠ Inverted' : 'Normal';
+                    this.el('yieldSpreadLabel').textContent = spread < 0 ? '⚠ Stress proxy high' : 'VIX-derived proxy';
                     const fg = Math.max(0, Math.min(100, Math.round(100 - (vix - 10) * 3.33)));
                     const fgEl = this.el('fearGreed');
                     fgEl.textContent = fg;
@@ -1410,20 +1491,19 @@
                     const vix = state.market.vix?.price ?? 20, cci = calc.cci(vix), crisis = calc.crisisProb(vix);
                     const badgeDot = document.querySelector('.hero-badge-dot');
                     if (badgeDot) badgeDot.style.background = utils.vixColor(vix);
-                    const liveDot = document.querySelector('.live-dot');
-                    if (liveDot) liveDot.style.background = vix > 30 ? 'var(--red)' : vix > 25 ? 'var(--orange)' : 'var(--green)';
                     const descEl = this.el('dashboardDesc');
-                    if (descEl) descEl.innerHTML = vix > 30 ? `<strong style="color:var(--red-soft);">⚠ Elevated risk:</strong> Crisis probability at ${crisis}%. CCI: ${cci.toFixed(3)}. Review all positions.` : vix > 20 ? `<strong style="color:var(--orange);">◎ Monitor:</strong> Crisis probability at ${crisis}%. Conditions warrant increased vigilance.` : `<strong style="color:var(--green);">✓ Normal:</strong> Crisis probability at ${crisis}%. Institutional-grade risk environment.`;
-                    const now = new Date();
-                    this.el('latestUpdate').textContent = `Q${Math.ceil((now.getMonth() + 1) / 3)} '${String(now.getFullYear()).slice(-2)}`;
+                    if (descEl) descEl.innerHTML = vix > 30 ? `<strong style="color:var(--red-soft);">⚠ Elevated proxy risk:</strong> Yahoo/VIX-derived stress estimate at ${crisis}%. Not investment advice; verify before acting.` : vix > 20 ? `<strong style="color:var(--orange);">◎ Monitor:</strong> Yahoo-only proxy shows ${crisis}% stress estimate. Conditions warrant increased vigilance.` : `<strong style="color:var(--green);">✓ Normal:</strong> Yahoo-only proxy indicates lower volatility stress. Data may be delayed/stale.`;
+                    const quotes = [...Object.values(state.market), ...Object.values(state.stocks)].filter(Boolean);
+                    const lastTs = Math.max(0, ...quotes.map(q => Number(q.timestamp) || 0));
+                    this.el('latestUpdate').textContent = lastTs ? new Date(lastTs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
                 },
                 
                 updateDashboard() {
-                    const marketHTML = Object.entries(state.market).filter(([,v]) => v).map(([key,data]) => { const cls = data.change >= 0 ? 'color-green' : 'color-red'; return `<div class="metric-row"><span class="metric-label">${key.toUpperCase()}</span><span class="metric-value ${cls}">${utils.formatCurrency(data.price)} (${utils.formatPercent(data.changePercent)})</span></div>`; }).join('');
+                    const marketHTML = Object.entries(state.market).filter(([,v]) => v).map(([key,data]) => { const cls = data.change >= 0 ? 'color-green' : 'color-red'; const stale = data.stale ? ' <span class="color-orange">STALE</span>' : ''; return `<div class="metric-row"><span class="metric-label">${key.toUpperCase()}${stale}</span><span class="metric-value ${cls}">${utils.formatMarketValue(key, data.price)} (${utils.formatPercent(data.changePercent)})</span></div>`; }).join('');
                     this.el('marketSnapshot').innerHTML = marketHTML || '<div class="metric-row">No data</div>';
                     this.el('aiLeaders').innerHTML = Object.entries(state.stocks).filter(([,v]) => v).slice(0,5).map(([k,v]) => { const cls = v.change >= 0 ? 'color-green' : 'color-red'; return `<div class="metric-row"><span class="metric-label">${k}</span><span class="metric-value ${cls}">${utils.formatCurrency(v.price)} (${utils.formatPercent(v.changePercent)})</span></div>`; }).join('');
                     const vix = state.market.vix?.price ?? 20, activeCount = Object.values(state.protocol).filter(Boolean).length, regime = vix > 30 ? 'CRISIS' : vix > 25 ? 'CORRECTION' : vix > 20 ? 'CAUTION' : 'EXPANSION';
-                    this.el('riskMetrics').innerHTML = `<div class="metric-row"><span>VIX</span><span class="metric-value ${vix > 25 ? 'color-red' : vix > 20 ? 'color-orange' : 'color-green'}">${utils.formatNumber(vix,2)}</span></div><div class="metric-row"><span>Crisis Probability</span><span class="metric-value ${vix > 25 ? 'color-red' : 'color-orange'}">${calc.crisisProb(vix)}%</span></div><div class="metric-row"><span>CCI</span><span class="metric-value">${utils.formatNumber(calc.cci(vix),3)}</span></div>`;
+                    this.el('riskMetrics').innerHTML = `<div class="metric-row"><span>VIX</span><span class="metric-value ${vix > 25 ? 'color-red' : vix > 20 ? 'color-orange' : 'color-green'}">${utils.formatNumber(vix,2)}</span></div><div class="metric-row"><span>Stress Proxy</span><span class="metric-value ${vix > 25 ? 'color-red' : 'color-orange'}">${calc.crisisProb(vix)}%</span></div><div class="metric-row"><span>CCI Proxy</span><span class="metric-value">${utils.formatNumber(calc.cci(vix),3)}</span></div>`;
                     this.el('protocolStatus').innerHTML = `<div class="metric-row"><span>Active Triggers</span><span class="metric-value ${activeCount > 0 ? 'color-red' : 'color-green'}">${activeCount}/5</span></div><div class="metric-row"><span>Current Regime</span><span class="metric-value color-gold">${regime}</span></div>`;
                     this.el('quickStats').innerHTML = `<div class="metric-row"><span>VIX</span><span class="metric-value">${utils.formatNumber(vix,1)}</span></div><div class="metric-row"><span>NASDAQ</span><span class="metric-value">${state.market.ndx ? utils.formatNumber(state.market.ndx.price,0) : '—'}</span></div><div class="metric-row"><span>NVDA</span><span class="metric-value">${utils.formatCurrency(state.stocks.NVDA?.price)}</span></div>`;
                     const regimeBadge = this.el('regimeBadge');
@@ -1431,14 +1511,21 @@
                     regimeBadge.className = 'bic-signal ' + (vix > 25 ? 'signal-high' : vix > 20 ? 'signal-elevated' : 'signal-low');
                     this.el('confidenceBadge').textContent = vix < 20 ? 'HIGH' : vix < 25 ? 'MEDIUM' : 'LOW';
                     const cciVal = calc.cci(vix), crisisVal = calc.crisisProb(vix);
-                    this.el('executiveSummary').innerHTML = `Current market regime shows <strong style="color:var(--gold-light);">${vix > 30 ? 'elevated' : vix > 20 ? 'moderate' : 'low'}</strong> volatility (VIX: ${utils.formatNumber(vix,2)}). AI sector correlation remains ${cciVal > 0.15 ? 'elevated' : 'moderate'} with CCI at ${utils.formatNumber(cciVal,3)}. Crisis probability estimated at <strong style="color:${crisisVal > 60 ? 'var(--red-soft)' : 'var(--orange)'};">${crisisVal}%</strong> within 6 months.` + (activeCount > 0 ? `<br><br><strong style="color:var(--red-soft);">⚠ ${activeCount} protocol trigger(s) active.</strong>` : '');
-                    this.el('executiveActions').innerHTML = vix > 30 ? '• <strong>Execute risk reduction immediately</strong><br>• Activate hedging strategies<br>• Increase cash to 40%+<br>• Review stop-losses' : vix > 25 ? '• Monitor positions closely<br>• Consider partial profit-taking<br>• Increase cash reserves to 20–30%<br>• Prepare contingency plans' : '• Maintain current allocation<br>• Monitor key support levels<br>• Review portfolio hedges<br>• Prepare trigger action plans';
+                    this.el('executiveSummary').innerHTML = `Yahoo-only proxy shows <strong style="color:var(--gold-light);">${vix > 30 ? 'elevated' : vix > 20 ? 'moderate' : 'low'}</strong> volatility stress (VIX: ${utils.formatNumber(vix,2)}). CCI proxy: ${utils.formatNumber(cciVal,3)}. Six-month stress proxy: <strong style="color:${crisisVal > 60 ? 'var(--red-soft)' : 'var(--orange)'};">${crisisVal}%</strong>. Treat this as a dashboard signal, not a trading recommendation.` + (activeCount > 0 ? `<br><br><strong style="color:var(--red-soft);">⚠ ${activeCount} protocol trigger(s) active.</strong>` : '');
+                    this.el('executiveActions').innerHTML = vix > 30 ? '• Verify data freshness before decisions<br>• Review concentration and downside exposure<br>• Consider hedges/cash only within your own mandate<br>• Document any action separately' : vix > 25 ? '• Monitor positions closely<br>• Re-check position sizing and stop levels<br>• Prepare contingency scenarios<br>• Avoid acting on stale data' : '• Maintain monitoring discipline<br>• Review support levels and portfolio beta<br>• Keep trigger playbooks ready<br>• Revalidate with broker/primary data';
                     this.updateMacroStrip();
                 },
                 
                 updateBubbleIndex() {
-                    if (!state.heatmap.length) return;
                     const index = calc.bubbleIndex();
+                    if (index == null) {
+                        this.el('bicScore').textContent = '—';
+                        this.el('bicGauge').style.width = '0%';
+                        this.el('bicSignal').textContent = 'No Data';
+                        this.el('bicSignal').className = 'bic-signal signal-moderate';
+                        this.el('bicTrend').textContent = 'Waiting for Yahoo data';
+                        return;
+                    }
                     this.el('bicScore').textContent = index;
                     this.el('bicGauge').style.width = `${index}%`;
                     const track = this.el('bicGaugeTrack');
@@ -1450,9 +1537,9 @@
                     signalEl.className = `bic-signal ${signalClass}`;
                     const prev = parseInt(localStorage.getItem('prev_bubble') ?? String(index - 5), 10);
                     const trendDir = index > prev ? 'up' : index < prev ? 'down' : '';
-                    this.el('bicTrend').innerHTML = `Trend: <span class="${trendDir}">${index > prev ? '↑ Rising' : index < prev ? '↓ Falling' : '→ Flat'}</span>`;
+                    this.el('bicTrend').innerHTML = `${state.heatmap.length ? 'Universe' : 'Mega-cap proxy'}: <span class="${trendDir}">${index > prev ? '↑ Rising' : index < prev ? '↓ Falling' : '→ Flat'}</span>`;
                     localStorage.setItem('prev_bubble', String(index));
-                    const components = [{ name: 'Valuation spread', value: Math.min(100, Math.round(index * 1.10)) }, { name: 'Retail sentiment', value: Math.min(100, Math.round(index * 1.08)) }, { name: 'Insider selling', value: Math.min(100, Math.round(index * 0.98)) }, { name: 'Capex sustainability', value: Math.min(100, Math.round(index * 0.93)) }, { name: 'Revenue quality', value: Math.min(100, Math.round(index * 0.88)) }];
+                    const components = [{ name: '52W range position', value: Math.min(100, Math.round(index * 1.05)) }, { name: '1D momentum stress', value: Math.min(100, Math.round(index * 1.02)) }, { name: 'VIX amplifier', value: Math.min(100, Math.round(index * 0.98)) }, { name: 'Data freshness', value: Math.min(100, Math.round(index * 0.90)) }, { name: 'Manual flags', value: Math.min(100, Math.round(index * 0.85)) }];
                     this.el('bicComponents').innerHTML = components.map(c => { const col = utils.scoreColor(c.value); return `<div class="bic-comp-row"><span class="bic-comp-name">${c.name}</span><div class="bic-comp-bar"><div class="bic-comp-bar-fill" style="width:${c.value}%; background:${col};"></div></div><span class="bic-comp-value" style="color:${col};">${c.value}</span></div>`; }).join('');
                 },
                 
@@ -1469,7 +1556,7 @@
                             score: riskScaled, price: c.price, change: c.changePercent, 
                             tier: CONFIG.TIER1.includes(c.symbol) ? 1 : CONFIG.TIER2.includes(c.symbol) ? 2 : 3, 
                             question: scoreRaw > 8 ? 'Valuation disconnected from fundamentals?' : scoreRaw > 6 ? 'Can growth justify current multiple?' : 'Is downside risk adequately hedged?', 
-                            flags: scoreRaw > 8 ? ['⚠ High bubble risk', '⚠ Insider selling elevated'] : scoreRaw > 6 ? ['◎ Moderate risk', '◎ Monitor closely'] : ['✓ Stable fundamentals', '✓ Institutional grade'], 
+                            flags: scoreRaw > 8 ? ['⚠ High market-risk proxy', '⚠ Verify with primary data'] : scoreRaw > 6 ? ['◎ Moderate proxy risk', '◎ Monitor closely'] : ['✓ Lower proxy risk', '✓ Yahoo data available'], 
                             thesis: scoreRaw > 8 ? 'reduce' : scoreRaw > 6 ? 'hold' : 'accumulate' 
                         }; 
                     });
@@ -1489,9 +1576,9 @@
                     } else grid.innerHTML = paginated.map(c => { 
                         const scoreCol = utils.scoreColor(c.score);
                         const chgCls = c.change >= 0 ? 'color-green' : 'color-red'; 
-                        const signal = c.scoreRaw >= 7.5 ? '⚠ REDUCE' : c.scoreRaw >= 5 ? '◎ HOLD' : '✓ BUY';
+                        const signal = c.scoreRaw >= 7.5 ? '⚠ HIGH' : c.scoreRaw >= 5 ? '◎ WATCH' : '✓ LOWER';
                         const riskLbl = c.scoreRaw >= 7.5 ? 'CRITICAL' : c.scoreRaw >= 5 ? 'ELEVATED' : 'MODERATE';
-                        return `<article class="company-card" data-ticker="${sanitize(c.ticker)}" tabindex="0" role="button" aria-label="View details for ${sanitize(c.ticker)}"><div class="cc-header"><div><div class="cc-ticker">${sanitize(c.ticker)}</div><div class="cc-name">${sanitize(c.name)}</div></div><span class="cc-tier">T${c.tier} · ${sanitize(c.sector)}</span></div><div class="cc-score-row"><div class="cc-bubble-score" style="color:${scoreCol}">${c.scoreRaw.toFixed(1)}</div><div style="flex:1"><div class="cc-score-gauge"><div class="cc-score-gauge-fill" style="width:${c.score}%; background:${scoreCol}"></div></div><div class="cc-gauge-meta"><span>BUBBLE RISK</span><span>${riskLbl}</span></div></div></div><div class="cc-price-row"><div class="cc-price-cell"><div class="cc-price-value">${utils.formatCurrency(c.price)}</div><div class="cc-price-label">Price</div></div><div class="cc-price-cell"><div class="cc-price-value ${chgCls}">${utils.formatPercent(c.change)}</div><div class="cc-price-label">1D Change</div></div><div class="cc-price-cell"><div class="cc-price-value">${signal}</div><div class="cc-price-label">Signal</div></div></div><div class="cc-key-question">"${sanitize(c.question)}"</div><div class="cc-flags">${c.flags.map(f => { const icon = f.includes('⚠') ? '⚠' : f.includes('◎') ? '◎' : '✓'; return `<div class="cc-flag"><span class="cc-flag-icon" aria-hidden="true">${icon}</span><span>${sanitize(f.replace(/[⚠◎✓]\s?/, ''))}</span></div>`; }).join('')}</div><div class="cc-footer"><span class="cc-footer-label">Institutional Thesis</span><span class="cc-thesis thesis-${c.thesis}">${c.thesis.toUpperCase()}</span></div></article>`;
+                        return `<article class="company-card" data-ticker="${sanitize(c.ticker)}" tabindex="0" role="button" aria-label="View details for ${sanitize(c.ticker)}"><div class="cc-header"><div><div class="cc-ticker">${sanitize(c.ticker)}</div><div class="cc-name">${sanitize(c.name)}</div></div><span class="cc-tier">T${c.tier} · ${sanitize(c.sector)}</span></div><div class="cc-score-row"><div class="cc-bubble-score" style="color:${scoreCol}">${c.scoreRaw.toFixed(1)}</div><div style="flex:1"><div class="cc-score-gauge"><div class="cc-score-gauge-fill" style="width:${c.score}%; background:${scoreCol}"></div></div><div class="cc-gauge-meta"><span>PROXY RISK</span><span>${riskLbl}</span></div></div></div><div class="cc-price-row"><div class="cc-price-cell"><div class="cc-price-value">${utils.formatCurrency(c.price)}</div><div class="cc-price-label">Price</div></div><div class="cc-price-cell"><div class="cc-price-value ${chgCls}">${utils.formatPercent(c.change)}</div><div class="cc-price-label">1D Change</div></div><div class="cc-price-cell"><div class="cc-price-value">${signal}</div><div class="cc-price-label">Signal</div></div></div><div class="cc-key-question">"${sanitize(c.question)}"</div><div class="cc-flags">${c.flags.map(f => { const icon = f.includes('⚠') ? '⚠' : f.includes('◎') ? '◎' : '✓'; return `<div class="cc-flag"><span class="cc-flag-icon" aria-hidden="true">${icon}</span><span>${sanitize(f.replace(/[⚠◎✓]\s?/, ''))}</span></div>`; }).join('')}</div><div class="cc-footer"><span class="cc-footer-label">Proxy View</span><span class="cc-thesis thesis-${c.thesis}">${c.thesis === 'reduce' ? 'RISK-OFF' : c.thesis === 'hold' ? 'WATCH' : 'LOWER RISK'}</span></div></article>`;
                     }).join('');
                     let paginationEl = document.getElementById('companiesPagination');
                     if (!paginationEl) { paginationEl = document.createElement('nav'); paginationEl.id = 'companiesPagination'; paginationEl.setAttribute('aria-label', 'Companies pagination'); grid.after(paginationEl); }
@@ -1530,7 +1617,11 @@
                     if (!nvda) return;
                     const base = { revenue: 130.5, wacc, growth, terminal, fcfMargin, shares: 24.6 };
                     const fvBase = calc.dcf(base), fvBull = calc.dcf({ ...base, growth: growth * 1.3, fcfMargin: Math.min(40, fcfMargin * 1.1) }), fvBear = calc.dcf({ ...base, growth: growth * 0.65, wacc: wacc * 1.15 });
-                    const bs = calc.bubbleScore(nvda.price, nvda.changePercent), adj = Math.max(0.5, Math.min(1, 1 - (bs - 5) * 0.08)), adjFV = fvBase * adj, upside = ((adjFV - nvda.price) / nvda.price) * 100;
+                    if ([fvBase, fvBull, fvBear].some(v => v == null || !isFinite(v))) {
+                        this.el('dcfAnalysis').innerHTML = '<strong class="color-orange">Invalid model spread:</strong> WACC must exceed terminal growth by at least 50 bps.';
+                        return;
+                    }
+                    const bs = calc.bubbleScore(nvda.price, nvda.changePercent, 0.3, nvda) ?? 5, adj = Math.max(0.5, Math.min(1, 1 - (bs - 5) * 0.08)), adjFV = fvBase * adj, upside = ((adjFV - nvda.price) / nvda.price) * 100;
                     this.el('dcfPrice').textContent = utils.formatCurrency(nvda.price);
                     this.el('dcfBull').textContent = utils.formatCurrency(fvBull);
                     this.el('fairValue').textContent = utils.formatCurrency(fvBase);
@@ -1541,10 +1632,10 @@
                     this.el('upside').innerHTML = `<span class="${upside > 0 ? 'color-green' : 'color-red'}">${utils.formatPercent(upside)}</span>`;
                     const rangeTotal = fvBull - fvBear, pricePos = Math.min(100, Math.max(0, ((nvda.price - fvBear) / rangeTotal) * 100));
                     this.el('dcfPriceMarker').style.left = `${pricePos}%`;
-                    let rec = 'HOLD', recCls = 'color-orange';
-                    if (upside > 25) { rec = 'STRONG BUY'; recCls = 'color-green'; } else if (upside > 10) { rec = 'BUY'; recCls = 'color-green'; } else if (upside < -20) { rec = 'STRONG SELL'; recCls = 'color-red'; } else if (upside < -8) { rec = 'SELL'; recCls = 'color-red'; }
+                    let rec = 'NEUTRAL GAP', recCls = 'color-orange';
+                    if (upside > 25) { rec = 'LARGE POSITIVE GAP'; recCls = 'color-green'; } else if (upside > 10) { rec = 'POSITIVE GAP'; recCls = 'color-green'; } else if (upside < -20) { rec = 'LARGE NEGATIVE GAP'; recCls = 'color-red'; } else if (upside < -8) { rec = 'NEGATIVE GAP'; recCls = 'color-red'; }
                     this.el('recommendation').innerHTML = `<strong class="${recCls}">${rec}</strong>`;
-                    this.el('dcfAnalysis').innerHTML = `FY2025 consensus: <strong style="color:var(--gold)">$130.5B revenue</strong>, ${utils.formatNumber(24.6,1)}B diluted shares.<br>Bull/Base/Bear: <strong class="color-green">${utils.formatCurrency(fvBull)}</strong> / <strong style="color:var(--gold)">${utils.formatCurrency(fvBase)}</strong> / <strong class="color-red">${utils.formatCurrency(fvBear)}</strong>.<br>Bubble adj. factor: <strong>${adj.toFixed(2)}x</strong> (score ${bs.toFixed(1)}/10).<br>${upside > 0 ? `<strong class="color-green">${utils.formatPercent(upside)} upside</strong> to bubble-adjusted fair value.` : `<strong class="color-red">${utils.formatPercent(Math.abs(upside))} downside</strong> — price exceeds bubble-adjusted fair value.`}`;
+                    this.el('dcfAnalysis').innerHTML = `FY2025 static inputs: <strong style="color:var(--gold)">$130.5B revenue</strong>, ${utils.formatNumber(24.6,1)}B diluted shares. This is a scenario model, not advice.<br>Bull/Base/Bear: <strong class="color-green">${utils.formatCurrency(fvBull)}</strong> / <strong style="color:var(--gold)">${utils.formatCurrency(fvBase)}</strong> / <strong class="color-red">${utils.formatCurrency(fvBear)}</strong>.<br>Yahoo proxy adj. factor: <strong>${adj.toFixed(2)}x</strong> (score ${bs.toFixed(1)}/10).<br>${upside > 0 ? `<strong class="color-green">${utils.formatPercent(upside)} model gap</strong> to adjusted fair value.` : `<strong class="color-red">${utils.formatPercent(Math.abs(upside))} model gap</strong> — price exceeds adjusted fair value in this scenario.`}`;
                 },
                 
                 showDetail(item) {
@@ -1555,7 +1646,7 @@
                     this.el('closeDetailBtn')?.focus();
                     const scoreCls = item.score > 8 ? 'color-red' : item.score > 6 ? 'color-orange' : 'color-green';
                     const chgCls = item.changePercent >= 0 ? 'color-green' : 'color-red';
-                    const analysis = item.score > 8 ? '<strong style="color:var(--red-soft);">High bubble risk.</strong> Consider reducing exposure.' : item.score > 6 ? '<strong style="color:var(--orange);">Moderate bubble signals.</strong> Monitor closely.' : '<strong style="color:var(--green);">Relatively stable.</strong> Suitable for institutional holding.';
+                    const analysis = item.score > 8 ? '<strong style="color:var(--red-soft);">High proxy risk.</strong> Verify with primary data before any decision.' : item.score > 6 ? '<strong style="color:var(--orange);">Moderate proxy signals.</strong> Monitor closely.' : '<strong style="color:var(--green);">Lower proxy risk.</strong> Still verify data freshness.';
                     this.el('detailContent').innerHTML = `<div class="metric-row"><span>Company</span><span class="metric-value">${sanitize(item.name)}</span></div><div class="metric-row"><span>Sector</span><span class="metric-value color-gold">${sanitize(item.sector)}</span></div><div class="metric-row"><span>Price</span><span class="metric-value color-gold">${utils.formatCurrency(item.price)}</span></div><div class="metric-row"><span>Change</span><span class="metric-value ${chgCls}">${utils.formatPercent(item.changePercent)}</span></div><div class="metric-row"><span>Bubble Score</span><span class="metric-value ${scoreCls}">${utils.formatNumber(item.score,1)} / 10</span></div><div class="exec-actions-box" style="margin-top:1rem;"><h4 class="exec-actions-title">Analysis</h4><p>${analysis}</p></div>`;
                 }
             };
@@ -1604,8 +1695,8 @@
                         autoBtn.setAttribute('aria-pressed', String(settings.autoRefresh));
                         autoBtn.addEventListener('click', () => { settings.autoRefresh = !settings.autoRefresh; localStorage.setItem('autoRefresh', String(settings.autoRefresh)); autoBtn.textContent = settings.autoRefresh ? 'ON' : 'OFF'; autoBtn.setAttribute('aria-pressed', String(settings.autoRefresh)); settings.autoRefresh ? this.startAutoRefresh() : this.stopAutoRefresh(); utils.showToast(`Auto-refresh ${settings.autoRefresh ? 'enabled' : 'disabled'}`); });
                     }
-                    document.getElementById('settingsLink')?.addEventListener('click', () => { const modal = document.getElementById('settingsModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.getElementById('fmpKey').value = settings.apiKeys.fmp; document.getElementById('alphaKey').value = settings.apiKeys.alpha; document.getElementById('refreshInterval').value = settings.refreshInterval / 60000; document.getElementById('fmpKey').focus(); });
-                    document.getElementById('saveSettingsBtn')?.addEventListener('click', () => { settings.apiKeys.fmp = document.getElementById('fmpKey').value.trim(); settings.apiKeys.alpha = document.getElementById('alphaKey').value.trim(); settings.refreshInterval = parseInt(document.getElementById('refreshInterval').value, 10) * 60000; localStorage.setItem('fmp_key', settings.apiKeys.fmp); localStorage.setItem('alpha_key', settings.apiKeys.alpha); localStorage.setItem('refreshInterval', String(settings.refreshInterval / 60000)); this._closeModal('settingsModal'); utils.showToast('Settings saved', 'success'); if (settings.autoRefresh) { this.stopAutoRefresh(); this.startAutoRefresh(); } });
+                    document.getElementById('settingsLink')?.addEventListener('click', () => { const modal = document.getElementById('settingsModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.getElementById('refreshInterval').value = settings.refreshInterval / 60000; document.getElementById('refreshInterval')?.focus(); });
+                    document.getElementById('saveSettingsBtn')?.addEventListener('click', () => { const minutes = Math.max(1, Math.min(60, parseInt(document.getElementById('refreshInterval').value, 10) || 5)); settings.refreshInterval = minutes * 60000; localStorage.setItem('refreshInterval', String(minutes)); this._closeModal('settingsModal'); utils.showToast('Settings saved', 'success'); if (settings.autoRefresh) { this.stopAutoRefresh(); this.startAutoRefresh(); } });
                     document.getElementById('cancelSettingsBtn')?.addEventListener('click', () => this._closeModal('settingsModal'));
                     ['flagASML','flagTaiwan','flagMSFT','flagNVDA'].forEach(id => { const el = document.getElementById(id); if (!el) return; const flag = id.replace('flag','').toLowerCase(); if (settings.manualFlags[flag]) { el.classList.add('active'); el.setAttribute('aria-pressed', 'true'); } el.addEventListener('click', () => { settings.manualFlags[flag] = !settings.manualFlags[flag]; localStorage.setItem(`flag_${flag}`, String(settings.manualFlags[flag])); el.classList.toggle('active', settings.manualFlags[flag]); el.setAttribute('aria-pressed', String(settings.manualFlags[flag])); ui.updateBubbleIndex(); ui.updateDashboard(); }); });
                     ['waccSlider','growthSlider','terminalSlider','fcfSlider'].forEach(id => { document.getElementById(id)?.addEventListener('input', utils.debounce(() => ui.updateDCF(), 150)); });
@@ -1618,7 +1709,7 @@
                     document.getElementById('closeDetailBtn')?.addEventListener('click', () => { const panel = document.getElementById('detailPanel'); panel.classList.remove('active'); panel.setAttribute('aria-hidden', 'true'); });
                     document.getElementById('exportDashCSV')?.addEventListener('click', () => { const data = Object.entries(state.market).map(([k,v]) => ({ Index: k.toUpperCase(), Price: v?.price, Change: v?.change, 'Change %': v?.changePercent })); exporters.toCSV(data, 'nwa_dashboard.csv'); });
                     document.getElementById('exportDashPDF')?.addEventListener('click', exporters.toPDF);
-                    document.getElementById('exportDCF')?.addEventListener('click', () => { exporters.toCSV([{ Symbol: 'NVDA', 'Current Price': document.getElementById('dcfPrice').textContent, 'Fair Value (FY25)': document.getElementById('fairValue').textContent, 'Adj Fair Value': document.getElementById('adjFairValue').textContent, 'Premium/Discount': document.getElementById('upside').textContent, Recommendation: document.getElementById('recommendation').textContent }], 'nwa_dcf_fy2025.csv'); });
+                    document.getElementById('exportDCF')?.addEventListener('click', () => { exporters.toCSV([{ Symbol: 'NVDA', 'Current Price': document.getElementById('dcfPrice').textContent, 'Fair Value (FY25)': document.getElementById('fairValue').textContent, 'Adj Fair Value': document.getElementById('adjFairValue').textContent, 'Premium/Discount': document.getElementById('upside').textContent, Signal: document.getElementById('recommendation').textContent }], 'nwa_dcf_fy2025.csv'); });
                     document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('detailPanel')?.classList.remove('active'); document.getElementById('detailPanel')?.setAttribute('aria-hidden', 'true'); document.getElementById('settingsModal')?.classList.remove('active'); document.getElementById('settingsModal')?.setAttribute('aria-hidden', 'true'); } });
                 },
                 
@@ -1712,12 +1803,12 @@
             function populateMethodology() {
                 const grid = document.getElementById('methodologyGrid');
                 if (!grid) return;
-                const FACTORS = [{n:'01',title:'Valuation Dispersion',desc:'Forward P/E spread between AI sector leaders (NVDA, AMD, AVGO) and median S&P 500.',weight:'12%'},{n:'02',title:'Retail Sentiment',desc:'Call/put ratio on AI names, options volume velocity.',weight:'11%'},{n:'03',title:'Insider Selling Pace',desc:'Aggregate insider sales (Form 4) across AI companies.',weight:'10%'},{n:'04',title:'Capex Sustainability',desc:'Hyperscaler AI capex relative to AI-attributable revenue growth.',weight:'10%'},{n:'05',title:'Revenue Quality',desc:'Recurring vs. one-time AI infrastructure revenue ratio.',weight:'9%'},{n:'06',title:'Analyst Herding',desc:'Consensus target price dispersion and rating concentration.',weight:'8%'},{n:'07',title:'Credit Spreads',desc:'IG/HY OAS spread widening vs 200-day moving average.',weight:'8%'},{n:'08',title:'IPO Pipeline',desc:'AI-related S-1 filing trajectory.',weight:'7%'},{n:'09',title:'Semiconductor Inventory',desc:'GPU channel inventory levels at distributors.',weight:'7%'},{n:'10',title:'Correlation Convergence',desc:'S&P 500 / AI sector 60-day rolling correlation.',weight:'6%'},{n:'11',title:'Geopolitical Exposure',desc:'Taiwan semiconductor risk premium.',weight:'6%'},{n:'12',title:'VIX Term Structure',desc:'VIX futures contango/backwardation signal extraction.',weight:'6%'}];
+                const FACTORS = [{n:'01',title:'52-Week Range Position',desc:'Current Yahoo price position inside the available 52-week high/low range.',weight:'14%'},{n:'02',title:'1D Momentum Stress',desc:'Daily move magnitude and upside acceleration from Yahoo chart data.',weight:'12%'},{n:'03',title:'Intraday Volatility',desc:'Yahoo day high/low range normalized by current price.',weight:'10%'},{n:'04',title:'VIX Stress Amplifier',desc:'VIX quote used as broad volatility amplifier for the proxy index.',weight:'10%'},{n:'05',title:'Mega-Cap AI Basket',desc:'NVDA, AMD, MSFT, GOOGL, META, AMZN, AVGO, SMCI, PLTR proxy basket.',weight:'9%'},{n:'06',title:'Universe Weighting',desc:'Tier 1 and Tier 2 symbols receive higher weights in aggregate risk.',weight:'9%'},{n:'07',title:'Data Freshness',desc:'Live Yahoo quotes are separated from stale local cache fallbacks.',weight:'8%'},{n:'08',title:'RSS News Sentiment',desc:'Public RSS headlines are classified with simple keyword sentiment.',weight:'7%'},{n:'09',title:'Manual Event Flags',desc:'User-controlled ASML/Taiwan/MSFT/NVDA flags add explicit risk penalty.',weight:'7%'},{n:'10',title:'NDX Drawdown Protocol',desc:'NASDAQ-100 daily closes trigger T1–T5 protocol thresholds.',weight:'6%'},{n:'11',title:'DXY Risk-Off Proxy',desc:'DXY quote acts as a macro stress proxy, not a full rates model.',weight:'4%'},{n:'12',title:'Scenario DCF Overlay',desc:'Static NVIDIA DCF scenario model; not a recommendation engine.',weight:'4%'}];
                 grid.innerHTML = FACTORS.map(f => `<div class="method-card"><div class="method-number">${f.n}</div><div class="method-title">${sanitize(f.title)}</div><div class="method-desc">${sanitize(f.desc)}</div><div class="method-weight">Weight: ${sanitize(f.weight)}</div></div>`).join('');
             }
             
             function _renderEWGrid() {
-                const EW_SIGNALS = [{name:'Insider Selling Pace',status:'high',detail:'AI sector insider sales reached $2.4B in trailing 90 days.',trend:'up',trendLabel:'↑ Accelerating'},{name:'Retail Call Buying',status:'high',detail:'Call/put ratio on AI names at 3.8×.',trend:'up',trendLabel:'↑ Rising'},{name:'Hyperscaler Capex ROI',status:'watch',detail:'Combined capex $240B/yr. AI revenue attribution still unclear.',trend:'flat',trendLabel:'→ Stable'},{name:'AI Revenue Quality',status:'ok',detail:'Recurring revenue ratio at 72%.',trend:'flat',trendLabel:'→ Stable'},{name:'Analyst Herd Behavior',status:'high',detail:'92% of NVDA ratings are Buy/Outperform.',trend:'up',trendLabel:'↑ Increasing'},{name:'Credit Spreads',status:'ok',detail:'IG/HY spreads remain tight.',trend:'flat',trendLabel:'→ Stable'},{name:'AI IPO Pipeline',status:'watch',detail:'14 AI-related IPOs in Q2 2025.',trend:'up',trendLabel:'↑ Rising'},{name:'Semiconductor Inventory',status:'watch',detail:'GPU channel inventory building at distributors.',trend:'up',trendLabel:'↑ Building'}];
+                const EW_SIGNALS = [{name:'Yahoo Quote Availability',status:'watch',detail:'Live/stale status is tracked separately. If Yahoo/CORS fails, cached data is labelled stale.',trend:'flat',trendLabel:'→ Data-dependent'},{name:'VIX Stress Proxy',status:'watch',detail:'VIX level drives broad market stress classification.',trend:'flat',trendLabel:'→ Yahoo quote'},{name:'AI Mega-Cap Momentum',status:'watch',detail:'NVDA/AMD/MSFT/GOOGL/META/AMZN/AVGO basket provides a liquid proxy.',trend:'flat',trendLabel:'→ Price-derived'},{name:'52W Range Position',status:'watch',detail:'Companies near 52-week highs receive higher market-risk proxy scores.',trend:'flat',trendLabel:'→ Yahoo meta'},{name:'Intraday Volatility',status:'ok',detail:'Day high/low ranges are used as a short-term instability signal.',trend:'flat',trendLabel:'→ Price-derived'},{name:'RSS Sentiment Proxy',status:'ok',detail:'Public AI RSS headlines are classified using simple keyword sentiment.',trend:'flat',trendLabel:'→ RSS-derived'},{name:'Manual Event Flags',status:'watch',detail:'User-set flags allow qualitative events to raise the proxy index.',trend:'flat',trendLabel:'→ User-controlled'},{name:'NDX Protocol Triggers',status:'watch',detail:'NASDAQ-100 drawdown and VIX levels drive T1–T5 protocol status.',trend:'flat',trendLabel:'→ Yahoo daily closes'}];
                 const STATUS_MAP = { high: 'ew-status-high', watch: 'ew-status-watch', ok: 'ew-status-ok' }, STATUS_LABEL = { high: 'High', watch: 'Watch', ok: 'OK' }, TREND_MAP = { up: 'trend-up', flat: 'trend-flat', down: 'trend-down' };
                 const grid = document.getElementById('ewGrid');
                 if (!grid) return;
@@ -1725,7 +1816,7 @@
             }
             
             function _renderEWAlerts() {
-                const ALERTS = [{severity:'critical',title:'SMCI Insider Sale — $45M',desc:'Largest insider sale since IPO.',date:'Jul 12'},{severity:'warning',title:'MSFT Capex Guidance Raised to $80B',desc:'AI infrastructure spend acceleration.',date:'Jul 10'}];
+                const ALERTS = [{severity:'info',title:'Yahoo/RSS Data Mode',desc:'This build uses only Yahoo Finance chart data and public RSS feeds. No paid APIs required.',date:'Live'},{severity:'warning',title:'Verify Before Acting',desc:'Proxy outputs are informational and may be stale if browser/CORS access is blocked.',date:'Always'}];
                 const container = document.getElementById('ewAlerts');
                 if (!container) return;
                 container.innerHTML = '<div class="ew-alerts-header">Latest Alerts</div>' + ALERTS.map(a => `<div class="ew-alert-item" role="listitem"><div class="alert-severity severity-${sanitize(a.severity)}" aria-label="${sanitize(a.severity)} severity"></div><div class="alert-content"><div class="alert-title">${sanitize(a.title)}</div><div class="alert-desc">${sanitize(a.desc)}</div></div><time class="alert-date">${sanitize(a.date)}</time></div>`).join('');
@@ -1749,7 +1840,7 @@
                 const top10 = [...state.heatmap].sort((a, b) => b.score - a.score).slice(0, 10);
                 const rows = top10.length ? top10.map(c => { const col = utils.scoreColor(c.score * 10), risk = c.score >= 8 ? 'CRITICAL' : c.score >= 6 ? 'ELEVATED' : 'WATCH', barW = (c.score / 10) * 100, chgCls = c.changePercent >= 0 ? 'color-green' : 'color-red'; return `<div class="contagion-row"><span class="contagion-ticker">${sanitize(c.symbol)}</span><div class="contagion-bar-wrap"><div class="contagion-bar" style="width:${barW}%; background:${col};"></div></div><span class="contagion-score" style="color:${col};">${(c.score * 10).toFixed(0)}/100</span><span class="${chgCls} contagion-change">${utils.formatPercent(c.changePercent)}</span><span class="contagion-risk" style="color:${col};">${risk}</span></div>`; }).join('') : '<div class="contagion-empty">Load Companies tab first to populate contagion data</div>';
                 const vix = state.market.vix?.price ?? 20, cci = calc.cci(vix), crisis = calc.crisisProb(vix);
-                return `<div class="section-header"><span class="section-label">Cascade Analysis</span><h2 class="section-title">Contagion <span class="gold-text">Map</span></h2><p class="section-desc">Network cascade modeling across 68 AI companies. Top-10 systemic risk leaders shown below.</p></div><div class="contagion-table"><div class="contagion-header"><span>Ticker</span><span>Bubble Risk Bar</span><span>Score</span><span>1D Chg</span><span>Risk</span></div>${rows}</div><div class="contagion-stats"><div class="contagion-stat"><div class="hp-value">${utils.formatNumber(cci, 3)}</div><div class="hp-label">Contagion Coefficient</div></div><div class="contagion-stat"><div class="hp-value ${crisis > 60 ? 'color-red' : 'color-orange'}">${crisis}%</div><div class="hp-label">Crisis Probability (6M)</div></div><div class="contagion-stat"><div class="hp-value">${utils.formatNumber(vix, 1)}</div><div class="hp-label">VIX Amplifier</div></div></div><div class="contagion-cta"><p class="contagion-note">Full cascade simulation, network graph, and timeline dynamics available in the standalone Contagion Engine.</p><a href="contagion.html" class="contagion-link btn-ghost" rel="noopener">Open Full Contagion Engine →</a></div>`;
+                return `<div class="section-header"><span class="section-label">Cascade Analysis</span><h2 class="section-title">Contagion <span class="gold-text">Map</span></h2><p class="section-desc">Yahoo-only cascade proxy across 68 AI companies. Top-10 market-risk proxy leaders shown below.</p></div><div class="contagion-table"><div class="contagion-header"><span>Ticker</span><span>Bubble Risk Bar</span><span>Score</span><span>1D Chg</span><span>Risk</span></div>${rows}</div><div class="contagion-stats"><div class="contagion-stat"><div class="hp-value">${utils.formatNumber(cci, 3)}</div><div class="hp-label">CCI Proxy</div></div><div class="contagion-stat"><div class="hp-value ${crisis > 60 ? 'color-red' : 'color-orange'}">${crisis}%</div><div class="hp-label">Stress Proxy (6M)</div></div><div class="contagion-stat"><div class="hp-value">${utils.formatNumber(vix, 1)}</div><div class="hp-label">VIX Amplifier</div></div></div><div class="contagion-cta"><p class="contagion-note">Standalone Contagion Engine provides a deeper proxy view. Verify all data before investment decisions.</p><a href="contagion.html" class="contagion-link btn-ghost" rel="noopener">Open Full Contagion Engine →</a></div>`;
             }
             
             // ═══════ INITIALIZATION ═══════
@@ -1757,10 +1848,10 @@
                 return new Promise((resolve) => {
                     const deadline = Date.now() + timeout;
                     function check() {
-                        const ready = typeof Chart !== 'undefined' && typeof html2canvas !== 'undefined' && typeof jspdf !== 'undefined' && typeof XLSX !== 'undefined' && typeof luxon !== 'undefined';
+                        const ready = typeof Chart !== 'undefined' && typeof html2canvas !== 'undefined' && typeof jspdf !== 'undefined' && typeof luxon !== 'undefined';
                         if (ready) { resolve(); return; }
                         if (Date.now() > deadline) {
-                            const missing = [typeof Chart === 'undefined' ? 'Chart.js' : null, typeof html2canvas === 'undefined' ? 'html2canvas' : null, typeof jspdf === 'undefined' ? 'jsPDF' : null, typeof XLSX === 'undefined' ? 'SheetJS' : null, typeof luxon === 'undefined' ? 'Luxon' : null].filter(Boolean);
+                            const missing = [typeof Chart === 'undefined' ? 'Chart.js' : null, typeof html2canvas === 'undefined' ? 'html2canvas' : null, typeof jspdf === 'undefined' ? 'jsPDF' : null, typeof luxon === 'undefined' ? 'Luxon' : null].filter(Boolean);
                             console.warn('[NWA] Library timeout. Missing:', missing.join(', '));
                             resolve(); return;
                         }
@@ -1832,5 +1923,5 @@
         })();
             window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a06113b11e65d203',t:'MTc4MDUxNDY1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0b437dd9ce5fff5',t:'MTc4MTM4NjQ1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
