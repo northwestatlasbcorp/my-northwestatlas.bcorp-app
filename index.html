@@ -1297,10 +1297,6 @@
             <div class="contact-line"><span class="contact-label">General</span><br><a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a></div>
             <div class="contact-line"><span class="contact-label">Investor Relations</span><br><a href="mailto:ir@northwestatlas.com" class="contact-value">ir@northwestatlas.com</a></div>
             <div class="contact-line"><span class="contact-label">Meeting</span><br><a href="mailto:meeting@northwestatlas.com" class="contact-value">Request a meeting</a></div>
-            <div class="contact-license">
-              <span class="license-jurisdiction">25.3243°N 55.3937°E · Sharjah, United Arab Emirates</span>
-            </div>
-          </div>
         </div>
         <div class="closing-statement">License #786048 · Regulated UAE</div>
       </div>
@@ -1609,8 +1605,6 @@
         var rafId = null;
         var EASE = 0.085;
         var WHEEL_MULT = 0.75;
-        var TOUCH_MULT = 0.85;
-        var THROW_TIME = 120;
         function maxScroll() {
           return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         }
@@ -1658,52 +1652,7 @@
             start();
           }, { passive: false });
         }
-        if (isTouch) {
-          var touchStartY = 0;
-          var lastTouchY = 0;
-          var lastTouchTime = 0;
-          var touchVelocity = 0;
-          var isTouching = false;
-          window.addEventListener('touchstart', function(e) {
-            if (e.touches.length !== 1) return;
-            isTouching = true;
-            touchStartY = e.touches[0].clientY;
-            lastTouchY = touchStartY;
-            lastTouchTime = performance.now();
-            touchVelocity = 0;
-            target = current = window.scrollY;
-            if (running && rafId) {
-              cancelAnimationFrame(rafId);
-              running = false;
-              rafId = null;
-            }
-          }, { passive: true });
-          window.addEventListener('touchmove', function(e) {
-            if (!isTouching || e.touches.length !== 1) return;
-            var y = e.touches[0].clientY;
-            var now = performance.now();
-            var dt = now - lastTouchTime;
-            var dy = lastTouchY - y;
-            if (dt > 0) {
-              touchVelocity = dy / dt;
-            }
-            lastTouchY = y;
-            lastTouchTime = now;
-            e.preventDefault();
-            target = clamp(target + dy * TOUCH_MULT);
-            start();
-          }, { passive: false });
-          window.addEventListener('touchend', function(e) {
-            if (!isTouching) return;
-            isTouching = false;
-            if (Math.abs(touchVelocity) > 0.3) {
-              var throwDist = touchVelocity * THROW_TIME;
-              target = clamp(target + throwDist);
-              start();
-            }
-            touchVelocity = 0;
-          }, { passive: true });
-        }
+        // Touch scroll intentionally uses native browser momentum for fluid mobile experience
         window.addEventListener('scroll', function() {
           if (!running) {
             current = target = window.scrollY;
@@ -1732,5 +1681,5 @@
       })();
     })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0bc44865e039875',t:'MTc4MTQ3MDg1OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0bc9f341a828e3f',t:'MTc4MTQ3NDU3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
