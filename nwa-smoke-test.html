@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>NWA Production Smoke Test</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080809; --card:#101012; --gold:#C5A059; --ok:#34D399; --bad:#E86B6B; --warn:#E8A840; --muted:#9AA2B0; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:32px; background:var(--bg); color:#EDE9E3; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    h1 { font-family: Georgia, serif; font-weight:300; color:#EDE9E3; }
+    .grid { display:grid; gap:12px; max-width:920px; }
+    .row { background:var(--card); border:1px solid rgba(197,160,89,.12); border-radius:6px; padding:14px 16px; display:grid; grid-template-columns: 180px 90px 1fr; gap:12px; align-items:center; }
+    .status { font-weight:700; }
+    .ok { color:var(--ok); } .bad { color:var(--bad); } .warn { color:var(--warn); }
+    .detail { color:var(--muted); overflow-wrap:anywhere; font-size:12px; }
+    button { margin:20px 0; padding:10px 18px; background:rgba(197,160,89,.08); color:var(--gold); border:1px solid rgba(197,160,89,.22); border-radius:4px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>NWA Production Smoke Test</h1>
+  <p style="color:var(--muted); max-width:760px;">Checks the NWA Data Proxy and core static pages. This page is noindex and intended for deployment verification.</p>
+  <button id="run">Run tests</button>
+  <div class="grid" id="results"></div>
+<script>
+(() => {
+  const BASE = 'https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/';
+  const tests = [
+    { name:'Worker health', url: BASE + '?health=1', expect: txt => txt.includes('NWA-DATA-PROXY') },
+    { name:'Quote NVDA', url: BASE + '?quote=NVDA&interval=1m&range=1d', expect: txt => txt.includes('"symbol":"NVDA"') },
+    { name:'Daily NDX', url: BASE + '?daily=NDX&range=1mo', expect: txt => txt.includes('"symbol":"^NDX"') },
+    { name:'NWA Feed', url: BASE + '?feed=techcrunch', expect: txt => /<rss|<feed/i.test(txt) },
+    { name:'Toolkit page', url: './toolkit.html', expect: txt => txt.includes('NWA AI Market Risk Toolkit') || txt.includes('NWA Terminal') },
+    { name:'Contagion page', url: './contagion.html', expect: txt => txt.includes('Contagion Engine') }
+  ];
+  const out = document.getElementById('results');
+  async function runOne(t) {
+    const start = performance.now();
+    try {
+      const res = await fetch(t.url, { cache:'no-store' });
+      const txt = await res.text();
+      const ok = res.ok && t.expect(txt);
+      return { ...t, ok, ms: Math.round(performance.now() - start), detail: `${res.status} ${res.statusText} · ${txt.slice(0, 120).replace(/\s+/g,' ')}` };
+    } catch (e) { return { ...t, ok:false, ms: Math.round(performance.now() - start), detail: e.message }; }
+  }
+  function row(r) {
+    const el = document.createElement('div'); el.className = 'row';
+    el.innerHTML = `<strong>${r.name}</strong><span class="status ${r.ok ? 'ok' : 'bad'}">${r.ok ? 'PASS' : 'FAIL'}</span><span class="detail">${r.ms}ms · ${r.detail}</span>`;
+    return el;
+  }
+  async function run() {
+    out.innerHTML = '<div class="row"><strong>Running</strong><span class="status warn">WAIT</span><span class="detail">Please wait…</span></div>';
+    const results = await Promise.all(tests.map(runOne));
+    out.innerHTML = '';
+    results.forEach(r => out.appendChild(row(r)));
+  }
+  document.getElementById('run').addEventListener('click', run);
+  run();
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0b50de349faf5ee',t:'MTc4MTM5NTIyMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
