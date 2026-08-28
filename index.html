@@ -24,66 +24,38 @@
   <link rel="canonical" href="https://northwestatlas.com/">
   <link rel="icon" href="favicon.png">
   <link rel="preload" href="logo-nwa-centered.png" as="image" fetchpriority="high">
-  <link rel="preload" href="fonts/PlayfairDisplay-Light.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="fonts/EBGaramond-Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="fonts/Suisse_Intl_Mono.ttf" as="font" type="font/ttf" crossorigin>
-  <style>
-    @font-face {
-      font-family: 'Playfair Display';
-      font-style: normal;
-      font-weight: 200;
-      font-display: swap;
-      src: url('fonts/PlayfairDisplay-ExtraLight.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Playfair Display';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: url('fonts/PlayfairDisplay-Light.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Playfair Display';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('fonts/PlayfairDisplay-Regular.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'EB Garamond';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: url('fonts/EBGaramond-Regular.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'EB Garamond';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('fonts/EBGaramond-Regular.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'EB Garamond';
-      font-style: italic;
-      font-weight: 400;
-      font-display: swap;
-      src: url('fonts/EBGaramond-Italic.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Suisse Intl Mono';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: url('fonts/Suisse_Intl_Mono.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Suisse Intl Mono';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('fonts/Suisse_Intl_Mono.ttf') format('truetype');
-    }
+  <link rel="preload" href="fonts/NWA-Playfair-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NWA-EBGaramond-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NWA-SuisseMono-400.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="stylesheet" href="fonts/nwa-fonts.css">
+    <!-- First-paint discipline: never reveal fallback type, then quietly fade in once core faces are ready. -->
+    <style id="nwa-first-paint">
+      html.nwa-fonts-pending body { opacity: 0; }
+      html.nwa-fonts-ready body, html.nwa-fonts-timeout body { opacity: 1; transition: opacity 360ms cubic-bezier(.16, 1, .3, 1); }
+      @media (prefers-reduced-motion: reduce) { html.nwa-fonts-ready body, html.nwa-fonts-timeout body { transition: none; } }
+    </style>
+    <script>
+      (function (root, doc) {
+        root.classList.add('nwa-fonts-pending');
+        var settled = false;
+        function reveal(state) {
+          if (settled) return;
+          settled = true;
+          root.classList.remove('nwa-fonts-pending');
+          root.classList.add(state);
+        }
+        if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
+        var core = [
+          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('400 1em "EB Garamond"'),
+          doc.fonts.load('400 1em "IBM Plex Mono"'),
+          doc.fonts.load('400 1em "Suisse Intl Mono"')
+        ];
+        Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
+        window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
+      }(document.documentElement, document));
+    </script>
+<style>
     :root {
       --obsidian: #080809;
       --obsidian-deep: #050506;
@@ -117,7 +89,7 @@
       --text-4xl: 3.5rem;
       --text-hero: clamp(3.5rem, 9vw, 7rem);
       --space-unit: 4px;
-      --grain-opacity: .022;
+      --grain-opacity: .014;
       --text-readable: .55;
       --text-muted: .35;
       --text-faint: .18;
@@ -168,12 +140,12 @@
       z-index: 10000; border-radius: 50%;
       will-change: transform; top: 0; left: 0;
       width: 48px; height: 48px;
-      background: radial-gradient(circle at center, rgba(var(--champagne-rgb), .12) 0%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(var(--champagne-rgb), .055) 0%, transparent 70%);
       transform: translate(-50%, -50%);
-      opacity: .8;
+      opacity: .45;
       transition: opacity .4s var(--spring);
     }
-    body.cursor-hover .cursor-glow { width: 72px; height: 72px; opacity: 1; background: radial-gradient(circle at center, rgba(var(--champagne-rgb), .18) 0%, transparent 70%); }
+    body.cursor-hover .cursor-glow { width: 60px; height: 60px; opacity: .6; background: radial-gradient(circle at center, rgba(var(--champagne-rgb), .08) 0%, transparent 70%); }
     body.cursor-click .cursor-glow { width: 32px; height: 32px; opacity: .5; }
     @media (prefers-reduced-motion: reduce), (pointer: coarse) {
       .cursor-glow { display: none !important; }
@@ -392,7 +364,7 @@
       background: radial-gradient(ellipse at 28% 28%, rgba(var(--champagne-rgb), .025) 0%, transparent 55%);
       pointer-events: none; z-index: 0;
     }
-    #hero #data-canvas { opacity: .4; }
+    #hero #data-canvas { opacity: .14; }
     .hero-content {
       position: relative; z-index: 2; width: 100%;
       display: grid;
@@ -424,15 +396,15 @@
     .trust-item { display: flex; flex-direction: column; gap: .22rem; }
     .trust-item .t-label { font-family: var(--mono); font-size: var(--text-2xs); letter-spacing: .5em; text-transform: uppercase; color: var(--ink-secondary); opacity: .4; }
     .trust-item .t-value { font-family: var(--mono); font-size: var(--text-sm); color: var(--bone-dim); letter-spacing: .12em; opacity: var(--text-readable); font-feature-settings: 'tnum' 1, 'lnum' 1; margin-top: .35rem; }
-    .hf { opacity: 0; filter: blur(4px); transform: translateY(18px); }
+    .hf { opacity: 0; transform: translateY(10px); }
     @media (prefers-reduced-motion: no-preference) {
-      .hf { animation: hfIn 2s var(--spring) forwards; }
-      .hf-1 { animation-delay: .3s; }
-      .hf-2 { animation-delay: .6s; }
-      .hf-3 { animation-delay: .9s; }
-      .hf-4 { animation-delay: 1.2s; }
+      .hf { animation: hfIn 1.15s var(--spring) forwards; }
+      .hf-1 { animation-delay: .08s; }
+      .hf-2 { animation-delay: .14s; }
+      .hf-3 { animation-delay: .20s; }
+      .hf-4 { animation-delay: .28s; }
     }
-    @keyframes hfIn { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+    @keyframes hfIn { to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .hf { opacity: 1; filter: none; transform: none; animation: none; } }
     .proof-section { padding: clamp(4rem, 8vw, 8rem) 0; position: relative; }
     .proof-section::before {
@@ -794,9 +766,9 @@
     .footer-legal a { color: var(--ink-secondary); text-decoration: none; font-family: var(--mono); font-size: var(--text-2xs); letter-spacing: .1em; transition: color .3s; }
     .footer-legal a:hover { color: var(--champagne); }
     .footer-meta-row { max-width: 760px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; gap: 3rem; font-family: var(--mono); font-size: var(--text-2xs); color: var(--ink-secondary); opacity: .3; letter-spacing: .22em; }
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 1.4s var(--spring), transform 1.4s var(--spring); }
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 1.05s var(--spring), transform 1.05s var(--spring); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-stagger .reveal-child { opacity: 0; transform: translateY(12px); transition: opacity .9s var(--spring), transform .9s var(--spring); }
+    .reveal-stagger .reveal-child { opacity: 0; transform: translateY(10px); transition: opacity .72s var(--spring), transform .72s var(--spring); }
     .reveal-stagger.visible .reveal-child { opacity: 1; transform: translateY(0); }
     .reveal-stagger.visible .reveal-child:nth-child(1) { transition-delay: 0s; }
     .reveal-stagger.visible .reveal-child:nth-child(2) { transition-delay: .08s; }
@@ -977,6 +949,12 @@
     }
   }
   </script>
+
+    <style id="nwa-accessibility-patch">
+      :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+      @media (prefers-contrast: more) { body { color: #EDE9E3; } }
+    </style>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -998,8 +976,6 @@
   <div class="grid-guide mid-b" aria-hidden="true"></div>
   <div class="grid-guide right" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">Skip to System</a>
-  <canvas id="data-canvas" aria-hidden="true"></canvas>
-  <div class="cursor-glow" aria-hidden="true"></div>
   <header class="header-system" id="header" role="banner">
     <nav class="grid-container" aria-label="System navigation">
       <a href="#hero" class="logo" aria-label="North West Atlas — System Core">
@@ -1014,7 +990,7 @@
         <li><a href="#investments" class="nav-link">Allocation</a></li>
         <li><a href="#enforcement" class="nav-link">Disputes</a></li>
         <li><a href="#analytics" class="nav-link">Research</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#contact" class="nav-link">Correspondence</a></li>
         <li aria-hidden="true"><span class="nav-sep"></span></li>
         <li><a href="toolkit.html" class="nav-link">Terminal</a></li>
       </ul>
@@ -1028,7 +1004,7 @@
       <div class="hero-content grid-container">
         <div class="hero-left">
           <div class="hf hf-1">
-            <span class="hero-badge">Since 2019</span>
+            <span class="hero-badge">Established 2019</span>
             <div class="hero-thesis">
               <span class="hero-line-1">Capital is a material,</span>
               <span class="hero-line-2">not a fluid.</span>
@@ -1042,7 +1018,7 @@
           <div class="hero-trust" aria-label="System credentials">
             <div class="trust-item"><span class="t-label">AUA*</span><span class="t-value">$500M+</span></div>
             <div class="trust-item"><span class="t-label">Regulated</span><span class="t-value">UAE</span></div>
-            <div class="trust-item"><span class="t-label">Track Record</span><span class="t-value">Since 2019</span></div>
+            <div class="trust-item"><span class="t-label">Track Record</span><span class="t-value">Established 2019</span></div>
           </div>
         </div>
       </div>
@@ -1287,16 +1263,16 @@
         <div class="section-index" aria-hidden="true">10</div>
         <div class="contact-layout reveal">
           <div class="contact-left">
-            <span class="section-label">Contact</span>
-            <h2 id="contact-h"><span class="split-line"><span class="split-line-inner">Institutional <span class="gold-text">Inquiries</span></span></span></h2>
-            <p class="contact-invitation">We engage with principals, co-investment counterparties, and institutional allocators managing alternative mandates.</p>
-            <p class="contact-offer">A first conversation is a research call — no commitment required, no pitch prepared.</p>
-            <p class="contact-qualified">For qualified counterparties only</p>
+            <span class="section-label">Correspondence</span>
+            <h2 id="contact-h"><span class="split-line"><span class="split-line-inner">Private <span class="gold-text">Correspondence</span></span></span></h2>
+            <p class="contact-invitation">North West Atlas maintains a limited channel for institutional correspondence, research matters, and formal introductions.</p>
+            <p class="contact-offer">No public solicitation. No retail engagement. Communication is considered selectively and in confidence.</p>
+            <p class="contact-qualified">Private &amp; institutional correspondence</p>
           </div>
           <div class="contact-right">
-            <div class="contact-line"><span class="contact-label">General</span><br><a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a></div>
-            <div class="contact-line"><span class="contact-label">Investor Relations</span><br><a href="mailto:ir@northwestatlas.com" class="contact-value">ir@northwestatlas.com</a></div>
-            <div class="contact-line"><span class="contact-label">Meeting</span><br><a href="mailto:meeting@northwestatlas.com" class="contact-value">Request a meeting</a></div>
+            <div class="contact-line"><span class="contact-label">Office</span><br><a href="mailto:info@northwestatlas.com" class="contact-value">info@northwestatlas.com</a></div>
+            <div class="contact-line"><span class="contact-label">Research &amp; capital</span><br><a href="mailto:ir@northwestatlas.com" class="contact-value">ir@northwestatlas.com</a></div>
+            <div class="contact-line"><span class="contact-label">Introductions</span><br><a href="mailto:meeting@northwestatlas.com" class="contact-value">meeting@northwestatlas.com</a></div>
         </div>
         <div class="closing-statement">License #786048 · Regulated UAE</div>
       </div>
@@ -1310,7 +1286,7 @@
         <div class="footer-coords">25.3243°N 55.3937°E · Sharjah, UAE</div>
         <nav class="footer-actions" aria-label="Footer">
           <a href="disclosures.html">Disclosures</a>
-          <a href="mailto:info@northwestatlas.com">Contact</a>
+          <a href="mailto:info@northwestatlas.com">Correspondence</a>
           <a href="toolkit.html">Terminal</a>
         </nav>
       </div>
@@ -1325,7 +1301,7 @@
         </div>
       </div>
       <div class="footer-meta-row">
-        <span>B Corp Certified</span>
+        <span>B Corp Standards</span>
         <span>UTC <span id="utcClock">&mdash;</span></span>
       </div>
     </div>
@@ -1351,7 +1327,7 @@
       function tickClock() { if (utcEl) utcEl.textContent = fmtUtc(); }
       tickClock();
       setInterval(tickClock, 1000);
-      if (isFine && !PRM && !isSlow) {
+      if (isFine && !PRM && !isSlow && document.querySelector('.cursor-glow')) {
         var glow = document.querySelector('.cursor-glow');
         var mx = -200, my = -200, gx = -200, gy = -200;
         document.addEventListener('mousemove', function(e) {
@@ -1681,5 +1657,5 @@
       })();
     })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0bc9f341a828e3f',t:'MTc4MTQ3NDU3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

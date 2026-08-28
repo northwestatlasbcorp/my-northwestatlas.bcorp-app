@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /nwa-smoke-test.html
+Disallow: /contagion.html
+
+Sitemap: https://northwestatlas.com/sitemap.xml
