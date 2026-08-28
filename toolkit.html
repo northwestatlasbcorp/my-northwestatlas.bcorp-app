@@ -2,14 +2,14 @@
 <html lang="en" data-theme="dark">
 <head>
     <!-- ═══════════════════════════════════════════
-         NWA Terminal v5.3 | Institutional Intelligence
+         NWA Terminal v5.4 | Institutional Intelligence
          ═══════════════════════════════════════════ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- PWA & Theme -->
     <meta name="theme-color" content="#080809">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="application-name" content="NWA Terminal">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,7 +18,7 @@
     <title>NWA AI Market Risk Toolkit | NWA Intelligence</title>
     <meta name="description" content="NWA AI sector market-risk proxy. Bubble Index proxy, Contagion Map, Company Cards, Portfolio Stress Test. 68 companies tracked.">
     <meta name="robots" content="index, follow">
-    <meta name="generator" content="NWA Terminal v5.3">
+    <meta name="generator" content="NWA Terminal v5.4">
     <link rel="canonical" href="https://northwestatlas.com/toolkit.html">
     
     <!-- Open Graph -->
@@ -26,30 +26,22 @@
     <meta property="og:description" content="NWA dashboard for AI sector risk proxies. Bubble Index proxy, Contagion Map, 68 Company Cards, Portfolio Stress Test.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://northwestatlas.com/toolkit.html">
-    <meta property="og:image" content="https://northwestatlas.com/og-toolkit.png">
+    <meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NWA AI Market Risk Toolkit">
     <meta name="twitter:description" content="NWA dashboard for AI sector market-risk proxies.">
-    <meta name="twitter:image" content="https://northwestatlas.com/og-toolkit.png">
+    <meta name="twitter:image" content="https://northwestatlas.com/og-image-enhanced.png">
     
     <!-- Favicon -->
     <link rel="icon" href="favicon.png">
     
     <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev">
     
     <!-- Font loading strategy with noscript fallback -->
-    <link rel="preload" as="style"
-          href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap"
-          rel="stylesheet" media="print" onload="this.media='all'">
     <noscript>
-        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400&display=swap"
-              rel="stylesheet">
     </noscript>
     
     <!-- External scripts -->
@@ -58,7 +50,35 @@
     <script defer crossorigin="anonymous" integrity="sha384-7cWzHabR6ZyfMWzZgVssYaOQRTccHUWZ0F09AanlF3RAJ/JNyFnIma2JTYIVKEUP" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
     <script defer crossorigin="anonymous" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     
-    <style>
+        <link rel="stylesheet" href="fonts/nwa-fonts.css">
+    <!-- First-paint discipline: never reveal fallback type, then quietly fade in once core faces are ready. -->
+    <style id="nwa-first-paint">
+      html.nwa-fonts-pending body { opacity: 0; }
+      html.nwa-fonts-ready body, html.nwa-fonts-timeout body { opacity: 1; transition: opacity 360ms cubic-bezier(.16, 1, .3, 1); }
+      @media (prefers-reduced-motion: reduce) { html.nwa-fonts-ready body, html.nwa-fonts-timeout body { transition: none; } }
+    </style>
+    <script>
+      (function (root, doc) {
+        root.classList.add('nwa-fonts-pending');
+        var settled = false;
+        function reveal(state) {
+          if (settled) return;
+          settled = true;
+          root.classList.remove('nwa-fonts-pending');
+          root.classList.add(state);
+        }
+        if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
+        var core = [
+          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('400 1em "EB Garamond"'),
+          doc.fonts.load('400 1em "IBM Plex Mono"'),
+          doc.fonts.load('400 1em "Suisse Intl Mono"')
+        ];
+        Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
+        window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
+      }(document.documentElement, document));
+    </script>
+<style>
         /* ═══════════════════════════════════════════
            NWA TOOLKIT 5.3 — FINAL PRODUCTION CSS
            Features: @layer cascade, shared components,
@@ -702,6 +722,12 @@
         .live-indicator.status-offline .live-dot { background: var(--red); }
         .data-note { font-size:.6rem; color:var(--text-dim); margin-top:.6rem; line-height:1.5; }
     </style>
+
+    <style id="nwa-accessibility-patch">
+      :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+      @media (prefers-contrast: more) { body { color: #EDE9E3; } }
+    </style>
 </head>
 <body>
     <div class="page-border"></div>
@@ -883,7 +909,7 @@
         <section class="toolkit-section" id="tab-early-warning" role="tabpanel" aria-labelledby="tab-btn-early-warning" tabindex="0">
             <div class="container">
                 <div class="section-header">
-                    <span class="section-label">Real-time monitoring</span>
+                    <span class="section-label">Market-data monitoring</span>
                     <h2 class="section-title">Early Warning <span class="gold-text">Signals</span></h2>
                     <p class="section-desc">Eight NWA proxy signals + Protocol triggers (T1–T5). Data may be delayed, stale, or partially unavailable.</p>
                 </div>
@@ -1026,7 +1052,7 @@
                 <p>&copy; <span id="year">2025</span> North West Atlas B Corp. All rights reserved. Informational only — not investment advice. NWA data may be delayed, stale, incomplete, or unavailable.</p>
                 <nav aria-label="Footer links">
                     <a href="/">Main Site</a> &nbsp;&middot;&nbsp;
-                    <a href="/cdn-cgi/l/email-protection#3f565159507f51504d4b57485a4c4b5e4b535e4c115c5052"><span class="__cf_email__" data-cfemail="563f38303916383924223e2133252237223a37257835393b">[email&#160;protected]</span></a> &nbsp;&middot;&nbsp;
+                    <a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a> &nbsp;&middot;&nbsp;
                     <a href="disclosures.html">Disclosures</a> &nbsp;&middot;&nbsp;
                     <a href="privacy.html">Privacy</a> &nbsp;&middot;&nbsp;
                     <a href="terms.html">Terms</a>
@@ -1058,11 +1084,11 @@
     <!-- ═══════════════════════════════════════════
          MAIN APPLICATION SCRIPT (PATCHED v5.3)
          ═══════════════════════════════════════════ -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         (function() {
             'use strict';
             
-            console.log(`[NWA Toolkit v5.3] Initialized @ ${new Date().toISOString()}`);
+            console.log(`[NWA Toolkit v5.4] Initialized @ ${new Date().toISOString()}`);
             
             // ═══════ UTILITY MODULE ═══════
             const sanitize = (str) => {
@@ -1167,11 +1193,6 @@
                     html2canvas: Object.freeze({ src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', integrity: 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H' }),
                     jspdf: Object.freeze({ src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', integrity: 'sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk' })
                 }),
-                proxies: Object.freeze([
-                    'https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/?url=',
-                    'https://corsproxy.io/?',
-                    'https://api.allorigins.win/raw?url='
-                ]),
                 PAGE_SIZE: 24,
                 TIER1: Object.freeze(['NVDA', 'AMD', 'AVGO', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSM', 'ASML']),
                 TIER2: Object.freeze(['ORCL', 'CRM', 'PLTR', 'SNOW', 'DDOG', 'SMCI', 'ANET', 'DELL', 'QCOM', 'ARM'])
@@ -1233,18 +1254,22 @@
             // ═══════ NWA DATA API ═══════
             const api = {
                 async _fetch(url, timeoutMs = 10000) {
-                    try {
-                        const res = await fetch(url, { headers: { 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9' }, signal: AbortSignal.timeout(timeoutMs) });
-                        if (res.ok) return res;
-                    } catch {}
-                    for (const proxy of CONFIG.proxies) {
+                    let lastError;
+                    for (let attempt = 0; attempt < 2; attempt++) {
                         try {
-                            const proxyUrl = proxy + encodeURIComponent(url);
-                            const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(timeoutMs + 2000) });
+                            const res = await fetch(url, {
+                                headers: { 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9' },
+                                signal: AbortSignal.timeout(timeoutMs),
+                                credentials: 'omit'
+                            });
                             if (res.ok) return res;
-                        } catch {}
+                            lastError = new Error(`HTTP ${res.status}`);
+                        } catch (error) {
+                            lastError = error;
+                        }
+                        if (attempt === 0) await new Promise(resolve => setTimeout(resolve, 400));
                     }
-                    throw new Error(`[NWA] All fetch attempts failed for: ${url}`);
+                    throw new Error(`[NWA] Data layer unavailable: ${lastError?.message || 'Unknown error'}`);
                 },
                 
                 fetchNWAQuote(symbol) {
@@ -1926,7 +1951,7 @@
                 const initialReveals = document.querySelectorAll('#tab-dashboard .reveal');
                 initialReveals.forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 80));
                 
-                utils.showToast('NWA Toolkit v5.3 ready', 'success');
+                utils.showToast('NWA Toolkit v5.4 ready', 'success');
                 console.log('[NWA] Init complete');
             }
             
@@ -1956,5 +1981,5 @@
         })();
             window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0b50e4649e8b8cc',t:'MTc4MTM5NTIzNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

@@ -1,0 +1,12 @@
+{
+  "name": "North West Atlas",
+  "short_name": "NWA",
+  "description": "Institutional advisory and market-risk intelligence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080809",
+  "theme_color": "#080809",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}

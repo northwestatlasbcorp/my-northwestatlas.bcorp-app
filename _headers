@@ -1,0 +1,22 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com; font-src 'self' data:; img-src 'self' data:; connect-src 'self' https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/fonts/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/nwa-fonts.css
+  Cache-Control: public, max-age=604800
+
+/toolkit.html
+  Cache-Control: public, max-age=300
+
+/contagion.html
+  Cache-Control: public, max-age=300
+
+/nwa-smoke-test.html
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
