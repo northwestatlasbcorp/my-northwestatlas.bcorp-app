@@ -5,13 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NWA | Terms of Use</title>
     <meta name="description" content="North West Atlas B Corp — Terms of use, platform access, and usage agreement for institutional counterparties.">
-    <meta name="robots" content="noindex, follow">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@200;300;400&family=Inter:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#080809">
+    <link rel="canonical" href="https://northwestatlas.com/terms.html">
+    <meta property="og:title" content="NWA | Terms of Use">
+    <meta property="og:description" content="North West Atlas B Corp — Terms of use, platform access, and usage agreement for institutional counterparties.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://northwestatlas.com/terms.html">
+    <meta property="og:image" content="https://northwestatlas.com/og-image-enhanced.png">
+    <meta name="twitter:card" content="summary_large_image">
 
-    <style>
+    <meta name="robots" content="noindex, follow">
+
+        <link rel="stylesheet" href="fonts/nwa-fonts.css">
+    <!-- First-paint discipline: never reveal fallback type, then quietly fade in once core faces are ready. -->
+    <style id="nwa-first-paint">
+      html.nwa-fonts-pending body { opacity: 0; }
+      html.nwa-fonts-ready body, html.nwa-fonts-timeout body { opacity: 1; transition: opacity 360ms cubic-bezier(.16, 1, .3, 1); }
+      @media (prefers-reduced-motion: reduce) { html.nwa-fonts-ready body, html.nwa-fonts-timeout body { transition: none; } }
+    </style>
+    <script>
+      (function (root, doc) {
+        root.classList.add('nwa-fonts-pending');
+        var settled = false;
+        function reveal(state) {
+          if (settled) return;
+          settled = true;
+          root.classList.remove('nwa-fonts-pending');
+          root.classList.add(state);
+        }
+        if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
+        var core = [
+          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('400 1em "EB Garamond"'),
+          doc.fonts.load('400 1em "IBM Plex Mono"'),
+          doc.fonts.load('400 1em "Suisse Intl Mono"')
+        ];
+        Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
+        window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
+      }(document.documentElement, document));
+    </script>
+<style>
         /* Identical layout system to disclosures/privacy */
         :root {
             --gold: #C5A059; --gold-dim: #8B6F4C; --gold-light: #E2CFA0; --gold-rgb: 197, 160, 89;
@@ -140,6 +173,12 @@
         @media print { .noise-overlay, .ambient-gradient, .watermark, .reading-progress { display: none; } aside { display: none; } .legal-layout { grid-template-columns: 1fr; } body { background: white; color: black; } main { padding: 2rem; } .clause { border: 0.5px solid #ddd; background: white; page-break-inside: avoid; box-shadow: none; transform: none; } .clause p { color: #333; } .clause h2 { color: #000; } }
         .nwa-grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:9998;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:256px;mix-blend-mode:overlay;}
         .nwa-page-border{position:fixed;inset:12px;border:0.5px solid rgba(197,160,89,.055);pointer-events:none;z-index:9997;border-radius:2px;}
+    </style>
+
+    <style id="nwa-accessibility-patch">
+      :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+      @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>

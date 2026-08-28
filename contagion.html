@@ -4,17 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080809">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="NWA Contagion Engine">
     <title>NWA | Contagion Engine — Scenario Cascade Modeling</title>
     <meta name="description" content="NWA systemic-risk scenario modeling. NVIDIA shock propagation across 19 AI-sector companies with NWA market data and proprietary cascade formulas.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@200;300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-    <style>
+        <link rel="stylesheet" href="fonts/nwa-fonts.css">
+    <!-- First-paint discipline: never reveal fallback type, then quietly fade in once core faces are ready. -->
+    <style id="nwa-first-paint">
+      html.nwa-fonts-pending body { opacity: 0; }
+      html.nwa-fonts-ready body, html.nwa-fonts-timeout body { opacity: 1; transition: opacity 360ms cubic-bezier(.16, 1, .3, 1); }
+      @media (prefers-reduced-motion: reduce) { html.nwa-fonts-ready body, html.nwa-fonts-timeout body { transition: none; } }
+    </style>
+    <script>
+      (function (root, doc) {
+        root.classList.add('nwa-fonts-pending');
+        var settled = false;
+        function reveal(state) {
+          if (settled) return;
+          settled = true;
+          root.classList.remove('nwa-fonts-pending');
+          root.classList.add(state);
+        }
+        if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
+        var core = [
+          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('400 1em "EB Garamond"'),
+          doc.fonts.load('400 1em "IBM Plex Mono"'),
+          doc.fonts.load('400 1em "Suisse Intl Mono"')
+        ];
+        Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
+        window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
+      }(document.documentElement, document));
+    </script>
+<style>
     /* ═══════════════════════════════════════════
        TOKENS — northwestatlas.html consistency
     ═══════════════════════════════════════════ */
@@ -825,6 +850,12 @@
         outline-offset: 2px;
     }
     </style>
+
+    <style id="nwa-accessibility-patch">
+      :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+      @media (prefers-contrast: more) { body { color: #EDE9E3; } }
+    </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -1005,7 +1036,7 @@
                 <div>
                     <a href="/">Home</a>
                     <a href="toolkit.html">Toolkit</a>
-                    <a href="/cdn-cgi/l/email-protection#0861666e674866677a7c607f6d7b7c697c64697b266b6765"><span class="__cf_email__" data-cfemail="5d34333b321d33322f29352a382e293c29313c2e733e3230">[email&#160;protected]</span></a>
+                    <a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a>
                 </div>
             </div>
         </div>
@@ -1013,7 +1044,7 @@
 
     <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 (function(){
 'use strict';
 
@@ -1180,7 +1211,6 @@
     // LIVE DATA MODULE (NWA Data Layer + Smart Cache)
     // ─────────────────────────────────────────────
     const LIVE_DATA_CONFIG = Object.freeze({
-       PROXIES: Object.freeze(['https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/?url=']),
         FRESH_TTL_MS: 45000, STALE_THRESHOLD_MS: 300000,
         DELAYED_THRESHOLD_MS: 1800000, MAX_CACHE_AGE_MS: 86400000,
         TIMEOUT_MS: 8000,
@@ -1227,8 +1257,7 @@
 
     async function cascadeFetchJson(url, timeoutMs = LIVE_DATA_CONFIG.TIMEOUT_MS, externalSignal = null) {
         const attempts = [
-            { label: 'direct', buildUrl: () => url, extraTimeout: 0 },
-            ...LIVE_DATA_CONFIG.PROXIES.map((proxy, i) => ({ label: `proxy[${i}]`, buildUrl: () => proxy + encodeURIComponent(url), extraTimeout: 2000 }))
+            { label: 'nwa-data-layer', buildUrl: () => url, extraTimeout: 0 }
         ];
         const errors = [];
         for (const attempt of attempts) {
@@ -2028,5 +2057,5 @@
 
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0b50f9b3f7d3c6d',t:'MTc4MTM5NTI5MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
