@@ -447,6 +447,58 @@
       grid-column: 6 / 13; font-family: var(--mono); font-size: var(--text-2xs); color: var(--ink-secondary);
       margin-top: 4rem; border-top: 0.5px solid var(--border-dim); padding-top: 1.6rem; text-align: left; line-height: 1.9; opacity: var(--text-muted);
     }
+    /* Microsoft-style full-bleed upgrade banner: art behind glass, copy above */
+    .upgrade-section { padding: 0 0 clamp(1rem, 3vw, 2rem); }
+    .upgrade-banner {
+      position: relative; grid-column: 1 / -1;
+      border-radius: var(--r2); overflow: hidden;
+      border: 0.5px solid var(--border);
+      background-color: var(--obsidian);
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: cover;
+    }
+    .upgrade-banner::before {
+      content: ''; position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(90deg, rgba(8,8,9,.94) 0%, rgba(8,8,9,.62) 50%, rgba(8,8,9,.10) 100%);
+    }
+    .upgrade-banner-content {
+      position: relative; z-index: 1;
+      max-width: 62%;
+      padding: clamp(2.75rem, 5.5vw, 5rem) clamp(1.75rem, 4vw, 4rem);
+    }
+    .upgrade-banner h2 { font-size: clamp(1.9rem, 3.2vw, 2.9rem); margin-bottom: 1.3rem; }
+    .upgrade-banner p {
+      font-family: var(--serif); font-size: var(--text-md); line-height: 1.9;
+      color: var(--bone-dim); opacity: var(--text-readable);
+      max-width: 58ch; margin-bottom: 1.4rem;
+    }
+    .upgrade-banner ul {
+      list-style: none; padding: 0; margin: 0 0 1.2rem;
+      display: flex; flex-direction: column; gap: .8rem;
+    }
+    .upgrade-banner ul li {
+      position: relative; padding-left: 1.6rem;
+      font-family: var(--serif); font-size: var(--text-base); line-height: 1.85;
+      color: var(--bone-dim); opacity: var(--text-readable); max-width: 56ch;
+    }
+    .upgrade-banner ul li::before {
+      content: ''; position: absolute; left: 0; top: .78em;
+      width: .7rem; height: 0.5px; background: var(--champagne); opacity: .5;
+    }
+    .upgrade-link {
+      color: var(--champagne-light); text-decoration: underline;
+      text-decoration-color: rgba(var(--champagne-rgb), .38);
+      text-decoration-thickness: 0.5px; text-underline-offset: 4px;
+      transition: color .5s var(--spring), text-decoration-color .5s var(--spring);
+    }
+    .upgrade-link:hover { color: var(--bone); text-decoration-color: rgba(var(--champagne-rgb), .8); }
+    @media (max-width: 1024px) {
+      .upgrade-banner-content { max-width: 100%; }
+      .upgrade-banner::before {
+        background: linear-gradient(90deg, rgba(8,8,9,.95) 0%, rgba(8,8,9,.88) 60%, rgba(8,8,9,.55) 100%);
+      }
+    }
     .about-section {
       padding: clamp(6rem, 12vw, 12rem) 0; position: relative; overflow: hidden;
       background: linear-gradient(180deg, transparent, rgba(var(--champagne-rgb), .01) 50%, transparent);
@@ -1041,6 +1093,20 @@
       </div>
     </section>
     <div class="system-divider" aria-hidden="true"><span class="line"></span><span class="line"></span></div>
+    <section class="upgrade-section" aria-labelledby="upgrade-h">
+      <div class="grid-container">
+        <div class="upgrade-banner reveal" style="background-image:url('upgrade-bg.jpg')">
+          <div class="upgrade-banner-content">
+            <h2 id="upgrade-h">Upgrade to the NWA Terminal</h2>
+            <p>If your portfolio carries AI-sector exposure, you should review the <a href="toolkit.html" class="upgrade-link">NWA AI Bubble Analysis Toolkit</a> — a proprietary systemic-risk overlay available to <a href="#contact" class="upgrade-link">qualified counterparties</a>. If you are positioning for repricing scenarios, you can:</p>
+            <ul>
+              <li>Request <a href="toolkit.html" class="upgrade-link">terminal access</a> through institutional onboarding for live signals and portfolio stress testing, or</li>
+              <li>Examine shock propagation with the <a href="contagion.html" class="upgrade-link">Contagion Engine</a> across a 68-company coverage universe.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="about" class="about-section" aria-labelledby="about-h">
       <div class="about-watermark" id="aboutWatermark" aria-hidden="true"><span class="about-watermark-text">NWA</span></div>
       <div class="grid-container">
