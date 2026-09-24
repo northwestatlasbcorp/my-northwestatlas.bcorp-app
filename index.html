@@ -406,6 +406,27 @@
     }
     @keyframes hfIn { to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { .hf { opacity: 1; filter: none; transform: none; animation: none; } }
+    /* ─── hero depth system: stereo-vario, near-still ─── */
+    .depth-words {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      will-change: transform;
+    }
+    .depth-word {
+      position: absolute; left: var(--ux); top: var(--uy);
+      font-family: var(--mono); font-weight: 300;
+      font-size: var(--text-xs); letter-spacing: .5em; text-transform: uppercase;
+      white-space: nowrap; color: var(--champagne);
+      filter: blur(.8px);
+      opacity: 0;
+    }
+    .depth-word.set-a { opacity: calc(var(--uo, .12) * clamp(0, 1 - var(--p, 0) * 1.25, 1)); }
+    .depth-word.set-b { opacity: calc(var(--uo, .12) * clamp(0, var(--p, 0) * 1.25 - .1, 1)); }
+    @media (max-width: 1024px) { .depth-words { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .depth-word.set-a { opacity: var(--uo, .12); }
+      .depth-word.set-b { display: none; }
+      .depth-words, [data-lag] { transform: none !important; }
+    }
     .proof-section { padding: clamp(4rem, 8vw, 8rem) 0; position: relative; }
     .proof-section::before {
       content: ''; position: absolute; inset: 0;
@@ -1001,21 +1022,29 @@
   </header>
   <main id="main-content">
     <section id="hero" aria-label="System overview">
+      <div class="depth-words" data-lag="26" data-float="3.5" aria-hidden="true">
+        <span class="depth-word set-a" style="--ux:58%; --uy:22%; --uo:.13">Structural patience</span>
+        <span class="depth-word set-a" style="--ux:4%;  --uy:80%; --uo:.10">Durable value</span>
+        <span class="depth-word set-a" style="--ux:80%; --uy:56%; --uo:.12">Legal architecture</span>
+        <span class="depth-word set-b" style="--ux:36%; --uy:12%; --uo:.12">Long-duration conviction</span>
+        <span class="depth-word set-b" style="--ux:2%;  --uy:42%; --uo:.10">Capital preservation</span>
+        <span class="depth-word set-b" style="--ux:70%; --uy:82%; --uo:.13">Enforcement frameworks</span>
+      </div>
       <div class="hero-content grid-container">
         <div class="hero-left">
           <div class="hf hf-1">
-            <span class="hero-badge">Established 2019</span>
+            <span class="hero-badge" data-lag="6" data-float="1.5">Established 2019</span>
             <div class="hero-thesis">
-              <span class="hero-line-1">Capital is a material,</span>
-              <span class="hero-line-2">not a fluid.</span>
+              <span class="hero-line-1" data-lag="10" data-float="2.5">Capital is a material,</span>
+              <span class="hero-line-2" data-lag="0" data-float="3">not a fluid.</span>
             </div>
           </div>
-          <div class="hero-statement hf hf-3">
+          <div class="hero-statement hf hf-3" data-lag="16" data-float="2">
             North West Atlas is an institutional advisory built around structural patience — positioning capital where consensus will be forced to arrive, after the noise subsides.
           </div>
         </div>
         <div class="hero-right hf hf-4">
-          <div class="hero-trust" aria-label="System credentials">
+          <div class="hero-trust" data-lag="22" data-float="1" aria-label="System credentials">
             <div class="trust-item"><span class="t-label">AUA*</span><span class="t-value">$500M+</span></div>
             <div class="trust-item"><span class="t-label">Regulated</span><span class="t-value">UAE</span></div>
             <div class="trust-item"><span class="t-label">Track Record</span><span class="t-value">Established 2019</span></div>
@@ -1690,6 +1719,76 @@
         }
         update(); window.addEventListener('resize', update, { passive: true });
       })();
+    })();
+  </script>
+<script>
+    /* Hero depth: near-still stereo-vario.
+       Layers shear a few px against scroll (lag by depth);
+       pointer influence is capped at ~3px. Vario: the lexicon
+       words crossfade between two sets as the first viewport
+       is scrolled. Everything settles and stays still. */
+    (function () {
+      'use strict';
+      var hero = document.getElementById('hero');
+      if (!hero) return;
+      var PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fine = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+      if (PRM) { hero.style.setProperty('--p', '0'); return; }
+
+      var items = [];
+      document.querySelectorAll('#hero [data-lag]').forEach(function (el) {
+        items.push({
+          el: el,
+          lag: parseFloat(el.dataset.lag) || 0,
+          f: parseFloat(el.dataset.float) || 0
+        });
+      });
+
+      var p = 0, tp = 0, mx = 0, my = 0, tx = 0, ty = 0;
+      var visible = true, raf = null;
+
+      function readScroll() {
+        tp = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)));
+      }
+      function step() {
+        raf = null;
+        readScroll();
+        p += (tp - p) * 0.07;
+        mx += (tx - mx) * 0.045;
+        my += (ty - my) * 0.045;
+        hero.style.setProperty('--p', p.toFixed(4));
+        for (var i = 0; i < items.length; i++) {
+          var it = items[i];
+          it.el.style.transform = 'translate3d(' +
+            (mx * it.f).toFixed(2) + 'px,' +
+            (my * it.f * 0.6 + p * it.lag).toFixed(2) + 'px,0)';
+        }
+        var settled = Math.abs(tp - p) < 0.0006 &&
+                      Math.abs(tx - mx) < 0.002 && Math.abs(ty - my) < 0.002;
+        if (!settled) raf = requestAnimationFrame(step);
+      }
+      function kick() { if (!raf && visible) raf = requestAnimationFrame(step); }
+
+      window.addEventListener('scroll', kick, { passive: true });
+      if (fine) {
+        window.addEventListener('pointermove', function (e) {
+          tx = (e.clientX / window.innerWidth) * 2 - 1;
+          ty = (e.clientY / window.innerHeight) * 2 - 1;
+          kick();
+        }, { passive: true });
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          visible = en[0].isIntersecting;
+          if (visible) kick();
+          else if (raf) { cancelAnimationFrame(raf); raf = null; }
+        }, { threshold: 0 }).observe(hero);
+      }
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+        else kick();
+      });
+      step();
     })();
   </script>
 </body>
