@@ -701,7 +701,7 @@
     .toolkit-badge { background: rgba(var(--champagne-rgb), .06); border-color: rgba(var(--champagne-rgb), .12); }
     .toolkit-icon { color: var(--champagne-light); }
     /* ─── Silk banner (NWA plate, 3D) ─── */
-    .silk-banner-section { padding: clamp(2rem, 5vw, 5rem) 0 clamp(4.5rem, 9vw, 9rem); position: relative; }
+    .silk-banner-section { padding: clamp(0rem, 1vw, 1.5rem) 0 clamp(4.5rem, 9vw, 9rem); position: relative; }
     .silk-banner-section .silk-plate-wrap { grid-column: 1 / -1; }
     .silk-plate-wrap {
       perspective: 1400px;
@@ -1147,6 +1147,37 @@
         </div>
       </div>
     </section>
+    <section class="silk-banner-section" aria-labelledby="silk-banner-h">
+    <div class="grid-container">
+    <div class="silk-plate-wrap" id="silkPlate">
+    <div class="silk-plate reveal">
+    <div class="silk-plate-copy">
+    <span class="section-label"><span class="silk-pulse" aria-hidden="true"></span>NWA Terminal — Live</span>
+    <h2 id="silk-banner-h">
+    <span class="split-line"><span class="split-line-inner">Position before the <span class="gold-text">repricing</span></span></span>
+    </h2>
+    <p class="silk-plate-text">
+    The <a href="toolkit.html" class="silk-link">NWA AI Bubble Analysis Toolkit</a> is live — a systemic-risk overlay
+    tracking a <a href="toolkit.html" class="silk-link">68-company coverage universe</a> through scenario analysis
+    and portfolio stress testing. Onboarding is open to <a href="#contact" class="silk-link">qualified counterparties</a>.
+    </p>
+    <div class="silk-plate-actions">
+    <a href="toolkit.html" class="silk-btn silk-btn-primary"><span>Open the Terminal</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#nwa-arrow-right"></use></svg></a>
+    <a href="contagion.html" class="silk-btn silk-btn-ghost"><span>Run the Contagion Engine</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#nwa-arrow-right"></use></svg></a>
+    </div>
+    </div>
+    <div class="silk-plate-visual" aria-hidden="true">
+    <canvas id="silkCanvas"></canvas>
+    <div class="silk-visual-meta">
+    <span>NWA-CE / 01</span>
+    <span>Contagion Field — Live</span>
+    </div>
+    </div>
+    <div class="silk-glare"></div>
+    </div>
+    </div>
+    </div>
+    </section>
     <section class="proof-section" aria-labelledby="proof-h">
       <div class="grid-container">
         <div class="section-index" aria-hidden="true">01</div>
@@ -1379,37 +1410,6 @@
             </div>
             <a href="toolkit.html" class="action-link"><span>Open Terminal</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#nwa-external"></use></svg></a>
           </article>
-        </div>
-      </div>
-    </section>
-    <section class="silk-banner-section" aria-labelledby="silk-banner-h">
-      <div class="grid-container">
-        <div class="silk-plate-wrap" id="silkPlate">
-          <div class="silk-plate reveal">
-            <div class="silk-plate-copy">
-              <span class="section-label"><span class="silk-pulse" aria-hidden="true"></span>NWA Terminal — Live</span>
-              <h2 id="silk-banner-h">
-                <span class="split-line"><span class="split-line-inner">Position before the <span class="gold-text">repricing</span></span></span>
-              </h2>
-              <p class="silk-plate-text">
-                The <a href="toolkit.html" class="silk-link">NWA AI Bubble Analysis Toolkit</a> is live — a systemic-risk overlay
-                tracking a <a href="toolkit.html" class="silk-link">68-company coverage universe</a> through scenario analysis
-                and portfolio stress testing. Onboarding is open to <a href="#contact" class="silk-link">qualified counterparties</a>.
-              </p>
-              <div class="silk-plate-actions">
-                <a href="toolkit.html" class="silk-btn silk-btn-primary"><span>Open the Terminal</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#nwa-arrow-right"></use></svg></a>
-                <a href="contagion.html" class="silk-btn silk-btn-ghost"><span>Run the Contagion Engine</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#nwa-arrow-right"></use></svg></a>
-              </div>
-            </div>
-            <div class="silk-plate-visual" aria-hidden="true">
-              <canvas id="silkCanvas"></canvas>
-              <div class="silk-visual-meta">
-                <span>NWA-CE / 01</span>
-                <span>Contagion Field — Live</span>
-              </div>
-            </div>
-            <div class="silk-glare"></div>
-          </div>
         </div>
       </div>
     </section>
