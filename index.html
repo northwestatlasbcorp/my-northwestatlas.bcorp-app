@@ -721,7 +721,6 @@
       box-shadow:
         0 40px 90px -40px rgba(0, 0, 0, .85),
         inset 0 1px 0 rgba(255, 255, 255, .035);
-      overflow: hidden;
       transform-style: preserve-3d;
     }
     .silk-plate-copy {
@@ -741,6 +740,57 @@
     @keyframes silkPulse {
       0%, 100% { opacity: .35; transform: scale(.8); }
       50% { opacity: 1; transform: scale(1.2); }
+    }
+    /* words drifting UNDER the glass */
+    .silk-under {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      transform: translateZ(-70px);
+    }
+    .silk-under span {
+      position: absolute; left: var(--ux); top: var(--uy);
+      font-family: var(--mono); font-size: var(--text-xs);
+      letter-spacing: .5em; text-transform: uppercase; white-space: nowrap;
+      color: var(--champagne); opacity: 0; filter: blur(1.1px);
+      transform: translate3d(calc(var(--mx, 0) * var(--pd, .6) * -12px), calc(var(--my, 0) * var(--pd, .6) * -9px), 0);
+      transition: opacity 1.4s var(--ease) .55s;
+    }
+    .silk-plate.visible .silk-under span { opacity: .075; }
+    /* the glass sheet itself */
+    .silk-glass-veil {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 62%; z-index: 1; pointer-events: none;
+      border-radius: 13px 0 0 13px;
+      background: linear-gradient(100deg, rgba(13,13,16,.68) 0%, rgba(13,13,16,.4) 58%, rgba(13,13,16,0) 100%);
+      -webkit-backdrop-filter: blur(6px) saturate(1.15);
+      backdrop-filter: blur(6px) saturate(1.15);
+    }
+    .silk-glass-veil::after {
+      content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 0.5px;
+      background: linear-gradient(180deg, transparent, rgba(var(--champagne-rgb), .13) 50%, transparent);
+    }
+    /* words floating ABOVE the glass, each at its own depth */
+    .silk-float {
+      display: inline-block;
+      transform: translate3d(calc(var(--mx, 0) * var(--pd, .5) * 14px), calc(var(--my, 0) * var(--pd, .5) * 11px), var(--pz, 40px));
+    }
+    .silk-float .fw { display: inline-block; }
+    @media (prefers-reduced-motion: no-preference) {
+      .silk-float .fw { opacity: 0; }
+      .silk-plate.visible .silk-float .fw {
+        animation: silkWordIn .95s var(--spring) var(--wd, 0s) both,
+                   silkBob var(--bd, 7s) ease-in-out calc(var(--wd, 0s) + .95s) infinite alternate;
+      }
+    }
+    @keyframes silkWordIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes silkBob {
+      from { transform: translateY(0); }
+      to { transform: translateY(3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .silk-float .fw { opacity: 1; animation: none; }
+      .silk-under span { transition: none; opacity: .075; }
     }
     .silk-plate h2 { font-size: clamp(1.9rem, 3.2vw, 2.9rem); margin-bottom: 1.4rem; }
     .silk-plate-text {
@@ -803,7 +853,7 @@
       color: var(--ink-secondary); opacity: .6; pointer-events: none;
     }
     .silk-glare {
-      position: absolute; inset: -1px; z-index: 6; border-radius: inherit;
+      position: absolute; inset: 0; z-index: 6; border-radius: inherit;
       pointer-events: none; mix-blend-mode: screen;
       background: radial-gradient(540px circle at var(--gx, 68%) var(--gy, 38%), rgba(232, 214, 172, .08), transparent 55%);
       opacity: 0; transition: opacity .8s var(--ease);
@@ -815,6 +865,8 @@
       .silk-plate { grid-template-columns: 1fr; }
       .silk-plate-visual { order: 2; margin: 0 1.25rem 1.25rem; min-height: 250px; }
       .silk-plate-copy { padding-bottom: 2.5rem; }
+      .silk-glass-veil { display: none; }
+      .silk-under span { filter: blur(1.4px); }
     }
     @media (max-width: 480px) {
       .silk-plate { border-radius: 10px; }
@@ -1150,12 +1202,26 @@
     <section class="silk-banner-section" aria-labelledby="silk-banner-h">
     <div class="grid-container">
     <div class="silk-plate-wrap" id="silkPlate">
-    <div class="silk-plate reveal">
-    <div class="silk-plate-copy">
-    <span class="section-label"><span class="silk-pulse" aria-hidden="true"></span>NWA Terminal — Live</span>
-    <h2 id="silk-banner-h">
-    <span class="split-line"><span class="split-line-inner">Position before the <span class="gold-text">repricing</span></span></span>
-    </h2>
+          <div class="silk-plate reveal">
+            <div class="silk-under" aria-hidden="true">
+              <span style="--ux:6%; --uy:15%; --pd:.9">Scenario</span>
+              <span style="--ux:41%; --uy:9%; --pd:.55">Liquidity</span>
+              <span style="--ux:71%; --uy:14%; --pd:.75">Contagion</span>
+              <span style="--ux:24%; --uy:47%; --pd:.4">Systemic</span>
+              <span style="--ux:58%; --uy:52%; --pd:.65">Duration</span>
+              <span style="--ux:11%; --uy:83%; --pd:.8">Repricing</span>
+              <span style="--ux:44%; --uy:90%; --pd:.5">Exposure</span>
+              <span style="--ux:76%; --uy:84%; --pd:.7">Coverage</span>
+            </div>
+            <div class="silk-glass-veil" aria-hidden="true"></div>
+            <div class="silk-plate-copy">
+              <span class="section-label"><span class="silk-pulse" aria-hidden="true"></span>NWA Terminal — Live</span>
+              <h2 id="silk-banner-h">
+                <span class="silk-float" style="--pz:42px; --pd:.35;"><span class="fw" style="--wd:.05s; --bd:7.5s">Position</span></span>
+                <span class="silk-float" style="--pz:58px; --pd:.5;"><span class="fw" style="--wd:.16s; --bd:8.5s">before</span></span>
+                <span class="silk-float" style="--pz:74px; --pd:.65;"><span class="fw" style="--wd:.27s; --bd:6.5s">the</span></span>
+                <span class="silk-float" style="--pz:92px; --pd:.8;"><span class="fw" style="--wd:.38s; --bd:9s"><span class="gold-text">repricing</span></span></span>
+              </h2>
     <p class="silk-plate-text">
     The <a href="toolkit.html" class="silk-link">NWA AI Bubble Analysis Toolkit</a> is live — a systemic-risk overlay
     tracking a <a href="toolkit.html" class="silk-link">68-company coverage universe</a> through scenario analysis
@@ -1989,16 +2055,22 @@
       }
 
       /* ---- 3D tilt + sheen ---- */
-      var tiltRaf = 0, rx = 0, ry = 0, trx = 0, tryv = 0;
+      var tiltRaf = 0, rx = 0, ry = 0, trx = 0, tryv = 0, mx = 0, my = 0, tmx = 0, tmy = 0;
       function applyTilt() {
         rx += (trx - rx) * 0.09;
         ry += (tryv - ry) * 0.09;
-        wrap.style.transform = 'perspective(1400px) rotateX(' + rx.toFixed(3) + 'deg) rotateY(' + ry.toFixed(3) + 'deg)';
-        if (Math.abs(trx - rx) > 0.01 || Math.abs(tryv - ry) > 0.01) {
+        mx += (tmx - mx) * 0.09;
+        my += (tmy - my) * 0.09;
+        wrap.style.transform = 'rotateX(' + rx.toFixed(3) + 'deg) rotateY(' + ry.toFixed(3) + 'deg)';
+        wrap.style.setProperty('--mx', mx.toFixed(4));
+        wrap.style.setProperty('--my', my.toFixed(4));
+        if (Math.abs(trx - rx) > 0.01 || Math.abs(tryv - ry) > 0.01 || Math.abs(tmx - mx) > 0.002 || Math.abs(tmy - my) > 0.002) {
           tiltRaf = requestAnimationFrame(applyTilt);
         } else {
-          rx = trx; ry = tryv;
-          wrap.style.transform = 'perspective(1400px) rotateX(' + rx.toFixed(3) + 'deg) rotateY(' + ry.toFixed(3) + 'deg)';
+          rx = trx; ry = tryv; mx = tmx; my = tmy;
+          wrap.style.transform = 'rotateX(' + rx.toFixed(3) + 'deg) rotateY(' + ry.toFixed(3) + 'deg)';
+          wrap.style.setProperty('--mx', mx.toFixed(4));
+          wrap.style.setProperty('--my', my.toFixed(4));
           tiltRaf = 0;
         }
       }
@@ -2008,12 +2080,14 @@
         var ny = ((e.clientY - r.top) / r.height) * 2 - 1;
         tryv = nx * 2.1;
         trx = -ny * 1.7;
+        tmx = nx;
+        tmy = ny;
         wrap.style.setProperty('--gx', ((nx + 1) * 50).toFixed(1) + '%');
         wrap.style.setProperty('--gy', ((ny + 1) * 50).toFixed(1) + '%');
         if (!tiltRaf) tiltRaf = requestAnimationFrame(applyTilt);
       }
       function relaxTilt() {
-        trx = 0; tryv = 0;
+        trx = 0; tryv = 0; tmx = 0; tmy = 0;
         if (!tiltRaf) tiltRaf = requestAnimationFrame(applyTilt);
       }
 
