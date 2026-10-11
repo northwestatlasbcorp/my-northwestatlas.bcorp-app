@@ -598,7 +598,7 @@
         transition: border-color .4s;
     }
     .so-card:hover { border-color: var(--border-hover); }
-    .so-icon { font-size: .8rem; margin-bottom: .4rem; }
+    .so-icon { font-family: var(--mono); font-size: .5rem; letter-spacing: .18em; text-transform: uppercase; color: var(--champagne); margin-bottom: .45rem; }
     .so-card-title {
         font-family: var(--serif); font-size: .72rem;
         color: var(--bone); font-weight: 400; margin-bottom: .3rem;
@@ -902,7 +902,7 @@
                     <div class="ctrl-sep"></div>
                     <button class="ctrl-btn primary" id="playBtn">▶ Play Cascade</button>
                     <button class="ctrl-btn" id="resetBtn">↻ Reset</button>
-                    <button class="ctrl-btn" id="liveBtn" title="Fetch prices from NWA data layer">⚡ NWA Prices</button>
+                    <button class="ctrl-btn" id="liveBtn" title="Fetch prices from NWA data layer">◆ NWA Prices</button>
                 </div>
             </div>
         </div>
@@ -1588,8 +1588,8 @@
             badge.dataset.prevPrice = newPrice;
             const isPos = quote.changePercent >= 0; const col = isPos ? 'var(--indicator-green)' : 'var(--indicator-red-soft)'; const sign = isPos ? '+' : '';
             let freshIcon = '';
-            if (quote.freshness === 'stale') freshIcon = ' 🔴'; else if (quote.freshness === 'delayed') freshIcon = ' 🟡';
-            else if (quote.marketTime) { const ageSec = (NOW - quote.marketTime) / 1000; freshIcon = ageSec < 90 ? ' 🟢' : ageSec < 360 ? ' 🟡' : ' 🔴'; } else freshIcon = ' 🟢';
+            if (quote.freshness === 'stale') freshIcon = ' ○'; else if (quote.freshness === 'delayed') freshIcon = ' ◐';
+            else if (quote.marketTime) { const ageSec = (NOW - quote.marketTime) / 1000; freshIcon = ageSec < 90 ? ' ●' : ageSec < 360 ? ' ◐' : ' ○'; } else freshIcon = ' ●';
             badge.textContent = `$${newPrice.toFixed(2)} (${sign}${quote.changePercent.toFixed(2)}%)${freshIcon}`;
             badge.style.color = col; badge.style.borderColor = isPos ? 'var(--indicator-green-border)' : 'var(--indicator-red-border)';
             badge.style.background = isPos ? 'var(--indicator-green-dim)' : 'var(--indicator-red-dim)';
@@ -1608,11 +1608,11 @@
         else if (m.marginCalls >= 1) { soBadge.textContent = 'WARNING'; soBadge.className = 'badge badge-amber'; }
         else { soBadge.textContent = 'LOW RISK'; soBadge.className = 'badge badge-green'; }
         $('soGrid').innerHTML = `
-            <div class="so-card"><div class="so-icon">⚠️</div><div class="so-card-title">Margin Call Risk</div><div class="so-card-body">${mcallCompanies.length > 0 ? mcallCompanies.map(c => `<strong>${c.ticker}</strong> (${Math.min(95, Math.round(c.finalImpact * 1.5))}%)`).join(', ') : 'No margin calls at current shock level.'}</div><div class="so-card-val" style="color:${m.marginCalls > 0 ? 'var(--indicator-red-soft)' : 'var(--indicator-green)'}">${m.marginCalls} triggered</div></div>
-            <div class="so-card"><div class="so-icon">📉</div><div class="so-card-title">ETF / Fund Outflows</div><div class="so-card-body">AI-focused ETFs (BOTZ, AIQ, SMH) estimated outflows from forced selling.</div><div class="so-card-val" style="color:${m.etfOutflow > 10 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">~$${m.etfOutflow.toFixed(0)}B estimated</div></div>
-            <div class="so-card"><div class="so-icon">🏦</div><div class="so-card-title">Credit Event Risk</div><div class="so-card-body">${highLeverage.length > 0 ? 'High-leverage companies: ' + highLeverage.map(c => `<strong>${c.ticker}</strong> (${c.leverage}x)`).join(', ') : 'No immediate credit concerns.'}</div><div class="so-card-val" style="color:${highLeverage.length > 0 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">${highLeverage.length > 0 ? 'ELEVATED' : 'STABLE'}</div></div>
-            <div class="so-card"><div class="so-icon">🏛️</div><div class="so-card-title">Pension Fund Exposure</div><div class="so-card-body">US public pension funds hold est. ${(m.totalDestroyed * 0.003).toFixed(1)}% of AI sector. ${m.totalDestroyed > 500 ? '<strong>⚠ Rebalancing threshold likely breached.</strong>' : 'Below rebalancing threshold.'}</div><div class="so-card-val" style="color:${m.totalDestroyed > 500 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">$${(m.totalDestroyed * 0.003).toFixed(0)}B exposure</div></div>
-            <div class="so-card"><div class="so-icon">🔗</div><div class="so-card-title">Feedback + Flash Crash</div><div class="so-card-body">Second-order feedback +${m.feedback.toFixed(1)}%. VIX amplifier: ${m.amplifier}x. Flash crash probability: <strong style="color:${flashCrashProb > 50 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">${flashCrashProb}%</strong></div><div class="so-card-val" style="color:${m.feedback > 3 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">+${m.feedback.toFixed(1)}% feedback</div></div>
+            <div class="so-card"><div class="so-icon">MRG</div><div class="so-card-title">Margin Call Risk</div><div class="so-card-body">${mcallCompanies.length > 0 ? mcallCompanies.map(c => `<strong>${c.ticker}</strong> (${Math.min(95, Math.round(c.finalImpact * 1.5))}%)`).join(', ') : 'No margin calls at current shock level.'}</div><div class="so-card-val" style="color:${m.marginCalls > 0 ? 'var(--indicator-red-soft)' : 'var(--indicator-green)'}">${m.marginCalls} triggered</div></div>
+            <div class="so-card"><div class="so-icon">ETF</div><div class="so-card-title">ETF / Fund Outflows</div><div class="so-card-body">AI-focused ETFs (BOTZ, AIQ, SMH) estimated outflows from forced selling.</div><div class="so-card-val" style="color:${m.etfOutflow > 10 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">~$${m.etfOutflow.toFixed(0)}B estimated</div></div>
+            <div class="so-card"><div class="so-icon">CRD</div><div class="so-card-title">Credit Event Risk</div><div class="so-card-body">${highLeverage.length > 0 ? 'High-leverage companies: ' + highLeverage.map(c => `<strong>${c.ticker}</strong> (${c.leverage}x)`).join(', ') : 'No immediate credit concerns.'}</div><div class="so-card-val" style="color:${highLeverage.length > 0 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">${highLeverage.length > 0 ? 'ELEVATED' : 'STABLE'}</div></div>
+            <div class="so-card"><div class="so-icon">PEN</div><div class="so-card-title">Pension Fund Exposure</div><div class="so-card-body">US public pension funds hold est. ${(m.totalDestroyed * 0.003).toFixed(1)}% of AI sector. ${m.totalDestroyed > 500 ? '<strong>▲ Rebalancing threshold likely breached.</strong>' : 'Below rebalancing threshold.'}</div><div class="so-card-val" style="color:${m.totalDestroyed > 500 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">$${(m.totalDestroyed * 0.003).toFixed(0)}B exposure</div></div>
+            <div class="so-card"><div class="so-icon">FBK</div><div class="so-card-title">Feedback + Flash Crash</div><div class="so-card-body">Second-order feedback +${m.feedback.toFixed(1)}%. VIX amplifier: ${m.amplifier}x. Flash crash probability: <strong style="color:${flashCrashProb > 50 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">${flashCrashProb}%</strong></div><div class="so-card-val" style="color:${m.feedback > 3 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">+${m.feedback.toFixed(1)}% feedback</div></div>
         `;
     }
 
@@ -1624,12 +1624,12 @@
         else if (srs >= 45) { badge.textContent = 'REDUCE'; badge.className = 'badge badge-amber'; }
         else { badge.textContent = 'MONITOR'; badge.className = 'badge badge-green'; }
         const hedges = [
-            { icon:'📉', title:'Put Options on NVDA', action: shock >= 35 ? `Evaluate ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Evaluate OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🔻', title:'SOXS / SMH Puts', action: `Scenario allocation example: ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🥇', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — evaluate GLD at 10–15%, TLT to 8–12%.` : `Evaluate Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
-            { icon:'💵', title:'Cash + Rotation', action: `Scenario cash range: ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotation examples: Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
+            { icon:'PUT', title:'Put Options on NVDA', action: shock >= 35 ? `Evaluate ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Evaluate OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'SOX', title:'SOXS / SMH Puts', action: `Scenario allocation example: ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'AU', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — evaluate GLD at 10–15%, TLT to 8–12%.` : `Evaluate Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
+            { icon:'CSH', title:'Cash + Rotation', action: `Scenario cash range: ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotation examples: Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
         ];
-        $('hedgeGrid').innerHTML = hedges.map(h => `<div class="hedge-card"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;"><span style="font-size:.8rem;">${h.icon}</span><span style="font-family:var(--serif);font-size:.68rem;color:var(--bone);font-weight:400;">${sanitizeText(h.title)}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;background:rgba(var(--champagne-rgb),.03);color:${h.color};">${sanitizeText(h.urgency)}</span></div><p style="font-size:.58rem;color:var(--ink-secondary);line-height:1.7;margin-bottom:.4rem;">${sanitizeText(h.action)}</p><div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-tertiary);padding-top:.3rem;border-top:0.5px solid var(--border);">Cost: <span style="color:var(--bone-dim);">${sanitizeText(h.cost)}</span></div></div>`).join('');
+        $('hedgeGrid').innerHTML = hedges.map(h => `<div class="hedge-card"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;"><span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--champagne);">${h.icon}</span><span style="font-family:var(--serif);font-size:.68rem;color:var(--bone);font-weight:400;">${sanitizeText(h.title)}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;background:rgba(var(--champagne-rgb),.03);color:${h.color};">${sanitizeText(h.urgency)}</span></div><p style="font-size:.58rem;color:var(--ink-secondary);line-height:1.7;margin-bottom:.4rem;">${sanitizeText(h.action)}</p><div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-tertiary);padding-top:.3rem;border-top:0.5px solid var(--border);">Cost: <span style="color:var(--bone-dim);">${sanitizeText(h.cost)}</span></div></div>`).join('');
     }
 
     function renderInstitutionalMetrics() {
@@ -1639,7 +1639,7 @@
         $('srsScore').style.color = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
         $('srsBar').style.width = srs + '%';
         $('srsBar').style.background = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
-        $('srsLabel').textContent = srs >= 70 ? '⚠ CRITICAL' : srs >= 45 ? '◎ ELEVATED' : '✓ MODERATE';
+        $('srsLabel').textContent = srs >= 70 ? '▲ CRITICAL' : srs >= 45 ? '◎ ELEVATED' : '✓ MODERATE';
         $('srsLabel').style.color = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
         const m = state.results.meta;
         $('srsComponents').innerHTML = [
@@ -1800,7 +1800,7 @@
             // Margin call warning icon
             if (isMCall) {
                 ctx.fillStyle = '#D94F4F'; ctx.font = 'bold 9px sans-serif';
-                ctx.fillText('⚠', n.x + n.r * 0.5, n.y - n.r * 0.5);
+                ctx.fillText('▲', n.x + n.r * 0.5, n.y - n.r * 0.5);
             }
         });
 
@@ -1821,7 +1821,7 @@
                 $('gttImpact').textContent = '-' + hoveredNode.impact.toFixed(1) + '%'; $('gttImpact').style.color = impactColor(hoveredNode.impact);
                 $('gttBeta').textContent = (d.beta || 0).toFixed(2);
                 $('gttRevExp').textContent = Math.round((d.revExp || 0) * 100) + '%';
-                $('gttMCall').textContent = d.mcallTriggered ? '⚠ TRIGGERED' : 'Safe';
+                $('gttMCall').textContent = d.mcallTriggered ? '▲ TRIGGERED' : 'Safe';
                 $('gttMCall').style.color = d.mcallTriggered ? 'var(--indicator-red)' : 'var(--indicator-green)';
                 $('gttMech').textContent = d.mechanism || '';
                 let tx = hoveredNode.x + 20, ty = hoveredNode.y - 20;
