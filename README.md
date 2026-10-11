@@ -35,7 +35,7 @@ scripts/verify.py       release checks, run by CI (see below)
 scripts/*.test.mjs      node:test suite for the Worker
 scripts/test_verify.py  unittest suite for the release checker
 .github/workflows/      verify.yml — two jobs, `verify` and `check-fonts`, both to be required
-_headers                Pages security headers and cache policy (GitHub Pages has no server config)
+_headers                header/cache policy — INERT on GitHub Pages (no custom headers there); kept for a header-capable host
 manifest.json           PWA manifest
 robots.txt sitemap.xml  indexing contract
 wrangler.jsonc          Worker deployment config
@@ -213,6 +213,13 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
 
 - CSP still needs `'unsafe-inline'` for `script-src`, which weakens the SRI story. Removing it means
   extracting inline scripts per page — a real refactor of the highest-traffic document, not a sweep.
+- Production is plain GitHub Pages (verified 2026-10-12: DNS resolves to 185.199.108–111.153 and the
+  Pages API reports the custom domain, HTTPS enforced). GitHub Pages serves fixed headers and ignores
+  `_headers`, so every page now carries its CSP as a `<meta http-equiv>` tag instead. What a meta tag
+  cannot do, this site therefore does not have: `frame-ancestors`/`X-Frame-Options` (clickjacking),
+  `X-Content-Type-Options: nosniff`, per-path `Cache-Control` (fonts get 10 minutes, not a year).
+  Closing that class needs a header-capable host — a separate infrastructure decision by the owner;
+  `_headers` is already written for it.
 - CDN assets are not self-hosted, so availability depends on jsDelivr and cdnjs.
 - `og-image-enhanced.png` is 1440×736. The declared dimensions now match the file; the Open Graph
   recommendation is 1200×630, so a re-export is still open.
