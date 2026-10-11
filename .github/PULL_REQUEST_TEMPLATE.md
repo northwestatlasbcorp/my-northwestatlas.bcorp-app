@@ -1,6 +1,6 @@
 ## What changes
 
-- One reviewable thing per PR. Link the Linear issue: `Closes NWA-<id>` (GitHub → Linear sync is on, so this also moves the board).
+- One reviewable thing per PR. Link the Linear issue: `Closes NOR-<id>` (GitHub → Linear sync is on, so this also moves the board).
 - Say what a visitor or operator would notice, and what breaks if this does not ship.
 
 ## Checks run here

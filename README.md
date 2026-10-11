@@ -135,7 +135,7 @@ Worker; pushing `main` does not redeploy it.
 4. After a production deploy, open `nwa-smoke-test.html` on the live host: the operator page asserts
    the header set, the Worker `?health=1` round-trip, font loading and the console-error counter.
 
-Linear project `northwestatlas` is the work queue; PRs referencing `Closes NWA-<id>` move cards.
+Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<id>` move cards.
 
 ## Conventions that are intentional — do not "clean up"
 
