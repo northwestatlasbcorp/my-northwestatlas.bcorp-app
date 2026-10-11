@@ -79,6 +79,14 @@ class VerifyTestCase(unittest.TestCase):
             path.write_bytes(b"")
         (self.tmp / "fonts").mkdir(exist_ok=True)
         (self.tmp / "fonts" / "nwa-fonts.css").write_text("@font-face{font-family:'EB Garamond'}")
+        (self.tmp / "fonts" / "NWA-Fixture-400.woff2").write_bytes(b"wOF2")
+        (self.tmp / "fonts" / "OFL.txt").write_text("SIL OPEN FONT LICENSE Version 1.1\n")
+        (self.tmp / "fonts" / "LICENSES.md").write_text(
+            "# Font licences\n\n## What is shipped\n\n"
+            "| File | Licence |\n| --- | --- |\n"
+            "| `NWA-Fixture-400.woff2` | SIL Open Font License 1.1 |\n\n"
+            "## Removed from the bundle\n\nnothing yet\n"
+        )
         (self.tmp / "og-image-enhanced.png").write_bytes(png_bytes())
         (self.tmp / "favicon.png").write_bytes(png_bytes())
         for name in self.verify.REQUIRED:
@@ -226,6 +234,50 @@ class VerifyTestCase(unittest.TestCase):
         (self.tmp / "fonts" / "NWA-Test-400.woff2").write_bytes(b"wOF2")
         self.assertEqual(self.verify.check_font_source_binaries(), [])
 
+    # -- font licences (see Linear NOR-13) ---------------------------------------------
+    def licence_row(self, old: str, new: str) -> None:
+        path = self.tmp / "fonts" / "LICENSES.md"
+        text = path.read_text()
+        self.assertIn(old, text)
+        path.write_text(text.replace(old, new, 1))
+
+    def test_bundled_font_without_licence_record_is_reported(self) -> None:
+        (self.tmp / "fonts" / "NWA-Unlisted-400.woff2").write_bytes(b"wOF2")
+        findings = self.verify.check_font_licences()
+        self.assertEqual(len(findings), 1)
+        self.assertIn("NWA-Unlisted-400.woff2", findings[0])
+
+    def test_licence_record_for_a_font_that_is_gone_is_reported(self) -> None:
+        self.licence_row(
+            "| `NWA-Fixture-400.woff2` | SIL Open Font License 1.1 |",
+            "| `NWA-Fixture-400.woff2` | SIL Open Font License 1.1 |\n| `NWA-Ghost-400.woff2` | SIL Open Font License 1.1 |",
+        )
+        findings = self.verify.check_font_licences()
+        self.assertEqual(len(findings), 1)
+        self.assertIn("NWA-Ghost-400.woff2", findings[0])
+
+    def test_unresolved_licence_in_a_shipped_row_blocks_the_build(self) -> None:
+        # the exact shape of the Suisse Int'l Mono row that sat in this repository for months
+        self.licence_row("SIL Open Font License 1.1 |", "Commercial, terms not in this repository |")
+        findings = self.verify.check_font_licences()
+        self.assertTrue(any("unresolved licence" in f for f in findings), findings)
+
+    def test_ofl_record_without_the_licence_text_is_reported(self) -> None:
+        (self.tmp / "fonts" / "OFL.txt").unlink()
+        findings = self.verify.check_font_licences()
+        self.assertEqual(len(findings), 1)
+        self.assertIn("fonts/OFL.txt", findings[0])
+
+    def test_removal_log_is_not_read_as_an_inventory(self) -> None:
+        path = self.tmp / "fonts" / "LICENSES.md"
+        path.write_text(path.read_text().replace("nothing yet", "| `NWA-Deleted-400.woff2` | removed, no licence held |"))
+        self.assertEqual(self.verify.check_font_licences(), [])
+
+    def test_no_fonts_at_all_needs_no_record(self) -> None:
+        for name in ("NWA-Fixture-400.woff2", "LICENSES.md", "OFL.txt"):
+            (self.tmp / "fonts" / name).unlink()
+        self.assertEqual(self.verify.check_font_licences(), [])
+
     def test_banned_claim_is_reported(self) -> None:
         self.write("index.html", self.read_page().replace("<p></p>", "") + "<p>B Corp Certified</p>")
         self.assertTrue(any("B Corp Certified" in f for f in self.verify.check_banned_phrases()))
@@ -259,7 +311,8 @@ class VerifyTestCase(unittest.TestCase):
 
     def test_checker_reports_a_clean_repository_summary(self) -> None:
         self.assertEqual(self.verify.run(), [])
-        self.assertEqual(len(self.verify.CHECKS), 12)
+        # Bump deliberately: adding a rule means adding its pass/fail fixtures above.
+        self.assertEqual(len(self.verify.CHECKS), 13)
 
 
 if __name__ == "__main__":

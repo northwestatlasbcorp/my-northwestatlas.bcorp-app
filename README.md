@@ -93,6 +93,7 @@ particular site — not generic linting:
 | third-party resources | scripts/styles/images load only from the pinned allow-list, and every third-party script has an SRI `integrity` attribute |
 | indexability | `robots.txt`, `sitemap.xml` and the page's `robots` meta agree — no `noindex` page advertised in the sitemap, no `Disallow` without `noindex` |
 | font sources | no TTF/OTF/EOT in the public bundle; WOFF2 subsets only (policy in `fonts/LICENSES.md`) |
+| font licences | every `fonts/*.woff2` has its own row in `fonts/LICENSES.md`, no shipped row records an unresolved licence, no row names a file that is gone, and OFL faces ship with `fonts/OFL.txt` |
 | claims | banned-phrase tripwire for certification language that has no document in `evidence/` |
 | secrets | private-key blocks, cloud key ids, tokens and credential-shaped assignments |
 
@@ -146,8 +147,16 @@ Worker; pushing `main` does not redeploy it.
    the check to make required in *Settings → Branches* (plus *Restrict push to admin merges* if the
    owner wants PR-only writes to `main`).
 3. Merge → GitHub Pages serves `main`; the Worker is deployed separately by `npm run worker:deploy`.
-4. After a production deploy, open `nwa-smoke-test.html` on the live host: the operator page asserts
-   the header set, the Worker `?health=1` round-trip, font loading and the console-error counter.
+4. After a production deploy, open `nwa-smoke-test.html` on the live host. It runs six `no-store` fetch
+   checks and prints PASS/FAIL per row: Worker `?health=1`, `?quote=NVDA`, `?daily=NDX`, `?feed=`, and
+   the Toolkit and Contagion documents. It asserts nothing about headers, fonts or the console — those
+   are the operator's own checks in the steps below.
+
+   Font loading is a console check, not a page check: in DevTools run
+   `document.fonts.check('400 1em "IBM Plex Mono"')` on `/toolkit.html` and expect `true`, then confirm
+   `getComputedStyle(document.querySelector('.footer-meta-row')).fontFamily` on `/` starts with
+   `"IBM Plex Mono"`. Both should be true after the type swap; the first would also be true if a face
+   were merely declared, so the second is the one that proves the page uses it.
 
 Rolling back is asymmetric, and that is the point: a site change reverts through `main` (Pages republishes),
 while the Worker rolls back with `npx wrangler deployments list` (find the previous version id) and
@@ -173,6 +182,10 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   `<meta http-equiv="Content-Security-Policy">` blocks on `toolkit.html` and `contagion.html` narrow it
   further for those documents. Edit both when changing CSP, and the checker cannot see that pairing.
 - **Inline CSS/JS per page** as described above.
+- **Type is local and licensed, and the checker enforces it.** Nine WOFF2 subsets under `fonts/`, all
+  SIL OFL 1.1, no hosted font request at any point: Playfair Display for display, EB Garamond for body,
+  IBM Plex Mono for every numeric and metadata role. The mono stack is one family across all pages, so a
+  re-subsetting or a rename is a documented, gated change (`fonts/LICENSES.md`, `check_font_licences`).
 - **Six pinned CDN libraries on two hosts** — `cdn.jsdelivr.net`: chart.js 4.4.0, luxon 3.3.0,
   chartjs-adapter-luxon 1.3.1, chartjs-plugin-zoom 2.0.1 (all in `toolkit.html`);
   `cdnjs.cloudflare.com`: html2canvas 1.4.1 and jsPDF 2.5.1 (`toolkit.html` and `contagion.html`,
@@ -191,7 +204,12 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   assumption: `logo-nwa.png` (765×475 brand master), the six partner logos
   (`rosteh`, `rost`, `veb-rf`, `rshb-inteh`, `minpromtorg`, `ros-eximbank` — publicly served, though no
   page claims a relationship with them), and five `placeholder.*` files left over from a UI kit.
-- `fonts/NWA-SuisseMono-400.woff2` needs a licence confirmation; see `fonts/LICENSES.md`.
+- *Closed on 2026-10-11:* `NWA-SuisseMono-400.woff2` (Suisse Int'l Mono, a commercial face with no
+  licence in the repository) is out of the bundle; mono roles run on the already-bundled IBM Plex Mono
+  (OFL 1.1). `fonts/LICENSES.md` records each file with its family, version, glyph count, size and the
+  licence record found inside the binary, and `fonts/OFL.txt` carries the licence text OFL condition 2
+  asks for. The remaining licensing judgement call — whether an OFL *subset* may keep a Reserved Font
+  Name — is written up there rather than decided silently.
 - **The relay has no rate limiting and accepts caller-chosen query strings on `?url=` targets.**
   Consequences, in order of likelihood: (a) an unauthenticated client can spend this Worker's request
   quota — the plan's daily limit is a dashboard fact, not a repository fact, so treat it as the budget;

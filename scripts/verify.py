@@ -89,6 +89,21 @@ BANNED_PHRASES = ("B Corp Certified",)
 # Webfonts ship as subset WOFF2 only; source binaries do not belong in a public bundle.
 FONT_SOURCE_SUFFIXES = frozenset({".ttf", ".otf", ".eot"})
 
+# A font may only be published with its licence attached: fonts/LICENSES.md is the record,
+# fonts/OFL.txt the text. This gate exists because a commercial face sat in the public bundle
+# behind nothing but a note saying its licence still had to be confirmed (Linear NOR-13).
+FONT_SHIP_SECTION = "## What is shipped"
+FONT_LICENCE_INDEX = "fonts/LICENSES.md"
+FONT_LICENCE_TEXT = "fonts/OFL.txt"
+OPEN_FONT_LICENCE_MARK = "Open Font License"
+LICENCE_UNRESOLVED_PHRASES = (
+    "not in this repository",
+    "unconfirmed",
+    "needs confirmation",
+    "to be confirmed",
+    "review required",
+)
+
 IGNORED_REF_PREFIXES = ("#", "mailto:", "tel:", "javascript:", "data:", "blob:")
 
 SKIP_DIRS = frozenset({".git", "node_modules", "__pycache__", ".wrangler", ".venv", "dist"})
@@ -345,6 +360,59 @@ def check_font_source_binaries() -> list[str]:
     return errors
 
 
+def font_licence_section(text: str) -> str:
+    """The block of fonts/LICENSES.md that makes claims about files in the bundle.
+
+    The removal log below it deliberately names files that no longer exist, so it must not be
+    read as an inventory.
+    """
+    start = text.find(FONT_SHIP_SECTION)
+    if start == -1:
+        return ""
+    rest = text[start + len(FONT_SHIP_SECTION):]
+    end = rest.find("\n## ")
+    return rest if end == -1 else rest[:end]
+
+
+def check_font_licences() -> list[str]:
+    """Every WOFF2 in the public bundle needs a resolved licence record next to it."""
+    fonts_dir = ROOT / "fonts"
+    bundled = sorted(path.name for path in fonts_dir.glob("*.woff2")) if fonts_dir.is_dir() else []
+    if not bundled:
+        return []
+    index = ROOT / FONT_LICENCE_INDEX
+    if not index.is_file():
+        return [
+            f"{FONT_LICENCE_INDEX}: {len(bundled)} webfont(s) in the bundle and no licence record at all"
+        ]
+
+    text = index.read_text(encoding="utf-8", errors="replace")
+    section = font_licence_section(text)
+    if not section:
+        return [f"{FONT_LICENCE_INDEX}: no {FONT_SHIP_SECTION!r} section to record fonts against"]
+
+    errors: list[str] = []
+    recorded = set(re.findall(r"`([^`]+\.woff2)`", section))
+    for name in bundled:
+        if name not in recorded:
+            errors.append(f"fonts/{name}: bundled webfont is not recorded in {FONT_LICENCE_INDEX}")
+    for name in sorted(recorded - set(bundled)):
+        errors.append(f"{FONT_LICENCE_INDEX}: records {name}, which is not in the bundle")
+    lowered = section.lower()
+    for phrase in LICENCE_UNRESOLVED_PHRASES:
+        if phrase in lowered:
+            errors.append(
+                f"{FONT_LICENCE_INDEX}: a shipped row records an unresolved licence ({phrase!r}) - "
+                "publish the font only once its rights are settled"
+            )
+    if OPEN_FONT_LICENCE_MARK in section and not (ROOT / FONT_LICENCE_TEXT).is_file():
+        errors.append(
+            f"{FONT_LICENCE_TEXT}: faces ship under the OFL, which requires the licence text to "
+            "accompany them"
+        )
+    return errors
+
+
 def check_indexability_consistency() -> list[str]:
     """The three indexing signals must agree: robots.txt, sitemap.xml, page meta.
 
@@ -447,6 +515,7 @@ CHECKS = (
     check_third_party_resources,
     check_indexability_consistency,
     check_font_source_binaries,
+    check_font_licences,
     check_banned_phrases,
     check_secrets,
 )

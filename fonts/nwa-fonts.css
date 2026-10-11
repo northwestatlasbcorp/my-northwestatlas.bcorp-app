@@ -62,10 +62,3 @@
   font-display: block;
   src: url('NWA-IBMPlexMono-400.woff2') format('woff2');
 }
-@font-face {
-  font-family: 'Suisse Intl Mono';
-  font-style: normal;
-  font-weight: 300 400;
-  font-display: block;
-  src: url('NWA-SuisseMono-400.woff2') format('woff2');
-}
