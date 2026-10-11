@@ -1,8 +1,15 @@
 name: verify
 
-# One gate for the whole repository: static release checks plus the tests that
-# protect the checker and the Cloudflare Worker. No deployment happens here -
-# Pages publishes from main and the Worker publishes through `npm run worker:deploy`.
+# Two jobs, no deployment - Pages publishes from main and the Worker publishes
+# through `npm run worker:deploy`.
+#
+#   verify       the stdlib-only release gate plus the test suites. Installs nothing
+#                with pip, on purpose: `scripts/verify.py` must stay runnable anywhere.
+#   check-fonts  the deep font licence control, `scripts/check_font_names.py`. It has
+#                to parse WOFF2 binaries, so it gets its own job with fontTools and
+#                brotli pinned to the versions the audit in fonts/LICENSES.md was run
+#                with. The script never exits 0 when the dependency is missing (it
+#                exits 2), so a broken install fails this job rather than passing it.
 
 on:
   pull_request:
@@ -45,3 +52,20 @@ jobs:
 
       - name: Worker syntax check
         run: node --check nwa-data-proxy-worker.js
+
+  check-fonts:
+    name: check-fonts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install the pinned font toolchain
+        run: python -m pip install --disable-pip-version-check 'fonttools==4.66.1' 'brotli==1.2.0'
+
+      - name: Deep font licence control
+        run: python scripts/check_font_names.py

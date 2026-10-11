@@ -17,7 +17,10 @@ Exit codes
     1  a violation was found
     2  fontTools is not installed, or the inputs are missing - the check did not run
 
-Needs: python3 -m pip install fonttools brotli   (not a CI dependency by design)
+Needs: python3 -m pip install fonttools brotli
+CI runs this in its own job (`check-fonts` in .github/workflows/verify.yml) with both packages
+pinned; the `verify` job stays stdlib-only. Exit 2 fails that job - a missing dependency can
+never read as a clean run.
 """
 from __future__ import annotations
 

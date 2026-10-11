@@ -34,7 +34,7 @@ styles/nwa-mobile-2026.css  mobile-layer overrides
 scripts/verify.py       release checks, run by CI (see below)
 scripts/*.test.mjs      node:test suite for the Worker
 scripts/test_verify.py  unittest suite for the release checker
-.github/workflows/      verify.yml — the single required status check
+.github/workflows/      verify.yml — two jobs, `verify` and `check-fonts`, both to be required
 _headers                Pages security headers and cache policy (GitHub Pages has no server config)
 manifest.json           PWA manifest
 robots.txt sitemap.xml  indexing contract
@@ -65,8 +65,9 @@ npm run worker:dev                 # http://localhost:8787, uses wrangler.jsonc 
 
 The gate needs Python 3 with the standard library only; the Worker tooling needs Node. One companion
 control, `scripts/check_font_names.py`, reads the font binaries themselves and therefore needs
-`fonttools` + `brotli` - it is deliberately not part of CI, and it exits `2` rather than reporting a
-clean run when the dependency is missing. Verified on
+`fonttools` + `brotli`. CI runs it in its own `check-fonts` job with `fonttools==4.66.1` and
+`brotli==1.2.0` pinned, keeping the `verify` job pip-free; the script exits `2` rather than reporting
+a clean run when the dependency is missing, which fails the job. Verified on
 Python 3.11.2, Node 22.22.3 and wrangler 4.149.0 (`package.json` declares `engines.node >=20`, which is
 the floor `node --test` and `Response` streams require — it is a declared floor, not a tested one).
 
@@ -78,7 +79,7 @@ npm run verify                      # static release checks
 npm run test:worker                 # node --test scripts/worker.test.mjs
 npm run test:site                   # python -m unittest discover -s scripts -p 'test_*.py'
 npm run check:worker                # node --check on the Worker
-npm run check:fonts                 # reads fonts/*.woff2 name records (needs fonttools, not CI)
+npm run check:fonts                 # reads fonts/*.woff2 name records (needs fonttools; CI job check-fonts)
 npx wrangler deploy --dry-run       # validates wrangler.jsonc and bundles the Worker
 ```
 
@@ -148,9 +149,10 @@ Worker; pushing `main` does not redeploy it.
 ## Release model
 
 1. Branch off `main`, open a PR into `main`.
-2. GitHub Actions `verify` (`.github/workflows/verify.yml`) runs the checker and both suites; it is
-   the check to make required in *Settings → Branches* (plus *Restrict push to admin merges* if the
-   owner wants PR-only writes to `main`).
+2. GitHub Actions (`.github/workflows/verify.yml`) runs two jobs on every PR: `verify` (the
+   stdlib-only checker and both suites) and `check-fonts` (the deep font licence control with
+   pinned `fonttools`/`brotli`); both are the checks to make required in *Settings → Branches*
+   (plus *Restrict push to admin merges* if the owner wants PR-only writes to `main`).
 3. Merge → GitHub Pages serves `main`; the Worker is deployed separately by `npm run worker:deploy`.
 4. After a production deploy, open `nwa-smoke-test.html` on the live host. It runs six `no-store` fetch
    checks and prints PASS/FAIL per row: Worker `?health=1`, `?quote=NVDA`, `?daily=NDX`, `?feed=`, and

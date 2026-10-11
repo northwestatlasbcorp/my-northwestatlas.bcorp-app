@@ -305,6 +305,10 @@ npm run check:fonts                    # or: python3 scripts/check_font_names.py
 # --quiet prints findings only; --fonts DIR checks another directory (used on pre-rename copies)
 ```
 
+CI runs this on every pull request as the `check-fonts` job in `.github/workflows/verify.yml`, with
+`fonttools==4.66.1` and `brotli==1.2.0` pinned - the versions this audit was performed with - while the
+dependency-free gate above keeps its own pip-free job.
+
 It parses every `fonts/*.woff2`, compares each user-facing `name` record and each file name against the
 reservations in `fonts/OFL.txt` using `rfn_findings` from `scripts/verify.py` - shared code, not a second
 opinion copy-pasted, so the two controls cannot drift - and reports the attribution records condition 2
