@@ -1,0 +1,23 @@
+{
+  "name": "my-northwestatlas-bcorp-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "North West Atlas public platform: static institutional site plus the Cloudflare Worker data relay.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "verify": "python3 scripts/verify.py",
+    "test": "node --test scripts/worker.test.mjs && python3 -m unittest discover -s scripts -p 'test_*.py'",
+    "test:worker": "node --test scripts/worker.test.mjs",
+    "test:site": "python3 -m unittest discover -s scripts -p 'test_*.py'",
+    "check:worker": "node --check nwa-data-proxy-worker.js",
+    "worker:dev": "wrangler dev",
+    "worker:dry-run": "wrangler deploy --dry-run",
+    "worker:deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}
