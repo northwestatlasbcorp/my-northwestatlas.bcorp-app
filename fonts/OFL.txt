@@ -35,25 +35,31 @@ the shipped binaries (name ID 0) and from the upstream repositories:
     so the record here matches the file contents and is noted for anyone who
     re-subsets from a current checkout.
 
-  NWA-Display-200.woff2, NWA-Display-300.woff2, NWA-Display-400.woff2
+  NWA-Serif-200.woff2, NWA-Serif-300.woff2, NWA-Serif-400.woff2
     Copyright 2017 The Playfair Display Project Authors
     (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name
     "Playfair Display".
     Upstream: https://github.com/clauseggers/Playfair-Display (Version 1.203,
     Claus Eggers Sorensen).
     Same treatment as NWA Mono: these are subset, re-encoded Modified
-    Versions, so they are distributed as "NWA Display" and the reserved name
-    appears only inside the retained copyright record. The upstream
-    repository's own OFL.txt (Playfair 2.2) no longer states a Reserved Font
-    Name, which is not a licence to use one: our files assert the reservation
-    in their own ID 0, and the more protective reading governs.
+    Versions, so they are distributed as "NWA Serif" and the reserved name
+    appears only inside the retained copyright record. The name avoids every
+    individual word of the reservation too, because OFL-FAQ 5.4 states that a
+    Modified Version may not use individual words of a Reserved Font Name -
+    "Display" is one of them, which is why an interim "NWA Display" was
+    renamed again on 2026-10-11. The upstream repository's own OFL.txt
+    (Playfair 2.2) no longer states a Reserved Font Name, which is not a
+    licence to use one: our files assert the reservation in their own ID 0,
+    and the more protective reading governs.
 
   The only route back to the upstream names is explicit written permission
   from the corresponding copyright holder (OFL condition 3), i.e. from IBM for
-  "Plex" and from Claus Eggers Sorensen for "Playfair Display". Nothing in
-  this repository claims such permission. See fonts/LICENSES.md,
-  "Reserved Font Names and subsetting", for the reasoning and for the parts
-  that remain interpretive rather than settled.
+  "Plex" and from Claus Eggers Sorensen for "Playfair Display". An author
+  re-declaration narrowing the reservation to "Playfair" would free the word
+  "Display", but only the copyright holder can change what is declared.
+  Nothing in this repository claims either. See fonts/LICENSES.md, "Reserved
+  Font Names and subsetting", for the reasoning and for the parts that remain
+  interpretive rather than settled.
 
 What that means for this repository, in one line each:
 
@@ -63,9 +69,10 @@ What that means for this repository, in one line each:
                file, plus the `name` records inside each binary that the subset
                retained (ID 0 in all nine files; ID 7/8/9/13/14 in some -
                fonts/LICENSES.md records which, per file).
-  condition 3  no Reserved Font Name is used by a file we built: the subsets
-               are named NWA Mono and NWA Display, internally and in CSS. EB
-               Garamond has nothing reserved, so its name is unchanged.
+  condition 3  no Reserved Font Name - and no individual word of one - is
+               used by a file we built: the subsets are named NWA Mono and NWA
+               Serif, internally, in CSS and in the file names. EB Garamond
+               has nothing reserved, so its name is unchanged.
   condition 4  no IBM, Duffner or Eggers Sorensen name is used to promote this site
                beyond attributing the fonts.
   condition 5  the fonts stay under OFL 1.1 and are not re-licensed; pages rendered

@@ -98,7 +98,7 @@ particular site — not generic linting:
 | indexability | `robots.txt`, `sitemap.xml` and the page's `robots` meta agree — no `noindex` page advertised in the sitemap, no `Disallow` without `noindex` |
 | font sources | no TTF/OTF/EOT in the public bundle; WOFF2 subsets only (policy in `fonts/LICENSES.md`) |
 | font licences | every `fonts/*.woff2` has its own row in `fonts/LICENSES.md`, no shipped row records an unresolved licence, no row names a file that is gone, and OFL faces ship with `fonts/OFL.txt` |
-| font reserved names | no file we built presents an upstream Reserved Font Name as its family - neither in `fonts/nwa-fonts.css` nor as the recorded `name` ID 1 - and every reservation `fonts/OFL.txt` declares has a rule in the checker (`OFL_RESERVED_FONT_NAMES`); the only way past it is `RESERVED_NAME_EXCEPTIONS`, which is for an unmodified upstream file or written permission |
+| font reserved names | no file we built presents an upstream Reserved Font Name - **or an individual word of one, per OFL-FAQ 5.4** - as its family, in `fonts/nwa-fonts.css`, in the recorded `name` ID 1 or in the `fonts/*.woff2` file name; a reserved phrase with its space removed is caught too, while typographical terms no licence here reserves (`Serif`, `Sans`, `Text`) are free, and every reservation `fonts/OFL.txt` declares has a rule in the checker (`OFL_RESERVED_FONT_NAMES`); the only way past it is `RESERVED_NAME_EXCEPTIONS`, which is for an unmodified upstream file or written permission |
 | claims | banned-phrase tripwire for certification language that has no document in `evidence/` |
 | secrets | private-key blocks, cloud key ids, tokens and credential-shaped assignments |
 
@@ -162,9 +162,10 @@ Worker; pushing `main` does not redeploy it.
    `getComputedStyle(document.querySelector('.footer-meta-row')).fontFamily` on `/` starts with
    `"NWA Mono"`. Both should be true after the type swap; the first would also be true if a face
    were merely declared, so the second is the one that proves the page uses it. The names are ours, not
-   the upstream ones: `NWA Mono` and `NWA Display` are subsets of IBM Plex Mono and Playfair Display,
-   and OFL condition 3 does not let a subset keep a Reserved Font Name, so a build that puts `"Plex"`
-   or `"Playfair Display"` back into a family name is rejected by `check_font_reserved_names`.
+   the upstream ones: `NWA Mono` and `NWA Serif` are subsets of IBM Plex Mono and Playfair Display, and
+   OFL condition 3 does not let a subset keep a Reserved Font Name or - per OFL-FAQ 5.4 - an individual
+   word of one, so a build that puts `"Plex"`, `"Playfair Display"` or `"Display"` back into a family
+   name or a file name is rejected by `check_font_reserved_names`.
 
 Rolling back is asymmetric, and that is the point: a site change reverts through `main` (Pages republishes),
 while the Worker rolls back with `npx wrangler deployments list` (find the previous version id) and
@@ -191,13 +192,14 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   further for those documents. Edit both when changing CSP, and the checker cannot see that pairing.
 - **Inline CSS/JS per page** as described above.
 - **Type is local and licensed, and the checker enforces it.** Nine WOFF2 subsets under `fonts/`, all
-  SIL OFL 1.1, no hosted font request at any point: `NWA Display` (Playfair Display) for display,
+  SIL OFL 1.1, no hosted font request at any point: `NWA Serif` (Playfair Display) for display,
   EB Garamond for body, `NWA Mono` (IBM Plex Mono) for every numeric and metadata role. The mono stack is
   one family across all pages, so a re-subsetting or a rename is a documented, gated change
   (`fonts/LICENSES.md`, `check_font_licences`, `check_font_reserved_names`). Two of the three families
   carry a Reserved Font Name upstream and are therefore shipped under ours - in the binaries' `name`
-  records, in CSS, and in the `ctx.font` strings that the Contagion PNG export draws with; EB Garamond
-  declares nothing reserved and keeps its upstream name.
+  records, in CSS, in the file names, and in the `ctx.font` strings that the Contagion and Toolkit
+  exports draw with (those already name `NWA Mono`, so renaming the display family did not touch them);
+  EB Garamond declares nothing reserved and keeps its upstream name.
 - **Six pinned CDN libraries on two hosts** — `cdn.jsdelivr.net`: chart.js 4.4.0, luxon 3.3.0,
   chartjs-adapter-luxon 1.3.1, chartjs-plugin-zoom 2.0.1 (all in `toolkit.html`);
   `cdnjs.cloudflare.com`: html2canvas 1.4.1 and jsPDF 2.5.1 (`toolkit.html` and `contagion.html`,
@@ -222,8 +224,17 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   record found inside the binary, and `fonts/OFL.txt` carries the licence text OFL condition 2 asks for.
   The judgement call left open there - whether an OFL *subset* may keep a Reserved Font Name - was
   settled the same day by not relying on it: the five subset files are distributed as `NWA Mono` and
-  `NWA Display`, and `scripts/check_font_names.py` reads the binaries themselves when fontTools is
-  available (`verify.py` stays stdlib-only, so it checks the record instead).
+  `NWA Serif`, avoiding every word of each reservation rather than only its full phrase, and
+  `scripts/check_font_names.py` reads the binaries themselves when fontTools is available (`verify.py`
+  stays stdlib-only, so it checks the record and the CSS instead).
+- **Font naming: two clarifications worth having in writing.** The conservative reading of OFL condition 3
+  and OFL-FAQ 5.4 is what ships, and it is not the only reading: the restriction reaches the primary font
+  name *as presented to the users*, and a `@font-face` family string is not surfaced by a browser the way
+  an installed font's name is. `Display` would also become available if the Playfair copyright holder
+  re-declared the reservation as `Playfair` alone, which is the single-word style OFL-FAQ 5.5 recommends -
+  an act of theirs, not an assumption we may make. Written permission from IBM (`Plex`) or Claus Eggers
+  Sørensen (`Playfair Display`) puts the upstream names back; nothing in this repository claims it. The
+  arguments and the open questions are recorded in [`fonts/LICENSES.md`](fonts/LICENSES.md).
 - **The relay has no rate limiting and accepts caller-chosen query strings on `?url=` targets.**
   Consequences, in order of likelihood: (a) an unauthenticated client can spend this Worker's request
   quota — the plan's daily limit is a dashboard fact, not a repository fact, so treat it as the budget;

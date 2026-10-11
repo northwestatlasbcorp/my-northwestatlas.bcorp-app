@@ -108,9 +108,10 @@ OFL_RESERVED_FONT_NAMES = {
     "Playfair Display": "Playfair Display, Copyright 2017 The Playfair Display Project Authors",
 }
 
-# The only lawful reasons a bundled file may keep a reserved name: it is the upstream file, unmodified,
-# or the copyright holder granted explicit written permission (OFL condition 3). Map filename to that
-# evidence - and do not add an entry to make a build pass; rename the font instead.
+# The only lawful reasons a bundled file may keep a reserved name - the full phrase or any word of it:
+# it is the upstream file, unmodified, or the copyright holder granted explicit written permission
+# (OFL condition 3, OFL-FAQ 5.4). Map filename to that evidence - and do not add an entry to make a
+# build pass; rename the font instead.
 RESERVED_NAME_EXCEPTIONS: dict[str, str] = {}
 
 LICENCE_UNRESOLVED_PHRASES = (
@@ -430,6 +431,59 @@ def check_font_licences() -> list[str]:
     return errors
 
 
+def rfn_findings(value: str, reserved) -> list[tuple[str, str, str]]:
+    """Every way a presented name collides with a Reserved Font Name: (kind, matched, reserved name).
+
+    `whole` - the declared name itself appears in `value`. `word` - an individual *word* of a multi-word
+    declaration appears as a word of `value`, which OFL-FAQ 5.4 also forbids: *"You may not use individual
+    words from the Reserved Font Names, but you would be allowed to use parts of words, as long as you do
+    not use any word from the Reserved Font Names entirely."* At most one finding per reserved name, and
+    the whole-phrase hit wins, so a rename report does not double-count.
+
+    A third kind, `packed`, catches the rename-that-is-not-a-rename: `PlayfairDisplay` or
+    `Playfair-Display` compared with punctuation stripped. And a `word` hit is required to be a whole word,
+    so `Displayport` is not a collision while `NWA-Display` is.
+
+    Two limits are deliberate. Fragments of a single reserved word are not reported, because 5.4 allows
+    them - catching `Playfard` is a reviewer's judgement call, not a machine rule. And the whole rule is
+    scoped to what the licences in this bundle actually declare: `Serif`, `Sans` and `Text` are
+    unrestricted, while `Display` is restricted only because `"Playfair Display"` is the reservation
+    these files ship with.
+    """
+    lowered = value.casefold()
+    packed = re.sub(r"[^a-z0-9]", "", lowered)
+    findings: list[tuple[str, str, str]] = []
+    for name in sorted(reserved):
+        target = name.casefold()
+        if target in lowered:
+            findings.append(("whole", name, name))
+            continue
+        for word in sorted(target.split()):
+            if re.search(rf"\b{re.escape(word)}\b", lowered):
+                findings.append(("word", word, name))
+                break
+        else:
+            squashed = re.sub(r"[^a-z0-9]", "", target)
+            if len(squashed) > 4 and squashed in packed:
+                findings.append(("packed", name, name))
+    return findings
+
+
+def _rfn_description(kind: str, matched: str, name: str, attribution: str) -> str:
+    """One sentence naming the collision and the clause that prohibits it."""
+    if kind == "whole":
+        return f"uses the Reserved Font Name {name!r} of {attribution}"
+    if kind == "packed":
+        return (
+            f"uses the Reserved Font Name {name!r} of {attribution} with the words run together - "
+            "removing a space is not a rename (condition 3 is about the name, not its formatting)"
+        )
+    return (
+        f"uses the word {matched!r} of the Reserved Font Name {name!r} of {attribution} - a renamed "
+        "Modified Version may not reuse an individual word of a reserved name (OFL-FAQ 5.4)"
+    )
+
+
 def _notice_reserved_names(notice: str) -> set[str]:
     """Reserved Font Names declared in a licence notice, tolerating wrapped lines.
 
@@ -464,12 +518,15 @@ def _shipped_font_rows(section: str) -> tuple[list[str], list[list[str]]]:
 
 
 def check_font_reserved_names() -> list[str]:
-    """No file we built may present itself under a Reserved Font Name (OFL condition 3).
+    """No file we built may present a Reserved Font Name - or a word of one - as its own name.
 
-    Two places a name is "presented": the `@font-face` families in fonts/nwa-fonts.css, and the
-    internal family name recorded in fonts/LICENSES.md's table for each binary. The gate reads the
-    record rather than the WOFF2 - it has to stay dependency-free - so scripts/check_font_names.py
-    is the companion that reads the files themselves.
+    OFL condition 3 restricts the primary font name as presented to the users, and OFL-FAQ 5.4 extends
+    that to individual words of the reservation, so a subset of `"Playfair Display"` may be called
+    neither `Playfair Display` nor `NWA Display`. Three places a name is presented are checked: the
+    `@font-face` families in fonts/nwa-fonts.css, the internal family recorded per binary in
+    fonts/LICENSES.md, and the shipped file names. The gate reads the audit record rather than the WOFF2
+    - it has to stay dependency-free - so scripts/check_font_names.py is the companion that reads the
+    files themselves with the same matcher.
     """
     notice = ROOT / FONT_LICENCE_TEXT
     reserved = set(OFL_RESERVED_FONT_NAMES)
@@ -483,8 +540,14 @@ def check_font_reserved_names() -> list[str]:
                 ]
         reserved |= declared
 
-    def offending(value: str) -> list[str]:
-        return sorted(name for name in reserved if name in value)
+    def report(where: str, value: str, remedy: str, subject: str = "") -> list[str]:
+        out = []
+        for kind, matched, name in rfn_findings(value, reserved):
+            attribution = OFL_RESERVED_FONT_NAMES.get(name, "an upstream licence")
+            out.append(
+                f"{where}: {subject}{value!r} {_rfn_description(kind, matched, name, attribution)} - {remedy}"
+            )
+        return out
 
     errors: list[str] = []
 
@@ -492,15 +555,26 @@ def check_font_reserved_names() -> list[str]:
     if css.is_file():
         sheet = css.read_text(encoding="utf-8", errors="replace")
         families = dict.fromkeys(
-            found.strip().strip("\'\"") for found in re.findall(r"font-family\s*:\s*([^;}]+)", sheet)
+            found.strip().strip("\"'") for found in re.findall(r"font-family\s*:\s*([^;}]+)", sheet)
         )
         for family in families:
-            for name in offending(family):
-                errors.append(
-                    f"fonts/nwa-fonts.css: @font-face family {family!r} uses the Reserved Font Name "
-                    f"{name!r} of {OFL_RESERVED_FONT_NAMES.get(name, 'an upstream licence')} - a subset "
-                    "is a Modified Version, so the face has to be named as ours"
-                )
+            errors += report(
+                "fonts/nwa-fonts.css",
+                family,
+                "a subset is a Modified Version, so the face has to be named as ours",
+            )
+
+    fonts_dir = ROOT / "fonts"
+    if fonts_dir.is_dir():
+        for path in sorted(fonts_dir.glob("*.woff2")):
+            if path.name in RESERVED_NAME_EXCEPTIONS:
+                continue
+            errors += report(
+                f"fonts/{path.name}",
+                path.name,
+                "the licence restricts the name a font is presented by, and this bundle keeps the file "
+                "name aligned with it so a renamed face cannot be served under the old one",
+            )
 
     index = ROOT / FONT_LICENCE_INDEX
     if index.is_file():
@@ -513,14 +587,14 @@ def check_font_reserved_names() -> list[str]:
             filename = re.search(r"`([^`]+\.woff2)`", row[file_at] if file_at is not None else "")
             if filename and filename.group(1) in RESERVED_NAME_EXCEPTIONS:
                 continue
-            for name in offending(row[family_at]):
-                errors.append(
-                    f"{FONT_LICENCE_INDEX}: the {header[family_at]} recorded for "
-                    f"{filename.group(1) if filename else row[file_at]!r} is a Reserved Font Name "
-                    f"({name!r}, {OFL_RESERVED_FONT_NAMES.get(name, 'an upstream licence')}) - rename "
-                    "the face in the binary and in the CSS, or record the evidence that permits it in "
-                    "RESERVED_NAME_EXCEPTIONS"
-                )
+            errors += report(
+                FONT_LICENCE_INDEX,
+                row[family_at],
+                "rename the face in the binary and in the CSS, or record the evidence that permits it in "
+                "RESERVED_NAME_EXCEPTIONS",
+                subject=f"the {header[family_at]} recorded for "
+                f"{filename.group(1) if filename else row[file_at]!r} is ",
+            )
     return errors
 
 

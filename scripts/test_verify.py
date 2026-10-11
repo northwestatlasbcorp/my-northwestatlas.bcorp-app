@@ -307,9 +307,99 @@ class VerifyTestCase(unittest.TestCase):
 
     def test_renamed_face_is_clean(self) -> None:
         (self.tmp / "fonts" / "LICENSES.md").write_text(
-            self.RESERVED_TABLE.format(family="NWA Display"), encoding="utf-8"
+            self.RESERVED_TABLE.format(family="NWA Serif"), encoding="utf-8"
         )
         self.assertEqual(self.verify.check_font_reserved_names(), [])
+
+    # OFL-FAQ 5.4: *"You may not use individual words from the Reserved Font Names, but you would be
+    # allowed to use parts of words, as long as you do not use any word from the Reserved Font Names
+    # entirely."* So `NWA Display` is a conflict against a reservation of `"Playfair Display"`, while a
+    # generic term nobody reserved, or a fragment, is not. These fixtures pin both sides of that line,
+    # because the first rename in this repository stopped at the full phrase.
+
+    def test_a_word_of_a_reserved_name_is_a_conflict_too(self) -> None:
+        (self.tmp / "fonts" / "LICENSES.md").write_text(
+            self.RESERVED_TABLE.format(family="NWA Display"), encoding="utf-8"
+        )
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("the word 'display' of the Reserved Font Name 'Playfair Display'", findings[0])
+        self.assertIn("NWA-Fixture-400.woff2", findings[0])
+
+    def test_a_word_of_a_reserved_name_in_the_css_is_a_conflict_too(self) -> None:
+        (self.tmp / "fonts" / "nwa-fonts.css").write_text(
+            "@font-face{font-family: 'NWA Display'; src: url('NWA-Fixture-400.woff2') format('woff2')}"
+        )
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("fonts/nwa-fonts.css", findings[0])
+        self.assertIn("individual word", findings[0])
+
+    def test_a_shipped_file_name_may_not_carry_a_reserved_word(self) -> None:
+        # CSS and the audit record stay clean: the leak is only in the file name being served.
+        (self.tmp / "fonts" / "NWA-Display-300.woff2").write_bytes(b"wOF2")
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("fonts/NWA-Display-300.woff2", findings[0])
+        self.assertIn("the word 'display'", findings[0])
+
+    def test_recorded_permission_clears_the_file_name_rule_as_well(self) -> None:
+        (self.tmp / "fonts" / "NWA-Display-300.woff2").write_bytes(b"wOF2")
+        saved = dict(self.verify.RESERVED_NAME_EXCEPTIONS)
+        try:
+            self.verify.RESERVED_NAME_EXCEPTIONS["NWA-Display-300.woff2"] = (
+                "written permission from the copyright holder, on file"
+            )
+            self.assertEqual(self.verify.check_font_reserved_names(), [])
+        finally:
+            self.verify.RESERVED_NAME_EXCEPTIONS.clear()
+            self.verify.RESERVED_NAME_EXCEPTIONS.update(saved)
+
+    def test_terms_no_licence_in_this_bundle_reserves_stay_free(self) -> None:
+        reserved = {"Playfair Display"}
+        for name in ("NWA Serif", "Caption Sans", "Text Serif", "Serif Displayport"):
+            self.assertEqual(self.verify.rfn_findings(name, reserved), [], name)
+
+    def test_fragments_of_a_reserved_word_are_not_reported_but_packed_names_are(self) -> None:
+        reserved = {"Playfair Display"}
+        # 5.4 allows parts of words; a near-homophone is for a reviewer, not for this gate.
+        self.assertEqual(self.verify.rfn_findings("Playfard", reserved), [])
+        self.assertEqual(self.verify.rfn_findings("Displai Grotesk", reserved), [])
+        # ...but dropping the space is not a rename, so the packed form is caught, and punctuation that
+        # leaves the words separable is caught by the word rule instead.
+        for value in ("PlayfairDisplay", "NWAPlayfairDisplay"):
+            findings = self.verify.rfn_findings(value, reserved)
+            self.assertEqual([kind for kind, _, _ in findings], ["packed"], value)
+        self.assertEqual(
+            self.verify.rfn_findings("Playfair-Display 200", reserved),
+            [("word", "display", "Playfair Display")],
+        )
+        # and the whole phrase still outranks the other kinds, reported once
+        self.assertEqual(
+            self.verify.rfn_findings("Playfair Display", reserved),
+            [("whole", "Playfair Display", "Playfair Display")],
+        )
+
+    def test_a_packed_upstream_name_in_the_css_fails_the_build(self) -> None:
+        (self.tmp / "fonts" / "nwa-fonts.css").write_text("@font-face{font-family:'PlayfairDisplay'}")
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("with the words run together", findings[0])
+
+    def test_the_deep_control_shares_the_gates_matcher(self) -> None:
+        # scripts/check_font_names.py must apply the same rule to the binaries, or the two drift apart.
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("nwa_font_names", SCRIPTS / "check_font_names.py")
+        assert spec is not None and spec.loader is not None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        matcher = module.load_shared_matcher()
+        reserved = {"Playfair Display", "Plex"}
+        for value in ("NWA Display", "NWA Serif", "PlayfairDisplay", "IBM Plex Mono", "NWA-Display-300"):
+            self.assertEqual(
+                matcher(value, reserved), self.verify.rfn_findings(value, reserved), value
+            )
 
     def test_reserved_name_needs_recorded_permission_or_an_unmodified_original(self) -> None:
         (self.tmp / "fonts" / "LICENSES.md").write_text(

@@ -48,6 +48,18 @@ LICENCE_INDEX = "fonts/LICENSES.md"
 SHIP_SECTION = "## What is shipped"
 
 
+def load_shared_matcher():
+    """`rfn_findings` lives in verify.py so the gate and this deep control cannot drift apart."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("nwa_verify", REPO / "scripts" / "verify.py")
+    if spec is None or spec.loader is None:
+        raise ImportError("scripts/verify.py cannot be loaded, so the reserved-name rule cannot be applied")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.rfn_findings
+
+
 def name_records(font) -> dict[int, str]:
     table = font["name"]
     found: dict[int, str] = {}
@@ -105,6 +117,7 @@ def recorded_rows(root: Path) -> dict[str, dict[str, str]]:
 def check(fonts_dir: Path, root: Path, quiet: bool = False) -> list[str]:
     from fontTools.ttLib import TTFont  # imported by the caller, which reports a missing dependency
 
+    rfn_findings = load_shared_matcher()
     reserved = reserved_from_notice(root)
     rows = recorded_rows(root)
     problems: list[str] = []
@@ -127,12 +140,23 @@ def check(fonts_dir: Path, root: Path, quiet: bool = False) -> list[str]:
         # ID 0 (copyright) and ID 10 (our provenance note) name the upstream family on purpose - that
         # is the attribution condition 3 tells us to keep - so only the presented names are compared.
         presented = {key: value for key, value in records.items() if key in USER_FACING}
-        offenders = {name for name in reserved if any(name in value for value in presented.values())}
-        for name in sorted(offenders):
-            where = ", ".join(f"id{key}={value!r}" for key, value in presented.items() if name in value)
+        for key, value in sorted(presented.items()):
+            for kind, matched, name in rfn_findings(value, reserved):
+                reason = (
+                    f"presents the Reserved Font Name {name!r} as its own name"
+                    if kind == "whole"
+                    else f"presents the word {matched!r} of the Reserved Font Name {name!r} as its own name "
+                    "(OFL-FAQ 5.4 forbids reusing individual words of a reservation in a Modified Version)"
+                )
+                problems.append(
+                    f"{path.name}: name ID {key}={value!r} {reason} - a subset is a Modified Version, so "
+                    "rename it (OFL condition 3)"
+                )
+        for kind, matched, name in rfn_findings(path.name, reserved):
             problems.append(
-                f"{path.name}: presents the Reserved Font Name {name!r} as its own name ({where}) - "
-                "a subset is a Modified Version, so rename it (OFL condition 3)"
+                f"{path.name}: file name still carries "
+                + (f"the Reserved Font Name {name!r}" if kind == "whole" else f"the word {matched!r} of {name!r}")
+                + " - a renamed face should not be served under a file name that reads like the original"
             )
         for name_id in REQUIRED_RECORDS:
             if not records.get(name_id):
@@ -189,7 +213,10 @@ def main(argv: list[str]) -> int:
         for problem in problems:
             print(f"  - {problem}")
         return 1
-    print("PASS - no Modified Version in the bundle presents a Reserved Font Name as its own family")
+    print(
+        "PASS - no Modified Version in the bundle presents a Reserved Font Name, or a word of one, "
+        "as its own family"
+    )
     return 0
 
 

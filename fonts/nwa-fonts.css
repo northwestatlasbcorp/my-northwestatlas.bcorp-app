@@ -1,24 +1,24 @@
 /* North West Atlas type system — locally hosted, WOFF2, no third-party font request. */
 @font-face {
-  font-family: 'NWA Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 200;
   font-display: block;
-  src: url('NWA-Display-200.woff2') format('woff2');
+  src: url('NWA-Serif-200.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'NWA Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 300;
   font-display: block;
-  src: url('NWA-Display-300.woff2') format('woff2');
+  src: url('NWA-Serif-300.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'NWA Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('NWA-Display-400.woff2') format('woff2');
+  src: url('NWA-Serif-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'EB Garamond';
