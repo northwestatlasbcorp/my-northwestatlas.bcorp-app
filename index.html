@@ -318,6 +318,8 @@
       padding: calc(1.8rem + var(--safe-top)) 0 1.8rem;
       transition: padding .7s var(--spring), background .7s var(--spring), backdrop-filter .7s var(--spring);
       background: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
     }
     .header-system.scrolled {
       background: rgba(8, 8, 9, .88);
@@ -327,7 +329,7 @@
     }
     nav { display: flex; justify-content: space-between; align-items: center; }
     .logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; margin-right: auto; }
-    .logo img { height: 34px; width: auto; transition: filter .5s var(--spring); }
+    .logo img { height: 34px; width: auto; transition: filter .5s var(--spring), height .7s var(--spring); }
     .header-system.scrolled .logo img { height: 30px; transform: none; }
     .logo:hover img { filter: brightness(1.2); }
     .nav-menu {
@@ -1492,7 +1494,10 @@
       var ticking = false;
       function onScroll() {
         var y = window.scrollY;
-        if (header) header.classList.toggle('scrolled', y > 50);
+        if (header) {
+          if (y > 50) header.classList.add('scrolled');
+          else if (y < 10) header.classList.remove('scrolled');
+        }
         for (var d = 0; d < dividers.length; d++) {
           var r = dividers[d].getBoundingClientRect();
           dividers[d].classList.toggle('in-view', r.top < window.innerHeight && r.bottom > 0);
