@@ -18,7 +18,7 @@
 //   NWA_ALLOWED_ORIGINS  space- or comma-separated list, e.g.
 //                        "https://northwestatlas.com https://preview.example.pages.dev"
 
-const VERSION = 'NWA-DATA-PROXY-1.2.0';
+const VERSION = 'NWA-DATA-PROXY-1.2.1';
 const NWA_CHART_BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -72,6 +72,22 @@ const SYMBOL_RE = /^[A-Za-z0-9.^=-]{1,16}$/;
 const ALLOWED_INTERVALS = new Set(['1m', '5m', '15m', '1h', '1d']);
 const ALLOWED_RANGES = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y']);
 
+// Loopback is always accepted and cannot be configured away. Threat model: for a browser
+// to send Origin: http://localhost:PORT, code must already be running on the visitor's
+// machine, and every byte this relay returns is public upstream data. Without this
+// exemption, local development and the smoke test could not reach the deployed relay once
+// NWA_ALLOWED_ORIGINS is set - which is exactly the compatibility break this avoids.
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1', '0.0.0.0']);
+
+function isLoopbackOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    return (url.protocol === 'http:' || url.protocol === 'https:') && LOOPBACK_HOSTS.has(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function allowedOrigins(env) {
   const raw = (env && env.NWA_ALLOWED_ORIGINS) || '';
   const list = raw.split(/[\s,]+/).map((value) => value.trim().replace(/\/$/, '')).filter(Boolean);
@@ -79,14 +95,20 @@ function allowedOrigins(env) {
 }
 
 /**
- * CORS headers for this request. Returns an empty object when the caller's
- * Origin is not on the list: the request still succeeds for non-browser
- * clients, but a foreign page cannot read the body.
+ * CORS headers for this request. An Origin that is not allowed gets no CORS headers:
+ * the HTTP request still succeeds, but a foreign page cannot read the response body.
+ *
+ * This is a reader control for browsers, not authorization. A client with no Origin at
+ * all (curl, a batch job, a server-side import) is served in full - deliberately, since
+ * every byte here is public upstream data and some consumers are non-browser by nature.
+ * Abuse containment therefore lives in input validation, the short caches and the body
+ * cap, not in this function.
  */
 function corsHeaders(request, env) {
   const origin = request.headers.get('Origin');
   if (!origin) return {};
-  if (!allowedOrigins(env).has(origin.replace(/\/$/, ''))) return {};
+  const normalized = origin.replace(/\/$/, '');
+  if (!isLoopbackOrigin(normalized) && !allowedOrigins(env).has(normalized)) return {};
   // Vary: Origin is mandatory here - the edge cache is keyed by URL, not by caller.
   return {
     'Access-Control-Allow-Origin': origin,
@@ -139,6 +161,45 @@ function buildFeedTarget(reqUrl) {
   return FEEDS[key] ? new URL(FEEDS[key]) : null;
 }
 
+/**
+ * Read the upstream body with a hard byte limit.
+ *
+ * A guard on Content-Length alone does not bound anything: a chunked response has no
+ * such header, and a wrong one is trivial. Here the stream is consumed chunk by chunk,
+ * so the number of bytes this Worker ever holds (and re-serves) is actually capped,
+ * and the response we emit carries a truthful Content-Length afterwards.
+ */
+async function readCappedBody(upstream, limit) {
+  if (!upstream.body) return { body: null };
+  const reader = upstream.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > limit) {
+        await reader.cancel();
+        return { tooLarge: true };
+      }
+      chunks.push(value);
+    }
+  } catch {
+    try { await reader.cancel(); } catch { /* the stream is already gone */ }
+    return { failed: true };
+  }
+  if (total === 0) return { body: new Uint8Array(0), total };
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return { body: bytes, total };
+}
+
+
 async function proxyTarget(target, request, ctx, env) {
   if (!isAllowedTarget(target)) return json({ error: 'Target not allowed' }, 403, corsHeaders(request, env));
 
@@ -173,10 +234,15 @@ async function proxyTarget(target, request, ctx, env) {
     return json({ error: timedOut ? 'Upstream timed out' : 'Upstream unreachable' }, 502, cors);
   }
 
+  // Content-Length is only a fast rejection: it can be absent (chunked) or a lie.
   const declaredLength = Number(upstream.headers.get('Content-Length') || 0);
   if (declaredLength > MAX_UPSTREAM_BYTES) {
     return json({ error: 'Upstream response too large' }, 502, cors);
   }
+
+  const limited = await readCappedBody(upstream, MAX_UPSTREAM_BYTES);
+  if (limited.tooLarge) return json({ error: 'Upstream response too large' }, 502, cors);
+  if (limited.failed) return json({ error: 'Upstream response could not be read' }, 502, cors);
 
   const isChart = target.pathname.startsWith('/v8/finance/chart/');
   const headers = new Headers(upstream.headers);
@@ -185,8 +251,9 @@ async function proxyTarget(target, request, ctx, env) {
   headers.set('X-NWA-Version', VERSION);
   headers.set('Vary', headers.get('Vary') ? `${headers.get('Vary')}, Origin` : 'Origin');
   headers.set('Cache-Control', isChart ? 'public, max-age=30, s-maxage=30' : 'public, max-age=300, s-maxage=300');
+  if (limited.total !== undefined) headers.set('Content-Length', String(limited.total));
 
-  const response = new Response(upstream.body, { status: upstream.status, headers });
+  const response = new Response(limited.body, { status: upstream.status, headers });
   if (upstream.ok) ctx.waitUntil(cache.put(cacheKey, response.clone()));
   return response;
 }

@@ -39,6 +39,30 @@ function stubCache({ hit = false } = {}) {
   };
 }
 
+function chunkStream(totalBytes, chunkSize = 256 * 1024) {
+  let sent = 0;
+  return new ReadableStream({
+    pull(controller) {
+      const size = Math.min(chunkSize, totalBytes - sent);
+      if (size <= 0) {
+        controller.close();
+        return;
+      }
+      sent += size;
+      controller.enqueue(new Uint8Array(size));
+    },
+  });
+}
+
+/** Lets a test present an upstream with headers that fetch itself would refuse to build. */
+function stubUpstreamObject(upstream) {
+  upstreamCalls = [];
+  globalThis.fetch = async (url, init) => {
+    upstreamCalls.push({ url, init });
+    return upstream;
+  };
+}
+
 const handle = (request, env = {}) => worker.fetch(request, env, makeCtx());
 
 test.beforeEach(() => {
@@ -187,3 +211,84 @@ test('NWA_ALLOWED_ORIGINS extends the list for previews without a code change', 
   const notListed = await handle(makeRequest('/?quote=NVDA', { origin: PROD_ORIGIN }), { NWA_ALLOWED_ORIGINS: preview });
   assert.equal(notListed.headers.get('Access-Control-Allow-Origin'), null, 'explicit config replaces the default list');
 });
+test('upstream body is capped by bytes actually read, not by Content-Length', async () => {
+  // No Content-Length at all (chunked): the header check cannot help, the reader must.
+  stubUpstreamObject({ status: 200, ok: true, headers: new Headers(), body: chunkStream(3 * 1024 * 1024) });
+  const response = await handle(makeRequest('/?feed=wired-ai'));
+  assert.equal(response.status, 502);
+  assert.equal((await response.json()).error, 'Upstream response too large');
+});
+
+test('a lying Content-Length does not raise the cap', async () => {
+  stubUpstreamObject({
+    status: 200,
+    ok: true,
+    headers: new Headers({ 'content-length': '12' }), // claims a tiny body
+    body: chunkStream(5 * 1024 * 1024),
+  });
+  const response = await handle(makeRequest('/?feed=wired-ai'));
+  assert.equal(response.status, 502);
+  assert.equal((await response.json()).error, 'Upstream response too large');
+});
+
+test('a body under the cap is forwarded complete, with an honest Content-Length', async () => {
+  const size = 700 * 1024; // no header present, so nothing to trust
+  stubUpstreamObject({
+    status: 200,
+    ok: true,
+    headers: new Headers({ 'content-type': 'application/json' }),
+    body: chunkStream(size),
+  });
+  const response = await handle(makeRequest('/?feed=market-AAPL'));
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('Content-Length'), String(size));
+  assert.equal((await response.arrayBuffer()).byteLength, size);
+});
+
+test('content-encoding is preserved when the body is buffered', async () => {
+  stubUpstreamObject({
+    status: 200,
+    ok: true,
+    headers: new Headers({ 'content-type': 'application/json', 'content-encoding': 'gzip' }),
+    body: chunkStream(1024),
+  });
+  const response = await handle(makeRequest('/?quote=NVDA'));
+  assert.equal(response.headers.get('Content-Encoding'), 'gzip');
+});
+
+test('a failing upstream stream is a clean 502, not a thrown exception', async () => {
+  const broken = new ReadableStream({
+    start(controller) {
+      controller.enqueue(new Uint8Array(10));
+      controller.error(new Error('connection reset'));
+    },
+  });
+  stubUpstreamObject({ status: 200, ok: true, headers: new Headers(), body: broken });
+  const response = await handle(makeRequest('/?feed=techcrunch'));
+  assert.equal(response.status, 502);
+  assert.equal((await response.json()).error, 'Upstream response could not be read');
+});
+
+test('loopback origins work without any configuration, and cannot be configured away', async () => {
+  for (const origin of ['http://localhost:8788', 'http://127.0.0.1:8787', 'http://[::1]:8787']) {
+    const response = await handle(makeRequest('/?quote=NVDA', { origin }), { NWA_ALLOWED_ORIGINS: 'https://elsewhere.example' });
+    assert.equal(response.headers.get('Access-Control-Allow-Origin'), origin, origin);
+  }
+});
+
+test('loopback lookalikes are not trusted', async () => {
+  for (const origin of ['https://evil.localhost', 'https://127.0.0.1.attacker.example', 'https://localhost.attacker.example:8787']) {
+    const response = await handle(makeRequest('/?quote=NVDA', { origin }));
+    assert.equal(response.headers.get('Access-Control-Allow-Origin'), null, origin);
+  }
+});
+
+test('the relay is not an authorization boundary: no-Origin clients are served by design', async () => {
+  // Documents the deliberate trade-off: curl (no Origin) reads the same public data.
+  const curlLike = new Request(`${WORKER}/?quote=NVDA`);
+  assert.equal(curlLike.headers.get('Origin'), null);
+  const response = await handle(curlLike);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('Access-Control-Allow-Origin'), null);
+});
+

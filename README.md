@@ -1,22 +1,20 @@
 # North West Atlas — public platform
 
 North West Atlas is an institutional advisory practice: AI-sector systemic-risk research, real assets
-and transition, cross-border legal architecture and enforcement, structured impact capital. This
-repository is its public surface — the marketing/research pages, the NWA Toolkit (market-risk
-monitoring and portfolio stress testing), the Contagion Engine scenario environment, and the data relay
-those two interactive pages call. Site content is informational and is not investment, legal or tax
-advice; the full framework is in `disclosures.html`.
+and transition, cross-border legal architecture and enforcement, structured impact capital. Site
+content is informational and is not investment, legal or tax advice; the full framework is in
+`disclosures.html`.
 
-Engineering-wise, everything else is deliberately absent: no framework, no build step, no bundler, no
-CSS preprocessor.
+This repository is that practice's public surface, and it ships exactly two artifacts.
 
+1. **The static site** — 12 HTML pages at the repository root, published by GitHub Pages from `main` at
+   [northwestatlas.com](https://northwestatlas.com) (see `CNAME`). They cover the positioning and
+   research pages plus two interactive products: the NWA Toolkit (market-risk monitoring and portfolio
+   stress testing) and the Contagion Engine scenario environment.
+2. **`nwa-data-proxy-worker.js`** — the CORS relay those two pages call for Yahoo Finance charts and
+   AI-press RSS, deployed separately to Cloudflare Workers as `nwabcorp-cors-proxy`.
 
-The repository ships two artifacts:
-
-1. **The static site** — 12 HTML pages at the repository root, published by GitHub Pages from `main`
-   at [northwestatlas.com](https://northwestatlas.com) (see `CNAME`).
-2. **`nwa-data-proxy-worker.js`** — a CORS relay for Yahoo Finance charts and AI-press RSS feeds,
-   deployed separately to Cloudflare Workers as `nwabcorp-cors-proxy`.
+No framework, no build step, no bundler, no CSS preprocessor: the pages are the product.
 
 ## Layout
 
@@ -55,16 +53,19 @@ Any static server works; `python3 -m http.server` keeps relative paths and `_hea
 python3 -m http.server 8788        # then open http://127.0.0.1:8788/index.html
 ```
 
-The interactive pages fetch from the deployed Worker (`nwabcorp-cors-proxy.…workers.dev`), so charts
-and feeds work offline only as far as the network allows. To exercise the relay itself:
+The interactive pages fetch the *deployed* Worker (their `CONFIG.NWA_DATA_BASE` points at
+`nwabcorp-cors-proxy.…workers.dev`), so charts and feeds need network access even in local review; a
+fully offline checkout renders them empty by design. Loopback origins are always accepted by the relay,
+so `http://127.0.0.1:8788` works against production without configuration. To exercise the relay itself:
 
 ```sh
 npm ci
 npm run worker:dev                 # http://localhost:8787, uses wrangler.jsonc vars
 ```
 
-Requires Python ≥ 3.10 for the checks (stdlib only) and Node ≥ 20 for the Worker and `wrangler`
-(verified here on Python 3.11.2, Node 22.22.3, wrangler 4.149.0).
+Checks need Python 3 with the standard library only; the Worker tooling needs Node. Verified on
+Python 3.11.2, Node 22.22.3 and wrangler 4.149.0 (`package.json` declares `engines.node >=20`, which is
+the floor `node --test` and `Response` streams require — it is a declared floor, not a tested one).
 
 ## Checks
 
@@ -111,13 +112,26 @@ in review, which is the point.
 | `?feed=techcrunch\|verge-ai\|wired-ai\|venturebeat-ai` \| `?feed=market-<SYMBOL>` | curated RSS/XML |
 | `?url=<encoded>` | legacy passthrough kept for older builds; same allow-list, same https-only rule |
 
-Security model, in three independent gates: the target host must be in `ALLOWED_HOSTS`, its path must
-be in `ALLOWED_PATH_PREFIXES` and the scheme must be `https`; and a browser request is only given CORS
-headers when its `Origin` is listed in `NWA_ALLOWED_ORIGINS` (otherwise a foreign page simply cannot
-read the body, while server-to-server calls keep working). Requests are never passed through with
-client cookies or authorization headers. Upstream calls have an 8 s timeout, a 2 MB response guard, and
-a `try/catch` that returns JSON `502` instead of faulting the isolate. Charts cache 30 s, feeds 300 s,
-both keyed by target with `Vary: Origin`.
+Three independent gates: the target host must be in `ALLOWED_HOSTS`; its path must be in
+`ALLOWED_PATH_PREFIXES` with an `https` scheme; and a browser reader must come from an Origin in
+`NWA_ALLOWED_ORIGINS` (plus any loopback origin, always) to receive CORS headers at all.
+
+**What the Origin list is not: authorization.** It decides whether *a browser on someone else's site*
+can read the response. A request with no `Origin` header — curl, a cron job, a spreadsheet import — is
+served in full, and that is deliberate: every byte the relay returns is public upstream data, and some
+consumers are non-browser by nature. Containing abuse therefore rests on input validation, the short
+caches and the size cap, not on CORS.
+
+Upstream calls: 8 s `AbortSignal.timeout`; `try/catch` mapping timeout and refusal to a JSON `502`
+(`no-store`) instead of faulting the isolate; client cookies and authorization headers are never
+forwarded. Responses are read through `readCappedBody`, which counts bytes *actually received* against
+2 MB — a `Content-Length` check alone would bound nothing, since the header can be absent (chunked) or
+false. That is why responses are buffered rather than streamed: for payloads of this size the honest cap
+is worth more than streaming. Charts cache 30 s, feeds 300 s, keyed by target, `Vary: Origin`.
+
+`?url=<encoded>` is accepted for builds older than the current pages. Nothing in this repository uses it
+(verified by grep across all HTML/JS: only `?quote=`, `?daily=` and `?feed=` are called), and it is the
+widest surface left in the relay because its query string is caller-controlled — see *Known gaps*.
 
 Configuration lives in `wrangler.jsonc` (`vars`) — non-secret only. Anything secret goes through
 `wrangler secret put`.
@@ -134,6 +148,12 @@ Worker; pushing `main` does not redeploy it.
 3. Merge → GitHub Pages serves `main`; the Worker is deployed separately by `npm run worker:deploy`.
 4. After a production deploy, open `nwa-smoke-test.html` on the live host: the operator page asserts
    the header set, the Worker `?health=1` round-trip, font loading and the console-error counter.
+
+Rolling back is asymmetric, and that is the point: a site change reverts through `main` (Pages republishes),
+while the Worker rolls back with `npx wrangler deployments list` (find the previous version id) and
+`npx wrangler rollback <version-id>` — both verified present in wrangler 4.149.0, and both need a
+Cloudflare login. History lives there, so a bad relay release never requires touching `main`. An Origin that turns out to be a legitimate consumer is a config fix in `wrangler.jsonc`, not a
+rollback.
 
 Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<id>` move cards.
 
@@ -153,10 +173,12 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   `<meta http-equiv="Content-Security-Policy">` blocks on `toolkit.html` and `contagion.html` narrow it
   further for those documents. Edit both when changing CSP, and the checker cannot see that pairing.
 - **Inline CSS/JS per page** as described above.
-- **Three CDN dependencies** (`cdn.jsdelivr.net` for chart.js in `toolkit.html`, `cdnjs.cloudflare.com`
-  for html2canvas and jsPDF in `toolkit.html` and `contagion.html`), each pinned with an `integrity`
-  hash and listed in the CSP. `unpkg.com` used to be allowed by the CSP while nothing loaded from it;
-  it is gone now, and `verify.py` fails if an unlisted host appears.
+- **Six pinned CDN libraries on two hosts** — `cdn.jsdelivr.net`: chart.js 4.4.0, luxon 3.3.0,
+  chartjs-adapter-luxon 1.3.1, chartjs-plugin-zoom 2.0.1 (all in `toolkit.html`);
+  `cdnjs.cloudflare.com`: html2canvas 1.4.1 and jsPDF 2.5.1 (`toolkit.html` and `contagion.html`,
+  loaded from a frozen JS config). Each carries an `integrity` hash, which `verify.py` requires of any
+  third-party script. `unpkg.com` used to be allowed by the CSP while nothing loaded from it; it is gone
+  now, and the checker fails if an unlisted host appears.
 
 ## Known gaps (tracked in Linear, not hidden here)
 
@@ -170,6 +192,15 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   (`rosteh`, `rost`, `veb-rf`, `rshb-inteh`, `minpromtorg`, `ros-eximbank` — publicly served, though no
   page claims a relationship with them), and five `placeholder.*` files left over from a UI kit.
 - `fonts/NWA-SuisseMono-400.woff2` needs a licence confirmation; see `fonts/LICENSES.md`.
+- **The relay has no rate limiting and accepts caller-chosen query strings on `?url=` targets.**
+  Consequences, in order of likelihood: (a) an unauthenticated client can spend this Worker's request
+  quota — the plan's daily limit is a dashboard fact, not a repository fact, so treat it as the budget;
+  (b) unique `?url=` query strings multiply cache keys, so each one is a cache miss and a real upstream
+  call, and `range=5y&interval=1m` is a heavy thing to ask Yahoo for on our behalf. Not fixed in the
+  audit PR because any cap is a behaviour change for consumers nobody has enumerated yet (see the
+  runbook order in the PR). Options, cheapest first: drop `?url=` once the older builds are confirmed
+  gone; rebuild the cache key from the validated parameters only; then a per-client-IP limit. Tracked in
+  Linear alongside the deploy task.
 - Institutional claims on the pages (jurisdiction, licence number, AUA figures) must each resolve to a
   document under `evidence/` before they can be called verified. This repository contains no such
   folder yet, so those statements are unverified by anything in CI.
@@ -182,4 +213,6 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   markup and CSS, not by screenshot diff.
 - Branch protection settings live in repository *Settings* and are only verifiable there; CI itself is
   green on this branch.
-- The upstream data providers' own rate limits were not probed.
+- The upstream data providers' own rate limits were not probed, and neither was this account's Workers
+  request quota — both are dashboard facts. Likewise, consumers of the relay outside this repository
+  cannot be enumerated from the code: only from live traffic logs.
