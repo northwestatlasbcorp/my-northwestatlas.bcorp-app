@@ -216,10 +216,13 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
 - CDN assets are not self-hosted, so availability depends on jsDelivr and cdnjs.
 - `og-image-enhanced.png` is 1440×736. The declared dimensions now match the file; the Open Graph
   recommendation is 1200×630, so a re-export is still open.
-- Unreferenced assets remain at the root, kept pending owner decisions rather than deleted on
-  assumption: `logo-nwa.png` (765×475 brand master), the six partner logos
-  (`rosteh`, `rost`, `veb-rf`, `rshb-inteh`, `minpromtorg`, `ros-eximbank` — publicly served, though no
-  page claims a relationship with them), and five `placeholder.*` files left over from a UI kit.
+- *Closed on 2026-10-12:* the unreferenced root assets are gone. Eleven files were removed by owner
+  decision after a full-history audit (443 commits): five `placeholder.*` leftovers from a UI kit that
+  no page ever referenced, and six partner logos (`rosteh`, `rost`, `veb-rf`, `rshb-inteh`,
+  `minpromtorg`, `ros-eximbank`) that an earlier index.html displayed between 2025-10 and 2026-06 and
+  that kept answering 200 after the block was removed. Git history still contains them - it was
+  deliberately not rewritten. `logo-nwa.png` (765×475 brand master) stays temporarily as the source
+  for the logo optimization and leaves the web root once the derived assets are confirmed.
 - *Closed on 2026-10-11:* `NWA-SuisseMono-400.woff2` (Suisse Int'l Mono, a commercial face with no
   licence in the repository) is out of the bundle; mono roles run on the already-bundled OFL face.
   `fonts/LICENSES.md` records each file with its family, version, glyph count, size and the licence
