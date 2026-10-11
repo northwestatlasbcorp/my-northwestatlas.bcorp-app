@@ -96,6 +96,23 @@ FONT_SHIP_SECTION = "## What is shipped"
 FONT_LICENCE_INDEX = "fonts/LICENSES.md"
 FONT_LICENCE_TEXT = "fonts/OFL.txt"
 OPEN_FONT_LICENCE_MARK = "Open Font License"
+# OFL condition 3: a Modified Version may not carry a Reserved Font Name as the name it is presented
+# under, and under the licence's own definition a subset re-encoded to WOFF2 *is* a Modified Version
+# (glyphs deleted, format changed). These are the names the upstream licences of the faces we ship
+# reserve, so a build cannot quietly put them back into a family name - the names in the binaries and
+# in fonts/nwa-fonts.css must be ours. fonts/LICENSES.md records why each file is named as it is, and
+# scripts/check_font_names.py runs the same rule against the binaries themselves (this gate is
+# dependency-free, so it reads the audit record and the CSS rather than parsing WOFF2).
+OFL_RESERVED_FONT_NAMES = {
+    "Plex": "IBM Plex Mono, Copyright 2017 IBM Corp.",
+    "Playfair Display": "Playfair Display, Copyright 2017 The Playfair Display Project Authors",
+}
+
+# The only lawful reasons a bundled file may keep a reserved name: it is the upstream file, unmodified,
+# or the copyright holder granted explicit written permission (OFL condition 3). Map filename to that
+# evidence - and do not add an entry to make a build pass; rename the font instead.
+RESERVED_NAME_EXCEPTIONS: dict[str, str] = {}
+
 LICENCE_UNRESOLVED_PHRASES = (
     "not in this repository",
     "unconfirmed",
@@ -413,6 +430,100 @@ def check_font_licences() -> list[str]:
     return errors
 
 
+def _notice_reserved_names(notice: str) -> set[str]:
+    """Reserved Font Names declared in a licence notice, tolerating wrapped lines.
+
+    Only the two shapes an upstream notice actually uses are matched - `Reserved Font Name: "X"` and
+    `with Reserved Font Name "X"` - because the OFL body itself quotes the phrase "Reserved Font Name"
+    in its definitions, and that is a term being defined, not a name being reserved.
+    """
+    flat = " ".join(notice.split())
+    found = re.findall(r'Reserved Font Names?:\s*"([^"]+)"|with Reserved Font Name\s+"([^"]+)"', flat)
+    return {first or second for first, second in found if first or second}
+
+
+def _markdown_row(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+
+def _markdown_column(cells: list[str], startswith: str) -> int | None:
+    for index, cell in enumerate(cells):
+        if cell.lower().startswith(startswith):
+            return index
+    return None
+
+
+def _shipped_font_rows(section: str) -> tuple[list[str], list[list[str]]]:
+    """Header cells and body rows of the first markdown table in a LICENSES.md section."""
+    lines = [line for line in section.splitlines() if line.strip().startswith("|")]
+    if len(lines) < 2:
+        return [], []
+    header = _markdown_row(lines[0])
+    rows = [_markdown_row(line) for line in lines[1:]]
+    return header, [row for row in rows if len(row) == len(header) and set("".join(row)) - set("-: ")]
+
+
+def check_font_reserved_names() -> list[str]:
+    """No file we built may present itself under a Reserved Font Name (OFL condition 3).
+
+    Two places a name is "presented": the `@font-face` families in fonts/nwa-fonts.css, and the
+    internal family name recorded in fonts/LICENSES.md's table for each binary. The gate reads the
+    record rather than the WOFF2 - it has to stay dependency-free - so scripts/check_font_names.py
+    is the companion that reads the files themselves.
+    """
+    notice = ROOT / FONT_LICENCE_TEXT
+    reserved = set(OFL_RESERVED_FONT_NAMES)
+    if notice.is_file():
+        declared = _notice_reserved_names(notice.read_text(encoding="utf-8", errors="replace"))
+        for name in sorted(declared):
+            if name not in OFL_RESERVED_FONT_NAMES:
+                return [
+                    f"{FONT_LICENCE_TEXT}: declares a Reserved Font Name {name!r} that this map has no "
+                    "rule for - add the name to OFL_RESERVED_FONT_NAMES, or rename the font"
+                ]
+        reserved |= declared
+
+    def offending(value: str) -> list[str]:
+        return sorted(name for name in reserved if name in value)
+
+    errors: list[str] = []
+
+    css = ROOT / "fonts" / "nwa-fonts.css"
+    if css.is_file():
+        sheet = css.read_text(encoding="utf-8", errors="replace")
+        families = dict.fromkeys(
+            found.strip().strip("\'\"") for found in re.findall(r"font-family\s*:\s*([^;}]+)", sheet)
+        )
+        for family in families:
+            for name in offending(family):
+                errors.append(
+                    f"fonts/nwa-fonts.css: @font-face family {family!r} uses the Reserved Font Name "
+                    f"{name!r} of {OFL_RESERVED_FONT_NAMES.get(name, 'an upstream licence')} - a subset "
+                    "is a Modified Version, so the face has to be named as ours"
+                )
+
+    index = ROOT / FONT_LICENCE_INDEX
+    if index.is_file():
+        section = font_licence_section(index.read_text(encoding="utf-8", errors="replace"))
+        header, rows = _shipped_font_rows(section)
+        family_at, file_at = _markdown_column(header, "family"), _markdown_column(header, "file")
+        if family_at is None:
+            return errors
+        for row in rows:
+            filename = re.search(r"`([^`]+\.woff2)`", row[file_at] if file_at is not None else "")
+            if filename and filename.group(1) in RESERVED_NAME_EXCEPTIONS:
+                continue
+            for name in offending(row[family_at]):
+                errors.append(
+                    f"{FONT_LICENCE_INDEX}: the {header[family_at]} recorded for "
+                    f"{filename.group(1) if filename else row[file_at]!r} is a Reserved Font Name "
+                    f"({name!r}, {OFL_RESERVED_FONT_NAMES.get(name, 'an upstream licence')}) - rename "
+                    "the face in the binary and in the CSS, or record the evidence that permits it in "
+                    "RESERVED_NAME_EXCEPTIONS"
+                )
+    return errors
+
+
 def check_indexability_consistency() -> list[str]:
     """The three indexing signals must agree: robots.txt, sitemap.xml, page meta.
 
@@ -516,6 +627,7 @@ CHECKS = (
     check_indexability_consistency,
     check_font_source_binaries,
     check_font_licences,
+    check_font_reserved_names,
     check_banned_phrases,
     check_secrets,
 )

@@ -13,6 +13,7 @@
     "test:worker": "node --test scripts/worker.test.mjs",
     "test:site": "python3 -m unittest discover -s scripts -p 'test_*.py'",
     "check:worker": "node --check nwa-data-proxy-worker.js",
+    "check:fonts": "python3 scripts/check_font_names.py",
     "worker:dev": "wrangler dev",
     "worker:dry-run": "wrangler deploy --dry-run",
     "worker:deploy": "wrangler deploy"

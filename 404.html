@@ -25,9 +25,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Display"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -45,7 +45,7 @@
             --ink-3: #6B7280;
             --ink-4: #4B5060;
             --serif: 'EB Garamond', Georgia, serif;
-            --display: 'Playfair Display', Georgia, serif;
+            --display: 'NWA Display', Georgia, serif;
             --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --ease: cubic-bezier(.16,1,.3,1);
         }

@@ -24,9 +24,9 @@
   <link rel="canonical" href="https://northwestatlas.com/">
   <link rel="icon" href="favicon.png">
   <link rel="preload" href="logo-nwa-centered.png" as="image" fetchpriority="high">
-  <link rel="preload" href="fonts/NWA-Playfair-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NWA-Display-300.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/NWA-EBGaramond-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/NWA-IBMPlexMono-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/NWA-Mono-300.woff2" as="font" type="font/woff2" crossorigin>
       <link rel="stylesheet" href="fonts/nwa-fonts.css">
     <!-- First-paint discipline: never reveal fallback type, then quietly fade in once core faces are ready. -->
     <style id="nwa-first-paint">
@@ -46,10 +46,10 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Display"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('300 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"')
+          doc.fonts.load('300 1em "NWA Mono"'),
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -69,8 +69,8 @@
       --ink-secondary: #6A6A72;
       --ink-tertiary: #3E3E46;
       --serif: 'EB Garamond', Georgia, serif;
-      --display: 'Playfair Display', Georgia, serif;
-      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+      --display: 'NWA Display', Georgia, serif;
+      --mono: 'NWA Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
       --spring: cubic-bezier(.16, 1, .3, 1);
       --ease: cubic-bezier(.4, 0, .2, 1);
       --border: rgba(197, 160, 89, .045);

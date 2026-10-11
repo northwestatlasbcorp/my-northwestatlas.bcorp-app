@@ -30,9 +30,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Display"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -70,8 +70,8 @@
         --indicator-crimson:     #B8243B;
 
         --serif:   'EB Garamond', Georgia, serif;
-        --display: 'Playfair Display', Georgia, serif;
-        --mono:    'IBM Plex Mono', 'Courier New', monospace;
+        --display: 'NWA Display', Georgia, serif;
+        --mono:    'NWA Mono', 'Courier New', monospace;
         --spring:  cubic-bezier(.16, 1, .3, 1);
         --ease:    cubic-bezier(.4, 0, .2, 1);
         --border:     rgba(197, 160, 89, .055);
@@ -1786,14 +1786,14 @@
 
             // Label
             ctx.fillStyle = n.ticker === 'NVDA' ? '#fff' : 'rgba(255,255,255,0.75)';
-            ctx.font = n.ticker === 'NVDA' ? '500 10px "IBM Plex Mono"' : '300 9px "IBM Plex Mono"';
+            ctx.font = n.ticker === 'NVDA' ? '500 10px "NWA Mono"' : '300 9px "NWA Mono"';
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             if (n.r > 12) ctx.fillText(n.ticker, n.x, n.y);
             else ctx.fillText(n.ticker, n.x, n.y + n.r + 11);
 
             // Impact percentage
             if (state.results && n.impact > 0) {
-                ctx.fillStyle = col; ctx.font = '400 8px "IBM Plex Mono"';
+                ctx.fillStyle = col; ctx.font = '400 8px "NWA Mono"';
                 ctx.fillText('-' + n.impact.toFixed(1) + '%', n.x, n.y + (n.r > 12 ? n.r + 12 : n.r + 22));
             }
 
@@ -1852,10 +1852,10 @@
                 const x = margin + j * cellW, y = margin + i * cellH;
                 ctx.fillStyle = v > 0 ? `rgba(197,160,89,${0.08 + v * 0.4})` : 'rgba(197,160,89,0.01)';
                 ctx.fillRect(x, y, cellW - 1, cellH - 1);
-                if (cellW > 28 && v > 0) { ctx.fillStyle = v > 0.6 ? 'rgba(237,233,227,0.8)' : 'rgba(237,233,227,0.3)'; ctx.font = '300 7px "IBM Plex Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(v.toFixed(1), x + cellW / 2, y + cellH / 2); }
+                if (cellW > 28 && v > 0) { ctx.fillStyle = v > 0.6 ? 'rgba(237,233,227,0.8)' : 'rgba(237,233,227,0.3)'; ctx.font = '300 7px "NWA Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(v.toFixed(1), x + cellW / 2, y + cellH / 2); }
             }
         }
-        ctx.fillStyle = 'rgba(237,233,227,0.4)'; ctx.font = '300 7px "IBM Plex Mono"';
+        ctx.fillStyle = 'rgba(237,233,227,0.4)'; ctx.font = '300 7px "NWA Mono"';
         for (let i = 0; i < n; i++) { ctx.save(); ctx.translate(margin + i * cellW + cellW / 2, margin - 5); ctx.rotate(-Math.PI / 4); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(tickers[i], 0, 0); ctx.restore(); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(tickers[i], margin - 5, margin + i * cellH + cellH / 2); }
     }
 

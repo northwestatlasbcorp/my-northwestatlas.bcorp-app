@@ -278,6 +278,64 @@ class VerifyTestCase(unittest.TestCase):
             (self.tmp / "fonts" / name).unlink()
         self.assertEqual(self.verify.check_font_licences(), [])
 
+    # OFL condition 3: a subset is a Modified Version, so it must not be presented under a Reserved
+    # Font Name. These fixtures cover both places the name can leak back in - the CSS family and the
+    # internal `name` records - plus the one door that is allowed to open.
+
+    RESERVED_TABLE = (
+        "# Font licences\n\n## What is shipped\n\n"
+        "| File | Family (`name` ID 1) | Licence |\n| --- | --- | --- |\n"
+        "| `NWA-Fixture-400.woff2` | {family} | SIL Open Font License 1.1 |\n\n"
+        "## Removed from the bundle\n\nnothing yet\n"
+    )
+
+    def test_css_family_may_not_use_a_reserved_font_name(self) -> None:
+        (self.tmp / "fonts" / "nwa-fonts.css").write_text(
+            "@font-face{font-family: 'IBM Plex Mono'; src: url('NWA-Fixture-400.woff2') format('woff2')}"
+        )
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("Reserved Font Name 'Plex'", findings[0])
+
+    def test_recorded_internal_family_may_not_be_a_reserved_font_name(self) -> None:
+        (self.tmp / "fonts" / "LICENSES.md").write_text(
+            self.RESERVED_TABLE.format(family="Playfair Display"), encoding="utf-8"
+        )
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("NWA-Fixture-400.woff2", findings[0])
+
+    def test_renamed_face_is_clean(self) -> None:
+        (self.tmp / "fonts" / "LICENSES.md").write_text(
+            self.RESERVED_TABLE.format(family="NWA Display"), encoding="utf-8"
+        )
+        self.assertEqual(self.verify.check_font_reserved_names(), [])
+
+    def test_reserved_name_needs_recorded_permission_or_an_unmodified_original(self) -> None:
+        (self.tmp / "fonts" / "LICENSES.md").write_text(
+            self.RESERVED_TABLE.format(family="Playfair Display"), encoding="utf-8"
+        )
+        self.assertTrue(self.verify.check_font_reserved_names())
+        saved = dict(self.verify.RESERVED_NAME_EXCEPTIONS)
+        try:
+            self.verify.RESERVED_NAME_EXCEPTIONS["NWA-Fixture-400.woff2"] = (
+                "unmodified upstream file, byte-identical to the author's release"
+            )
+            self.assertEqual(self.verify.check_font_reserved_names(), [])
+        finally:
+            self.verify.RESERVED_NAME_EXCEPTIONS.clear()
+            self.verify.RESERVED_NAME_EXCEPTIONS.update(saved)
+
+    def test_notice_may_not_reserve_a_name_the_checker_does_not_know(self) -> None:
+        (self.tmp / "fonts" / "OFL.txt").write_text(
+            "SIL OPEN FONT LICENSE Version 1.1\n"
+            "Copyright 2012 Someone. with Reserved Font Name \"Fira Sans\".\n",
+            encoding="utf-8",
+        )
+        findings = self.verify.check_font_reserved_names()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("OFL_RESERVED_FONT_NAMES", findings[0])
+
     def test_banned_claim_is_reported(self) -> None:
         self.write("index.html", self.read_page().replace("<p></p>", "") + "<p>B Corp Certified</p>")
         self.assertTrue(any("B Corp Certified" in f for f in self.verify.check_banned_phrases()))
@@ -312,7 +370,7 @@ class VerifyTestCase(unittest.TestCase):
     def test_checker_reports_a_clean_repository_summary(self) -> None:
         self.assertEqual(self.verify.run(), [])
         # Bump deliberately: adding a rule means adding its pass/fail fixtures above.
-        self.assertEqual(len(self.verify.CHECKS), 13)
+        self.assertEqual(len(self.verify.CHECKS), 14)
 
 
 if __name__ == "__main__":

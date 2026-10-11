@@ -6,35 +6,66 @@ Version 1.1 (SIL OFL 1.1), reproduced verbatim below. The per-family copyright
 notices required by OFL condition 2 are these, taken from the `name` records of
 the shipped binaries (name ID 0) and from the upstream repositories:
 
-  NWA-IBMPlexMono-300.woff2, NWA-IBMPlexMono-400.woff2
+  NWA-Mono-300.woff2, NWA-Mono-400.woff2
     Copyright 2017 IBM Corp. All rights reserved.
     IBM Plex(r) is a trademark of IBM Corp, registered in many jurisdictions
     worldwide. Reserved Font Name: "Plex".
     Upstream: https://github.com/IBM/plex (IBM Plex Mono, Version 2.3,
     designed by Mike Abbink with Bold Monday; the web build's own licence text
     is LICENSE.txt in that repository and states SIL OFL 1.1.)
+    These two files are Modified Versions under the OFL: subset to the
+    characters this site renders and re-encoded to WOFF2. Under condition 3 a
+    Modified Version may not use the Reserved Font Name, so they are
+    distributed as "NWA Mono" - in their own `name` records and in
+    fonts/nwa-fonts.css - while the copyright, trademark and licence records
+    above are kept verbatim inside the files and name ID 10 records what they
+    were built from. "IBM Plex" remains a trademark of IBM Corp; nothing here
+    is presented as an IBM product.
 
   NWA-EBGaramond-400.woff2, NWA-EBGaramond-400-italic.woff2,
   NWA-EBGaramond-500.woff2, NWA-EBGaramond-500-italic.woff2
     Copyright 2017 The EB Garamond Project Authors
     (https://github.com/octaviopardo/EBGaramond12)
     Upstream: https://github.com/octaviopardo/EBGaramond12 (Version 1.001,
-    Georg Duffner). No Reserved Font Name is declared in the files.
+    Georg Duffner). No Reserved Font Name is declared in the files, so the
+    upstream family name is kept: a subset may keep a name that nobody
+    reserved. Current upstream also carries "Copyright 2025 Deborah
+    Khodanovich" for the RCS citation glyphs; those glyphs are not in these
+    subsets (no codepoint above U+2E7F is present in any of the four files),
+    so the record here matches the file contents and is noted for anyone who
+    re-subsets from a current checkout.
 
-  NWA-Playfair-200.woff2, NWA-Playfair-300.woff2, NWA-Playfair-400.woff2
+  NWA-Display-200.woff2, NWA-Display-300.woff2, NWA-Display-400.woff2
     Copyright 2017 The Playfair Display Project Authors
     (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name
     "Playfair Display".
     Upstream: https://github.com/clauseggers/Playfair-Display (Version 1.203,
     Claus Eggers Sorensen).
+    Same treatment as NWA Mono: these are subset, re-encoded Modified
+    Versions, so they are distributed as "NWA Display" and the reserved name
+    appears only inside the retained copyright record. The upstream
+    repository's own OFL.txt (Playfair 2.2) no longer states a Reserved Font
+    Name, which is not a licence to use one: our files assert the reservation
+    in their own ID 0, and the more protective reading governs.
+
+  The only route back to the upstream names is explicit written permission
+  from the corresponding copyright holder (OFL condition 3), i.e. from IBM for
+  "Plex" and from Claus Eggers Sorensen for "Playfair Display". Nothing in
+  this repository claims such permission. See fonts/LICENSES.md,
+  "Reserved Font Names and subsetting", for the reasoning and for the parts
+  that remain interpretive rather than settled.
 
 What that means for this repository, in one line each:
 
   condition 1  no font is sold by itself - it is served as part of a website.
+               This is a condition we meet, not an exception to condition 3.
   condition 2  the copyright notices and this licence accompany the fonts: this
-               file, plus the unchanged `name` records inside each binary.
-  condition 3  Reserved Font Names are used only for the unmodified upstream
-               outlines; see "Subsetting and OFL condition 3" in fonts/LICENSES.md.
+               file, plus the `name` records inside each binary that the subset
+               retained (ID 0 in all nine files; ID 7/8/9/13/14 in some -
+               fonts/LICENSES.md records which, per file).
+  condition 3  no Reserved Font Name is used by a file we built: the subsets
+               are named NWA Mono and NWA Display, internally and in CSS. EB
+               Garamond has nothing reserved, so its name is unchanged.
   condition 4  no IBM, Duffner or Eggers Sorensen name is used to promote this site
                beyond attributing the fonts.
   condition 5  the fonts stay under OFL 1.1 and are not re-licensed; pages rendered

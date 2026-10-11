@@ -63,7 +63,10 @@ npm ci
 npm run worker:dev                 # http://localhost:8787, uses wrangler.jsonc vars
 ```
 
-Checks need Python 3 with the standard library only; the Worker tooling needs Node. Verified on
+The gate needs Python 3 with the standard library only; the Worker tooling needs Node. One companion
+control, `scripts/check_font_names.py`, reads the font binaries themselves and therefore needs
+`fonttools` + `brotli` - it is deliberately not part of CI, and it exits `2` rather than reporting a
+clean run when the dependency is missing. Verified on
 Python 3.11.2, Node 22.22.3 and wrangler 4.149.0 (`package.json` declares `engines.node >=20`, which is
 the floor `node --test` and `Response` streams require — it is a declared floor, not a tested one).
 
@@ -75,10 +78,11 @@ npm run verify                      # static release checks
 npm run test:worker                 # node --test scripts/worker.test.mjs
 npm run test:site                   # python -m unittest discover -s scripts -p 'test_*.py'
 npm run check:worker                # node --check on the Worker
+npm run check:fonts                 # reads fonts/*.woff2 name records (needs fonttools, not CI)
 npx wrangler deploy --dry-run       # validates wrangler.jsonc and bundles the Worker
 ```
 
-`scripts/verify.py` is the gate CI runs. Twelve checks, all machine-checkable invariants of this
+`scripts/verify.py` is the gate CI runs. Fourteen checks, all machine-checkable invariants of this
 particular site — not generic linting:
 
 | Check | What it guarantees |
@@ -94,6 +98,7 @@ particular site — not generic linting:
 | indexability | `robots.txt`, `sitemap.xml` and the page's `robots` meta agree — no `noindex` page advertised in the sitemap, no `Disallow` without `noindex` |
 | font sources | no TTF/OTF/EOT in the public bundle; WOFF2 subsets only (policy in `fonts/LICENSES.md`) |
 | font licences | every `fonts/*.woff2` has its own row in `fonts/LICENSES.md`, no shipped row records an unresolved licence, no row names a file that is gone, and OFL faces ship with `fonts/OFL.txt` |
+| font reserved names | no file we built presents an upstream Reserved Font Name as its family - neither in `fonts/nwa-fonts.css` nor as the recorded `name` ID 1 - and every reservation `fonts/OFL.txt` declares has a rule in the checker (`OFL_RESERVED_FONT_NAMES`); the only way past it is `RESERVED_NAME_EXCEPTIONS`, which is for an unmodified upstream file or written permission |
 | claims | banned-phrase tripwire for certification language that has no document in `evidence/` |
 | secrets | private-key blocks, cloud key ids, tokens and credential-shaped assignments |
 
@@ -153,10 +158,13 @@ Worker; pushing `main` does not redeploy it.
    are the operator's own checks in the steps below.
 
    Font loading is a console check, not a page check: in DevTools run
-   `document.fonts.check('400 1em "IBM Plex Mono"')` on `/toolkit.html` and expect `true`, then confirm
+   `document.fonts.check('400 1em "NWA Mono"')` on `/toolkit.html` and expect `true`, then confirm
    `getComputedStyle(document.querySelector('.footer-meta-row')).fontFamily` on `/` starts with
-   `"IBM Plex Mono"`. Both should be true after the type swap; the first would also be true if a face
-   were merely declared, so the second is the one that proves the page uses it.
+   `"NWA Mono"`. Both should be true after the type swap; the first would also be true if a face
+   were merely declared, so the second is the one that proves the page uses it. The names are ours, not
+   the upstream ones: `NWA Mono` and `NWA Display` are subsets of IBM Plex Mono and Playfair Display,
+   and OFL condition 3 does not let a subset keep a Reserved Font Name, so a build that puts `"Plex"`
+   or `"Playfair Display"` back into a family name is rejected by `check_font_reserved_names`.
 
 Rolling back is asymmetric, and that is the point: a site change reverts through `main` (Pages republishes),
 while the Worker rolls back with `npx wrangler deployments list` (find the previous version id) and
@@ -183,9 +191,13 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   further for those documents. Edit both when changing CSP, and the checker cannot see that pairing.
 - **Inline CSS/JS per page** as described above.
 - **Type is local and licensed, and the checker enforces it.** Nine WOFF2 subsets under `fonts/`, all
-  SIL OFL 1.1, no hosted font request at any point: Playfair Display for display, EB Garamond for body,
-  IBM Plex Mono for every numeric and metadata role. The mono stack is one family across all pages, so a
-  re-subsetting or a rename is a documented, gated change (`fonts/LICENSES.md`, `check_font_licences`).
+  SIL OFL 1.1, no hosted font request at any point: `NWA Display` (Playfair Display) for display,
+  EB Garamond for body, `NWA Mono` (IBM Plex Mono) for every numeric and metadata role. The mono stack is
+  one family across all pages, so a re-subsetting or a rename is a documented, gated change
+  (`fonts/LICENSES.md`, `check_font_licences`, `check_font_reserved_names`). Two of the three families
+  carry a Reserved Font Name upstream and are therefore shipped under ours - in the binaries' `name`
+  records, in CSS, and in the `ctx.font` strings that the Contagion PNG export draws with; EB Garamond
+  declares nothing reserved and keeps its upstream name.
 - **Six pinned CDN libraries on two hosts** — `cdn.jsdelivr.net`: chart.js 4.4.0, luxon 3.3.0,
   chartjs-adapter-luxon 1.3.1, chartjs-plugin-zoom 2.0.1 (all in `toolkit.html`);
   `cdnjs.cloudflare.com`: html2canvas 1.4.1 and jsPDF 2.5.1 (`toolkit.html` and `contagion.html`,
@@ -205,11 +217,13 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
   (`rosteh`, `rost`, `veb-rf`, `rshb-inteh`, `minpromtorg`, `ros-eximbank` — publicly served, though no
   page claims a relationship with them), and five `placeholder.*` files left over from a UI kit.
 - *Closed on 2026-10-11:* `NWA-SuisseMono-400.woff2` (Suisse Int'l Mono, a commercial face with no
-  licence in the repository) is out of the bundle; mono roles run on the already-bundled IBM Plex Mono
-  (OFL 1.1). `fonts/LICENSES.md` records each file with its family, version, glyph count, size and the
-  licence record found inside the binary, and `fonts/OFL.txt` carries the licence text OFL condition 2
-  asks for. The remaining licensing judgement call — whether an OFL *subset* may keep a Reserved Font
-  Name — is written up there rather than decided silently.
+  licence in the repository) is out of the bundle; mono roles run on the already-bundled OFL face.
+  `fonts/LICENSES.md` records each file with its family, version, glyph count, size and the licence
+  record found inside the binary, and `fonts/OFL.txt` carries the licence text OFL condition 2 asks for.
+  The judgement call left open there - whether an OFL *subset* may keep a Reserved Font Name - was
+  settled the same day by not relying on it: the five subset files are distributed as `NWA Mono` and
+  `NWA Display`, and `scripts/check_font_names.py` reads the binaries themselves when fontTools is
+  available (`verify.py` stays stdlib-only, so it checks the record instead).
 - **The relay has no rate limiting and accepts caller-chosen query strings on `?url=` targets.**
   Consequences, in order of likelihood: (a) an unauthenticated client can spend this Worker's request
   quota — the plan's daily limit is a dashboard fact, not a repository fact, so treat it as the budget;
