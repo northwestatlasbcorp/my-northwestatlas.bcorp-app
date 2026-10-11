@@ -1,5 +1,9 @@
 name: verify
 
+# One gate for the whole repository: static release checks plus the tests that
+# protect the checker and the Cloudflare Worker. No deployment happens here -
+# Pages publishes from main and the Worker publishes through `npm run worker:deploy`.
+
 on:
   pull_request:
     branches: [main]
@@ -10,14 +14,34 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   verify:
     name: verify
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Static release checks
         run: python scripts/verify.py
+
+      - name: Release checker tests
+        run: python -m unittest discover -s scripts -p 'test_*.py' -v
+
+      - name: Data proxy tests
+        run: node --test scripts/worker.test.mjs
+
+      - name: Worker syntax check
+        run: node --check nwa-data-proxy-worker.js
