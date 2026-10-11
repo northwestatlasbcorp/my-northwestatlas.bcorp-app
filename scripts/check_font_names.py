@@ -72,6 +72,20 @@ def name_records(font) -> dict[int, str]:
     return found
 
 
+def user_facing_records(font) -> list[tuple[int, int, str]]:
+    """Every copy of every presenting record, per platform - not just the one this system prefers.
+
+    `getName` answers for one platform at a time, so a rename that rewrites the Windows (3,1) record and
+    forgets the Macintosh (1,0) twin still presents the old family on macOS. Reporting only the preferred
+    record would let exactly that pass, which is the failure the ID 10 note exists to catch.
+    """
+    found = []
+    for rec in sorted(font["name"].names, key=lambda r: (r.nameID, r.platformID, r.platEncID, r.langID)):
+        if rec.nameID in USER_FACING:
+            found.append((rec.nameID, rec.platformID, str(rec)))
+    return found
+
+
 def present_ids(font) -> set[int]:
     return {rec.nameID for rec in font["name"].names}
 
@@ -139,8 +153,8 @@ def check(fonts_dir: Path, root: Path, quiet: bool = False) -> list[str]:
         # compared against the reservation list from the notice, so an unrecorded file is still covered.
         # ID 0 (copyright) and ID 10 (our provenance note) name the upstream family on purpose - that
         # is the attribution condition 3 tells us to keep - so only the presented names are compared.
-        presented = {key: value for key, value in records.items() if key in USER_FACING}
-        for key, value in sorted(presented.items()):
+        presented = user_facing_records(font)
+        for key, platform, value in presented:
             for kind, matched, name in rfn_findings(value, reserved):
                 reason = (
                     f"presents the Reserved Font Name {name!r} as its own name"
@@ -149,8 +163,8 @@ def check(fonts_dir: Path, root: Path, quiet: bool = False) -> list[str]:
                     "(OFL-FAQ 5.4 forbids reusing individual words of a reservation in a Modified Version)"
                 )
                 problems.append(
-                    f"{path.name}: name ID {key}={value!r} {reason} - a subset is a Modified Version, so "
-                    "rename it (OFL condition 3)"
+                    f"{path.name}: name ID {key} (platform {platform})={value!r} {reason} - a subset is a "
+                    "Modified Version, so rename it (OFL condition 3)"
                 )
         for kind, matched, name in rfn_findings(path.name, reserved):
             problems.append(

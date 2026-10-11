@@ -230,9 +230,12 @@ Linear project `northwestatlas` is the work queue; PRs referencing `Closes NOR-<
 - **Font naming: two clarifications worth having in writing.** The conservative reading of OFL condition 3
   and OFL-FAQ 5.4 is what ships, and it is not the only reading: the restriction reaches the primary font
   name *as presented to the users*, and a `@font-face` family string is not surfaced by a browser the way
-  an installed font's name is. `Display` would also become available if the Playfair copyright holder
-  re-declared the reservation as `Playfair` alone, which is the single-word style OFL-FAQ 5.5 recommends -
-  an act of theirs, not an assumption we may make. Written permission from IBM (`Plex`) or Claus Eggers
+  an installed font's name is. The FAQ does grant one narrow allowance for webfonts - Functional
+  Equivalence, 2.7 and 2.8 - but it demands complete original metadata and effective access to the whole
+  font, and these subsets have neither, so it is not a route this bundle can take. `Display` would also
+  become available if the Playfair copyright holder re-declared the reservation as `Playfair` alone,
+  which is the single-word style OFL-FAQ 5.5 recommends - an act of theirs, not an assumption we may
+  make. Written permission from IBM (`Plex`) or Claus Eggers
   Sørensen (`Playfair Display`) puts the upstream names back; nothing in this repository claims it. The
   arguments and the open questions are recorded in [`fonts/LICENSES.md`](fonts/LICENSES.md).
 - **The relay has no rate limiting and accepts caller-chosen query strings on `?url=` targets.**

@@ -100,8 +100,7 @@ from OFL 1.0 and from secondary commentary, and the `grep` for each of them in `
 nothing. The quotation above is the file in this repository.
 
 So the question is not whether the design was altered - it was not - but **whether these files are
-Modified Versions at all**.
-They are, on the licence's own definition, for two independent reasons:
+Modified Versions at all**. They are, on the licence's own definition, for two independent reasons:
 
 - the licence defines a Modified Version as *"any derivative made by adding to, deleting, or
   substituting -- in part or in whole -- any of the components of the Original Version, by changing
@@ -122,6 +121,52 @@ changed, or the WOFF-specific metadata is incomplete, the font must be considere
 OFL restrictions would apply and the name of the font must be changed: any RFNs cannot be used"*. `NWA
 Mono` and `NWA Serif` follow that instruction, and the upstream `name` records that carry attribution are
 left byte-for-byte alone, exactly as condition 3 permits.
+
+### The one exception the FAQ does grant, and why these files do not qualify
+
+It is worth stating the allowance precisely, because it is the only place in the FAQ where a webfont may
+keep a reserved name, and it is narrower than "we only converted the format". OFL-FAQ 2.2: *"You are
+allowed to create, use and distribute a WOFF version of an OFL font without changing the font name, but
+only if the original font data remains unchanged except for WOFF compression, and WOFF-specific metadata
+is either omitted altogether or present and includes, unaltered, the contents of all equivalent metadata
+in the original font."* OFL-FAQ 2.7 extends that to optimization of any kind: *"If a webfont is optimized
+only in ways that preserve Functional Equivalence (see 2.8), then it may use RFNs, as it reasonably
+represents the Original Version"*. Functional Equivalence requires that the result *"Preserves original
+author, project and license metadata"*, including at a minimum copyright and authorship, the licence as
+stated in the Original Version, **any RFN declarations**, and a link back to the original project. The
+same entry adds that *"Some newer subsetting technologies may be able to subset in a way that allows users
+to effectively have access to the complete font, including smart font behaviour"* - and the
+"Webfonts and Reserved Font Names" page that expands on it records the converse explicitly: *"Removal,
+abbreviation or replacement of metadata may be in violation of the terms of the OFL, and even when OFL
+terms are met, the font would not meet the requirements for FE, so the font would need to be considered a
+Modified Version for which RFN restrictions apply."*
+
+Our nine files fail that test on two independent counts, which is why the bundle is renamed rather than
+argued about:
+
+- **the two variable display files are missing attribution records.** `NWA-Serif-200.woff2` and
+  `NWA-Serif-300.woff2` carry ID 0, 1, 2, 3, 4, 5, 6, 10, 14 and the axis records 256-270, and nothing
+  else: ID 7, 8, 9, 11, 12, 13 and 16, 17, 25 - trademark, notice, manufacturer, licence description and
+  the typographic family pair - are absent from the binaries we inherited, and their provenance is
+  unrecorded, so it cannot be established that the removal was ever complete or accurate. 2.2.2
+  anticipates exactly this: *"most WOFF conversion tools and online services do not meet the two
+  requirements listed above, and so their output must be considered a Modified Version."*
+- **no file in the bundle is functionally complete.** Each face covers 223 to 248 codepoints where the
+  upstream builds cover thousands. The variable axes do survive in the 200 and 300 files (`fvar`, `gvar`,
+  `STAT`, `HVAR` are present), so the *behaviour* is largely there, and the 400 file plus both mono files
+  keep the attribution set that ID 0, 5, 7, 8, 9, 11, 12, 13, 14 make up. What no file preserves is
+  completeness: a reader of these files cannot reach the font the upstream project distributes, which is
+  the requirement 2.7 and its "Functional Equivalence" page set ("whether the resulting font preserves the
+  completeness, behavior, quality and metadata of the original").
+
+So there is an exception in the FAQ, it is documented, and it is not available to this bundle: for the two
+variable files on both counts, for the other seven on completeness alone. That is a stronger position than
+"the licence grants nothing", and it is why the metadata fields were left exactly as they were found - an
+FE argument has to be made with the original records intact, and dropping them forecloses the argument.
+`scripts/check_font_names.py` therefore requires the attribution record condition 2 expects (ID 0) and our
+own provenance note (ID 10) in every file we built, and it compares **every platform's copy** of each
+presenting record rather than the one this system happens to prefer, because a rename that fixes the Windows
+record and leaves the Macintosh twin behind is the failure mode to watch for.
 
 ### An individual word of a reserved name is reserved too
 
@@ -197,8 +242,10 @@ stated plainly rather than argued away:
   family string is presented at all is a real question: a browser never shows it, while an installed font
   announces itself in every menu - and, for a webfont whose family is reused in a `ctx.font` canvas string
   or in a PDF print-out, it arguably is. That is the strongest argument for keeping an upstream name in a
-  web subset, and it is an argument about exposure, not a clause of the licence: nothing in OFL 1.1 or the
-  FAQ grants an exception for CSS, and 2.6 counts web delivery as modification rather than excusing it.
+  web subset, and it is an argument about exposure, not a clause of the licence: the FAQ's only concession
+  to web delivery is the Functional Equivalence test above (2.2, 2.7, 2.8), which is about metadata and
+  completeness rather than about how visible the name is, and 2.6 counts subsetting as modification
+  instead of excusing it.
 - Whether `Plex` is one word or the abbreviation of `IBM Plex Mono` cuts the other way for us, not for
   the checker. 5.4 is about *individual words*, and `NWA Mono` matches no declared word of the IBM
   reservation, so the mono files keep the shorter name they were given in the first rename. `NWA Plex
@@ -278,11 +325,13 @@ pyftsubset EBGaramond-Regular.ttf \
   --flavor=woff2 --output-file=fonts/NWA-EBGaramond-400.woff2
 ```
 
-Then, for a family whose licence reserves a name (IBM Plex and Playfair - not EB Garamond), set the
-presented names to the NWA family and record the provenance, leaving the attribution records alone. The
-name you choose must avoid **every word** of the reservation, because OFL-FAQ 5.4 says a Modified Version
-may not use an individual word of one; that is why the display files are `NWA Serif` and not
-`NWA Display`:
+Then decide the name. A subset is a Modified Version, so the presented name must avoid the reservation
+**and every individual word of it** - OFL-FAQ 5.4 - which is why the display files are `NWA Serif` and not
+`NWA Display`. Keep every `name` record upstream if you want the option of arguing Functional
+Equivalence under 2.7 one day - and rewrite each record on **every** platform, since a rename that updates
+only the Windows copy leaves the Macintosh twin presenting the old family. For a family
+whose licence reserves a name (IBM Plex and Playfair - not EB Garamond), set the presented names to the NWA
+family and record the provenance, leaving the attribution records alone:
 
 ```py
 from fontTools.ttLib import TTFont
