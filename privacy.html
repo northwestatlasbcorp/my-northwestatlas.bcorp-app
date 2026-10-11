@@ -176,12 +176,15 @@
     </style>
 
     <style id="nwa-accessibility-patch">
+      .skip-link { position: absolute; top: -100%; left: 1.5rem; background: var(--gold); color: var(--bg-deep); padding: .5rem 1rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; font-weight: 600; z-index: 300; border-radius: 0 0 3px 3px; text-decoration: none; transition: top .3s ease; }
+      .skip-link:focus { top: 0; }
       :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
       @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>
+    <a href="#mainContent" class="skip-link">Skip to content</a>
     <div class="nwa-page-border"></div>
     <div class="nwa-grain"></div>
     <div class="noise-overlay" aria-hidden="true"></div>

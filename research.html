@@ -53,7 +53,7 @@
         
         :root {
             --gold: #C5A059;
-            --gold-light: #E8D5B5;
+            --gold-light: #E2CFA0;
             --gold-dim: #8B6F4C;
             --gold-rgb: 197, 160, 89;
             
@@ -662,12 +662,15 @@
     </style>
 
     <style id="nwa-accessibility-patch">
+      .skip-link { position: absolute; top: -100%; left: 1.5rem; background: var(--gold); color: var(--navy-deep); padding: .5rem 1rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; font-weight: 600; z-index: 300; border-radius: 0 0 3px 3px; text-decoration: none; transition: top .3s ease; }
+      .skip-link:focus { top: 0; }
       :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
       @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="nwa-page-border"></div>
     <div class="nwa-grain"></div>
     <div class="nwa-status-bar"><div style="display:flex;align-items:center;"><span class="s-dot"></span> NWA RESEARCH — OPERATIONAL</div><div>INSTITUTIONAL INTELLIGENCE</div></div>
@@ -729,7 +732,7 @@
     </header>
 
     <!-- ==================== DOCUMENT ACCESS ==================== -->
-    <main class="viewer-section" aria-label="Document access">
+    <main id="main-content" class="viewer-section" aria-label="Document access">
         <section class="document-access" aria-labelledby="document-access-title">
             <div class="document-access-kicker">Limited circulation</div>
             <h2 id="document-access-title">The full monograph is available by request.</h2>

@@ -294,20 +294,23 @@
     </style>
 
     <style id="nwa-accessibility-patch">
+      .skip-link { position: absolute; top: -100%; left: 1.5rem; background: var(--gold); color: var(--void); padding: .5rem 1rem; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; font-weight: 600; z-index: 300; border-radius: 0 0 3px 3px; text-decoration: none; transition: top .3s ease; }
+      .skip-link:focus { top: 0; }
       :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
       @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <div class="noise" aria-hidden="true"></div>
 
-    <main role="alert">
+    <main id="main-content" role="alert">
         <div class="container">
             <div class="error-code" aria-hidden="true">404</div>
             <div class="error-line" aria-hidden="true"></div>
-            <div class="error-sub">Signal lost in transit</div>
+            <h1 class="error-sub">Signal lost in transit</h1>
             <p class="error-desc">
                 The institutional resource you are looking for does not exist, 
                 has been relocated, or is classified beyond your clearance level.
