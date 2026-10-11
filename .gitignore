@@ -1,0 +1,36 @@
+# The site is static: no build step, no committed dependencies.
+# Everything below is local tooling for the Cloudflare Worker and the font pipeline.
+node_modules/
+.wrangler/
+dist/
+.cache/
+npm-debug.log*
+
+# Secrets and local environment. Never commit real credentials, even for a Worker.
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Font pipeline scratch. The public bundle ships subset WOFF2 only (see fonts/LICENSES.md),
+# so source binaries are ignored on purpose; `git add -f` if a licence requires committing one.
+*.ttf
+*.otf
+fonts/_build/
+fonts/*.ufo/

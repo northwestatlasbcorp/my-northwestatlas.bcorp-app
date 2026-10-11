@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Served by GitHub Pages, which strips no header and adds none: this meta tag IS the CSP. frame-ancestors cannot work from a meta tag, so clickjacking protection needs a header-capable host (see README). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>North West Atlas | Asset Recovery & Cross-Border Enforcement</title>
     <meta name="description" content="Institutional framework for cross-border asset tracing, freezing orders, and recovery through Cayman Islands Grand Court and offshore jurisdictions.">
+    <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#080809">
     <link rel="canonical" href="https://northwestatlas.com/enforcement.html">
     <meta property="og:title" content="North West Atlas | Asset Recovery & Cross-Border Enforcement">
@@ -33,10 +36,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Serif"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "Suisse Intl Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -55,15 +57,15 @@
 
             --text-primary: #EDE9E3;
             --text-secondary: #9AA2B0;
-            --text-muted: #6A6A72;
+            --text-muted: #8A8A93;
 
             --border: rgba(197, 160, 89, 0.055);
             --border-hover: rgba(197, 160, 89, 0.14);
 
             --font-primary: 'EB Garamond', Georgia, serif;
-            --font-display: 'Playfair Display', Georgia, serif;
+            --font-display: 'NWA Serif', Georgia, serif;
             --font-sans: 'EB Garamond', Georgia, serif;
-            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --font-mono: 'NWA Mono', 'Courier New', monospace;
 
             --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
             --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
@@ -1032,7 +1034,7 @@
             margin-bottom: var(--space-xl);
         }
 
-        .footer-brand h4 {
+        .footer-brand h3 {
             font-family: var(--font-display);
             font-size: 0.92rem;
             font-weight: 300;
@@ -1049,7 +1051,7 @@
             opacity: 0.6;
         }
 
-        .footer-col h5 {
+        .footer-col h4 {
             font-family: var(--font-sans);
             font-size: 0.48rem;
             letter-spacing: 0.3em;
@@ -1435,24 +1437,24 @@
 
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h4>North West <span class="gold-text">Atlas</span> B Corp</h4>
+                    <h3>North West <span class="gold-text">Atlas</span> B Corp</h3>
                     <p>Institutional advisory and structured capital for technology and real assets. Cayman Islands enforcement division.</p>
                 </div>
                 <div class="footer-col">
-                    <h5>This Page</h5>
+                    <h4>This Page</h4>
                     <a href="#protocols">Protocols</a>
                     <a href="#lifecycle">Process</a>
                     <a href="#calculator">Calculator</a>
                 </div>
                 <div class="footer-col">
-                    <h5>Jurisdictions</h5>
+                    <h4>Jurisdictions</h4>
                     <a href="#">Cayman Islands</a>
                     <a href="#">British Virgin Islands</a>
                     <a href="#">United Kingdom</a>
                     <a href="#">UAE / DIFC</a>
                 </div>
                 <div class="footer-col">
-                    <h5>Contact</h5>
+                    <h4>Contact</h4>
                     <!--email_off--><a href="mailto:enforcement@northwestatlas.com">enforcement@northwestatlas.com</a><!--/email_off-->
                     <!--email_off--><a href="mailto:info@northwestatlas.com">info@northwestatlas.com</a><!--/email_off-->
                     <a href="/#contact">Main Inquiries</a>

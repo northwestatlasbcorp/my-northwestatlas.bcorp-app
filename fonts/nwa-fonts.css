@@ -1,24 +1,24 @@
 /* North West Atlas type system — locally hosted, WOFF2, no third-party font request. */
 @font-face {
-  font-family: 'Playfair Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 200;
   font-display: block;
-  src: url('NWA-Playfair-200.woff2') format('woff2');
+  src: url('NWA-Serif-200.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Playfair Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 300;
   font-display: block;
-  src: url('NWA-Playfair-300.woff2') format('woff2');
+  src: url('NWA-Serif-300.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Playfair Display';
+  font-family: 'NWA Serif';
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('NWA-Playfair-400.woff2') format('woff2');
+  src: url('NWA-Serif-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'EB Garamond';
@@ -49,23 +49,16 @@
   src: url('NWA-EBGaramond-500-italic.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'IBM Plex Mono';
+  font-family: 'NWA Mono';
   font-style: normal;
   font-weight: 300;
   font-display: block;
-  src: url('NWA-IBMPlexMono-300.woff2') format('woff2');
+  src: url('NWA-Mono-300.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'IBM Plex Mono';
+  font-family: 'NWA Mono';
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('NWA-IBMPlexMono-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Suisse Intl Mono';
-  font-style: normal;
-  font-weight: 300 400;
-  font-display: block;
-  src: url('NWA-SuisseMono-400.woff2') format('woff2');
+  src: url('NWA-Mono-400.woff2') format('woff2');
 }

@@ -1,14 +1,35 @@
 // NWA Data Proxy — Cloudflare Worker
-// Free-tier friendly market-data and intelligence feed layer.
-// Preferred client formats:
+// Market-data and RSS relay for the NWA Toolkit and Contagion Engine.
+//
+// Endpoints:
+//   /?health=1                      liveness + version
 //   /?quote=NVDA&interval=1m&range=1d
 //   /?daily=NVDA&range=1mo
 //   /?feed=techcrunch | verge-ai | wired-ai | venturebeat-ai | market-NVDA
-// Legacy format still supported:
-//   /?url=<encoded allowlisted target URL>
+//   /?url=<encoded target>          legacy, kept for older builds; same allow-list applies
+//
+// Security model (three independent gates):
+//   1. target host must be on ALLOWED_HOSTS
+//   2. target path must be on ALLOWED_PATH_PREFIXES and the scheme must be https
+//   3. cross-origin readers must come from an origin in NWA_ALLOWED_ORIGINS,
+//      otherwise no CORS header is emitted and the browser blocks the response
+//
+// Configuration (Cloudflare dashboard or wrangler.jsonc `vars`, never committed secrets):
+//   NWA_ALLOWED_ORIGINS  space- or comma-separated list, e.g.
+//                        "https://northwestatlas.com https://preview.example.pages.dev"
 
-const VERSION = 'NWA-DATA-PROXY-1.1.0';
+const VERSION = 'NWA-DATA-PROXY-1.2.1';
 const NWA_CHART_BASE = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://northwestatlas.com',
+  'https://www.northwestatlas.com',
+  'http://localhost:8787',
+  'http://127.0.0.1:8787',
+];
+
+const UPSTREAM_TIMEOUT_MS = 8000;
+const MAX_UPSTREAM_BYTES = 2 * 1024 * 1024; // charts and feeds are small; this is a misuse guard
 
 const TICKER_MAP = Object.freeze({
   NDX: '^NDX',
@@ -16,14 +37,14 @@ const TICKER_MAP = Object.freeze({
   SPX: '^GSPC',
   VIX: '^VIX',
   DJI: '^DJI',
-  DXY: 'DX-Y.NYB'
+  DXY: 'DX-Y.NYB',
 });
 
 const FEEDS = Object.freeze({
   'techcrunch': 'https://techcrunch.com/tag/artificial-intelligence/feed/',
   'verge-ai': 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml',
   'wired-ai': 'https://www.wired.com/feed/tag/ai/latest/rss',
-  'venturebeat-ai': 'https://feeds.feedburner.com/venturebeat/SZYF'
+  'venturebeat-ai': 'https://feeds.feedburner.com/venturebeat/SZYF',
 });
 
 const ALLOWED_HOSTS = new Set([
@@ -35,7 +56,7 @@ const ALLOWED_HOSTS = new Set([
   'wired.com',
   'www.theverge.com',
   'theverge.com',
-  'feeds.feedburner.com'
+  'feeds.feedburner.com',
 ]);
 
 const ALLOWED_PATH_PREFIXES = [
@@ -44,40 +65,89 @@ const ALLOWED_PATH_PREFIXES = [
   '/tag/artificial-intelligence/feed/',
   '/feed/tag/ai/latest/rss',
   '/rss/ai-artificial-intelligence/index.xml',
-  '/venturebeat/SZYF'
+  '/venturebeat/SZYF',
 ];
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
-  'Access-Control-Max-Age': '86400'
-};
+const SYMBOL_RE = /^[A-Za-z0-9.^=-]{1,16}$/;
+const ALLOWED_INTERVALS = new Set(['1m', '5m', '15m', '1h', '1d']);
+const ALLOWED_RANGES = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y']);
 
-function json(body, status = 200) {
+// Loopback is always accepted and cannot be configured away. Threat model: for a browser
+// to send Origin: http://localhost:PORT, code must already be running on the visitor's
+// machine, and every byte this relay returns is public upstream data. Without this
+// exemption, local development and the smoke test could not reach the deployed relay once
+// NWA_ALLOWED_ORIGINS is set - which is exactly the compatibility break this avoids.
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1', '0.0.0.0']);
+
+function isLoopbackOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    return (url.protocol === 'http:' || url.protocol === 'https:') && LOOPBACK_HOSTS.has(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
+function allowedOrigins(env) {
+  const raw = (env && env.NWA_ALLOWED_ORIGINS) || '';
+  const list = raw.split(/[\s,]+/).map((value) => value.trim().replace(/\/$/, '')).filter(Boolean);
+  return new Set(list.length ? list : DEFAULT_ALLOWED_ORIGINS);
+}
+
+/**
+ * CORS headers for this request. An Origin that is not allowed gets no CORS headers:
+ * the HTTP request still succeeds, but a foreign page cannot read the response body.
+ *
+ * This is a reader control for browsers, not authorization. A client with no Origin at
+ * all (curl, a batch job, a server-side import) is served in full - deliberately, since
+ * every byte here is public upstream data and some consumers are non-browser by nature.
+ * Abuse containment therefore lives in input validation, the short caches and the body
+ * cap, not in this function.
+ */
+function corsHeaders(request, env) {
+  const origin = request.headers.get('Origin');
+  if (!origin) return {};
+  const normalized = origin.replace(/\/$/, '');
+  if (!isLoopbackOrigin(normalized) && !allowedOrigins(env).has(normalized)) return {};
+  // Vary: Origin is mandatory here - the edge cache is keyed by URL, not by caller.
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
+  };
+}
+
+function json(body, status, extra = {}) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...CORS_HEADERS, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store',
-      'X-NWA-Version': VERSION }
+    headers: {
+      ...extra,
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+      'X-NWA-Version': VERSION,
+    },
   });
 }
 
 function isAllowedTarget(target) {
-  if (!['https:', 'http:'].includes(target.protocol)) return false;
+  if (target.protocol !== 'https:') return false; // no plain-HTTP relay
   if (!ALLOWED_HOSTS.has(target.hostname)) return false;
-  return ALLOWED_PATH_PREFIXES.some(prefix => target.pathname.startsWith(prefix));
+  return ALLOWED_PATH_PREFIXES.some((prefix) => target.pathname.startsWith(prefix));
 }
 
 function buildChartTarget(reqUrl, mode) {
   const rawSymbol = reqUrl.searchParams.get(mode) || reqUrl.searchParams.get('symbol');
-  if (!rawSymbol || !/^[A-Za-z0-9.^=-]{1,16}$/.test(rawSymbol)) return null;
+  if (!rawSymbol || !SYMBOL_RE.test(rawSymbol)) return null;
   const symbol = TICKER_MAP[rawSymbol.toUpperCase()] || rawSymbol.toUpperCase();
   const interval = mode === 'daily' ? '1d' : (reqUrl.searchParams.get('interval') || '1m');
   const range = reqUrl.searchParams.get('range') || (mode === 'daily' ? '1mo' : '1d');
-  const allowedIntervals = new Set(['1m', '5m', '15m', '1h', '1d']);
-  const allowedRanges = new Set(['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y']);
-  if (!allowedIntervals.has(interval) || !allowedRanges.has(range)) return null;
-  return new URL(`${NWA_CHART_BASE}${encodeURIComponent(symbol)}?interval=${interval}&range=${range}&includePrePost=false&events=div%2Csplit`);
+  if (!ALLOWED_INTERVALS.has(interval) || !ALLOWED_RANGES.has(range)) return null;
+  return new URL(
+    `${NWA_CHART_BASE}${encodeURIComponent(symbol)}?interval=${interval}&range=${range}&includePrePost=false&events=div%2Csplit`
+  );
 }
 
 function buildFeedTarget(reqUrl) {
@@ -91,62 +161,127 @@ function buildFeedTarget(reqUrl) {
   return FEEDS[key] ? new URL(FEEDS[key]) : null;
 }
 
-async function proxyTarget(target, request, ctx) {
-  if (!isAllowedTarget(target)) return json({ error: 'Target not allowed' }, 403);
+/**
+ * Read the upstream body with a hard byte limit.
+ *
+ * A guard on Content-Length alone does not bound anything: a chunked response has no
+ * such header, and a wrong one is trivial. Here the stream is consumed chunk by chunk,
+ * so the number of bytes this Worker ever holds (and re-serves) is actually capped,
+ * and the response we emit carries a truthful Content-Length afterwards.
+ */
+async function readCappedBody(upstream, limit) {
+  if (!upstream.body) return { body: null };
+  const reader = upstream.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > limit) {
+        await reader.cancel();
+        return { tooLarge: true };
+      }
+      chunks.push(value);
+    }
+  } catch {
+    try { await reader.cancel(); } catch { /* the stream is already gone */ }
+    return { failed: true };
+  }
+  if (total === 0) return { body: new Uint8Array(0), total };
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return { body: bytes, total };
+}
 
+
+async function proxyTarget(target, request, ctx, env) {
+  if (!isAllowedTarget(target)) return json({ error: 'Target not allowed' }, 403, corsHeaders(request, env));
+
+  const cors = corsHeaders(request, env);
   const cache = caches.default;
   const cacheKey = new Request(target.toString(), { method: 'GET' });
+
   const cached = await cache.match(cacheKey);
   if (cached) {
-    const h = new Headers(cached.headers);
-    Object.entries(CORS_HEADERS).forEach(([k, v]) => h.set(k, v));
-    h.set('X-NWA-Cache', 'HIT');
-    h.set('X-NWA-Version', VERSION);
-    return new Response(cached.body, { status: cached.status, headers: h });
+    const headers = new Headers(cached.headers);
+    Object.entries(cors).forEach(([key, value]) => headers.set(key, value));
+    headers.set('X-NWA-Cache', 'HIT');
+    headers.set('X-NWA-Version', VERSION);
+    return new Response(cached.body, { status: cached.status, headers });
   }
 
-  const isChart = target.pathname.startsWith('/v8/finance/chart/');
-  const upstream = await fetch(target.toString(), {
-    method: 'GET',
-    headers: {
-      'Accept': request.headers.get('Accept') || 'application/json, text/plain, */*',
-      'Accept-Language': 'en-US,en;q=0.9',
-      'User-Agent': 'Mozilla/5.0 NWA-Data-Layer/1.0'
-    },
-    cf: { cacheTtl: isChart ? 30 : 300, cacheEverything: true }
-  });
+  let upstream;
+  try {
+    upstream = await fetch(target.toString(), {
+      method: 'GET',
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      headers: {
+        Accept: request.headers.get('Accept') || 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'User-Agent': 'Mozilla/5.0 NWA-Data-Layer/1.0',
+      },
+      cf: { cacheTtl: target.pathname.startsWith('/v8/finance/chart/') ? 30 : 300, cacheEverything: true },
+    });
+  } catch (cause) {
+    // A hanging or refusing upstream must surface as a clean JSON error, not a Worker runtime error.
+    const timedOut = cause && (cause.name === 'TimeoutError' || cause.name === 'AbortError');
+    return json({ error: timedOut ? 'Upstream timed out' : 'Upstream unreachable' }, 502, cors);
+  }
 
+  // Content-Length is only a fast rejection: it can be absent (chunked) or a lie.
+  const declaredLength = Number(upstream.headers.get('Content-Length') || 0);
+  if (declaredLength > MAX_UPSTREAM_BYTES) {
+    return json({ error: 'Upstream response too large' }, 502, cors);
+  }
+
+  const limited = await readCappedBody(upstream, MAX_UPSTREAM_BYTES);
+  if (limited.tooLarge) return json({ error: 'Upstream response too large' }, 502, cors);
+  if (limited.failed) return json({ error: 'Upstream response could not be read' }, 502, cors);
+
+  const isChart = target.pathname.startsWith('/v8/finance/chart/');
   const headers = new Headers(upstream.headers);
-  Object.entries(CORS_HEADERS).forEach(([k, v]) => headers.set(k, v));
+  Object.entries(cors).forEach(([key, value]) => headers.set(key, value));
   headers.set('X-NWA-Cache', 'MISS');
   headers.set('X-NWA-Version', VERSION);
-  headers.set('Vary', 'Accept-Encoding');
+  headers.set('Vary', headers.get('Vary') ? `${headers.get('Vary')}, Origin` : 'Origin');
   headers.set('Cache-Control', isChart ? 'public, max-age=30, s-maxage=30' : 'public, max-age=300, s-maxage=300');
+  if (limited.total !== undefined) headers.set('Content-Length', String(limited.total));
 
-  const response = new Response(upstream.body, { status: upstream.status, headers });
+  const response = new Response(limited.body, { status: upstream.status, headers });
   if (upstream.ok) ctx.waitUntil(cache.put(cacheKey, response.clone()));
   return response;
 }
 
 export default {
   async fetch(request, env, ctx) {
-    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS_HEADERS });
-    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405);
+    const cors = corsHeaders(request, env);
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, 405, cors);
 
     const reqUrl = new URL(request.url);
     if (reqUrl.searchParams.has('health')) {
-      return json({ ok: true, version: VERSION, endpoints: ['quote', 'daily', 'feed'], ts: new Date().toISOString() }, 200);
+      return json({ ok: true, version: VERSION, endpoints: ['quote', 'daily', 'feed'], ts: new Date().toISOString() }, 200, cors);
     }
-    let target = null;
 
+    let target = null;
     if (reqUrl.searchParams.has('quote')) target = buildChartTarget(reqUrl, 'quote');
     else if (reqUrl.searchParams.has('daily')) target = buildChartTarget(reqUrl, 'daily');
     else if (reqUrl.searchParams.has('feed')) target = buildFeedTarget(reqUrl);
     else if (reqUrl.searchParams.has('url')) {
-      try { target = new URL(reqUrl.searchParams.get('url')); } catch { return json({ error: 'Invalid target URL' }, 400); }
+      try {
+        target = new URL(reqUrl.searchParams.get('url'));
+      } catch {
+        return json({ error: 'Invalid target URL' }, 400, cors);
+      }
     }
 
-    if (!target) return json({ error: 'Missing or invalid NWA data request' }, 400);
-    return proxyTarget(target, request, ctx);
-  }
+    if (!target) return json({ error: 'Missing or invalid NWA data request' }, 400, cors);
+    return proxyTarget(target, request, ctx, env);
+  },
 };

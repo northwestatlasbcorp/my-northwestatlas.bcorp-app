@@ -30,10 +30,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Serif"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "Suisse Intl Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -54,8 +53,8 @@
         --champagne-rgb:   197, 160, 89;
         --bone:            #EDE9E3;
         --bone-dim:        #9AA2B0;
-        --ink-secondary:   #6A6A72;
-        --ink-tertiary:    #3E3E46;
+        --ink-secondary: #8A8A93;
+        --ink-tertiary: #7E7E87;
 
         /* Functional indicator colors — NOT decorative */
         --indicator-green:       #34D399;
@@ -71,8 +70,8 @@
         --indicator-crimson:     #B8243B;
 
         --serif:   'EB Garamond', Georgia, serif;
-        --display: 'Playfair Display', Georgia, serif;
-        --mono:    'IBM Plex Mono', 'Courier New', monospace;
+        --display: 'NWA Serif', Georgia, serif;
+        --mono:    'NWA Mono', 'Courier New', monospace;
         --spring:  cubic-bezier(.16, 1, .3, 1);
         --ease:    cubic-bezier(.4, 0, .2, 1);
         --border:     rgba(197, 160, 89, .055);
@@ -342,7 +341,7 @@
         font-family: var(--mono); font-size: .56rem;
         padding: .35rem .6rem; outline: none; cursor: pointer;
         -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%236A6A72' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%238A8A93' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
         background-repeat: no-repeat; background-position: right .5rem center;
         padding-right: 1.4rem; letter-spacing: .08em;
         transition: border-color .4s;
@@ -599,7 +598,7 @@
         transition: border-color .4s;
     }
     .so-card:hover { border-color: var(--border-hover); }
-    .so-icon { font-size: .8rem; margin-bottom: .4rem; }
+    .so-icon { font-family: var(--mono); font-size: .5rem; letter-spacing: .18em; text-transform: uppercase; color: var(--champagne); margin-bottom: .45rem; }
     .so-card-title {
         font-family: var(--serif); font-size: .72rem;
         color: var(--bone); font-weight: 400; margin-bottom: .3rem;
@@ -903,7 +902,7 @@
                     <div class="ctrl-sep"></div>
                     <button class="ctrl-btn primary" id="playBtn">▶ Play Cascade</button>
                     <button class="ctrl-btn" id="resetBtn">↻ Reset</button>
-                    <button class="ctrl-btn" id="liveBtn" title="Fetch prices from NWA data layer">⚡ NWA Prices</button>
+                    <button class="ctrl-btn" id="liveBtn" title="Fetch prices from NWA data layer">◆ NWA Prices</button>
                 </div>
             </div>
         </div>
@@ -1589,8 +1588,8 @@
             badge.dataset.prevPrice = newPrice;
             const isPos = quote.changePercent >= 0; const col = isPos ? 'var(--indicator-green)' : 'var(--indicator-red-soft)'; const sign = isPos ? '+' : '';
             let freshIcon = '';
-            if (quote.freshness === 'stale') freshIcon = ' 🔴'; else if (quote.freshness === 'delayed') freshIcon = ' 🟡';
-            else if (quote.marketTime) { const ageSec = (NOW - quote.marketTime) / 1000; freshIcon = ageSec < 90 ? ' 🟢' : ageSec < 360 ? ' 🟡' : ' 🔴'; } else freshIcon = ' 🟢';
+            if (quote.freshness === 'stale') freshIcon = ' ○'; else if (quote.freshness === 'delayed') freshIcon = ' ◐';
+            else if (quote.marketTime) { const ageSec = (NOW - quote.marketTime) / 1000; freshIcon = ageSec < 90 ? ' ●' : ageSec < 360 ? ' ◐' : ' ○'; } else freshIcon = ' ●';
             badge.textContent = `$${newPrice.toFixed(2)} (${sign}${quote.changePercent.toFixed(2)}%)${freshIcon}`;
             badge.style.color = col; badge.style.borderColor = isPos ? 'var(--indicator-green-border)' : 'var(--indicator-red-border)';
             badge.style.background = isPos ? 'var(--indicator-green-dim)' : 'var(--indicator-red-dim)';
@@ -1609,11 +1608,11 @@
         else if (m.marginCalls >= 1) { soBadge.textContent = 'WARNING'; soBadge.className = 'badge badge-amber'; }
         else { soBadge.textContent = 'LOW RISK'; soBadge.className = 'badge badge-green'; }
         $('soGrid').innerHTML = `
-            <div class="so-card"><div class="so-icon">⚠️</div><div class="so-card-title">Margin Call Risk</div><div class="so-card-body">${mcallCompanies.length > 0 ? mcallCompanies.map(c => `<strong>${c.ticker}</strong> (${Math.min(95, Math.round(c.finalImpact * 1.5))}%)`).join(', ') : 'No margin calls at current shock level.'}</div><div class="so-card-val" style="color:${m.marginCalls > 0 ? 'var(--indicator-red-soft)' : 'var(--indicator-green)'}">${m.marginCalls} triggered</div></div>
-            <div class="so-card"><div class="so-icon">📉</div><div class="so-card-title">ETF / Fund Outflows</div><div class="so-card-body">AI-focused ETFs (BOTZ, AIQ, SMH) estimated outflows from forced selling.</div><div class="so-card-val" style="color:${m.etfOutflow > 10 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">~$${m.etfOutflow.toFixed(0)}B estimated</div></div>
-            <div class="so-card"><div class="so-icon">🏦</div><div class="so-card-title">Credit Event Risk</div><div class="so-card-body">${highLeverage.length > 0 ? 'High-leverage companies: ' + highLeverage.map(c => `<strong>${c.ticker}</strong> (${c.leverage}x)`).join(', ') : 'No immediate credit concerns.'}</div><div class="so-card-val" style="color:${highLeverage.length > 0 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">${highLeverage.length > 0 ? 'ELEVATED' : 'STABLE'}</div></div>
-            <div class="so-card"><div class="so-icon">🏛️</div><div class="so-card-title">Pension Fund Exposure</div><div class="so-card-body">US public pension funds hold est. ${(m.totalDestroyed * 0.003).toFixed(1)}% of AI sector. ${m.totalDestroyed > 500 ? '<strong>⚠ Rebalancing threshold likely breached.</strong>' : 'Below rebalancing threshold.'}</div><div class="so-card-val" style="color:${m.totalDestroyed > 500 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">$${(m.totalDestroyed * 0.003).toFixed(0)}B exposure</div></div>
-            <div class="so-card"><div class="so-icon">🔗</div><div class="so-card-title">Feedback + Flash Crash</div><div class="so-card-body">Second-order feedback +${m.feedback.toFixed(1)}%. VIX amplifier: ${m.amplifier}x. Flash crash probability: <strong style="color:${flashCrashProb > 50 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">${flashCrashProb}%</strong></div><div class="so-card-val" style="color:${m.feedback > 3 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">+${m.feedback.toFixed(1)}% feedback</div></div>
+            <div class="so-card"><div class="so-icon">MRG</div><div class="so-card-title">Margin Call Risk</div><div class="so-card-body">${mcallCompanies.length > 0 ? mcallCompanies.map(c => `<strong>${c.ticker}</strong> (${Math.min(95, Math.round(c.finalImpact * 1.5))}%)`).join(', ') : 'No margin calls at current shock level.'}</div><div class="so-card-val" style="color:${m.marginCalls > 0 ? 'var(--indicator-red-soft)' : 'var(--indicator-green)'}">${m.marginCalls} triggered</div></div>
+            <div class="so-card"><div class="so-icon">ETF</div><div class="so-card-title">ETF / Fund Outflows</div><div class="so-card-body">AI-focused ETFs (BOTZ, AIQ, SMH) estimated outflows from forced selling.</div><div class="so-card-val" style="color:${m.etfOutflow > 10 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">~$${m.etfOutflow.toFixed(0)}B estimated</div></div>
+            <div class="so-card"><div class="so-icon">CRD</div><div class="so-card-title">Credit Event Risk</div><div class="so-card-body">${highLeverage.length > 0 ? 'High-leverage companies: ' + highLeverage.map(c => `<strong>${c.ticker}</strong> (${c.leverage}x)`).join(', ') : 'No immediate credit concerns.'}</div><div class="so-card-val" style="color:${highLeverage.length > 0 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">${highLeverage.length > 0 ? 'ELEVATED' : 'STABLE'}</div></div>
+            <div class="so-card"><div class="so-icon">PEN</div><div class="so-card-title">Pension Fund Exposure</div><div class="so-card-body">US public pension funds hold est. ${(m.totalDestroyed * 0.003).toFixed(1)}% of AI sector. ${m.totalDestroyed > 500 ? '<strong>▲ Rebalancing threshold likely breached.</strong>' : 'Below rebalancing threshold.'}</div><div class="so-card-val" style="color:${m.totalDestroyed > 500 ? 'var(--indicator-orange)' : 'var(--indicator-green)'}">$${(m.totalDestroyed * 0.003).toFixed(0)}B exposure</div></div>
+            <div class="so-card"><div class="so-icon">FBK</div><div class="so-card-title">Feedback + Flash Crash</div><div class="so-card-body">Second-order feedback +${m.feedback.toFixed(1)}%. VIX amplifier: ${m.amplifier}x. Flash crash probability: <strong style="color:${flashCrashProb > 50 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">${flashCrashProb}%</strong></div><div class="so-card-val" style="color:${m.feedback > 3 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)'}">+${m.feedback.toFixed(1)}% feedback</div></div>
         `;
     }
 
@@ -1625,12 +1624,12 @@
         else if (srs >= 45) { badge.textContent = 'REDUCE'; badge.className = 'badge badge-amber'; }
         else { badge.textContent = 'MONITOR'; badge.className = 'badge badge-green'; }
         const hedges = [
-            { icon:'📉', title:'Put Options on NVDA', action: shock >= 35 ? `Evaluate ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Evaluate OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🔻', title:'SOXS / SMH Puts', action: `Scenario allocation example: ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
-            { icon:'🥇', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — evaluate GLD at 10–15%, TLT to 8–12%.` : `Evaluate Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
-            { icon:'💵', title:'Cash + Rotation', action: `Scenario cash range: ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotation examples: Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
+            { icon:'PUT', title:'Put Options on NVDA', action: shock >= 35 ? `Evaluate ${Math.round(100 - shock*0.6)}% strike puts, 3–6 month expiry.` : `Evaluate OTM puts as tail hedge.`, cost: shock >= 35 ? 'High (IV elevated)' : 'Low (<1%)', urgency: shock >= 40 ? 'IMMEDIATE' : 'OPTIONAL', color: shock >= 40 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'SOX', title:'SOXS / SMH Puts', action: `Scenario allocation example: ${Math.min(20, Math.round(srs/5))}% to inverse semiconductor positions.`, cost: Math.min(20, Math.round(srs/5)) + '% allocation', urgency: srs >= 60 ? 'HIGH' : 'MEDIUM', color: srs >= 60 ? 'var(--indicator-red-soft)' : 'var(--indicator-orange)' },
+            { icon:'AU', title:'Risk-Off: Gold + TLT', action: vix > 25 ? `VIX at ${vix} — evaluate GLD at 10–15%, TLT to 8–12%.` : `Evaluate Gold (5%) + 20yr Treasuries (5%).`, cost: '10–27% reallocation', urgency: vix > 30 ? 'HIGH' : 'LOW', color: vix > 30 ? 'var(--indicator-orange)' : 'var(--indicator-green)' },
+            { icon:'CSH', title:'Cash + Rotation', action: `Scenario cash range: ${srs>=70?'35–45%':srs>=50?'20–30%':'10–15%'}. Rotation examples: Energy, Healthcare, Utilities.`, cost: (srs>=70?'35–45%':srs>=50?'20–30%':'10–15%') + ' cash', urgency: srs >= 70 ? 'CRITICAL' : 'PLANNED', color: srs >= 70 ? 'var(--indicator-red-soft)' : 'var(--bone-dim)' }
         ];
-        $('hedgeGrid').innerHTML = hedges.map(h => `<div class="hedge-card"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;"><span style="font-size:.8rem;">${h.icon}</span><span style="font-family:var(--serif);font-size:.68rem;color:var(--bone);font-weight:400;">${sanitizeText(h.title)}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;background:rgba(var(--champagne-rgb),.03);color:${h.color};">${sanitizeText(h.urgency)}</span></div><p style="font-size:.58rem;color:var(--ink-secondary);line-height:1.7;margin-bottom:.4rem;">${sanitizeText(h.action)}</p><div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-tertiary);padding-top:.3rem;border-top:0.5px solid var(--border);">Cost: <span style="color:var(--bone-dim);">${sanitizeText(h.cost)}</span></div></div>`).join('');
+        $('hedgeGrid').innerHTML = hedges.map(h => `<div class="hedge-card"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;"><span style="font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--champagne);">${h.icon}</span><span style="font-family:var(--serif);font-size:.68rem;color:var(--bone);font-weight:400;">${sanitizeText(h.title)}</span><span style="margin-left:auto;font-family:var(--mono);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;background:rgba(var(--champagne-rgb),.03);color:${h.color};">${sanitizeText(h.urgency)}</span></div><p style="font-size:.58rem;color:var(--ink-secondary);line-height:1.7;margin-bottom:.4rem;">${sanitizeText(h.action)}</p><div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-tertiary);padding-top:.3rem;border-top:0.5px solid var(--border);">Cost: <span style="color:var(--bone-dim);">${sanitizeText(h.cost)}</span></div></div>`).join('');
     }
 
     function renderInstitutionalMetrics() {
@@ -1640,7 +1639,7 @@
         $('srsScore').style.color = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
         $('srsBar').style.width = srs + '%';
         $('srsBar').style.background = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
-        $('srsLabel').textContent = srs >= 70 ? '⚠ CRITICAL' : srs >= 45 ? '◎ ELEVATED' : '✓ MODERATE';
+        $('srsLabel').textContent = srs >= 70 ? '▲ CRITICAL' : srs >= 45 ? '◎ ELEVATED' : '✓ MODERATE';
         $('srsLabel').style.color = srs >= 70 ? 'var(--indicator-red-soft)' : srs >= 45 ? 'var(--indicator-orange)' : 'var(--indicator-green)';
         const m = state.results.meta;
         $('srsComponents').innerHTML = [
@@ -1787,21 +1786,21 @@
 
             // Label
             ctx.fillStyle = n.ticker === 'NVDA' ? '#fff' : 'rgba(255,255,255,0.75)';
-            ctx.font = n.ticker === 'NVDA' ? '500 10px "IBM Plex Mono"' : '300 9px "IBM Plex Mono"';
+            ctx.font = n.ticker === 'NVDA' ? '500 10px "NWA Mono"' : '300 9px "NWA Mono"';
             ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
             if (n.r > 12) ctx.fillText(n.ticker, n.x, n.y);
             else ctx.fillText(n.ticker, n.x, n.y + n.r + 11);
 
             // Impact percentage
             if (state.results && n.impact > 0) {
-                ctx.fillStyle = col; ctx.font = '400 8px "IBM Plex Mono"';
+                ctx.fillStyle = col; ctx.font = '400 8px "NWA Mono"';
                 ctx.fillText('-' + n.impact.toFixed(1) + '%', n.x, n.y + (n.r > 12 ? n.r + 12 : n.r + 22));
             }
 
             // Margin call warning icon
             if (isMCall) {
                 ctx.fillStyle = '#D94F4F'; ctx.font = 'bold 9px sans-serif';
-                ctx.fillText('⚠', n.x + n.r * 0.5, n.y - n.r * 0.5);
+                ctx.fillText('▲', n.x + n.r * 0.5, n.y - n.r * 0.5);
             }
         });
 
@@ -1822,7 +1821,7 @@
                 $('gttImpact').textContent = '-' + hoveredNode.impact.toFixed(1) + '%'; $('gttImpact').style.color = impactColor(hoveredNode.impact);
                 $('gttBeta').textContent = (d.beta || 0).toFixed(2);
                 $('gttRevExp').textContent = Math.round((d.revExp || 0) * 100) + '%';
-                $('gttMCall').textContent = d.mcallTriggered ? '⚠ TRIGGERED' : 'Safe';
+                $('gttMCall').textContent = d.mcallTriggered ? '▲ TRIGGERED' : 'Safe';
                 $('gttMCall').style.color = d.mcallTriggered ? 'var(--indicator-red)' : 'var(--indicator-green)';
                 $('gttMech').textContent = d.mechanism || '';
                 let tx = hoveredNode.x + 20, ty = hoveredNode.y - 20;
@@ -1853,10 +1852,10 @@
                 const x = margin + j * cellW, y = margin + i * cellH;
                 ctx.fillStyle = v > 0 ? `rgba(197,160,89,${0.08 + v * 0.4})` : 'rgba(197,160,89,0.01)';
                 ctx.fillRect(x, y, cellW - 1, cellH - 1);
-                if (cellW > 28 && v > 0) { ctx.fillStyle = v > 0.6 ? 'rgba(237,233,227,0.8)' : 'rgba(237,233,227,0.3)'; ctx.font = '300 7px "IBM Plex Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(v.toFixed(1), x + cellW / 2, y + cellH / 2); }
+                if (cellW > 28 && v > 0) { ctx.fillStyle = v > 0.6 ? 'rgba(237,233,227,0.8)' : 'rgba(237,233,227,0.3)'; ctx.font = '300 7px "NWA Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(v.toFixed(1), x + cellW / 2, y + cellH / 2); }
             }
         }
-        ctx.fillStyle = 'rgba(237,233,227,0.4)'; ctx.font = '300 7px "IBM Plex Mono"';
+        ctx.fillStyle = 'rgba(237,233,227,0.4)'; ctx.font = '300 7px "NWA Mono"';
         for (let i = 0; i < n; i++) { ctx.save(); ctx.translate(margin + i * cellW + cellW / 2, margin - 5); ctx.rotate(-Math.PI / 4); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(tickers[i], 0, 0); ctx.restore(); ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(tickers[i], margin - 5, margin + i * cellH + cellH / 2); }
     }
 

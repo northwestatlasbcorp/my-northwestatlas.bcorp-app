@@ -1,0 +1,71 @@
+name: verify
+
+# Two jobs, no deployment - Pages publishes from main and the Worker publishes
+# through `npm run worker:deploy`.
+#
+#   verify       the stdlib-only release gate plus the test suites. Installs nothing
+#                with pip, on purpose: `scripts/verify.py` must stay runnable anywhere.
+#   check-fonts  the deep font licence control, `scripts/check_font_names.py`. It has
+#                to parse WOFF2 binaries, so it gets its own job with fontTools and
+#                brotli pinned to the versions the audit in fonts/LICENSES.md was run
+#                with. The script never exits 0 when the dependency is missing (it
+#                exits 2), so a broken install fails this job rather than passing it.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Static release checks
+        run: python scripts/verify.py
+
+      - name: Release checker tests
+        run: python -m unittest discover -s scripts -p 'test_*.py' -v
+
+      - name: Data proxy tests
+        run: node --test scripts/worker.test.mjs
+
+      - name: Worker syntax check
+        run: node --check nwa-data-proxy-worker.js
+
+  check-fonts:
+    name: check-fonts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install the pinned font toolchain
+        run: python -m pip install --disable-pip-version-check 'fonttools==4.66.1' 'brotli==1.2.0'
+
+      - name: Deep font licence control
+        run: python scripts/check_font_names.py

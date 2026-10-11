@@ -1,9 +1,20 @@
 {
+  // Data relay used by toolkit.html and contagion.html.
+  // Deploy: `npm run worker:dry-run`, then `npm run worker:deploy`.
+  // wrangler is a devDependency, so the local $schema path resolves after `npm ci`.
+  // Any secret goes through `wrangler secret put NAME` - never into this file.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nwabcorp-cors-proxy",
   "main": "nwa-data-proxy-worker.js",
   "compatibility_date": "2026-06-13",
   "observability": { "enabled": true },
   "workers_dev": true,
-  "preview_urls": false
+  "preview_urls": false,
+  "vars": {
+    // Origins allowed to read responses from a browser. Space-separated.
+    // A request from any other Origin is served without CORS headers, so the
+    // foreign page cannot read the body while server-to-server calls keep working.
+    // Preview deployments must add their own host here.
+    "NWA_ALLOWED_ORIGINS": "https://northwestatlas.com https://www.northwestatlas.com"
+  }
 }

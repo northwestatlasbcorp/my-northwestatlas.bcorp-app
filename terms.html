@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Served by GitHub Pages, which strips no header and adds none: this meta tag IS the CSP. frame-ancestors cannot work from a meta tag, so clickjacking protection needs a header-capable host (see README). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>NWA | Terms of Use</title>
     <meta name="description" content="North West Atlas B Corp — Terms of use, platform access, and usage agreement for institutional counterparties.">
     <meta name="theme-color" content="#080809">
@@ -35,10 +37,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Serif"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "Suisse Intl Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -50,9 +51,9 @@
             --gold: #C5A059; --gold-dim: #8B6F4C; --gold-light: #E2CFA0; --gold-rgb: 197, 160, 89;
             --bg-deep: #080809; --bg-sidebar: #101012; --bg-surface: #101012; --bg-card: rgba(255, 255, 255, 0.012);
             --border: rgba(197, 160, 89, 0.06); --border-hover: rgba(197, 160, 89, 0.15); --border-active: rgba(197, 160, 89, 0.35);
-            --text-main: #EDE9E3; --text-secondary: #9AA2B0; --text-muted: #3E3E46; --text-clause: #6A6A72;
-            --font-serif: 'EB Garamond', Georgia, serif; --font-display: 'Playfair Display', Georgia, serif;
-            --font-sans: 'EB Garamond', Georgia, serif; --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            --text-main: #EDE9E3; --text-secondary: #9AA2B0; --text-muted: #7E7E87; --text-clause: #8A8A93;
+            --font-serif: 'EB Garamond', Georgia, serif; --font-display: 'NWA Serif', Georgia, serif;
+            --font-sans: 'EB Garamond', Georgia, serif; --font-mono: 'NWA Mono', 'Courier New', monospace;
             --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1); --radius: 4px; --radius-sm: 2px; --sidebar-width: 320px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -176,12 +177,15 @@
     </style>
 
     <style id="nwa-accessibility-patch">
+      .skip-link { position: absolute; top: -100%; left: 1.5rem; background: var(--gold); color: var(--bg-deep); padding: .5rem 1rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; font-weight: 600; z-index: 300; border-radius: 0 0 3px 3px; text-decoration: none; transition: top .3s ease; }
+      .skip-link:focus { top: 0; }
       :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
       @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>
+    <a href="#mainContent" class="skip-link">Skip to content</a>
     <div class="nwa-page-border"></div>
     <div class="nwa-grain"></div>
     <div class="noise-overlay" aria-hidden="true"></div>

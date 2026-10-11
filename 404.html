@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Served by GitHub Pages, which strips no header and adds none: this meta tag IS the CSP. frame-ancestors cannot work from a meta tag, so clickjacking protection needs a header-capable host (see README). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>404 · Signal Lost | North West Atlas B Corp</title>
     <meta name="robots" content="noindex, nofollow">
 
@@ -25,10 +27,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Serif"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "Suisse Intl Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -37,17 +38,17 @@
 <style>
         :root {
             --gold: #C5A059;
-            --gold-light: #E8D5B5;
+            --gold-light: #E2CFA0;
             --gold-dim: #8B6F4C;
             --gold-rgb: 197, 160, 89;
-            --void: #060607;
+            --void: #080809;
             --ink-1: #EDE9E3;
             --ink-2: #9AA2B0;
-            --ink-3: #6B7280;
-            --ink-4: #4B5060;
+            --ink-3: #8A8A93;
+            --ink-4: #7E7E87;
             --serif: 'EB Garamond', Georgia, serif;
-            --display: 'Playfair Display', Georgia, serif;
-            --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --display: 'NWA Serif', Georgia, serif;
+            --mono: 'NWA Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
             --ease: cubic-bezier(.16,1,.3,1);
         }
 
@@ -57,7 +58,7 @@
             height: 100%;
             background: var(--void);
             color: var(--ink-2);
-            font-family: var(--sans);
+            font-family: var(--serif);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -151,7 +152,7 @@
 
         /* Subtitle */
         .error-sub {
-            font-family: var(--sans);
+            font-family: var(--mono);
             font-size: 0.6rem;
             font-weight: 400;
             letter-spacing: 0.5em;
@@ -181,7 +182,7 @@
             align-items: center;
             gap: .8rem;
             text-decoration: none;
-            font-family: var(--sans);
+            font-family: var(--mono);
             font-size: 0.6rem;
             letter-spacing: 0.25em;
             text-transform: uppercase;
@@ -227,7 +228,7 @@
         }
 
         .error-nav a {
-            font-family: var(--sans);
+            font-family: var(--mono);
             font-size: 0.55rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -262,7 +263,7 @@
             position: fixed;
             bottom: 2rem;
             left: 2.5rem;
-            font-family: var(--sans);
+            font-family: var(--mono);
             font-size: 0.42rem;
             letter-spacing: 0.55em;
             text-transform: uppercase;
@@ -293,20 +294,23 @@
     </style>
 
     <style id="nwa-accessibility-patch">
+      .skip-link { position: absolute; top: -100%; left: 1.5rem; background: var(--gold); color: var(--void); padding: .5rem 1rem; font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; font-weight: 600; z-index: 300; border-radius: 0 0 3px 3px; text-decoration: none; transition: top .3s ease; }
+      .skip-link:focus { top: 0; }
       :focus-visible { outline: 2px solid #E2CFA0; outline-offset: 4px; }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
       @media (prefers-contrast: more) { body { color: #EDE9E3; } }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <div class="noise" aria-hidden="true"></div>
 
-    <main role="alert">
+    <main id="main-content" role="alert">
         <div class="container">
             <div class="error-code" aria-hidden="true">404</div>
             <div class="error-line" aria-hidden="true"></div>
-            <div class="error-sub">Signal lost in transit</div>
+            <h1 class="error-sub">Signal lost in transit</h1>
             <p class="error-desc">
                 The institutional resource you are looking for does not exist, 
                 has been relocated, or is classified beyond your clearance level.

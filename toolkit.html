@@ -69,10 +69,9 @@
         }
         if (!doc.fonts || !doc.fonts.load) { reveal('nwa-fonts-timeout'); return; }
         var core = [
-          doc.fonts.load('300 1em "Playfair Display"'),
+          doc.fonts.load('300 1em "NWA Serif"'),
           doc.fonts.load('400 1em "EB Garamond"'),
-          doc.fonts.load('400 1em "IBM Plex Mono"'),
-          doc.fonts.load('400 1em "Suisse Intl Mono"')
+          doc.fonts.load('400 1em "NWA Mono"')
         ];
         Promise.all(core).then(function () { reveal('nwa-fonts-ready'); }, function () { reveal('nwa-fonts-timeout'); });
         window.setTimeout(function () { reveal('nwa-fonts-timeout'); }, 1800);
@@ -91,7 +90,7 @@
         @layer tokens {
             :root {
                 --gold: #C5A059;
-                --gold-light: #E8D5B5;
+                --gold-light: #E2CFA0;
                 --gold-dark: #8B6F4C;
                 --gold-accent: #C5A059;
                 --gold-rgb: 197, 160, 89;
@@ -124,13 +123,13 @@
                 
                 --text-primary: #EDE9E3;
                 --text-secondary: #9AA2B0;
-                --text-muted: #6A6A72;
-                --text-dim: #3E3E46;
+                --text-muted: #8A8A93;
+                --text-dim: #7E7E87;
                 
                 --font-serif: 'EB Garamond', Georgia, serif;
-                --font-display: 'Playfair Display', Georgia, serif;
+                --font-display: 'NWA Serif', Georgia, serif;
                 --font-sans: 'EB Garamond', Georgia, serif;
-                --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+                --font-mono: 'NWA Mono', 'Courier New', monospace;
                 
                 --ease: cubic-bezier(0.25, 0.10, 0.25, 1.00);
                 --ease-out: cubic-bezier(0.00, 0.00, 0.20, 1.00);
@@ -866,12 +865,12 @@
                                 <span class="skeleton skeleton-line" style="width:70%" aria-hidden="true"></span>
                             </p>
                             <div class="exec-actions-box">
-                                <h4 class="exec-actions-title">Risk Playbook <span style="color:var(--text-dim); font-weight:300;">(not advice)</span></h4>
+                                <h3 class="exec-actions-title">Risk Playbook <span style="color:var(--text-dim); font-weight:300;">(not advice)</span></h3>
                                 <p id="executiveActions"><span class="skeleton skeleton-line" style="width:90%" aria-hidden="true"></span></p>
                             </div>
                         </div>
                         <div class="exec-card-stats">
-                            <h4 class="exec-stats-title">Quick Stats</h4>
+                            <h3 class="exec-stats-title">Quick Stats</h3>
                             <div id="quickStats" aria-live="polite">
                                 <div class="skeleton skeleton-line" aria-hidden="true"></div>
                                 <div class="skeleton skeleton-line" style="width:80%" aria-hidden="true"></div>
