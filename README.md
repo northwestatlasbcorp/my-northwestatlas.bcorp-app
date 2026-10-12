@@ -17,11 +17,15 @@ The public platform presents selected areas of research, analytical systems, and
 
 ## Public Systems
 
-**NWA Toolkit**  
+[**NWA Toolkit**](https://northwestatlas.com/toolkit.html)  
 A market-risk research environment for AI-sector monitoring, scenario analysis, and portfolio stress testing.
 
-**Contagion Engine**  
+[**Institutional Disclosures**](https://northwestatlas.com/disclosures.html)
+
+[**Contagion Engine**](https://northwestatlas.com/contagion.html)  
 A scenario environment for examining how defined market shocks may propagate across a selected universe of AI-sector companies.
 
-**Research**  
+[**Research**](https://northwestatlas.com/research.html)  
 Selected frameworks and institutional research on capital preservation under structural uncertainty.
+
+© North West Atlas B Corp.
