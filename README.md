@@ -1,5 +1,27 @@
-# North West Atlas — public platform
+# North West Atlas
 
-North West Atlas is an institutional advisory practice: AI-sector systemic-risk research, real assets and transition, cross-border legal architecture and enforcement, structured impact capital. Site content is informational and is not investment, legal or tax advice; the full framework is in `disclosures.html`.
+Institutional Intelligence · Capital Advisory · Cross-Border Architecture
 
-[Visit northwestatlas.com](https://northwestatlas.com/)
+*Capital is a material, not a fluid.*
+
+North West Atlas is an institutional advisory practice focused on the intersection of capital allocation, legal architecture, and long-term value preservation.
+
+The public platform presents selected areas of research, analytical systems, and institutional frameworks.
+
+## Mandate
+
+- **Artificial Intelligence** — thematic research and systemic-risk monitoring across the AI economy.
+- **Real Assets &amp; Transition** — long-duration infrastructure, critical materials, and resilience-oriented capital allocation.
+- **Legal Architecture** — cross-border strategy, asset tracing, and enforcement frameworks.
+- **Impact Capital** — structured capital supporting measurable social and environmental outcomes.
+
+## Public Systems
+
+**NWA Toolkit**  
+A market-risk research environment for AI-sector monitoring, scenario analysis, and portfolio stress testing.
+
+**Contagion Engine**  
+A scenario environment for examining how defined market shocks may propagate across a selected universe of AI-sector companies.
+
+**Research**  
+Selected frameworks and institutional research on capital preservation under structural uncertainty.
