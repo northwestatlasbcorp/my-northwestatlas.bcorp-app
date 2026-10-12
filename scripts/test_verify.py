@@ -183,11 +183,28 @@ class VerifyTestCase(unittest.TestCase):
         self.assertEqual(len(findings), 1, findings)
         self.assertIn("styles/nwa-mobile-2026.css:2", findings[0])
 
-    def test_clip_and_visible_are_allowed(self) -> None:
+    def test_clip_on_body_is_allowed(self) -> None:
+        # Body is the right place for horizontal clipping: it propagates to the viewport the
+        # standard way, and the shared phone stylesheet has declared exactly this for months.
         self.assertEqual(
-            self.root_overflow("html { overflow-x: clip }\nbody { overflow-x: clip }\nbody { overflow-y: visible }"),
+            self.root_overflow("body { overflow-x: clip }\nbody { overflow-y: visible }"),
             [],
         )
+
+    def test_clip_on_the_root_is_reported(self) -> None:
+        # Regression guard: `clip` on html was the fix that restored scrolling in the
+        # Instagram in-app browser - and it moved scrolling off the compositor, so the page
+        # then stuttered on Android and jittered in Chrome. The root must stay default.
+        findings = self.root_overflow("html { overflow-x: clip }")
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("html", findings[0])
+        self.assertIn("viewport", findings[0])
+
+    def test_prose_in_a_comment_is_not_read_as_a_declaration(self) -> None:
+        # The rule reads CSS, not English: "carries no overflow: it applies to the viewport"
+        # in a comment used to be picked up as an overflow declaration.
+        css = "/* the root carries no overflow: it applies to the viewport */\nhtml { width: 100% }"
+        self.assertEqual(self.root_overflow(css), [])
 
     def test_a_class_that_only_starts_with_body_is_not_a_root_selector(self) -> None:
         css = ".body-copy { overflow: hidden }\nbody::before { overflow: hidden }\n.foo { content: \"body\"; overflow: hidden }"

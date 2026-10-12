@@ -89,8 +89,9 @@
         background: var(--obsidian);
         scrollbar-width: thin;
         scrollbar-color: rgba(var(--champagne-rgb), .15) transparent;
-        /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-        overflow-x: clip;
+        /* The root carries no overflow: it applies to the viewport, where `hidden` stopped
+           vertical panning in Android in-app WebViews and `clip` degraded scrolling to the
+           main thread. Horizontal clipping belongs on body (scripts/verify.py). */
         scroll-behavior: smooth;
     }
     body {

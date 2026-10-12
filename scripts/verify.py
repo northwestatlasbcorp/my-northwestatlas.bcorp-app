@@ -104,6 +104,22 @@ SCROLL_CONTAINER_OVERFLOW = re.compile(
     r"overflow(?:-[xy])?\s*:\s*(hidden|scroll|auto)\b", re.IGNORECASE
 )
 
+# The root is stricter: it has no safe non-default value here. `clip` on html stops the
+# viewport from being the plain scroll container, and Chromium then keeps body as its own
+# scroller - scrolling still happens, but on the main thread, which is exactly the jank
+# that `hidden` -> `clip` introduced. The keywords are explicit so that prose in a comment
+# ("carries no overflow: it applies to the viewport") can never read as a declaration.
+ROOT_OVERFLOW_SELECTOR_RE = re.compile(r"^(?:html|:root)\b", re.IGNORECASE)
+ROOT_FORBIDDEN_OVERFLOW = re.compile(
+    r"overflow(?:-[xy])?\s*:\s*(hidden|scroll|auto|clip|overlay)\b", re.IGNORECASE
+)
+CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
+
+
+def without_comments(css: str) -> str:
+    """Blank out comments while keeping every offset, so line numbers stay true."""
+    return CSS_COMMENT.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), css)
+
 # Inline CSS and the shared stylesheet both reach the pages, so the rule covers both.
 STYLE_FILE_GLOB = "styles/*.css"
 
@@ -255,17 +271,27 @@ def check_root_scroll_containers() -> list[str]:
     """
     errors: list[str] = []
     for path in [*page_files(), *sorted(ROOT.glob(STYLE_FILE_GLOB))]:
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = without_comments(path.read_text(encoding="utf-8", errors="replace"))
         for block in ROOT_OVERFLOW_BLOCK.finditer(text):
-            found = SCROLL_CONTAINER_OVERFLOW.search(block.group(2))
-            if not found:
-                continue
+            selector, declarations = block.group(1), block.group(2)
             lineno = text.count("\n", 0, block.start(1)) + 1
-            errors.append(
-                f"{path.relative_to(ROOT)}:{lineno}: {block.group(1)} uses overflow "
-                f"'{found.group(1)}', which stops vertical panning in Android in-app "
-                "WebViews - use 'clip'"
-            )
+            if ROOT_OVERFLOW_SELECTOR_RE.match(selector):
+                root_hit = ROOT_FORBIDDEN_OVERFLOW.search(declarations)
+                if root_hit:
+                    errors.append(
+                        f"{path.relative_to(ROOT)}:{lineno}: {selector} sets overflow "
+                        f"'{root_hit.group(1)}' - the root's overflow applies to the viewport: "
+                        "'hidden' stopped vertical panning in Android in-app WebViews and 'clip' "
+                        "moved scrolling off the compositor; keep the root default and clip on body"
+                    )
+                continue
+            found = SCROLL_CONTAINER_OVERFLOW.search(declarations)
+            if found:
+                errors.append(
+                    f"{path.relative_to(ROOT)}:{lineno}: {selector} uses overflow "
+                    f"'{found.group(1)}', which stops vertical panning in Android in-app "
+                    "WebViews - use 'clip'"
+                )
     return errors
 
 
