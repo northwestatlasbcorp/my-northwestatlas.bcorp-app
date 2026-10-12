@@ -86,6 +86,27 @@ SECRET_SCAN_EXEMPT = frozenset({Path("scripts/verify.py")})
 # Claims that must never appear without documentary evidence (see Linear NOR-10).
 BANNED_PHRASES = ("B Corp Certified",)
 
+# A non-visible overflow on html or body is never a local decision. Chrome propagates the
+# declared value to the viewport; an engine that does not propagate - the Android WebView
+# behind the Instagram and Facebook in-app browsers - instead turns the element itself into
+# a scroll container, with the sibling axis coerced from visible to auto. Either way the
+# phone renders the page and then refuses to pan it vertically, while the same page scrolls
+# normally in Chrome. `clip` clips exactly like `hidden` without creating a scroll
+# container, so it is the only value allowed on these two selectors.
+# :root is html spelled differently, and html.dark / body.dark are the same element as
+# html / body. A selector that only mentions them as an ancestor (".x body") still applies
+# to body, so it is flagged too; a class that merely starts with those letters is not.
+ROOT_OVERFLOW_SELECTOR = r"(?:html|body|:root)(?:[.#\[][^,{}\s]*)*"
+ROOT_OVERFLOW_BLOCK = re.compile(
+    rf"(?<![\w.#-])({ROOT_OVERFLOW_SELECTOR})(?![\w-])\s*(?:,[^{{}}]*)?\{{([^{{}}]*)\}}"
+)
+SCROLL_CONTAINER_OVERFLOW = re.compile(
+    r"overflow(?:-[xy])?\s*:\s*(hidden|scroll|auto)\b", re.IGNORECASE
+)
+
+# Inline CSS and the shared stylesheet both reach the pages, so the rule covers both.
+STYLE_FILE_GLOB = "styles/*.css"
+
 # Webfonts ship as subset WOFF2 only; source binaries do not belong in a public bundle.
 FONT_SOURCE_SUFFIXES = frozenset({".ttf", ".otf", ".eot"})
 
@@ -221,6 +242,30 @@ def check_page_metadata() -> list[str]:
             errors.append(f"{page.name}: <html> has no lang attribute")
         if 'name="viewport"' not in text:
             errors.append(f"{page.name}: missing viewport meta")
+    return errors
+
+
+def check_root_scroll_containers() -> list[str]:
+    """Forbid overflow values that turn the document root or body into a scroll container.
+
+    Regression guard for the scrolling failure in the Instagram in-app browser on Android:
+    the page rendered, but the gesture did nothing. Both the inline CSS of every page and
+    the shared stylesheet are scanned, because a mobile-only block is exactly where the
+    anti-pattern would come back unnoticed.
+    """
+    errors: list[str] = []
+    for path in [*page_files(), *sorted(ROOT.glob(STYLE_FILE_GLOB))]:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for block in ROOT_OVERFLOW_BLOCK.finditer(text):
+            found = SCROLL_CONTAINER_OVERFLOW.search(block.group(2))
+            if not found:
+                continue
+            lineno = text.count("\n", 0, block.start(1)) + 1
+            errors.append(
+                f"{path.relative_to(ROOT)}:{lineno}: {block.group(1)} uses overflow "
+                f"'{found.group(1)}', which stops vertical panning in Android in-app "
+                "WebViews - use 'clip'"
+            )
     return errors
 
 
@@ -694,6 +739,7 @@ CHECKS = (
     check_local_references,
     check_manifest_and_sitemap,
     check_page_metadata,
+    check_root_scroll_containers,
     check_duplicate_ids,
     check_canonicals,
     check_open_graph_images,
