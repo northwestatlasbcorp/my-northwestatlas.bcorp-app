@@ -89,7 +89,8 @@
         background: var(--obsidian);
         scrollbar-width: thin;
         scrollbar-color: rgba(var(--champagne-rgb), .15) transparent;
-        overflow-x: hidden;
+        /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
+        overflow-x: clip;
         scroll-behavior: smooth;
     }
     body {
@@ -103,7 +104,8 @@
         font-weight: 300;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        overflow-x: hidden;
+        /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
+        overflow-x: clip;
         text-rendering: optimizeLegibility;
         padding-bottom: 28px;
     }

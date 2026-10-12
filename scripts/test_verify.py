@@ -150,6 +150,49 @@ class VerifyTestCase(unittest.TestCase):
         findings = self.verify.check_page_metadata()
         self.assertEqual(len(findings), 2)
 
+    # -- root overflow (scrolling in Android in-app browsers) ------------------
+    def root_overflow(self, css: str) -> list[str]:
+        """Ship `css` in a fresh copy of index.html and return what the rule reports."""
+        self.write("index.html", self.page("index.html", f"<style>\n{css}\n</style>"))
+        return self.verify.check_root_scroll_containers()
+
+    def test_hidden_overflow_on_the_root_or_body_is_reported(self) -> None:
+        # Regression guard: the page rendered in the Instagram in-app browser on Android
+        # but refused to pan vertically, while the same page scrolled in Chrome.
+        for css, selector in (
+            ("html{overflow-x:hidden}", "html"),
+            ("body { overflow-x: hidden }", "body"),
+            (":root { overflow: hidden }", ":root"),
+        ):
+            with self.subTest(css=css):
+                findings = self.root_overflow(css)
+                self.assertEqual(len(findings), 1, findings)
+                self.assertIn(selector, findings[0])
+                self.assertIn("clip", findings[0])
+
+    def test_a_merged_selector_list_is_reported(self) -> None:
+        self.assertEqual(len(self.root_overflow("html, body { overflow-x: hidden }")), 1)
+
+    def test_overflow_inside_a_media_query_is_reported(self) -> None:
+        # The shared mobile stylesheet is where the anti-pattern could come back unseen.
+        self.write(
+            "styles/nwa-mobile-2026.css",
+            "@media (max-width: 768px) {\n  body { overflow-x: hidden; }\n}\n",
+        )
+        findings = self.verify.check_root_scroll_containers()
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("styles/nwa-mobile-2026.css:2", findings[0])
+
+    def test_clip_and_visible_are_allowed(self) -> None:
+        self.assertEqual(
+            self.root_overflow("html { overflow-x: clip }\nbody { overflow-x: clip }\nbody { overflow-y: visible }"),
+            [],
+        )
+
+    def test_a_class_that_only_starts_with_body_is_not_a_root_selector(self) -> None:
+        css = ".body-copy { overflow: hidden }\nbody::before { overflow: hidden }\n.foo { content: \"body\"; overflow: hidden }"
+        self.assertEqual(self.root_overflow(css), [])
+
     # -- duplicate ids ---------------------------------------------------------
     def test_duplicate_id_is_reported(self) -> None:
         self.write("index.html", self.read_page() + '<p id="chart"></p><p id="chart"></p>')
@@ -460,7 +503,7 @@ class VerifyTestCase(unittest.TestCase):
     def test_checker_reports_a_clean_repository_summary(self) -> None:
         self.assertEqual(self.verify.run(), [])
         # Bump deliberately: adding a rule means adding its pass/fail fixtures above.
-        self.assertEqual(len(self.verify.CHECKS), 14)
+        self.assertEqual(len(self.verify.CHECKS), 15)
 
 
 if __name__ == "__main__":

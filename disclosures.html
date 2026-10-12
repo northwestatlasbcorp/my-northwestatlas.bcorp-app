@@ -109,7 +109,8 @@
             font-weight: 300;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
+            /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
+            overflow-x: clip;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
