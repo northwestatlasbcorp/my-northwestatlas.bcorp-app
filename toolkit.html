@@ -561,6 +561,7 @@
             .dcf-analysis-text { font-size: 0.75rem; line-height: 1.6; color: var(--text-secondary); }
             
             /* Methodology */
+            .methodology-limits { margin-top: 1.25rem; max-width: 72ch; }
             .method-number { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gold); opacity: 0.4; margin-bottom: 0.5rem; }
             .method-title { font-size: 0.85rem; color: var(--text-primary); font-weight: 400; margin-bottom: 0.5rem; }
             .method-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
@@ -1026,7 +1027,7 @@
         <!-- Historical Overlay -->
         <section class="toolkit-section" id="tab-history" role="tabpanel" aria-labelledby="tab-btn-history" tabindex="0">
             <div class="container">
-                <div class="section-header"><span class="section-label">Pattern Recognition</span><h2 class="section-title">Historical <span class="gold-text">Overlay</span></h2><p class="section-desc">Current AI cycle mapped against the Dot-com bubble (1995–2002). Time-indexed comparison.</p></div>
+                <div class="section-header"><span class="section-label">Pattern Recognition</span><h2 class="section-title">Historical <span class="gold-text">Overlay</span></h2><p class="section-desc">Current AI cycle mapped against the Dot-com bubble (1995–2002). A time-indexed visual comparison built on static illustrative series — context, not a backtest.</p></div>
                 <div class="history-chart-container"><div class="history-chart"><canvas id="historyCanvas" role="img" aria-label="Historical overlay chart comparing AI boom to Dot-com bubble 1995–2002"></canvas></div></div>
                 <div class="history-position" aria-live="polite">
                     <div class="hp-item"><div class="hp-value" id="currentMonth">Month 38</div><div class="hp-label">Current cycle position</div></div>
@@ -1039,8 +1040,11 @@
         <!-- Methodology -->
         <section class="toolkit-section" id="tab-methodology" role="tabpanel" aria-labelledby="tab-btn-methodology" tabindex="0">
             <div class="container-narrow">
-                <div class="section-header"><span class="section-label">Transparency</span><h2 class="section-title"><span class="gold-text">Methodology</span></h2><p class="section-desc">The NWA AI Bubble Index™ is composed of 12 quantitative factors weighted by predictive power.</p></div>
+                <div class="section-header"><span class="section-label">Transparency</span><h2 class="section-title"><span class="gold-text">Methodology</span></h2><p class="section-desc">The NWA AI Bubble Index™ is composed of 12 quantitative factors with fixed weights. The index is a heuristic proxy — weights are static parameters, not fitted to historical data and not re-estimated from live data.</p></div>
                 <div class="methodology-grid" id="methodologyGrid"></div>
+                <div class="methodology-limits" role="note">
+                    <p class="section-desc"><strong>Limitations.</strong> The index is a proxy, not a valuation model. Sentiment is keyword-based, not NLP; event flags are manual and subjective by design; NWA data-layer quotes may be delayed or stale (stale data is labelled); VIX and DXY serve as coarse macro proxies. Outputs are informational and are not calibrated for out-of-sample prediction.</p>
+                </div>
             </div>
         </section>
     </main>
