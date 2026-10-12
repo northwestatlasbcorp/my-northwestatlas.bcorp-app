@@ -64,7 +64,9 @@
         ::-webkit-scrollbar-thumb { background: rgba(var(--gold-rgb), 0.15); border-radius: 4px; }
         body {
             background: var(--bg-deep); color: var(--text-main); font-family: var(--font-sans);
-            font-weight: 300; display: flex; min-height: 100vh; overflow-x: hidden;
+            font-weight: 300; display: flex; min-height: 100vh;
+            /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
+            overflow-x: clip;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6;
         }
         .noise-overlay {
