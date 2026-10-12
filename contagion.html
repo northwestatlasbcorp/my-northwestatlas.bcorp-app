@@ -8,7 +8,7 @@
     <meta name="color-scheme" content="dark">
     <meta name="application-name" content="NWA Contagion Engine">
     <title>NWA | Contagion Engine — Scenario Cascade Modeling</title>
-    <meta name="description" content="NWA systemic-risk scenario modeling. NVIDIA shock propagation across 19 AI-sector companies with NWA market data and proprietary cascade formulas.">
+    <meta name="description" content="NWA systemic-risk scenario modeling. NVIDIA shock propagation across 19 AI-sector companies with NWA market data and documented cascade formulas.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.png">
         <link rel="stylesheet" href="fonts/nwa-fonts.css">
@@ -679,6 +679,14 @@
        CORRELATION MATRIX
     ═══════════════════════════════════════════ */
     .corr-section { margin-bottom: 1.5rem; }
+    .model-notes { background: rgba(var(--champagne-rgb), .015); border: .5px solid rgba(var(--champagne-rgb), .06); border-radius: var(--r2); margin-bottom: 1.5rem; }
+    .model-notes summary { cursor: pointer; padding: .8rem 1.2rem; font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--bone-dim); list-style: none; }
+    .model-notes summary::-webkit-details-marker { display: none; }
+    .model-notes summary:hover { color: var(--champagne-light); }
+    .model-notes-body { padding: 0 1.2rem 1rem; color: var(--ink-secondary); font-size: .82rem; line-height: 1.55; }
+    .mn-glossary { margin: .8rem 0; }
+    .mn-glossary dt { font-family: var(--mono); color: var(--champagne-light); font-size: .68rem; letter-spacing: .1em; margin-top: .5rem; }
+    .mn-glossary dd { margin: .1rem 0 0; }
     .corr-toggle { width: 100%; text-align: left; }
     .corr-matrix {
         display: none; margin-top: .8rem;
@@ -1007,6 +1015,23 @@
                     <div class="corr-canvas-wrap"><canvas id="corrCanvas" role="img" aria-label="Assumption matrix heatmap"></canvas></div>
                 </div>
             </div>
+
+            <details class="model-notes">
+                <summary>◇ Model Assumptions &amp; Limitations</summary>
+                <div class="model-notes-body">
+                    <p>The cascade is a deterministic proxy: impact = shock × weighted beta × VIX amplifier × timeline multiplier, with second-order effects propagated through supply-chain and correlation links. All company parameters are NWA analytical estimates — static, not fitted to market data.</p>
+                    <dl class="mn-glossary">
+                        <dt>beta</dt><dd>Company sensitivity to an NVDA shock (1.00 = full pass-through).</dd>
+                        <dt>revExp</dt><dd>Share of revenue exposed to AI demand.</dd>
+                        <dt>supply</dt><dd>Supply-chain dependence on the NVDA ecosystem.</dd>
+                        <dt>corr</dt><dd>Price correlation with NVDA (see Assumption Matrix).</dd>
+                        <dt>leverage / liq</dt><dd>Balance-sheet leverage and trading-liquidity modifiers.</dd>
+                        <dt>margin-call threshold</dt><dd>Drawdown at which forced-selling mechanics are assumed to begin.</dd>
+                        <dt>T1–T5</dt><dd>Propagation-horizon multiplier, from immediate (T1) to extended (T5).</dd>
+                    </dl>
+                    <p><strong>The model does not capture:</strong> correlation regime shifts under stress, liquidity spirals beyond second-order effects, policy response, non-AI macro channels, intraday dynamics. Scenario presets only set the sliders — they never change the formulas. Scenarios are illustrative narratives, not forecasts.</p>
+                </div>
+            </details>
 
             <section id="newsSection" style="margin-bottom:1.5rem;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;">
