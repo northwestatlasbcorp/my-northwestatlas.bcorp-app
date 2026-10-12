@@ -110,7 +110,9 @@
       background: var(--obsidian);
       scrollbar-width: thin;
       scrollbar-color: rgba(var(--champagne-rgb), .12) transparent;
-      overflow-x: hidden;
+      /* clip, not hidden: hidden on the root propagates to the viewport and
+         breaks vertical panning in Android in-app WebViews (Instagram). */
+      overflow-x: clip;
       width: 100%;
       touch-action: pan-y;
     }
