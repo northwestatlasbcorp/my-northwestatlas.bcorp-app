@@ -110,11 +110,10 @@
       background: var(--obsidian);
       scrollbar-width: thin;
       scrollbar-color: rgba(var(--champagne-rgb), .12) transparent;
-      /* The root carries no overflow: it applies to the viewport, where `hidden` stopped
-         vertical panning in Android in-app WebViews and `clip` degraded scrolling to the
-         main thread. Horizontal clipping belongs on body (scripts/verify.py). */
+      /* The scrolling contract (scripts/verify.py): the root carries no overflow and no
+         touch-action - the viewport must stay the one and only document scroller, in
+         every engine. Horizontal clipping, if needed, belongs on an inner element. */
       width: 100%;
-      touch-action: pan-y;
     }
     body {
       font-family: var(--serif);
@@ -127,8 +126,6 @@
       font-weight: 300;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-      overflow-x: clip;
       width: 100%;
       max-width: 100vw;
       font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
@@ -1403,10 +1400,15 @@
       var watermark = document.getElementById('aboutWatermark');
       if (watermark && !PRM && !isSlow) {
         var wmText = watermark.querySelector('.about-watermark-text');
-        function updateWatermark() {
+        var wmTop = 0, wmHeight = 0;
+        function measureWatermark() {
           var rect = watermark.parentElement.getBoundingClientRect();
+          wmTop = rect.top + window.scrollY;
+          wmHeight = rect.height;
+        }
+        function updateWatermark() {
           var vh = window.innerHeight;
-          var center = rect.top + rect.height / 2 - vh / 2;
+          var center = wmTop - window.scrollY + wmHeight / 2 - vh / 2;
           var driftY = center * 0.15;
           var scale = 1.05 + (1 - Math.abs(Math.max(-1, Math.min(1, center / vh)))) * 0.06;
           var opac = 0.014 + (1 - Math.abs(Math.max(-1, Math.min(1, center / vh)))) * 0.015;
@@ -1421,6 +1423,10 @@
         window.addEventListener('scroll', function() {
           if (!wmTicking) { requestAnimationFrame(updateWatermark); wmTicking = true; }
         }, { passive: true });
+        window.addEventListener('resize', measureWatermark, { passive: true });
+        window.addEventListener('load', measureWatermark);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureWatermark);
+        measureWatermark();
         updateWatermark();
       }
       var dataCanvas = document.getElementById('data-canvas');
@@ -1493,35 +1499,57 @@
         resizeData(); dId = requestAnimationFrame(drawData);
       }
       var header = document.getElementById('header');
-      var dividers = document.querySelectorAll('.system-divider');
+      var dividers = Array.prototype.slice.call(document.querySelectorAll('.system-divider'));
       var ticking = false;
+      // Scroll hot path: geometry is measured on load/resize/fonts only. Per-frame
+      // getBoundingClientRect/offsetTop over every section forced a layout on each
+      // scroll frame - the mid-range Android stutter. State is written only on change.
+      var navSections = [];
+      var dividerMetrics = [];
+      var maxScroll = 0;
+      function measureScrollLayout() {
+        dividerMetrics = dividers.map(function(d) {
+          var r = d.getBoundingClientRect();
+          return { el: d, top: r.top + window.scrollY, height: r.height, inView: null };
+        });
+        navSections = Array.prototype.map.call(document.querySelectorAll('section[id]'), function(sec) {
+          var r = sec.getBoundingClientRect();
+          return {
+            link: document.querySelector('.nav-link[href="#' + sec.id + '"]'),
+            top: r.top + window.scrollY,
+            height: r.height,
+            active: null
+          };
+        });
+        maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      }
       function onScroll() {
         var y = window.scrollY;
+        var vh = window.innerHeight;
         if (header) {
           if (y > 50) header.classList.add('scrolled');
           else if (y < 10) header.classList.remove('scrolled');
         }
-        for (var d = 0; d < dividers.length; d++) {
-          var r = dividers[d].getBoundingClientRect();
-          dividers[d].classList.toggle('in-view', r.top < window.innerHeight && r.bottom > 0);
+        for (var d = 0; d < dividerMetrics.length; d++) {
+          var m = dividerMetrics[d];
+          var inView = m.top - y < vh && m.top + m.height - y > 0;
+          if (inView !== m.inView) { m.el.classList.toggle('in-view', inView); m.inView = inView; }
         }
         var threshold = y + 140;
-        document.querySelectorAll('section[id]').forEach(function(sec) {
-          var top = sec.getBoundingClientRect().top + window.scrollY;
-          var lnk = document.querySelector('.nav-link[href="#' + sec.id + '"]');
-          if (lnk) {
-            var isActive = threshold >= top && threshold < top + sec.offsetHeight;
-            lnk.classList.toggle('active', isActive);
-            if (isActive) {
-              lnk.setAttribute('aria-current', 'page');
-            } else {
-              lnk.removeAttribute('aria-current');
-            }
+        for (var s = 0; s < navSections.length; s++) {
+          var ns = navSections[s];
+          if (!ns.link) continue;
+          var isActive = threshold >= ns.top && threshold < ns.top + ns.height;
+          if (isActive !== ns.active) {
+            ns.link.classList.toggle('active', isActive);
+            if (isActive) ns.link.setAttribute('aria-current', 'page');
+            else ns.link.removeAttribute('aria-current');
+            ns.active = isActive;
           }
-        });
+        }
         var scrollProgress = document.querySelector('.scroll-progress');
         if (scrollProgress && !CSS.supports('animation-timeline: scroll()')) {
-          var scrollPercent = y / (document.documentElement.scrollHeight - window.innerHeight || 1);
+          var scrollPercent = maxScroll > 0 ? y / maxScroll : 0;
           scrollProgress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, scrollPercent)) + ')';
         }
         ticking = false;
@@ -1529,6 +1557,10 @@
       window.addEventListener('scroll', function() {
         if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
       }, { passive: true });
+      window.addEventListener('resize', measureScrollLayout, { passive: true });
+      window.addEventListener('load', measureScrollLayout);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureScrollLayout);
+      measureScrollLayout();
       onScroll();
       if ('IntersectionObserver' in window && !PRM) {
         var sio = new IntersectionObserver(function(entries) {
@@ -1608,6 +1640,10 @@
           if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
         });
       }
+      // Inertial scroll owns all programmatic glides (gestures and anchor jumps alike) so
+      // two scroll engines can never fight over the page. It is declared here and assigned
+      // below; click handlers only run after the assignment.
+      var inertialScroll = null;
       document.querySelectorAll('a[href^="#"]').forEach(function(a) {
         a.addEventListener('click', function(e) {
           var href = this.getAttribute('href');
@@ -1615,77 +1651,203 @@
           var tgt = document.querySelector(href);
           if (!tgt) return;
           e.preventDefault();
-          tgt.scrollIntoView({ behavior: PRM ? 'auto' : 'smooth' });
+          if (inertialScroll) {
+            inertialScroll.goTo(tgt.getBoundingClientRect().top + window.scrollY);
+          } else {
+            tgt.scrollIntoView({ behavior: 'auto' });
+          }
         });
       });
-      (function smoothInertialScroll() {
-        if (PRM) return;
-        var isTouch = !isFine;
+      inertialScroll = (function smoothInertialScroll() {
+        if (PRM) return null;
         var target = window.scrollY;
         var current = window.scrollY;
         var running = false;
         var rafId = null;
+        // The designed "heavy, leisurely" institutional feel - deliberate, not an
+        // artifact: the page follows the gesture at 85% of the finger (TOUCH_MULT) and
+        // settles through a slow lerp, with a short restrained throw so nothing ever
+        // flies. These constants are the design; do not "tune" them without the owner.
         var EASE = 0.085;
         var WHEEL_MULT = 0.75;
-        function maxScroll() {
-          return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        var TOUCH_MULT = 0.85;
+        var THROW_TIME = 120;
+        var MAX_TOUCH_VELOCITY = 5; // px/ms - a hard ceiling so a glitched sample cannot fling the page
+        // maxScroll is read at gesture start and cached: reading scrollHeight inside the
+        // rAF loop (right after scrollTo wrote the scroll position) forced a synchronous
+        // layout on every frame of the animation - the stutter the design must not have.
+        var maxScrollCache = 0;
+        function refreshMaxScroll() {
+          maxScrollCache = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         }
         function clamp(v) {
-          return Math.max(0, Math.min(v, maxScroll()));
+          return Math.max(0, Math.min(v, maxScrollCache));
         }
         function scrollTo(y) {
-          window.scrollTo({ top: y, behavior: 'instant' });
+          // 'instant' so the lerp owns every frame; smooth-on-smooth would stutter.
+          try { window.scrollTo({ top: y, behavior: 'instant' }); }
+          catch (err) { window.scrollTo(0, y); }
         }
         function loop() {
-          var diff = target - current;
-          if (Math.abs(diff) < 0.2) {
-            current = target;
+          try {
+            var diff = target - current;
+            if (Math.abs(diff) < 0.2) {
+              current = target;
+              scrollTo(current);
+              running = false;
+              rafId = null;
+              return;
+            }
+            current += diff * EASE;
+            if (current > maxScrollCache) { current = maxScrollCache; target = maxScrollCache; }
+            if (current < 0) { current = 0; target = 0; }
             scrollTo(current);
+            rafId = requestAnimationFrame(loop);
+          } catch (err) {
+            // Fail-safe: whatever broke, release control so the browser's own
+            // scrolling takes over - the module must never leave the page unpannable.
             running = false;
             rafId = null;
-            return;
           }
-          current += diff * EASE;
-          var ms = maxScroll();
-          if (current > ms) { current = ms; target = ms; }
-          if (current < 0) { current = 0; target = 0; }
-          scrollTo(current);
-          rafId = requestAnimationFrame(loop);
         }
         function start() {
           if (!running) {
+            refreshMaxScroll();
             running = true;
             rafId = requestAnimationFrame(loop);
           }
         }
-        if (!isTouch) {
-          window.addEventListener('wheel', function(e) {
-            if (e.ctrlKey || e.metaKey || e.shiftKey) return;
-            var el = e.target;
-            while (el && el !== document.body) {
-              var st = getComputedStyle(el);
-              if ((st.overflowY === 'auto' || st.overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
-                return;
-              }
-              el = el.parentElement;
-            }
-            e.preventDefault();
-            target = clamp(target + e.deltaY * WHEEL_MULT);
-            start();
-          }, { passive: false });
+        function cancel() {
+          if (running && rafId) {
+            cancelAnimationFrame(rafId);
+          }
+          running = false;
+          rafId = null;
+          refreshMaxScroll();
+          current = target = window.scrollY;
         }
-        // Touch scroll intentionally uses native browser momentum for fluid mobile experience
+        function goTo(y) {
+          refreshMaxScroll();
+          target = clamp(y);
+          start();
+        }
+
+        // Wheel path. Both input paths are always armed (no pointer:fine gate): in-app
+        // WebViews misreport pointer/hover media features, and the designed feel must
+        // follow the input the user actually has - wheel on desktops, fingers on phones,
+        // both on hybrids.
+        var scrollerCache = typeof WeakMap === 'function' ? new WeakMap() : null;
+        function isNestedScroller(el) {
+          if (!el || el === document.body || el === document.documentElement) return false;
+          if (scrollerCache) {
+            var cached = scrollerCache.get(el);
+            if (cached !== undefined) return cached;
+          }
+          var result = false;
+          try {
+            var st = getComputedStyle(el);
+            result = (st.overflowY === 'auto' || st.overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+          } catch (err) { result = false; }
+          if (scrollerCache) scrollerCache.set(el, result);
+          return result;
+        }
+        window.addEventListener('wheel', function(e) {
+          if (e.ctrlKey || e.metaKey || e.shiftKey) return; // browser zoom & co stay native
+          var el = e.target;
+          while (el && el !== document.body) {
+            if (isNestedScroller(el)) return;
+            el = el.parentElement;
+          }
+          // deltaMode: 0 = pixels, 1 = lines (Firefox), 2 = pages - normalize, or line
+          // mode delivers ~3px notches and the heavy feel dies.
+          var dy = e.deltaY;
+          if (e.deltaMode === 1) dy *= 16;
+          else if (e.deltaMode === 2) dy *= window.innerHeight;
+          e.preventDefault();
+          target = clamp(target + dy * WHEEL_MULT);
+          start();
+        }, { passive: false });
+
+        // Touch path: the heavy designed follow. The one deliberate non-passive listener
+        // on the site (verify:allow-scroll-hijack) - cancelling the native stream is what
+        // "the page follows at 85% of the finger" means. Every confused gesture exits
+        // through release(), so the module can never reproduce "the page ignores the
+        // finger": a cancelled gesture hands control straight back to the browser.
+        var lastTouchY = 0;
+        var lastTouchTime = 0;
+        var touchVelocity = 0;
+        var isTouching = false;
+        function nativeTarget(el) {
+          // Form controls and opt-in elements keep their native touch behavior.
+          return !!(el && el.closest && el.closest('input, select, textarea, [data-native-gesture]'));
+        }
+        function release() {
+          isTouching = false;
+          touchVelocity = 0;
+          cancel();
+        }
+        window.addEventListener('touchstart', function(e) {
+          if (e.touches.length !== 1 || nativeTarget(e.target)) return;
+          isTouching = true;
+          lastTouchY = e.touches[0].clientY;
+          lastTouchTime = performance.now();
+          touchVelocity = 0;
+          cancel();
+        }, { passive: true });
+        window.addEventListener('touchmove', function(e) { // verify:allow-scroll-hijack
+          if (!isTouching) return;
+          if (e.touches.length !== 1 || !e.cancelable || nativeTarget(e.target)) {
+            release();
+            return;
+          }
+          var y = e.touches[0].clientY;
+          var now = performance.now();
+          var dt = now - lastTouchTime;
+          var dy = lastTouchY - y;
+          if (dt > 0) {
+            // EMA smoothing: single-sample spikes (1ms glitches) used to make the throw
+            // fly away. The ceiling keeps even a real fast flick restrained.
+            var instant = dy / dt;
+            touchVelocity += (instant - touchVelocity) * 0.35;
+            if (touchVelocity > MAX_TOUCH_VELOCITY) touchVelocity = MAX_TOUCH_VELOCITY;
+            else if (touchVelocity < -MAX_TOUCH_VELOCITY) touchVelocity = -MAX_TOUCH_VELOCITY;
+          }
+          lastTouchY = y;
+          lastTouchTime = now;
+          e.preventDefault();
+          target = clamp(target + dy * TOUCH_MULT);
+          start();
+        }, { passive: false });
+        window.addEventListener('touchend', function(e) {
+          if (!isTouching || e.touches.length > 0) return; // done only when all fingers are up
+          isTouching = false;
+          if (Math.abs(touchVelocity) > 0.3) {
+            var throwDist = touchVelocity * THROW_TIME;
+            target = clamp(target + throwDist);
+            start();
+          }
+          touchVelocity = 0;
+        }, { passive: true });
+        window.addEventListener('touchcancel', function() {
+          release();
+        }, { passive: true });
+
         window.addEventListener('scroll', function() {
           if (!running) {
             current = target = window.scrollY;
           }
         }, { passive: true });
         window.addEventListener('resize', function() {
+          scrollerCache = typeof WeakMap === 'function' ? new WeakMap() : null;
+          refreshMaxScroll();
           target = clamp(target);
         }, { passive: true });
+        window.addEventListener('load', refreshMaxScroll);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshMaxScroll);
+        refreshMaxScroll();
+
+        return { goTo: goTo, cancel: cancel };
       })();
-      function setVh() { document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px'); }
-      setVh(); window.addEventListener('resize', setVh, { passive: true });
       (function placeGuides() {
         var a = document.querySelector('.grid-guide.mid-a'), b = document.querySelector('.grid-guide.mid-b');
         if (!a || !b) return;

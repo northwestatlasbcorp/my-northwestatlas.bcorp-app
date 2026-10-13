@@ -1,19 +1,26 @@
 /* NWA mobile composition — quiet authority, touch-first hierarchy. */
 @media (max-width: 768px) {
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  body { overflow-x: clip; }
+  /* The scrolling contract (scripts/verify.py): html, body and :root carry no overflow
+     and no touch-action - the viewport is the one and only document scroller, in every
+     engine. Horizontal clipping belongs on inner elements, never on the root. */
   :where(input, select, textarea) { font-size: 16px; }
   :where(button, a, input, select) { -webkit-tap-highlight-color: transparent; }
+
+  /* Scroll-frame cost: full-screen blend layers and backdrop blurs force per-frame GPU
+     work under a panning finger and stutter on phone GPUs. The grain is invisible at
+     .014 opacity on mobile anyway; the chrome keeps its near-opaque solid backgrounds. */
+  .nwa-grain, .noise-overlay, .noise { display: none !important; }
 
   /* ── Public site ───────────────────────────────────────────── */
   .nwa-home .status-bar { display: none; }
   .nwa-home .header-system {
     padding: max(.7rem, env(safe-area-inset-top)) 0 .7rem;
-    background: rgba(8, 8, 9, .88);
-    backdrop-filter: blur(26px) saturate(140%);
-    -webkit-backdrop-filter: blur(26px) saturate(140%);
+    background: rgba(8, 8, 9, .97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
-  .nwa-home .header-system.scrolled { padding: max(.55rem, env(safe-area-inset-top)) 0 .55rem; }
+  .nwa-home .header-system.scrolled { padding: max(.55rem, env(safe-area-inset-top)) 0 .55rem; background: rgba(8, 8, 9, .985); }
   .nwa-home .grid-container { padding-inline: max(1.25rem, env(safe-area-inset-left)) max(1.25rem, env(safe-area-inset-right)); }
   .nwa-home .logo img { height: 28px; }
   .nwa-home .menu-toggle { width: 44px; height: 44px; display: grid; place-items: center; margin-right: -.5rem; }
@@ -21,8 +28,8 @@
     padding: calc(5.75rem + env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
     justify-content: flex-start; align-items: flex-start; gap: .35rem;
     background: rgba(8, 8, 9, .975);
-    backdrop-filter: blur(28px) saturate(125%);
-    -webkit-backdrop-filter: blur(28px) saturate(125%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   .nwa-home .nav-menu li { width: 100%; border-bottom: .5px solid rgba(197,160,89,.075); }
   .nwa-home .nav-link { display: flex; align-items: center; min-height: 48px; padding: .65rem 0; font-size: .66rem; letter-spacing: .24em; }
@@ -54,7 +61,12 @@
 
   /* ── NWA Toolkit ───────────────────────────────────────────── */
   .nwa-toolkit .container { padding-inline: max(1.1rem, env(safe-area-inset-left)) max(1.1rem, env(safe-area-inset-right)); }
-  .nwa-toolkit .toolkit-header { min-height: 56px; padding: max(.55rem, env(safe-area-inset-top)) 0 .55rem; }
+  .nwa-toolkit .toolkit-header {
+    min-height: 56px; padding: max(.55rem, env(safe-area-inset-top)) 0 .55rem;
+    background: rgba(8, 8, 9, .97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .nwa-toolkit .header-inner { flex-direction: row !important; min-height: 40px; gap: .5rem; }
   .nwa-toolkit .header-left { min-width: 0; gap: .65rem; }
   .nwa-toolkit .header-logo { height: 28px; }
@@ -76,7 +88,12 @@
   .nwa-toolkit .bic-score { font-size: 3.7rem; }
   .nwa-toolkit .bic-components { padding-top: .9rem; }
   .nwa-toolkit .bic-comp-row { padding: .45rem 0; font-size: .76rem; }
-  .nwa-toolkit .toolkit-nav { top: 56px; padding: .25rem 0; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .nwa-toolkit .toolkit-nav {
+    top: 56px; padding: .25rem 0; scroll-snap-type: x mandatory; scrollbar-width: none;
+    background: rgba(8, 8, 9, .98);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .nwa-toolkit .toolkit-nav::-webkit-scrollbar { display: none; }
   .nwa-toolkit .toolkit-nav .container { padding: 0 .65rem; }
   .nwa-toolkit .nav-tab { min-height: 44px; padding: .65rem .8rem; font-size: .54rem; letter-spacing: .12em; scroll-snap-align: start; }
@@ -102,7 +119,22 @@
 
   /* ── Contagion Engine ───────────────────────────────────────── */
   .nwa-contagion .container { padding-inline: max(1.1rem, env(safe-area-inset-left)) max(1.1rem, env(safe-area-inset-right)); }
-  .nwa-contagion header { height: 54px; }
+  .nwa-contagion header {
+    height: 54px;
+    background: rgba(8, 8, 9, .97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .nwa-contagion .ctrl-strip {
+    background: rgba(8, 8, 9, .98);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .nwa-contagion .status-bar {
+    background: rgba(8, 8, 9, .98);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .nwa-contagion header nav { padding-inline: max(1.1rem, env(safe-area-inset-left)) max(1.1rem, env(safe-area-inset-right)); }
   .nwa-contagion .brand img { height: 25px; }
   .nwa-contagion .brand-tag, .nwa-contagion .nav-status { display: none; }

@@ -150,28 +150,33 @@ class VerifyTestCase(unittest.TestCase):
         findings = self.verify.check_page_metadata()
         self.assertEqual(len(findings), 2)
 
-    # -- root overflow (scrolling in Android in-app browsers) ------------------
-    def root_overflow(self, css: str) -> list[str]:
+    # -- root scroll contract (vertical panning on mobile) ---------------------
+    def root_css(self, css: str) -> list[str]:
         """Ship `css` in a fresh copy of index.html and return what the rule reports."""
         self.write("index.html", self.page("index.html", f"<style>\n{css}\n</style>"))
-        return self.verify.check_root_scroll_containers()
+        return self.verify.check_root_scroll_contract()
 
-    def test_hidden_overflow_on_the_root_or_body_is_reported(self) -> None:
+    def test_any_overflow_on_a_root_selector_is_reported(self) -> None:
         # Regression guard: the page rendered in the Instagram in-app browser on Android
-        # but refused to pan vertically, while the same page scrolled in Chrome.
+        # but refused to pan vertically, while the same page scrolled in Chrome. `hidden`
+        # was replaced by `clip`, then `clip` was moved from html to body - and every one
+        # of those configurations stayed unstable somewhere. The contract is now total:
+        # no overflow value at all on these selectors.
         for css, selector in (
             ("html{overflow-x:hidden}", "html"),
             ("body { overflow-x: hidden }", "body"),
             (":root { overflow: hidden }", ":root"),
+            ("html { overflow-x: clip }", "html"),
+            ("body { overflow-x: clip }", "body"),
+            ("html, body { overflow-x: clip }", "html"),
+            ("body { overflow-y: auto }", "body"),
+            (":root { overflow: scroll }", ":root"),
         ):
             with self.subTest(css=css):
-                findings = self.root_overflow(css)
+                findings = self.root_css(css)
                 self.assertEqual(len(findings), 1, findings)
                 self.assertIn(selector, findings[0])
-                self.assertIn("clip", findings[0])
-
-    def test_a_merged_selector_list_is_reported(self) -> None:
-        self.assertEqual(len(self.root_overflow("html, body { overflow-x: hidden }")), 1)
+                self.assertIn("viewport", findings[0])
 
     def test_overflow_inside_a_media_query_is_reported(self) -> None:
         # The shared mobile stylesheet is where the anti-pattern could come back unseen.
@@ -179,36 +184,135 @@ class VerifyTestCase(unittest.TestCase):
             "styles/nwa-mobile-2026.css",
             "@media (max-width: 768px) {\n  body { overflow-x: hidden; }\n}\n",
         )
-        findings = self.verify.check_root_scroll_containers()
+        findings = self.verify.check_root_scroll_contract()
         self.assertEqual(len(findings), 1, findings)
         self.assertIn("styles/nwa-mobile-2026.css:2", findings[0])
 
-    def test_clip_on_body_is_allowed(self) -> None:
-        # Body is the right place for horizontal clipping: it propagates to the viewport the
-        # standard way, and the shared phone stylesheet has declared exactly this for months.
+    def test_default_root_values_are_allowed(self) -> None:
         self.assertEqual(
-            self.root_overflow("body { overflow-x: clip }\nbody { overflow-y: visible }"),
+            self.root_css(
+                "html { overflow-y: visible }\nbody { overflow: visible }\n"
+                ":root { overflow: initial }\nbody { overflow-x: unset }"
+            ),
             [],
         )
 
-    def test_clip_on_the_root_is_reported(self) -> None:
-        # Regression guard: `clip` on html was the fix that restored scrolling in the
-        # Instagram in-app browser - and it moved scrolling off the compositor, so the page
-        # then stuttered on Android and jittered in Chrome. The root must stay default.
-        findings = self.root_overflow("html { overflow-x: clip }")
+    def test_logical_overflow_axes_are_covered(self) -> None:
+        # overflow-block/inline are the logical names of the same properties.
+        findings = self.root_css("body { overflow-block: hidden }")
         self.assertEqual(len(findings), 1, findings)
-        self.assertIn("html", findings[0])
-        self.assertIn("viewport", findings[0])
+
+    def test_touch_action_on_a_root_selector_is_reported(self) -> None:
+        # Regression guard: `touch-action: pan-y` on html intersected with every gesture in
+        # the document; older Android WebViews then ignored vertical pans altogether, and
+        # pinch zoom is lost everywhere. The root must leave gestures to the browser.
+        findings = self.root_css("html { touch-action: pan-y }")
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("touch-action", findings[0])
+        self.assertIn("auto", findings[0])
+
+    def test_touch_action_auto_is_allowed(self) -> None:
+        self.assertEqual(self.root_css("html { touch-action: auto }\nbody { touch-action: auto }"), [])
+
+    def test_position_fixed_on_the_body_is_reported(self) -> None:
+        # The scroll-lock pattern: if the unlock never runs, the page is dead to panning.
+        findings = self.root_css("body { position: fixed; top: 0 }")
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("position", findings[0])
 
     def test_prose_in_a_comment_is_not_read_as_a_declaration(self) -> None:
         # The rule reads CSS, not English: "carries no overflow: it applies to the viewport"
         # in a comment used to be picked up as an overflow declaration.
         css = "/* the root carries no overflow: it applies to the viewport */\nhtml { width: 100% }"
-        self.assertEqual(self.root_overflow(css), [])
+        self.assertEqual(self.root_css(css), [])
 
     def test_a_class_that_only_starts_with_body_is_not_a_root_selector(self) -> None:
         css = ".body-copy { overflow: hidden }\nbody::before { overflow: hidden }\n.foo { content: \"body\"; overflow: hidden }"
-        self.assertEqual(self.root_overflow(css), [])
+        self.assertEqual(self.root_css(css), [])
+
+    def test_clipping_on_an_inner_element_is_allowed(self) -> None:
+        # The contract moves horizontal clipping here: wrappers and decorative boxes may
+        # clip; the root never does.
+        css = ".clip { overflow-x: clip }\n.hero { overflow: hidden }\n.ambient-bg { overflow: hidden }"
+        self.assertEqual(self.root_css(css), [])
+
+    # -- scroll and touch listeners --------------------------------------------
+    def js_findings(self, script: str) -> list[str]:
+        self.write("index.html", self.page("index.html", f"<script>\n{script}\n</script>"))
+        return self.verify.check_scroll_handlers()
+
+    def test_a_scroll_listener_without_passive_is_reported(self) -> None:
+        findings = self.js_findings("window.addEventListener('scroll', function () {});")
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("passive", findings[0])
+
+    def test_a_touchmove_listener_without_passive_is_reported(self) -> None:
+        # Regression guard: a conditional preventDefault in a non-passive touchmove handler
+        # freezes panning on Android while desktop QA sees nothing.
+        findings = self.js_findings(
+            "document.addEventListener('touchmove', function (e) { if (x) e.preventDefault(); });"
+        )
+        self.assertEqual(len(findings), 1, findings)
+        self.assertIn("touchmove", findings[0])
+
+    def test_passive_listeners_are_allowed(self) -> None:
+        self.assertEqual(
+            self.js_findings(
+                "window.addEventListener('scroll', onScroll, { passive: true });\n"
+                "document.addEventListener('touchstart', onTouch, { passive: true });"
+            ),
+            [],
+        )
+
+    def test_a_listener_on_another_event_is_not_scanned(self) -> None:
+        # wheel is exempt on purpose: the inertial-scroll module manages it deliberately.
+        self.assertEqual(
+            self.js_findings("window.addEventListener('wheel', onWheel, { passive: false });"),
+            [],
+        )
+
+    def test_data_blocks_like_json_ld_are_not_scanned(self) -> None:
+        # <script type="application/ld+json"> is data, not executable code; an
+        # addEventListener-looking string inside it is not a listener registration.
+        self.write(
+            "index.html",
+            self.read_page().replace(
+                "</head>",
+                '<script type="application/ld+json">'
+                '{"x": "addEventListener(\'scroll\', f, {passive:false})"}'
+                "</script></head>",
+            ),
+        )
+        self.assertEqual(self.verify.check_scroll_handlers(), [])
+
+    def test_passive_true_inside_the_handler_body_does_not_count(self) -> None:
+        # Options must sit in the addEventListener call itself, not somewhere in the body.
+        findings = self.js_findings(
+            "window.addEventListener('scroll', function () { var o = { passive: true }; });"
+        )
+        self.assertEqual(len(findings), 1, findings)
+
+    def test_a_marked_scroll_hijack_is_allowed(self) -> None:
+        # The designed inertial scroller on index.html drives the page under the finger
+        # and must cancel the native touch stream to do it. The marker is the
+        # review-visible claim that the handler fail-safes to native scrolling.
+        self.assertEqual(
+            self.js_findings(
+                "window.addEventListener('touchmove', function (e) { // verify:allow-scroll-hijack\n"
+                "  if (!isTouching) return;\n"
+                "  e.preventDefault();\n"
+                "}, { passive: false });"
+            ),
+            [],
+        )
+
+    def test_the_marker_must_sit_on_the_listener_line(self) -> None:
+        # A marker floating somewhere else in the file must not whitewash the listener.
+        findings = self.js_findings(
+            "// verify:allow-scroll-hijack\n"
+            "window.addEventListener('touchmove', function (e) { e.preventDefault(); });"
+        )
+        self.assertEqual(len(findings), 1, findings)
 
     # -- duplicate ids ---------------------------------------------------------
     def test_duplicate_id_is_reported(self) -> None:
@@ -520,7 +624,7 @@ class VerifyTestCase(unittest.TestCase):
     def test_checker_reports_a_clean_repository_summary(self) -> None:
         self.assertEqual(self.verify.run(), [])
         # Bump deliberately: adding a rule means adding its pass/fail fixtures above.
-        self.assertEqual(len(self.verify.CHECKS), 15)
+        self.assertEqual(len(self.verify.CHECKS), 16)
 
 
 if __name__ == "__main__":
