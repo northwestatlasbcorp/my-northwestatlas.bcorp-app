@@ -273,6 +273,28 @@ class VerifyTestCase(unittest.TestCase):
         )
         self.assertEqual(len(findings), 1, findings)
 
+    def test_a_marked_scroll_hijack_is_allowed(self) -> None:
+        # The designed inertial scroller on index.html drives the page under the finger
+        # and must cancel the native touch stream to do it. The marker is the
+        # review-visible claim that the handler fail-safes to native scrolling.
+        self.assertEqual(
+            self.js_findings(
+                "window.addEventListener('touchmove', function (e) { // verify:allow-scroll-hijack\n"
+                "  if (!isTouching) return;\n"
+                "  e.preventDefault();\n"
+                "}, { passive: false });"
+            ),
+            [],
+        )
+
+    def test_the_marker_must_sit_on_the_listener_line(self) -> None:
+        # A marker floating somewhere else in the file must not whitewash the listener.
+        findings = self.js_findings(
+            "// verify:allow-scroll-hijack\n"
+            "window.addEventListener('touchmove', function (e) { e.preventDefault(); });"
+        )
+        self.assertEqual(len(findings), 1, findings)
+
     # -- duplicate ids ---------------------------------------------------------
     def test_duplicate_id_is_reported(self) -> None:
         self.write("index.html", self.read_page() + '<p id="chart"></p><p id="chart"></p>')

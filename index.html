@@ -1655,8 +1655,14 @@
         var current = window.scrollY;
         var running = false;
         var rafId = null;
+        // The designed "heavy, leisurely" institutional feel - deliberate, not an
+        // artifact: the page follows the gesture at 85% of the finger (TOUCH_MULT) and
+        // settles through a slow lerp, with a short restrained throw so nothing ever
+        // flies. These constants are the design; do not "tune" them without the owner.
         var EASE = 0.085;
         var WHEEL_MULT = 0.75;
+        var TOUCH_MULT = 0.85;
+        var THROW_TIME = 120;
         function maxScroll() {
           return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         }
@@ -1664,23 +1670,32 @@
           return Math.max(0, Math.min(v, maxScroll()));
         }
         function scrollTo(y) {
-          window.scrollTo(0, y);
+          // 'instant' so the lerp owns every frame; smooth-on-smooth would stutter.
+          try { window.scrollTo({ top: y, behavior: 'instant' }); }
+          catch (err) { window.scrollTo(0, y); }
         }
         function loop() {
-          var diff = target - current;
-          if (Math.abs(diff) < 0.2) {
-            current = target;
+          try {
+            var diff = target - current;
+            if (Math.abs(diff) < 0.2) {
+              current = target;
+              scrollTo(current);
+              running = false;
+              rafId = null;
+              return;
+            }
+            current += diff * EASE;
+            var ms = maxScroll();
+            if (current > ms) { current = ms; target = ms; }
+            if (current < 0) { current = 0; target = 0; }
             scrollTo(current);
+            rafId = requestAnimationFrame(loop);
+          } catch (err) {
+            // Fail-safe: whatever broke, release control so the browser's own
+            // scrolling takes over - the module must never leave the page unpannable.
             running = false;
             rafId = null;
-            return;
           }
-          current += diff * EASE;
-          var ms = maxScroll();
-          if (current > ms) { current = ms; target = ms; }
-          if (current < 0) { current = 0; target = 0; }
-          scrollTo(current);
-          rafId = requestAnimationFrame(loop);
         }
         function start() {
           if (!running) {
@@ -1704,7 +1719,75 @@
             start();
           }, { passive: false });
         }
-        // Touch scroll intentionally uses native browser momentum for fluid mobile experience
+        if (isTouch) {
+          var lastTouchY = 0;
+          var lastTouchTime = 0;
+          var touchVelocity = 0;
+          var isTouching = false;
+          function nativeTarget(el) {
+            // Form controls and opt-in elements keep their native touch behavior.
+            return !!(el && el.closest && el.closest('input, select, textarea, [data-native-gesture]'));
+          }
+          function release() {
+            isTouching = false;
+            touchVelocity = 0;
+            target = current = window.scrollY;
+            if (running && rafId) {
+              cancelAnimationFrame(rafId);
+              running = false;
+              rafId = null;
+            }
+          }
+          window.addEventListener('touchstart', function(e) {
+            if (e.touches.length !== 1 || nativeTarget(e.target)) return;
+            isTouching = true;
+            lastTouchY = e.touches[0].clientY;
+            lastTouchTime = performance.now();
+            touchVelocity = 0;
+            target = current = window.scrollY;
+            if (running && rafId) {
+              cancelAnimationFrame(rafId);
+              running = false;
+              rafId = null;
+            }
+          }, { passive: true });
+          // The one deliberate non-passive listener on the site (verify:allow-scroll-hijack):
+          // the heavy designed follow requires cancelling the native gesture stream. Every
+          // exit hatch is release(), so a cancelled or confused gesture can never leave the
+          // page ignoring the finger - the failure mode this module must not reproduce.
+          window.addEventListener('touchmove', function(e) { // verify:allow-scroll-hijack
+            if (!isTouching) return;
+            if (e.touches.length !== 1 || !e.cancelable || nativeTarget(e.target)) {
+              release();
+              return;
+            }
+            var y = e.touches[0].clientY;
+            var now = performance.now();
+            var dt = now - lastTouchTime;
+            var dy = lastTouchY - y;
+            if (dt > 0) {
+              touchVelocity = dy / dt;
+            }
+            lastTouchY = y;
+            lastTouchTime = now;
+            e.preventDefault();
+            target = clamp(target + dy * TOUCH_MULT);
+            start();
+          }, { passive: false });
+          window.addEventListener('touchend', function(e) {
+            if (!isTouching || e.touches.length > 0) return;
+            isTouching = false;
+            if (Math.abs(touchVelocity) > 0.3) {
+              var throwDist = touchVelocity * THROW_TIME;
+              target = clamp(target + throwDist);
+              start();
+            }
+            touchVelocity = 0;
+          }, { passive: true });
+          window.addEventListener('touchcancel', function() {
+            release();
+          }, { passive: true });
+        }
         window.addEventListener('scroll', function() {
           if (!running) {
             current = target = window.scrollY;

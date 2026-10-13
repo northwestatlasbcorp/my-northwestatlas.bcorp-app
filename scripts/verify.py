@@ -129,8 +129,9 @@ CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 # Scroll and touch listeners that are not passive can cancel native panning - the
 # intermittent "the page stopped scrolling" failure on Android, because such a listener only
 # calls preventDefault under some condition desktop QA never exercises. Every registration
-# of these events must pass { passive: true }. `wheel` is deliberately exempt: the
-# desktop-only inertial-scroll module on index.html manages wheel gestures on purpose.
+# of these events must pass { passive: true }. `wheel` is exempt on purpose: the desktop-only
+# inertial-scroll module on index.html manages wheel gestures and is gated behind a
+# fine-pointer media query.
 PASSIVE_REQUIRED_EVENTS = ("scroll", "touchstart", "touchmove", "touchend", "touchcancel")
 PASSIVE_TRUE = re.compile(r"passive\s*:\s*true\b")
 SCRIPT_TAG = re.compile(r"<script\b[^>]*>(.*?)</script>", re.DOTALL | re.IGNORECASE)
@@ -138,6 +139,13 @@ ADD_LISTENER = re.compile(
     r"addEventListener\s*\(\s*['\"](" + "|".join(PASSIVE_REQUIRED_EVENTS) + r")['\"]",
     re.IGNORECASE,
 )
+
+# One deliberate exception exists: index.html's inertial scroller IS the designed
+# "heavy, leisurely" institutional scroll, and driving the page under the user's finger
+# requires cancelling the native touch stream. Such a line must carry a review-visible
+# marker - the same pattern as SECRET_ALLOW_MARKER above. A marker is a claim that the
+# handler fail-safes to native scrolling on every exit path (see the release() guard).
+SCROLL_HIJACK_ALLOW_MARKER = "verify:allow-scroll-hijack"
 
 
 def without_comments(css: str) -> str:
@@ -407,12 +415,20 @@ def check_scroll_handlers() -> list[str]:
                 options = args[2] if len(args) >= 3 else ""
                 if PASSIVE_TRUE.search(options):
                     continue
-                lineno = text.count("\n", 0, script.start(1) + call.start()) + 1
+                abs_start = script.start(1) + call.start()
+                lineno = text.count("\n", 0, abs_start) + 1
+                line_start = text.rfind("\n", 0, abs_start) + 1
+                line_end = text.find("\n", abs_start)
+                line = text[line_start : line_end if line_end != -1 else len(text)]
+                if SCROLL_HIJACK_ALLOW_MARKER in line:
+                    continue
                 errors.append(
                     f"{page.relative_to(ROOT)}:{lineno}: addEventListener('{call.group(1)}') "
                     "without { passive: true } - a non-passive scroll/touch listener can "
-                    "cancel native panning and freeze the page on Android; pass "
-                    "{ passive: true } (and handle gestures without preventDefault)"
+                    "cancel native panning and freeze the page on Android. Pass "
+                    "{ passive: true }, or - only for a deliberate scroll hijack that "
+                    "fail-safes to native scrolling on every exit path - mark the line "
+                    f"with '{SCROLL_HIJACK_ALLOW_MARKER}' for review"
                 )
     return errors
 

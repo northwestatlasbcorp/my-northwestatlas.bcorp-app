@@ -84,12 +84,14 @@
         `${who} position is ${s.position} (root must not be positioned)`);
     }
 
-    // A listener that preventDefaults touchmove freezes panning on Android while
-    // desktop QA sees nothing. Dispatch a cancelable event and ask the engine.
+    // A stuck gesture hijack freezes panning on Android while desktop QA sees nothing.
+    // Dispatch a cancelable touchmove with no touch started: the inertial scroller must
+    // be idle and nobody may cancel the gesture. On the site's own pages the designed
+    // hijack only claims an active one-finger pan (index.html fail-safes on every exit).
     if (typeof TouchEvent === 'function') {
       const ev = new TouchEvent('touchmove', { cancelable: true, bubbles: true });
       body.dispatchEvent(ev);
-      check(!ev.defaultPrevented, 'a touchmove listener cancels the gesture (preventDefault)');
+      check(!ev.defaultPrevented, 'a touchmove listener cancels gestures while no pan is active (stuck hijack)');
     }
 
     // Scrolling must respond: give the page guaranteed overflow, scroll, measure.
