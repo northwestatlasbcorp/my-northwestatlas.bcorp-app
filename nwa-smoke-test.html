@@ -55,13 +55,62 @@
 </head>
 <body>
   <h1>NWA Production Smoke Test</h1>
-  <p style="color:var(--muted); max-width:760px;">Checks the NWA Data Proxy and core static pages. This page is noindex and intended for deployment verification.</p>
+  <p style="color:var(--muted); max-width:760px;">Checks the NWA Data Proxy, core static pages and the scrolling contract. Open this page on the affected phone to verify vertical panning on that device: the first row checks the root scroller contract, gesture handling and that scrolling responds. This page is noindex and intended for deployment verification.</p>
   <button id="run">Run tests</button>
   <div class="grid" id="results"></div>
 <script>
 (() => {
   const BASE = 'https://nwabcorp-cors-proxy.ceo-northwestatlas-bcorp.workers.dev/';
+
+  // Scroll contract probe: run this page ON THE DEVICE that misbehaves. CI cannot
+  // pan a page with a finger, so this harness verifies the same contract the release
+  // gate encodes (scripts/verify.py) against the live engine: the viewport must be
+  // the one and only document scroller, nothing may cancel touch gestures, and
+  // scrolling must actually respond.
+  function scrollContract() {
+    const notes = [];
+    let ok = true;
+    const html = document.documentElement, body = document.body;
+    const style = el => getComputedStyle(el);
+    const check = (good, label) => { if (!good) { ok = false; notes.push(label); } };
+
+    for (const [who, el] of [['html', html], ['body', body]]) {
+      const s = style(el);
+      check(s.overflowX === 'visible' && s.overflowY === 'visible',
+        `${who} overflow is ${s.overflowX}/${s.overflowY} (must stay visible)`);
+      check(s.touchAction === 'auto',
+        `${who} touch-action is ${s.touchAction} (must stay auto)`);
+      check(!(s.position === 'fixed' || s.position === 'sticky'),
+        `${who} position is ${s.position} (root must not be positioned)`);
+    }
+
+    // A listener that preventDefaults touchmove freezes panning on Android while
+    // desktop QA sees nothing. Dispatch a cancelable event and ask the engine.
+    if (typeof TouchEvent === 'function') {
+      const ev = new TouchEvent('touchmove', { cancelable: true, bubbles: true });
+      body.dispatchEvent(ev);
+      check(!ev.defaultPrevented, 'a touchmove listener cancels the gesture (preventDefault)');
+    }
+
+    // Scrolling must respond: give the page guaranteed overflow, scroll, measure.
+    const spacer = document.createElement('div');
+    spacer.style.cssText = 'height:300vh;width:1px;pointer-events:none';
+    body.appendChild(spacer);
+    const y0 = window.scrollY;
+    window.scrollBy(0, 240);
+    const moved = window.scrollY > y0;
+    window.scrollTo(0, y0);
+    spacer.remove();
+    check(moved, 'window.scrollBy did not move the page');
+    check(document.scrollingElement === html || document.scrollingElement === body,
+      'document.scrollingElement is neither html nor body');
+
+    if (ok && !notes.length) notes.push('root default, gestures free, scroll responds');
+    return { ok, detail: notes.join(' · ') };
+  }
+
   const tests = [
+    { name:'Scroll contract (this device)', probe: scrollContract },
     { name:'Worker health', url: BASE + '?health=1', expect: txt => txt.includes('NWA-DATA-PROXY') },
     { name:'Quote NVDA', url: BASE + '?quote=NVDA&interval=1m&range=1d', expect: txt => txt.includes('"symbol":"NVDA"') },
     { name:'Daily NDX', url: BASE + '?daily=NDX&range=1mo', expect: txt => txt.includes('"symbol":"^NDX"') },
@@ -72,6 +121,12 @@
   const out = document.getElementById('results');
   async function runOne(t) {
     const start = performance.now();
+    if (t.probe) {
+      try {
+        const r = t.probe();
+        return { ...t, ok: r.ok, ms: Math.round(performance.now() - start), detail: r.detail };
+      } catch (e) { return { ...t, ok: false, ms: Math.round(performance.now() - start), detail: String(e && e.message || e) }; }
+    }
     try {
       const res = await fetch(t.url, { cache:'no-store' });
       const txt = await res.text();

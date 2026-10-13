@@ -65,8 +65,6 @@
         body {
             background: var(--bg-deep); color: var(--text-main); font-family: var(--font-sans);
             font-weight: 300; display: flex; min-height: 100vh;
-            /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-            overflow-x: clip;
             -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1.6;
         }
         .noise-overlay {
@@ -172,6 +170,16 @@
             .doc-header h1 { font-size: 2.2rem; }
             .watermark { display: none; }
             .signature-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        @media (max-width: 768px) {
+            /* Scroll-frame cost on phones: the blend grain and backdrop blurs re-render
+               under every panning frame and stutter on mobile GPUs (scroll contract). */
+            .nwa-grain, .noise-overlay { display: none !important; }
+            aside {
+                background: rgba(8, 8, 15, 0.98);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
         }
         @media print { .noise-overlay, .ambient-gradient, .watermark, .reading-progress { display: none; } aside { display: none; } .legal-layout { grid-template-columns: 1fr; } body { background: white; color: black; } main { padding: 2rem; } .clause { border: 0.5px solid #ddd; background: white; page-break-inside: avoid; box-shadow: none; transform: none; } .clause p { color: #333; } .clause h2 { color: #000; } }
         .nwa-grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:9998;pointer-events:none;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-size:256px;mix-blend-mode:overlay;}
@@ -301,11 +309,19 @@
         'use strict';
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var progressBar = document.getElementById('readingProgress');
-        function updateProgress() { var s = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight; progressBar.style.width = (h > 0 ? (s / h) * 100 : 0) + '%'; }
+        var docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        function updateProgress() { var s = window.scrollY; progressBar.style.width = (docExtent > 0 ? (s / docExtent) * 100 : 0) + '%'; }
         var clauses = document.querySelectorAll('.clause'), tocLinks = document.querySelectorAll('.toc-link'), ticking = false;
-        function updateScrollSpy() { var p = window.scrollY + 120, id = ''; clauses.forEach(function(c) { if (p >= c.offsetTop && p < c.offsetTop + c.offsetHeight + 50) id = c.getAttribute('id'); }); tocLinks.forEach(function(l) { l.classList.toggle('active', id && l.getAttribute('href') === '#' + id); }); }
+        // Clause geometry is cached (refreshed on load/resize/fonts): reading offsetTop and
+        // offsetHeight for every clause inside each scroll frame forced a layout per frame.
+        var clauseMetrics = [];
+        function measureClauses() { docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight); clauseMetrics = Array.prototype.map.call(clauses, function(c) { var r = c.getBoundingClientRect(); return { id: c.getAttribute('id'), top: r.top + window.scrollY, height: r.height }; }); }
+        function updateScrollSpy() { var p = window.scrollY + 120, id = ''; clauseMetrics.forEach(function(m) { if (p >= m.top && p < m.top + m.height + 50) id = m.id; }); tocLinks.forEach(function(l) { l.classList.toggle('active', id && l.getAttribute('href') === '#' + id); }); }
         function onScroll() { if (!ticking) { requestAnimationFrame(function() { updateProgress(); updateScrollSpy(); ticking = false; }); ticking = true; } }
-        window.addEventListener('scroll', onScroll, { passive: true }); updateProgress(); updateScrollSpy();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', measureClauses, { passive: true });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureClauses);
+        measureClauses(); updateProgress(); updateScrollSpy();
         tocLinks.forEach(function(l) { l.addEventListener('click', function(e) { var t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' }); } }); });
         var reveals = document.querySelectorAll('.reveal');
         if (reveals.length && 'IntersectionObserver' in window && !prefersReduced) { var io = new IntersectionObserver(function(e) { e.forEach(function(en) { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } }); }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }); reveals.forEach(function(el) { io.observe(el); }); } else { reveals.forEach(function(el) { el.classList.add('visible'); }); }

@@ -102,8 +102,6 @@
             font-weight: 300;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-            overflow-x: clip;
             -webkit-user-select: none;
             -moz-user-select: none;
             user-select: none;
@@ -222,6 +220,7 @@
             position: fixed;
             inset: 0;
             z-index: -2;
+            overflow: hidden;
             background: var(--bg-deep);
         }
 
@@ -1161,6 +1160,15 @@
             .lifecycle-grid { grid-template-columns: 1fr; }
             .scroll-progress { display: none; }
             .footer-grid { grid-template-columns: 1fr; }
+            /* Scroll-frame cost on phones: blend grain and backdrop blurs re-render under
+               every panning frame and stutter on mobile GPUs; the chrome keeps its solid
+               near-opaque backgrounds instead (scripts/verify.py, scroll contract). */
+            .nwa-grain, .noise-overlay { display: none !important; }
+            header.scrolled, .nav-menu {
+                background: rgba(7, 7, 8, 0.98);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1502,20 +1510,24 @@
             });
         }
 
-        // Header + scroll progress
+        // Header + scroll progress (extent cached - no per-frame layout reads)
         var header = document.getElementById('header');
         var progressBar = document.getElementById('scrollProgress');
         var ticking = false;
+        var docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
         function onScroll() {
             var y = window.scrollY;
             header.classList.toggle('scrolled', y > 50);
             if (progressBar) {
-                var h = document.documentElement.scrollHeight - window.innerHeight;
-                progressBar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+                progressBar.style.width = (docExtent > 0 ? (y / docExtent) * 100 : 0) + '%';
             }
             ticking = false;
         }
+
+        window.addEventListener('resize', function() {
+            docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        }, { passive: true });
 
         window.addEventListener('scroll', function() {
             if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }

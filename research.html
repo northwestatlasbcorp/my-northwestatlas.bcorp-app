@@ -91,8 +91,6 @@
             font-weight: 300;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-            overflow-x: clip;
         }
 
         ::selection {
@@ -659,7 +657,13 @@
         .nwa-page-border{position:fixed;inset:12px;border:0.5px solid rgba(197,160,89,.055);pointer-events:none;z-index:9997;border-radius:2px;}
         .nwa-status-bar{position:fixed;bottom:0;left:0;right:0;height:28px;background:rgba(8,8,9,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:0.5px solid rgba(197,160,89,.04);z-index:150;display:flex;align-items:center;justify-content:space-between;padding:0 2.4rem;font-family:var(--font-mono);font-size:.38rem;letter-spacing:.18em;color:#6A6A72;opacity:.28;}
         .nwa-status-bar .s-dot{width:5px;height:5px;border-radius:50%;background:rgba(52,211,153,.45);display:inline-block;margin-right:6px;}
-        @media(max-width:768px){.nwa-status-bar{display:none;}}
+        @media(max-width:768px){
+            .nwa-status-bar{display:none;}
+            /* Scroll-frame cost on phones: the blend grain and nav backdrop blur re-render
+               under every panning frame and stutter on mobile GPUs (scroll contract). */
+            .nwa-grain{display:none !important;}
+            .page-nav{background:rgba(7,7,10,0.98);backdrop-filter:none;-webkit-backdrop-filter:none;}
+        }
     </style>
 
     <style id="nwa-accessibility-patch">

@@ -89,9 +89,8 @@
         background: var(--obsidian);
         scrollbar-width: thin;
         scrollbar-color: rgba(var(--champagne-rgb), .15) transparent;
-        /* The root carries no overflow: it applies to the viewport, where `hidden` stopped
-           vertical panning in Android in-app WebViews and `clip` degraded scrolling to the
-           main thread. Horizontal clipping belongs on body (scripts/verify.py). */
+        /* The scrolling contract (scripts/verify.py): the root carries no overflow - the
+           viewport must stay the one and only document scroller, in every engine. */
         scroll-behavior: smooth;
     }
     body {
@@ -105,8 +104,6 @@
         font-weight: 300;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-        overflow-x: clip;
         text-rendering: optimizeLegibility;
         padding-bottom: 28px;
     }
@@ -2048,11 +2045,14 @@
         }
     }
 
-    // Scroll progress
+    // Scroll progress - window.scrollY (not documentElement.scrollTop, which reads 0 in
+    // engines where the scroller lands on body) and a cached extent (no per-frame layout).
+    let scrollExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    window.addEventListener('resize', () => {
+        scrollExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    }, { passive: true });
     window.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        const progress = scrollExtent > 0 ? (window.scrollY / scrollExtent) * 100 : 0;
         const bar = $('scrollProgress'); if (bar) bar.style.width = progress + '%';
     }, { passive: true });
 

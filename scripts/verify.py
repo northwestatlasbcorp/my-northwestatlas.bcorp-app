@@ -86,13 +86,16 @@ SECRET_SCAN_EXEMPT = frozenset({Path("scripts/verify.py")})
 # Claims that must never appear without documentary evidence (see Linear NOR-10).
 BANNED_PHRASES = ("B Corp Certified",)
 
-# A non-visible overflow on html or body is never a local decision. Chrome propagates the
-# declared value to the viewport; an engine that does not propagate - the Android WebView
-# behind the Instagram and Facebook in-app browsers - instead turns the element itself into
-# a scroll container, with the sibling axis coerced from visible to auto. Either way the
-# phone renders the page and then refuses to pan it vertically, while the same page scrolls
-# normally in Chrome. `clip` clips exactly like `hidden` without creating a scroll
-# container, so it is the only value allowed on these two selectors.
+# The scrolling contract: html, body and :root stay completely default. Their overflow
+# propagates to the viewport in conformant engines and becomes a broken inner scroller in
+# engines that do not propagate (the Android WebView behind Instagram/Facebook in-app
+# browsers) - the page renders and then refuses to pan vertically. Three sessions cycled
+# through `hidden` -> `clip` -> "clip on body only" and every configuration stayed unstable
+# somewhere, because ANY non-default value is engine-dependent (propagation rules, clip
+# support, overflow-x/overflow-y promotion). The only state that is safe everywhere is the
+# default one: the viewport is the one and only document scroller. Horizontal clipping, if
+# needed, belongs on an inner element (`overflow-x: clip` on a wrapper or decorative box),
+# never on these three selectors.
 # :root is html spelled differently, and html.dark / body.dark are the same element as
 # html / body. A selector that only mentions them as an ancestor (".x body") still applies
 # to body, so it is flagged too; a class that merely starts with those letters is not.
@@ -100,20 +103,41 @@ ROOT_OVERFLOW_SELECTOR = r"(?:html|body|:root)(?:[.#\[][^,{}\s]*)*"
 ROOT_OVERFLOW_BLOCK = re.compile(
     rf"(?<![\w.#-])({ROOT_OVERFLOW_SELECTOR})(?![\w-])\s*(?:,[^{{}}]*)?\{{([^{{}}]*)\}}"
 )
-SCROLL_CONTAINER_OVERFLOW = re.compile(
-    r"overflow(?:-[xy])?\s*:\s*(hidden|scroll|auto)\b", re.IGNORECASE
-)
 
-# The root is stricter: it has no safe non-default value here. `clip` on html stops the
-# viewport from being the plain scroll container, and Chromium then keeps body as its own
-# scroller - scrolling still happens, but on the main thread, which is exactly the jank
-# that `hidden` -> `clip` introduced. The keywords are explicit so that prose in a comment
-# ("carries no overflow: it applies to the viewport") can never read as a declaration.
-ROOT_OVERFLOW_SELECTOR_RE = re.compile(r"^(?:html|:root)\b", re.IGNORECASE)
+# Explicit keywords so that prose in a comment ("carries no overflow: it applies to the
+# viewport") can never read as a declaration. Non-default overflow on the root selectors is
+# forbidden in every axis: hidden/clip kill panning in in-app WebViews, auto/scroll turn the
+# element into a second scroller.
 ROOT_FORBIDDEN_OVERFLOW = re.compile(
-    r"overflow(?:-[xy])?\s*:\s*(hidden|scroll|auto|clip|overlay)\b", re.IGNORECASE
+    r"overflow(?:-[xy])?\s*:\s*(hidden|clip|scroll|auto|overlay)\b", re.IGNORECASE
 )
+# touch-action on the root intersects with every gesture in the document. `pan-y` looks
+# harmless but has cancelled vertical panning in older Android WebViews and blocks pinch
+# zoom; the default `auto` is the only value that leaves gestures to the browser.
+ROOT_FORBIDDEN_TOUCH_ACTION = re.compile(
+    r"touch-action\s*:\s*(?!auto\b|initial\b|inherit\b|unset\b|revert\b|revert-layer\b)[\w-]+",
+    re.IGNORECASE,
+)
+# position: fixed on body is the "scroll lock" that leaves a page permanently unscrollable
+# whenever the unlock never runs (interrupted menu, crashed handler, restored page cache).
+ROOT_FORBIDDEN_POSITION = re.compile(
+    r"(?<![\w-])position\s*:\s*(fixed|sticky)\b", re.IGNORECASE
+)
+ROOT_SELECTOR_RE = re.compile(r"^(?:html|body|:root)\b", re.IGNORECASE)
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
+
+# Scroll and touch listeners that are not passive can cancel native panning - the
+# intermittent "the page stopped scrolling" failure on Android, because such a listener only
+# calls preventDefault under some condition desktop QA never exercises. Every registration
+# of these events must pass { passive: true }. `wheel` is deliberately exempt: the
+# desktop-only inertial-scroll module on index.html manages wheel gestures on purpose.
+PASSIVE_REQUIRED_EVENTS = ("scroll", "touchstart", "touchmove", "touchend", "touchcancel")
+PASSIVE_TRUE = re.compile(r"passive\s*:\s*true\b")
+SCRIPT_TAG = re.compile(r"<script\b[^>]*>(.*?)</script>", re.DOTALL | re.IGNORECASE)
+ADD_LISTENER = re.compile(
+    r"addEventListener\s*\(\s*['\"](" + "|".join(PASSIVE_REQUIRED_EVENTS) + r")['\"]",
+    re.IGNORECASE,
+)
 
 
 def without_comments(css: str) -> str:
@@ -261,36 +285,134 @@ def check_page_metadata() -> list[str]:
     return errors
 
 
-def check_root_scroll_containers() -> list[str]:
-    """Forbid overflow values that turn the document root or body into a scroll container.
+def check_root_scroll_contract() -> list[str]:
+    """html, body and :root must stay completely default in every stylesheet.
 
-    Regression guard for the scrolling failure in the Instagram in-app browser on Android:
-    the page rendered, but the gesture did nothing. Both the inline CSS of every page and
-    the shared stylesheet are scanned, because a mobile-only block is exactly where the
-    anti-pattern would come back unnoticed.
+    Regression guard for three sessions of mobile scroll breakage: the Instagram in-app
+    browser on Android rendered the page but refused to pan it vertically, and Android
+    Chrome stuttered - each time because a non-default overflow (then `clip`, then
+    `touch-action`) sat on a root selector where engines disagree what it applies to.
+    Both the inline CSS of every page and the shared stylesheet are scanned, because a
+    mobile-only block is exactly where the anti-pattern would come back unnoticed.
     """
     errors: list[str] = []
     for path in [*page_files(), *sorted(ROOT.glob(STYLE_FILE_GLOB))]:
         text = without_comments(path.read_text(encoding="utf-8", errors="replace"))
         for block in ROOT_OVERFLOW_BLOCK.finditer(text):
             selector, declarations = block.group(1), block.group(2)
-            lineno = text.count("\n", 0, block.start(1)) + 1
-            if ROOT_OVERFLOW_SELECTOR_RE.match(selector):
-                root_hit = ROOT_FORBIDDEN_OVERFLOW.search(declarations)
-                if root_hit:
-                    errors.append(
-                        f"{path.relative_to(ROOT)}:{lineno}: {selector} sets overflow "
-                        f"'{root_hit.group(1)}' - the root's overflow applies to the viewport: "
-                        "'hidden' stopped vertical panning in Android in-app WebViews and 'clip' "
-                        "moved scrolling off the compositor; keep the root default and clip on body"
-                    )
+            if not ROOT_SELECTOR_RE.match(selector):
                 continue
-            found = SCROLL_CONTAINER_OVERFLOW.search(declarations)
-            if found:
+            lineno = text.count("\n", 0, block.start(1)) + 1
+            where = f"{path.relative_to(ROOT)}:{lineno}: {selector}"
+            hit = ROOT_FORBIDDEN_OVERFLOW.search(declarations)
+            if hit:
                 errors.append(
-                    f"{path.relative_to(ROOT)}:{lineno}: {selector} uses overflow "
-                    f"'{found.group(1)}', which stops vertical panning in Android in-app "
-                    "WebViews - use 'clip'"
+                    f"{where} sets overflow '{hit.group(1)}' - overflow on html/body/:root "
+                    "applies to the viewport in some engines and creates a second, broken "
+                    "scroller in others (vertical panning died in Android in-app WebViews; "
+                    "'clip' then moved scrolling off the compositor). Keep the root default "
+                    "and clip horizontal overflow on an inner element instead"
+                )
+                continue
+            hit = ROOT_FORBIDDEN_TOUCH_ACTION.search(declarations)
+            if hit:
+                errors.append(
+                    f"{where} sets touch-action '{hit.group(0).split(':', 1)[1].strip()}' - "
+                    "touch-action on the root intersects with every gesture in the document "
+                    "and has cancelled vertical panning in Android WebViews; leave it 'auto'"
+                )
+                continue
+            hit = ROOT_FORBIDDEN_POSITION.search(declarations)
+            if hit:
+                errors.append(
+                    f"{where} sets position: {hit.group(1)} - a positioned body is a scroll "
+                    "lock that stays locked when the unlock never runs; lock by toggling a "
+                    "class scoped to a menu, not by positioning the root"
+                )
+    return errors
+
+
+def _matching_paren_end(text: str, open_at: int) -> int:
+    """Index of the ')' closing the '(' at open_at, or -1 when unbalanced."""
+    depth = 0
+    for i in range(open_at, len(text)):
+        if text[i] == "(":
+            depth += 1
+        elif text[i] == ")":
+            depth -= 1
+            if depth == 0:
+                return i
+    return -1
+
+
+def _call_arguments(text: str, open_at: int, close_at: int) -> list[str]:
+    """Top-level arguments of a call, split on commas outside strings and nesting."""
+    args: list[str] = []
+    start = open_at + 1
+    parens = 1
+    braces = 0
+    brackets = 0
+    quote = ""
+    i = start
+    while i < close_at:
+        ch = text[i]
+        if quote:
+            if ch == "\\":
+                i += 2
+                continue
+            if ch == quote:
+                quote = ""
+        elif ch in "'\"`":
+            quote = ch
+        elif ch == "(":
+            parens += 1
+        elif ch == ")":
+            parens -= 1
+        elif ch == "{":
+            braces += 1
+        elif ch == "}":
+            braces -= 1
+        elif ch == "[":
+            brackets += 1
+        elif ch == "]":
+            brackets -= 1
+        elif ch == "," and parens == 1 and braces == 0 and brackets == 0:
+            args.append(text[start:i])
+            start = i + 1
+        i += 1
+    args.append(text[start:close_at])
+    return args
+
+
+def check_scroll_handlers() -> list[str]:
+    """Scroll and touch listeners must be registered with { passive: true }.
+
+    A non-passive listener can call preventDefault and silently cancel native panning -
+    the failure is conditional, so it shows up on phones and never in a desktop smoke
+    run. `wheel` is exempt on purpose: index.html's desktop inertial scroll manages wheel
+    gestures and is gated behind a fine-pointer media query.
+    """
+    errors: list[str] = []
+    for page in page_files():
+        text = page.read_text(encoding="utf-8", errors="replace")
+        for script in SCRIPT_TAG.finditer(text):
+            body = script.group(1)
+            for call in ADD_LISTENER.finditer(body):
+                open_at = body.index("(", call.start())
+                close_at = _matching_paren_end(body, open_at)
+                end = close_at if close_at != -1 else len(body)
+                args = _call_arguments(body, open_at, end)
+                # The options are the third argument; a `passive: true` written anywhere
+                # else (including inside the handler body) must not count.
+                options = args[2] if len(args) >= 3 else ""
+                if PASSIVE_TRUE.search(options):
+                    continue
+                lineno = text.count("\n", 0, script.start(1) + call.start()) + 1
+                errors.append(
+                    f"{page.relative_to(ROOT)}:{lineno}: addEventListener('{call.group(1)}') "
+                    "without { passive: true } - a non-passive scroll/touch listener can "
+                    "cancel native panning and freeze the page on Android; pass "
+                    "{ passive: true } (and handle gestures without preventDefault)"
                 )
     return errors
 
@@ -765,7 +887,8 @@ CHECKS = (
     check_local_references,
     check_manifest_and_sitemap,
     check_page_metadata,
-    check_root_scroll_containers,
+    check_root_scroll_contract,
+    check_scroll_handlers,
     check_duplicate_ids,
     check_canonicals,
     check_open_graph_images,

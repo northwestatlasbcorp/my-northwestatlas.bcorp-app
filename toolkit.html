@@ -177,8 +177,6 @@
                 font-weight: 300;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-                /* clip, not hidden: hidden here stops vertical panning in Android in-app WebViews (scripts/verify.py) */
-                overflow-x: clip;
                 text-rendering: optimizeLegibility;
             }
             
@@ -1984,7 +1982,9 @@
             window.addEventListener('beforeunload', () => { handlers.stopAutoRefresh(); console.log('[NWA] Shutting down…'); });
             document.addEventListener('visibilitychange', () => { if (document.hidden) handlers.stopAutoRefresh(); else if (settings.autoRefresh) handlers.startAutoRefresh(); });
         })();
-            window.addEventListener("scroll",()=>{const t=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight,p=h>0?(t/h)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
+            let scrollExtent=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+            window.addEventListener("resize",()=>{scrollExtent=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);},{passive:true});
+            window.addEventListener("scroll",()=>{const p=scrollExtent>0?(window.scrollY/scrollExtent)*100:0;const b=document.getElementById("nwaScrollProgress");if(b)b.style.width=p+"%";},{passive:true});
     </script>
 </body>
 </html>
