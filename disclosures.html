@@ -954,17 +954,19 @@
 
         function updateProgress() {
             var scrollTop = window.scrollY;
-            var progress = docExtent > 0 ? (scrollTop / docExtent) * 100 : 0;
+            var progress = docExtent > 0 ? Math.min(100, (scrollTop / docExtent) * 100) : 0;
             progressBar.style.width = progress + '%';
         }
 
         // === SCROLL SPY ===
         // Geometry is cached and refreshed on load/resize/fonts: reading offsetTop and
         // offsetHeight for every clause inside each scroll frame forced a synchronous
-        // layout per frame and stuttered on Android.
+        // layout per frame and stuttered on Android. The DOM is written only when the
+        // active clause changes, never on every frame.
         var clauses = document.querySelectorAll('.clause');
         var tocLinks = document.querySelectorAll('.toc-link');
         var clauseMetrics = [];
+        var lastActiveId = null;
         var ticking = false;
 
         function measureClauses() {
@@ -989,6 +991,8 @@
                 }
             });
 
+            if (currentId === lastActiveId) return;
+            lastActiveId = currentId;
             tocLinks.forEach(function(link) {
                 var href = link.getAttribute('href');
                 var isActive = currentId && href === '#' + currentId;
@@ -1009,6 +1013,7 @@
 
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', measureClauses, { passive: true });
+        window.addEventListener('load', measureClauses);
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureClauses);
         measureClauses();
         updateProgress();

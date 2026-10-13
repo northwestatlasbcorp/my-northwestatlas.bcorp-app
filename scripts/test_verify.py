@@ -197,6 +197,11 @@ class VerifyTestCase(unittest.TestCase):
             [],
         )
 
+    def test_logical_overflow_axes_are_covered(self) -> None:
+        # overflow-block/inline are the logical names of the same properties.
+        findings = self.root_css("body { overflow-block: hidden }")
+        self.assertEqual(len(findings), 1, findings)
+
     def test_touch_action_on_a_root_selector_is_reported(self) -> None:
         # Regression guard: `touch-action: pan-y` on html intersected with every gesture in
         # the document; older Android WebViews then ignored vertical pans altogether, and
@@ -260,11 +265,25 @@ class VerifyTestCase(unittest.TestCase):
         )
 
     def test_a_listener_on_another_event_is_not_scanned(self) -> None:
-        # wheel is exempt on purpose: the desktop inertial-scroll module needs it.
+        # wheel is exempt on purpose: the inertial-scroll module manages it deliberately.
         self.assertEqual(
             self.js_findings("window.addEventListener('wheel', onWheel, { passive: false });"),
             [],
         )
+
+    def test_data_blocks_like_json_ld_are_not_scanned(self) -> None:
+        # <script type="application/ld+json"> is data, not executable code; an
+        # addEventListener-looking string inside it is not a listener registration.
+        self.write(
+            "index.html",
+            self.read_page().replace(
+                "</head>",
+                '<script type="application/ld+json">'
+                '{"x": "addEventListener(\'scroll\', f, {passive:false})"}'
+                "</script></head>",
+            ),
+        )
+        self.assertEqual(self.verify.check_scroll_handlers(), [])
 
     def test_passive_true_inside_the_handler_body_does_not_count(self) -> None:
         # Options must sit in the addEventListener call itself, not somewhere in the body.

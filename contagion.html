@@ -2046,14 +2046,23 @@
     }
 
     // Scroll progress - window.scrollY (not documentElement.scrollTop, which reads 0 in
-    // engines where the scroller lands on body) and a cached extent (no per-frame layout).
+    // engines where the scroller lands on body), a cached extent (no per-frame layout),
+    // one DOM write per frame and a clamped percentage.
     let scrollExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    window.addEventListener('resize', () => {
+    const measureExtent = () => {
         scrollExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    }, { passive: true });
+    };
+    window.addEventListener('resize', measureExtent, { passive: true });
+    window.addEventListener('load', measureExtent);
+    let progressPending = false;
     window.addEventListener('scroll', () => {
-        const progress = scrollExtent > 0 ? (window.scrollY / scrollExtent) * 100 : 0;
-        const bar = $('scrollProgress'); if (bar) bar.style.width = progress + '%';
+        if (progressPending) return;
+        progressPending = true;
+        requestAnimationFrame(() => {
+            progressPending = false;
+            const progress = scrollExtent > 0 ? Math.min(100, (window.scrollY / scrollExtent) * 100) : 0;
+            const bar = $('scrollProgress'); if (bar) bar.style.width = progress + '%';
+        });
     }, { passive: true });
 
     function waitForLibraries(timeoutMs = 2500) {

@@ -310,16 +310,18 @@
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var progressBar = document.getElementById('readingProgress');
         var docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-        function updateProgress() { var s = window.scrollY; progressBar.style.width = (docExtent > 0 ? (s / docExtent) * 100 : 0) + '%'; }
+        function updateProgress() { var s = window.scrollY; progressBar.style.width = (docExtent > 0 ? Math.min(100, (s / docExtent) * 100) : 0) + '%'; }
         var clauses = document.querySelectorAll('.clause'), tocLinks = document.querySelectorAll('.toc-link'), ticking = false;
         // Clause geometry is cached (refreshed on load/resize/fonts): reading offsetTop and
         // offsetHeight for every clause inside each scroll frame forced a layout per frame.
-        var clauseMetrics = [];
+        // The DOM is written only when the active clause changes, never on every frame.
+        var clauseMetrics = [], lastActiveId = null;
         function measureClauses() { docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight); clauseMetrics = Array.prototype.map.call(clauses, function(c) { var r = c.getBoundingClientRect(); return { id: c.getAttribute('id'), top: r.top + window.scrollY, height: r.height }; }); }
-        function updateScrollSpy() { var p = window.scrollY + 120, id = ''; clauseMetrics.forEach(function(m) { if (p >= m.top && p < m.top + m.height + 50) id = m.id; }); tocLinks.forEach(function(l) { l.classList.toggle('active', id && l.getAttribute('href') === '#' + id); }); }
+        function updateScrollSpy() { var p = window.scrollY + 120, id = ''; clauseMetrics.forEach(function(m) { if (p >= m.top && p < m.top + m.height + 50) id = m.id; }); if (id === lastActiveId) return; lastActiveId = id; tocLinks.forEach(function(l) { l.classList.toggle('active', id && l.getAttribute('href') === '#' + id); }); }
         function onScroll() { if (!ticking) { requestAnimationFrame(function() { updateProgress(); updateScrollSpy(); ticking = false; }); ticking = true; } }
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', measureClauses, { passive: true });
+        window.addEventListener('load', measureClauses);
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureClauses);
         measureClauses(); updateProgress(); updateScrollSpy();
         tocLinks.forEach(function(l) { l.addEventListener('click', function(e) { var t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' }); } }); });

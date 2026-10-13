@@ -106,10 +106,11 @@ ROOT_OVERFLOW_BLOCK = re.compile(
 
 # Explicit keywords so that prose in a comment ("carries no overflow: it applies to the
 # viewport") can never read as a declaration. Non-default overflow on the root selectors is
-# forbidden in every axis: hidden/clip kill panning in in-app WebViews, auto/scroll turn the
-# element into a second scroller.
+# forbidden in every axis and every name: hidden/clip kill panning in in-app WebViews,
+# auto/scroll turn the element into a second scroller. overflow-block/inline are the
+# logical-axis names of the same properties.
 ROOT_FORBIDDEN_OVERFLOW = re.compile(
-    r"overflow(?:-[xy])?\s*:\s*(hidden|clip|scroll|auto|overlay)\b", re.IGNORECASE
+    r"overflow(?:-[xy]|-block|-inline)?\s*:\s*(hidden|clip|scroll|auto|overlay)\b", re.IGNORECASE
 )
 # touch-action on the root intersects with every gesture in the document. `pan-y` looks
 # harmless but has cancelled vertical panning in older Android WebViews and blocks pinch
@@ -129,16 +130,22 @@ CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 # Scroll and touch listeners that are not passive can cancel native panning - the
 # intermittent "the page stopped scrolling" failure on Android, because such a listener only
 # calls preventDefault under some condition desktop QA never exercises. Every registration
-# of these events must pass { passive: true }. `wheel` is exempt on purpose: the desktop-only
-# inertial-scroll module on index.html manages wheel gestures and is gated behind a
-# fine-pointer media query.
+# of these events must pass { passive: true }. `wheel` is exempt on purpose: index.html's
+# inertial scroll module deliberately manages wheel gestures the same way it manages touch.
 PASSIVE_REQUIRED_EVENTS = ("scroll", "touchstart", "touchmove", "touchend", "touchcancel")
 PASSIVE_TRUE = re.compile(r"passive\s*:\s*true\b")
-SCRIPT_TAG = re.compile(r"<script\b[^>]*>(.*?)</script>", re.DOTALL | re.IGNORECASE)
+SCRIPT_TAG = re.compile(r"<script\b([^>]*)>(.*?)</script>", re.DOTALL | re.IGNORECASE)
+JS_TYPES = frozenset({"", "text/javascript", "application/javascript", "module", "text/ecmascript"})
 ADD_LISTENER = re.compile(
     r"addEventListener\s*\(\s*['\"](" + "|".join(PASSIVE_REQUIRED_EVENTS) + r")['\"]",
     re.IGNORECASE,
 )
+
+
+def _is_javascript(attrs: str) -> bool:
+    """Only executable script blocks matter; JSON-LD and friends are data, not code."""
+    found = re.search(r"\stype\s*=\s*['\"]([^'\"]*)['\"]", attrs, re.IGNORECASE)
+    return found.group(1).strip().lower() in JS_TYPES if found else True
 
 # One deliberate exception exists: index.html's inertial scroller IS the designed
 # "heavy, leisurely" institutional scroll, and driving the page under the user's finger
@@ -404,7 +411,9 @@ def check_scroll_handlers() -> list[str]:
     for page in page_files():
         text = page.read_text(encoding="utf-8", errors="replace")
         for script in SCRIPT_TAG.finditer(text):
-            body = script.group(1)
+            if not _is_javascript(script.group(1)):
+                continue
+            body = script.group(2)
             for call in ADD_LISTENER.finditer(body):
                 open_at = body.index("(", call.start())
                 close_at = _matching_paren_end(body, open_at)
@@ -415,7 +424,7 @@ def check_scroll_handlers() -> list[str]:
                 options = args[2] if len(args) >= 3 else ""
                 if PASSIVE_TRUE.search(options):
                     continue
-                abs_start = script.start(1) + call.start()
+                abs_start = script.start(2) + call.start()
                 lineno = text.count("\n", 0, abs_start) + 1
                 line_start = text.rfind("\n", 0, abs_start) + 1
                 line_end = text.find("\n", abs_start)

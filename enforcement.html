@@ -1510,24 +1510,29 @@
             });
         }
 
-        // Header + scroll progress (extent cached - no per-frame layout reads)
+        // Header + scroll progress (extent cached - no per-frame layout reads, DOM
+        // written only when the state changes)
         var header = document.getElementById('header');
         var progressBar = document.getElementById('scrollProgress');
         var ticking = false;
+        var wasScrolled = null;
         var docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
         function onScroll() {
             var y = window.scrollY;
-            header.classList.toggle('scrolled', y > 50);
+            var scrolled = y > 50;
+            if (scrolled !== wasScrolled) { header.classList.toggle('scrolled', scrolled); wasScrolled = scrolled; }
             if (progressBar) {
-                progressBar.style.width = (docExtent > 0 ? (y / docExtent) * 100 : 0) + '%';
+                progressBar.style.width = (docExtent > 0 ? Math.min(100, (y / docExtent) * 100) : 0) + '%';
             }
             ticking = false;
         }
 
-        window.addEventListener('resize', function() {
+        function measureExtent() {
             docExtent = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-        }, { passive: true });
+        }
+        window.addEventListener('resize', measureExtent, { passive: true });
+        window.addEventListener('load', measureExtent);
 
         window.addEventListener('scroll', function() {
             if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
